@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - 4.1
+install:
+  - npm install -g mocha
+  - npm install
+
+# notifications:
+#   slack:
+#     rooms:
+#       - nest-parrot:z3jqw9krJbPu0CcQBKS90AnZ#travis-ci
+#      - nest-parrot:z3jqw9krJbPu0CcQBKS90AnZ#random
+
+# deploy:
+#     skip_cleanup: true
+#     provider: npm
+#     email: bradwoo8621@gmail.com
+#     api_key: d77c3467-e5f4-4372-9848-d334fb0681d1
+#     on:
+#         tags: true
