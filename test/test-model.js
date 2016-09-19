@@ -38,5 +38,10 @@ describe('Model', function() {
 		it('--Should handle post change event', function() {
 			model.firePostChangeEvent('test', 'a', 'b');
 		})
+		it('--Should have no post change listener', function() {
+			model.removePostChangeListener('test', listener);
+			let listeners = model.getListeners('test');
+			assert.equal(listeners.length, 0);
+		})
 	});
 });
