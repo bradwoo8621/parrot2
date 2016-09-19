@@ -1,7 +1,7 @@
 require("babel-register")({
 	"presets": [
 		"react", 
-		["es2015", { "loose": true }]
+		"es2015"
 	],
 	"plugins": [
 		"transform-react-jsx"

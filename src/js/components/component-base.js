@@ -40,7 +40,7 @@ class RichLayoutComponent extends BaseComponent {
 	}
 	// position can be string or function
 	getPosition() {
-		return this.wrapOptionValue(this.getLayout().getPosition());
+		return this.getLayout().getPosition();
 	}
 	// styles
 	getComponentStyle() {
@@ -224,8 +224,6 @@ class ComponentBase extends LifecycleComponent {
 }
 
 export {
-	React,
-	
 	BaseComponent,
 	RichLayoutComponent,
 	TwinModelComponent,
@@ -233,5 +231,6 @@ export {
 	LifecycleComponent,
 	ComponentBase,
 
+	React,
 	classnames
 }
