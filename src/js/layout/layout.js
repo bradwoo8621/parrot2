@@ -65,6 +65,10 @@ class Layout {
 	getOptionValue(key) {
 		return this.getOptions()[key];
 	}
+
+	getAdditionalModel() {
+		return this.getOptionValue('additionalModel');
+	}
 }
 
 export {Layout}

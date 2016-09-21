@@ -21,11 +21,13 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test --recursive"
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "react": "^15.3.1"
+    "react": "^15.3.1",
+    "underscore": "^1.8.3",
+    "underscore.deep": "^0.5.1"
   },
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "^6.8.0",

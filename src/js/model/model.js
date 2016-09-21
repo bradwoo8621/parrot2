@@ -1,3 +1,6 @@
+import underscore from 'underscore'
+import deep from 'underscore.deep'
+
 class ListenerSupport {
 	constructor(id) {
 		this.id = id;
@@ -59,14 +62,17 @@ class Model {
 			};
 			return listeners;
 		}, {});
+		this.baseModel = initDataJSON;
+		this.currentModel = deep.deepClone(initDataJSON);
 	}
 	getListenersByTimeAndType(time, type) {
 		return this.listeners[type][time];
 	}
 	getListenerSupport(id, time, type, create = false) {
+		id = id ? id : '--all';
 		let listeners = this.getListenersByTimeAndType(time, type);
 		let support = listeners.find(listener => {
-			return listener.id == id;
+			return listener.id.toString() == id.toString();
 		});
 		if (!support && create) {
 			support = new ListenerSupport(id);
@@ -95,28 +101,28 @@ class Model {
 	}
 
 	addPostChangeListener(id, listener) {
-		this.addListener(id, listener);
+		return this.addListener(id, listener);
 	}
 	removePostChangeListener(id, listener) {
-		this.removeListener(id, listener);
+		return this.removeListener(id, listener);
 	}
 	addPostAddListener(id, listener) {
-		this.addListener(id, listener, 'add');
+		return this.addListener(id, listener, 'add');
 	}
 	removePostAddListener(id, listener) {
-		this.removeListener(id, listener, 'add');
+		return this.removeListener(id, listener, 'add');
 	}
 	addPostRemoveListener(id, listener) {
-		this.addListener(id, listener, 'remove');
+		return this.addListener(id, listener, 'remove');
 	}
 	removePostRemoveListener(id, listener) {
-		this.removeListener(id, listener, 'remove');
+		return this.removeListener(id, listener, 'remove');
 	}
 	addPostValidateListener(id, listener) {
-		this.addListener(id, listener, 'validate');
+		return this.addListener(id, listener, 'validate');
 	}
 	removePostValidateListener(id, listener) {
-		this.removeListener(id, listener, 'validate');
+		return this.removeListener(id, listener, 'validate');
 	}
 
 	fireEvent(evt) {
@@ -173,6 +179,50 @@ class Model {
 			model: this
 		});
 	}
+
+	getBaseModel() {
+		return this.baseModel;
+	}
+	getCurrentModel() {
+		return this.currentModel;
+	}
+	get(id) {
+		return this.getFromJSON(id, this.getCurrentModel());
+	}
+	getFromJSON(id, json) {
+		let ids = id.split('.');
+		let count = ids.length - 1;
+		return ids.reduce((object, id, index) => {
+			let value = object[id];
+			return (index === count) ? value : ((typeof value === 'undefined' || value == null) ? {} : value);
+		}, json);
+	}
+	set(id, value) {
+		let old = this.get(id);
+		if (typeof old === typeof value && old == value) {
+			// do nothing
+			return;
+		}
+		this.setIntoJSON(id, value, this.getCurrentModel());
+		this.firePostChangeEvent(id, old, value);
+		return this;
+	}
+	setIntoJSON(id, value, json) {
+		let ids = id.split('.');
+		let count = ids.length - 1;
+		ids.reduce((object, id, index) => {
+			if (index === count) {
+				// last one
+				object[id] = value;
+				return value;
+			} else {
+				let val = object[id];
+				object[id] = (typeof val === 'undefined' || val == null) ? {} : val;
+				return object[id];
+			}
+		}, json);
+		return this;
+	}
 }
 
-export {Model}
+export {Model, underscore, deep}

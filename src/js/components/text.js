@@ -1,5 +1,10 @@
-import base from './component-base'
+import * as CDK from './n-component'
 
-class NText extends React.Component {
+class NText extends CDK.NComponent {
+	render() {
+		
+	}
 }
 
+export {NText}
+export * from './n-component'
