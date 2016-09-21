@@ -1,9 +1,6 @@
 import * as CDK from './n-component'
 
-let ReactDOM = CDK.ReactDOM;
-let $ = CDK.$;
-let classnames = CDK.classnames;
-let Envs = CDK.Envs;
+let {React, ReactDOM, $, classnames, Envs} = CDK;
 
 class NText extends CDK.NComponent {
 	// renderer
@@ -57,7 +54,7 @@ class NText extends CDK.NComponent {
 	}
 
 	// data event
-	onComponentChanged(evt) {
+	onComponentChanged = (evt) => {
 		// compare the formatted text
 		let newValue = this.getComponentText();
 		let oldValue = this.getValueFromModel();
@@ -67,11 +64,11 @@ class NText extends CDK.NComponent {
 	}
 
 	// dom event
-	onComponentKeyPressed(evt) {
+	onComponentKeyPressed = (evt) => {
 		this.onComponentChanged(evt);
 		this.fireEventMonitor(evt, 'keyPress');
 	}
-	onComponentFocused(evt) {
+	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();
 
 		// when focus, show the unformatted value
@@ -83,7 +80,7 @@ class NText extends CDK.NComponent {
 
 		this.fireEventMonitor(evt, 'focus');
 	}
-	onComponentBlurred(evt) {
+	onComponentBlurred = (evt) => {
 		this.onComponentFocusChanged();
 
 		let text = this.getComponentText();

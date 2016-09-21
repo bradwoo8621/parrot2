@@ -4,7 +4,8 @@ require("babel-register")({
 		"es2015"
 	],
 	"plugins": [
-		"transform-react-jsx"
+		"transform-react-jsx",
+		"transform-class-properties"
 	]
 });
 
@@ -31,7 +32,7 @@ describe('NComponent', function() {
 		});
 
 		it('--Orientation can be horizontal & default view mode is false', function() {
-			comp = new NComponent({
+			let comp = new NComponent({
 				orientation: 'h'
 			});
 			assert.equal(comp.getOrientation(), 'h');
@@ -39,7 +40,7 @@ describe('NComponent', function() {
 		});
 
 		it('--View mode can be true', function() {
-			comp = new NComponent({
+			let comp = new NComponent({
 				viewMode: true
 			});
 			assert.equal(comp.isViewMode(), true);

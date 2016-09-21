@@ -9,9 +9,7 @@ import {Model} from '../model/model'
 let $ = jQuery;
 
 class NComponent extends React.Component {
-	getInitialState() {
-		return {};
-	}
+	state = {}
 
 	// returns additional model only if additional model designated and @isUsingPrimaryModel is false
 	getModel() {
@@ -60,6 +58,7 @@ class NComponent extends React.Component {
 			pre: this.preComponentWillUnmount,
 			post: this.postComponentWillUnmount
 		});
+		delete this.functionList;
 	}
 	componentDidMount() {
 		this.installUnderlyingMonitors({
@@ -72,11 +71,13 @@ class NComponent extends React.Component {
 	installUnderlyingMonitors() {
 		this.pointcutPreExecutor.apply(this, arguments);
 		this.addPostChangeListener(this.onModelChanged);
+		this.detectMonitors(['enabled', 'visible'], this.forceUpdate);
 		this.pointcutPostExecutor.apply(this, arguments);
 	}
 	uninstallUnderlyingMonitors() {
 		this.pointcutPreExecutor.apply(this, arguments);
 		this.removePostChangeListener(this.onModelChanged);
+		this.undetectMonitors(['enabled', 'visible'], this.forceUpdate);
 		this.pointcutPostExecutor.apply(this, arguments);
 	}
 	// life cycle pointcut executor
@@ -118,16 +119,16 @@ class NComponent extends React.Component {
 	}
 
 	// func is the add/remove method for listener on model object
-	addModelListener(listener, func) {
+	addModelListener(listener, funcOnModel) {
 		if (listener) {
-			func.call(this.getModel(), this.getDataId(), listener);
+			funcOnModel.call(this.getModel(), this.getDataId(), listener);
 		}
 		return this;
 	}
-	onModelChanged(evt) {
+	onModelChanged = (evt) => {
 		this.forceUpdate();
 	}
-	onModelValidated(evt) {
+	onModelValidated = (evt) => {
 		this.forceUpdate();
 	}
 
@@ -209,12 +210,15 @@ class NComponent extends React.Component {
 			return list[index + 1];
 		}
 	}
-	invokeMonitorRule(optionKey) {
+	invokeMonitorRule(key, defaultValue) {
 		let def = this.getLayoutOptionValue(key);
+		if (this.isNoValueAssigned(def)) {
+			return defaultValue;
+		}
 		if (def.rule) {
 			return def.rule.call(this);
 		} else if (def.depends) {
-			return true;
+			return defaultValue;
 		} else if (typeof def === 'function') {
 			return def.call(this);
 		} else {
@@ -311,10 +315,10 @@ class NComponent extends React.Component {
 		return (typeof value === 'undefined') || value == null;
 	}
 	isVisible() {
-		return this.invokeMonitorRule('visible');
+		return this.invokeMonitorRule('visible', true);
 	}
 	isEnabled() {
-		return this.invokeMonitorRule('enabled');	
+		return this.invokeMonitorRule('enabled', true);
 	}
 	renderNormalLine() {
 		return <hr className={classnames('normal-line', this.getStyle('normal-line'))} 
