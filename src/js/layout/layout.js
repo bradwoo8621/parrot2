@@ -20,12 +20,16 @@ class Layout {
 			return this.buildDefaultType();
 		}
 	}
-	buildDefaultType(type = 'Text') {
+	getTypeAsString() {
+		return this.getType().type;
+	}
+	buildDefaultType(type) {
+		type = type ? type : 'Text';
 		return {
 			type: type,
-			label: true,
-			error: true,
-			popover: true
+			label: typeof type.label !== 'undefined' ? type.label : true,
+			error: typeof type.error !== 'undefined' ? type.error : true,
+			popover: typeof type.popover !== 'undefined' ? type.popover : Envs.COMPONENT_ERROR_POPOVER
 		};
 	}
 
@@ -68,6 +72,13 @@ class Layout {
 
 	getAdditionalModel() {
 		return this.getOptionValue('additionalModel');
+	}
+
+	getEventMonitors() {
+		return this.layout.evt ? this.layout.evt : {};
+	}
+	getEventMonitor(key) {
+		return this.getEventMonitors()[key];
 	}
 }
 

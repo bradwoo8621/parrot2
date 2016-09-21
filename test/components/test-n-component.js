@@ -8,18 +8,17 @@ require("babel-register")({
 	]
 });
 
-const {Model} = require('../../src/js/model/model');
-const {Layout} = require('../../src/js/layout/layout');
 const SDK = require('../../src/js/components/n-component');
+let {Model, Layout, NComponent} = SDK;
 
 const assert = require('assert');
 
-describe('BaseComponent', function() {
+describe('NComponent', function() {
 	describe('#constructor', function() {
 		it('--4 properties can be passed', function() {
 			let model = new Model({});
 			let layout = new Layout('test', {});
-			let comp = new SDK.BaseComponent({
+			let comp = new NComponent({
 				model: model,
 				layout: layout,
 				orientation: 'v',
@@ -32,7 +31,7 @@ describe('BaseComponent', function() {
 		});
 
 		it('--Orientation can be horizontal & default view mode is false', function() {
-			comp = new SDK.BaseComponent({
+			comp = new NComponent({
 				orientation: 'h'
 			});
 			assert.equal(comp.getOrientation(), 'h');
@@ -40,20 +39,18 @@ describe('BaseComponent', function() {
 		});
 
 		it('--View mode can be true', function() {
-			comp = new SDK.BaseComponent({
+			comp = new NComponent({
 				viewMode: true
 			});
 			assert.equal(comp.isViewMode(), true);
 		});
 	});
-});
-describe('RichLayoutComponent', function() {
-	let model = new Model({});
 	describe('#getId', function() {
 		it('--Id getter & default data id is id', function() {
+			let model = new Model({});
 			let layout = new Layout('test-id', {
 			});
-			let comp = new SDK.RichLayoutComponent({
+			let comp = new NComponent({
 				model: model,
 				layout: layout
 			});
@@ -63,10 +60,11 @@ describe('RichLayoutComponent', function() {
 	});
 	describe('#getDataId', function() {
 		it('--Different data id set', function() {
+			let model = new Model({});
 			let layout = new Layout('test-id', {
 				dataId: 'test-data-id'
 			});
-			let comp = new SDK.RichLayoutComponent({
+			let comp = new NComponent({
 				model: model,
 				layout: layout
 			});
@@ -74,9 +72,6 @@ describe('RichLayoutComponent', function() {
 			assert.equal(comp.getDataId(), 'test-data-id');
 		});
 	});
-});
-
-describe('ModelObservedComponent', function() {
 	describe('#detectMonitors', function() {
 		it('--Should trigger handler, can be setup and tear down', function() {
 			let model = new Model({});
@@ -95,7 +90,7 @@ describe('ModelObservedComponent', function() {
 					usePrimaryModel: true
 				}
 			});
-			class AComp extends SDK.ModelObservedComponent {
+			class AComp extends NComponent {
 				enabledHandler() {
 					newTestPropValue = this.getModel().get('testProp');
 				}
@@ -123,6 +118,42 @@ describe('ModelObservedComponent', function() {
 			model2.set('testProp2', 'test-value2');
 			assert.equal(newTestPropValue, 'test-value1');
 			assert.equal(newTestPropValue2, 'test-value2');
+		});
+	});
+	describe('#eventMonitors', function() {
+		it('--Should have event monitors', function() {
+			let model = new Model({});
+			let onFocus = function() {};
+			let onBlur = function() {};
+			let onMouseOver = function() {};
+			let monitors = {
+				focus: onFocus,
+				blur: onBlur,
+				mouseOver: onMouseOver
+			};
+			let layout = new Layout('test-id', {
+				dataId: 'test-data-id',
+				evt: monitors
+			});
+			let comp = new NComponent({
+				model: model,
+				layout: layout
+			});
+
+			assert.equal(comp.getEventMonitors(), monitors);
+			assert.equal(comp.getEventMonitor('focus'), onFocus);
+			assert.equal(comp.getEventMonitor('blur'), onBlur);
+			assert.equal(comp.getEventMonitor('mouseOver'), onMouseOver);
+
+			let monitorsOf = comp.getEventMonitorsOf('focus', 'blur');
+			assert.equal(Object.keys(monitorsOf).length, 2);
+			assert.equal(monitorsOf.focus, onFocus);
+			assert.equal(monitorsOf.blur, onBlur);
+
+			let monitorsBut = comp.getEventMonitorsBut('blur');
+			assert.equal(Object.keys(monitorsBut).length, 2);
+			assert.equal(monitorsBut.focus, onFocus);
+			assert.equal(monitorsBut.mouseOver, onMouseOver);
 		});
 	});
 });

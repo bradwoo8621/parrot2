@@ -64,6 +64,7 @@ class Model {
 		}, {});
 		this.baseModel = initDataJSON;
 		this.currentModel = deep.deepClone(initDataJSON);
+		this.changed = false;
 	}
 	getListenersByTimeAndType(time, type) {
 		return this.listeners[type][time];
@@ -204,6 +205,7 @@ class Model {
 			return;
 		}
 		this.setIntoJSON(id, value, this.getCurrentModel());
+		this.setChanged(true);
 		this.firePostChangeEvent(id, old, value);
 		return this;
 	}
@@ -222,6 +224,14 @@ class Model {
 			}
 		}, json);
 		return this;
+	}
+
+	isChanged() {
+		return this.changed;
+	}
+
+	setChanged(changed) {
+		this.changed = changed;
 	}
 }
 
