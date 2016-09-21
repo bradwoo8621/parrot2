@@ -1,29 +1,50 @@
 let path = require('path');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+let extractSASS = new ExtractTextPlugin('[name].css');
 
 module.exports = {
 	entry: {
-		'n-text/n-text': './html-test/n-text/test'
+		'n-text/n-text': './html-test/n-text/test',
+
+		// sass
+		'style-default': './src/sass/bundle-default.scss'
 	},
 	output: {
-        path: path.join(__dirname, "html-test"),
-        filename: "[name].entry.js"
+        path: path.join(__dirname, 'html-test'),
+        filename: '[name].entry.js'
     },
     // devtool: 'source-map',
 	module: {
-		loaders: [
-			{
-				test: /\.js$/,
-				include: [
-					path.join(__dirname, 'src'),
-					path.join(__dirname, 'html-test')
-				],
-				loader: 'babel-loader',
-				query: {
-					presets: ['es2015', 'react'],
-					plugins: ['transform-react-jsx','transform-class-properties']
-				}
+		loaders: [{
+			test: /\.js$/,
+			include: [
+				path.join(__dirname, 'src'),
+				path.join(__dirname, 'html-test')
+			],
+			loader: 'babel-loader',
+			query: {
+				presets: ['es2015', 'react'],
+				plugins: ['transform-react-jsx','transform-class-properties']
 			}
-		]
+		}, {
+			test: /\.scss$/i, 
+			loader: extractSASS.extract(['css','sass']) 
+		}]
 	},
+	plugins: [
+    	extractSASS
+    ],
+    externals: {
+        // require('jquery') is external and available
+        //  on the global var jQuery
+        'jquery': 'jQuery',
+        'lodash': '_',
+
+        'react': 'React',
+        'react-dom': 'ReactDOM',
+
+        'classnames': 'classNames'
+    },
 	debug: true
 }

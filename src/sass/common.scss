@@ -1,0 +1,13 @@
+html {
+	font-size: $html-font-size;
+}
+body {
+	margin: $margin-0;
+	padding: $pad-0;
+	font-size: $font-size;
+	color: $color-font;
+	position: relative;
+	font-family: $font-family;
+    line-height: $line-height;
+    background-color: $container-bg-color;
+}

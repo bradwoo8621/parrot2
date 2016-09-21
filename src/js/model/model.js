@@ -1,5 +1,4 @@
-import underscore from 'underscore'
-import deep from 'underscore.deep'
+import lodash from 'lodash'
 
 class ListenerSupport {
 	constructor(id) {
@@ -63,7 +62,7 @@ class Model {
 			return listeners;
 		}, {});
 		this.baseModel = initDataJSON;
-		this.currentModel = deep.deepClone(initDataJSON);
+		this.currentModel = lodash.cloneDeep(initDataJSON);
 		this.changed = false;
 	}
 	getListenersByTimeAndType(time, type) {
@@ -235,4 +234,4 @@ class Model {
 	}
 }
 
-export {Model, underscore, deep}
+export {Model, lodash}
