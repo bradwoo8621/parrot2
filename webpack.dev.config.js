@@ -7,14 +7,15 @@ let extractSASS = new ExtractTextPlugin('[name].css');
 
 module.exports = {
 	entry: {
-		'n-text/n-text': './html-test/n-text/test',
+		'n-text': './html-test/n-text/test.js',
+		'n-icon': './html-test/n-icon/test.js',
 
 		// sass
 		'style-default': './src/sass/bundle-default.scss'
 	},
 	output: {
         path: path.join(__dirname, 'html-test'),
-        filename: '[name].entry.js'
+        filename: '[name]/entry.js'
     },
     // devtool: 'source-map',
 	module: {

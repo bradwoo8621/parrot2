@@ -43,27 +43,27 @@ class NComponent extends React.Component {
 	// lifecycle
 	componentWillUpdate(nextProps, nextState) {
 		this.uninstallUnderlyingMonitors({
-			pre: this.preComponentWillUpdate,
-			post: this.postComponentWillUpdate
+			pre: this.preWillUpdate,
+			post: this.postWillUpdate
 		}, nextProps, nextState);
 	}
 	componentDidUpdate(prevProps, prevState) {
 		this.installUnderlyingMonitors({
-			pre: this.preComponentDidUpdate,
-			post: this.postComponentDidUpdate
+			pre: this.preDidUpdate,
+			post: this.postDidUpdate
 		}, prevProps, prevState);
 	}
 	componentWillUnmount() {
 		this.uninstallUnderlyingMonitors({
-			pre: this.preComponentWillUnmount,
-			post: this.postComponentWillUnmount
+			pre: this.preWillUnmount,
+			post: this.postWillUnmount
 		});
 		delete this.functionList;
 	}
 	componentDidMount() {
 		this.installUnderlyingMonitors({
-			pre: this.preComponentDidMount,
-			post: this.postComponentDidMmount
+			pre: this.preDidMount,
+			post: this.postDidMount
 		});
 	}
 
@@ -188,6 +188,7 @@ class NComponent extends React.Component {
 	}
 	manageMonitors(optionsKeys, handler, manageFunction) {
 		optionsKeys.forEach(key => {
+			// monitor must be bindToThis
 			manageFunction.call(this, key, this.bindToThis(handler));
 		});
 		return this;
@@ -301,7 +302,6 @@ class NComponent extends React.Component {
 		return this.wrapOptionValue(value)
 	}
 
-	// internal methods
 	wrapOptionValue(value) {
 		if (typeof value === 'function') {
 			// let context to be component itself
@@ -311,6 +311,9 @@ class NComponent extends React.Component {
 			return value;
 		}
 	}
+	wrapToArray(value) {
+		return Array.isArray(value) ? value : [value];
+	}
 	isNoValueAssigned(value) {
 		return (typeof value === 'undefined') || value == null;
 	}
@@ -319,6 +322,9 @@ class NComponent extends React.Component {
 	}
 	isEnabled() {
 		return this.invokeMonitorRule('enabled', true);
+	}
+	isClickable() {
+		return this.getEventMonitor('click');
 	}
 	renderNormalLine() {
 		return <hr className={classnames('n-normal-line', this.getStyle('normal-line'))} 
@@ -349,7 +355,10 @@ class NComponent extends React.Component {
 			return {};
 		}
 		return needList.reduce((set, key) => {
-			set[key] = monitors[key];
+			let monitor = monitors[key];
+			if (monitor) {
+				set[key] = monitors[key];
+			}
 			return set;
 		}, {});
 	}
@@ -363,15 +372,21 @@ class NComponent extends React.Component {
 		}
 		return Object.keys(monitors).reduce((set, key) => {
 			if (filterList.indexOf(key) == -1) {
-				set[key] = monitors[key];
+			let monitor = monitors[key];
+				if (monitor) {
+					set[key] = monitors[key];
+				}
 			}
 			return set;
 		}, {});
 	}
+	// monitors will bind to this and prepared for add to dom node
 	wrapMonitorsToDOM(monitors) {
 		return Object.keys(monitors).reduce((set, key) => {
 			let newKey = key.charAt(0).toUpperCase() + key.slice(1);
-			set[`on${newKey}`] = monitors[key];
+			// bindToThis is important
+			// after this, the function context always be react component itself
+			set[`on${newKey}`] = this.bindToThis(monitors[key]);
 			return set;
 		}, {});
 	}

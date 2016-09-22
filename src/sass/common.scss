@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 html {
 	font-size: $html-font-size;
 }
@@ -22,17 +26,39 @@ input[type=url] {
 	margin: $margin-0;
 	border: $border-0;
 	outline: none;
+	font-family: $font-family;
 	font-size: $font-size;
+	color: $color-font;
+	display: block;
+}
+
+.text-right {
+	input {
+		text-align: right;
+	}
 }
 
 .n-control {
 	line-height: $line-height;
 }
 
+.n-input-addon {
+	display: table-cell;
+    position: relative;
+    width: 1%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
 .n-normal-line {
 	position: absolute;
     border: $border-0;
     border-top: $border-1;
+    left: 0;
     bottom: 0;
     width: 100%;
     margin: $margin-0;
@@ -43,6 +69,7 @@ input[type=url] {
 	position: absolute;
     border: $border-0;
     border-top: 2px solid $color-primary;
+    left: 0;
     bottom: 0;
     width: 100%;
     margin: $margin-0;

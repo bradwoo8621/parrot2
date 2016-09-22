@@ -34,6 +34,8 @@ class Envs {
 		this.renderers = {};
 
 		this.COMPONENT_TYPES = {
+			ICON: {type: 'icon', label: false, popover: false, error: false},
+			STACK_ICON: {type: 'stack-icon', label: false, popover: false, error: false},
 			LABEL: {type: 'label'},
 			TEXT: {type: 'text'}
 		};
@@ -87,6 +89,22 @@ class Envs {
 		this.props.numberParser = value;
 	}
 
+	get PERCENTAGE_FORMATTER() {
+		return this.props.percentageFormatter;
+	}
+
+	set PERCENTAGE_FORMATTER(value) {
+		this.props.PERCENTAGE_FORMATTER = value;
+	}
+
+	get PERCENTAGE_PARSER() {
+		return this.props.percentageParser;
+	}
+
+	set PERCENTAGE_PARSER(value) {
+		this.props.percentageParser = value;
+	}
+
 	getRenderer(type) {
 		return this.renderers[type];
 	}
@@ -109,7 +127,11 @@ class Envs {
 		}
 	}
 	render(renderer, options) {
-		return renderer.call(this, options);
+		if (typeof renderer === 'string') {
+			return this.getRenderer(renderer).call(this, options);
+		} else {
+			return renderer.call(this, options);
+		}
 	}
 }
 

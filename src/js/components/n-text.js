@@ -1,9 +1,60 @@
-import * as CDK from './n-component'
+import {React, ReactDOM, $, classnames, Envs, NComponent, Layout} from './n-component'
+import {NIcon, NStackIcon} from './n-icon'
 
-let {React, ReactDOM, $, classnames, Envs} = CDK;
+class NText extends NComponent {
+	// lifecycle
+	postWillUpdate() {
+		this.getComponent().off('change', this.onComponentChanged);
+	}
+	postDidUpdate() {
+		let value = this.getValueFromModel();
+		if (!$(ReactDOM.findDOMNode(this.refs.focusLine)).hasClass('focus')) {
+			value = this.formatValue(value);
+		}
+		if (this.getComponentText() != value) {
+			this.getComponent().val(value);
+		}
+		this.getComponent().on('change', this.onComponentChanged);
+	}
+	postDidMount() {
+		this.getComponent().val(this.formatValue(this.getValueFromModel()));
+		this.getComponent().on('change', this.onComponentChanged);
+	}
+	postWillUnmount() {
+		this.getComponent().off('change', this.onComponentChanged);
+	}
 
-class NText extends CDK.NComponent {
 	// renderer
+	renderAddon(addon, addonIndex) {
+		// must and only have one key
+		let id = Object.keys(addon)[0];
+		let layout = new Layout(id, addon[id]);
+		return Envs.render(layout.getTypeAsString(), {
+			// primary model pass to addon
+			model: this.getPrimaryModel(),
+			layout: layout,
+			orientation: this.getOrientation(),
+			viewMode: this.isViewMode(),
+			key: addonIndex
+		});
+	}
+	renderAddons(addons) {
+		if (!addons) {
+			return null;
+		}
+
+		return (<div className='n-input-addon'>
+			{this.wrapToArray(addons).map((addon, addonIndex) => {
+				return this.renderAddon(addon, addonIndex);
+			})}
+		</div>);
+	}
+	renderLeftAddons() {
+		return this.renderAddons(this.getLeftAddons());
+	}
+	renderRightAddons() {
+		return this.renderAddons(this.getRightAddons());
+	}
 	renderText() {
 		return (<input type={this.getInputKind()}
 		               className='n-control'
@@ -23,11 +74,31 @@ class NText extends CDK.NComponent {
 			return this.renderInViewMode();
 		}
 
-		return (<div className={this.getComponentStyle()}>
+		return (<div className={classnames(this.getComponentStyle(), {'has-addon': this.hasAddon()})}>
+			{this.renderLeftAddons()}
 			{this.renderText()}
+			{this.renderRightAddons()}
 			{this.renderNormalLine()}
 			{this.renderFocusLine()}
 		</div>);
+	}
+
+	getValueFromModel() {
+		var value = super.getValueFromModel();
+		var transformer = this.getTextTransformer();
+		if (transformer && transformer.display) {
+			return transformer.display.call(this, value);
+		} else {
+			return value;
+		}
+	}
+	setValueToModel(value) {
+		var transformer = this.getTextTransformer();
+		if (transformer && transformer.model) {
+			super.setValueToModel(transformer.model.call(this, value));
+		} else {
+			super.setValueToModel(value);
+		}
 	}
 
 	getComponent() {
@@ -47,8 +118,20 @@ class NText extends CDK.NComponent {
 	getTextFormatter() {
 		return this.getLayoutOptionValue('formatter');
 	}
+	getTextTransformer() {
+		return this.getLayoutOptionValue('transformer');
+	}
 	isAutoTrim() {
 		return this.getLayoutOptionValue('trim', false);
+	}
+	getLeftAddons() {
+		return this.getLayoutOptionValue('leftAddons');
+	}
+	getRightAddons() {
+		return this.getLayoutOptionValue('rightAddons');
+	}
+	hasAddon() {
+		return this.getLeftAddons() || this.getRightAddons();
 	}
 	getComponentText() {
 		let value = this.getComponent().val();
@@ -85,13 +168,14 @@ class NText extends CDK.NComponent {
 	onComponentBlurred = (evt) => {
 		this.onComponentFocusChanged();
 
-		let text = this.getComponentText();
+		let text = this.formatValue(this.getComponentText());
 		if (text) {
-			let value = this.getValueFromModel();
+			let value = this.formatValue(this.getValueFromModel());
 			if (text != value) {
+				// this moment, value of component is not formatted
 				this.setValueToModel(text);
-				this.getComponent().val(this.formatValueFromText(text));
 			}
+			this.getComponent().val(this.formatValue(text));
 		} else {
 			this.setValueToModel(null);
 		}
@@ -99,7 +183,7 @@ class NText extends CDK.NComponent {
 	}
 
 	// others
-	formatValueFromText(value) {
+	formatValue(value) {
 		let formatter = this.getTextFormatter();
 		if (formatter && formatter.display) {
 			return formatter.display.call(this, value);
@@ -107,7 +191,7 @@ class NText extends CDK.NComponent {
 			return value;
 		}
 	}
-	parseTextToValue(text) {
+	parseText(text) {
 		let formatter = this.getTextFormatter();
 		if (formatter && formatter.model) {
 			return formatter.model.call(this, text);
@@ -132,5 +216,5 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.TEXT.type, function (options) {
 	return <NText {...options} />;
 });
 
-export {NText}
+export {NText, NIcon, NStackIcon}
 export * from './n-component'
