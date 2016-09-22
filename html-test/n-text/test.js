@@ -14,5 +14,13 @@ $(function() {
 		}
 	});
 
-	ReactDOM.render(<NText model={model} layout={layout}/>, document.getElementById('main'));
+
+	let panel = (<div className='n-top-container'>
+		<div className='n-row'>
+			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
+				<NText model={model} layout={layout}/>
+			</div>
+		</div>
+	</div>);
+	ReactDOM.render(panel, document.getElementById('main'));
 });

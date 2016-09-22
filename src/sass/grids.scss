@@ -1,0 +1,110 @@
+.n-top-container {
+	position: relative;
+	width: calc(100% - 30px);
+	margin: auto;
+}
+
+.n-row {
+	margin-left: $margin--15;
+	margin-right: $margin--15;
+	position: relative;
+	&:before {
+		display: table;
+		content: '';
+	}
+	&:after {
+		display: table;
+		content: '';
+		clear: both;
+	}
+}
+
+@for $index from 1 through 20 {
+	.n-col-xs-#{$index},
+	.n-col-sm-#{$index},
+	.n-col-md-#{$index},
+	.n-col-lg-#{$index},
+	.n-col-xl-#{$index},
+	.n-col-2xl-#{$index},
+	.n-col-3xl-#{$index},
+	.n-col-4xl-#{$index} {
+		position: relative;
+		min-height: 1px;
+		padding-right: $pad-15;
+		padding-left: $pad-15;
+	}
+}
+
+@mixin no-standard-columns($column, $media-name) {
+	.n-row.n-row-#{$column}c {
+		@for $index from 1 through $column {
+			> .n-col-#{$media-name}-#{$index} {
+				width: percentage($index / 10);
+			}
+			> .n-col-#{$media-name}-offset-#{$index} {
+				margin-left: percentage($index / 10);
+			}
+			> .n-col-#{$media-name}-push-#{$index} {
+				left: percentage($index / 12);
+			}
+			> .n-col-#{$media-name}-pull-#{$index} {
+				right: percentage($index / 12);
+			}
+		}
+	}
+}
+
+@mixin grid($media, $media-name) {
+	@media#{$media} {
+		.n-col-#{$media-name}-1,
+		.n-col-#{$media-name}-2,
+		.n-col-#{$media-name}-3,
+		.n-col-#{$media-name}-4,
+		.n-col-#{$media-name}-5,
+		.n-col-#{$media-name}-6,
+		.n-col-#{$media-name}-7,
+		.n-col-#{$media-name}-8,
+		.n-col-#{$media-name}-9,
+		.n-col-#{$media-name}-10,
+		.n-col-#{$media-name}-11,
+		.n-col-#{$media-name}-12,
+		.n-col-#{$media-name}-13,
+		.n-col-#{$media-name}-14,
+		.n-col-#{$media-name}-15,
+		.n-col-#{$media-name}-16,
+		.n-col-#{$media-name}-17,
+		.n-col-#{$media-name}-18,
+		.n-col-#{$media-name}-19,
+		.n-col-#{$media-name}-20 {
+			float: left;
+		}
+		// standard 12 columns as bootstrap
+		@for $index from 1 through 12 {
+			.n-col-#{$media-name}-#{$index} {
+				width: percentage($index / 12);
+			}
+			.n-col-#{$media-name}-offset-#{$index} {
+				margin-left: percentage($index / 12);
+			}
+			.n-col-#{$media-name}-push-#{$index} {
+				left: percentage($index / 12);
+			}
+			.n-col-#{$media-name}-pull-#{$index} {
+				right: percentage($index / 12);
+			}
+		}
+
+		$columns-list: 10 16 20;
+		@for $column-index from 1 through 3 {
+			@include no-standard-columns(nth($columns-list, $column-index),
+						  $media-name);
+		}
+	}
+}
+
+$media-list: $media-xs $media-sm $media-md $media-lg $media-xl $media-2xl $media-3xl $media-4xl;
+$media-name-list: xs sm md lg xl 2xl 3xl 4xl;
+@for $media-index from 1 through 8 {
+	@include grid(nth($media-list, $media-index),
+				  nth($media-name-list, $media-index));
+}

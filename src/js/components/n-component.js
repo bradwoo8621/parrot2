@@ -321,15 +321,11 @@ class NComponent extends React.Component {
 		return this.invokeMonitorRule('enabled', true);
 	}
 	renderNormalLine() {
-		return <hr className={classnames('normal-line', this.getStyle('normal-line'))} 
+		return <hr className={classnames('n-normal-line', this.getStyle('normal-line'))} 
 				   ref='normalLine'/>;
 	}
-	/**
-	 * render focus bottom border
-	 * @returns {XML}
-	 */
 	renderFocusLine() {
-		return <hr className={classnames('focus-line', this.getStyle('focus-line'))}
+		return <hr className={classnames('n-focus-line', this.getStyle('focus-line'))}
 				   ref='focusLine'/>;
 	}
 	// only handle gain or lost

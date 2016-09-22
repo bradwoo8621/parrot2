@@ -6,7 +6,7 @@ class NText extends CDK.NComponent {
 	// renderer
 	renderText() {
 		return (<input type={this.getInputKind()}
-		               className='form-control'
+		               className='n-control'
 		               disabled={!this.isEnabled()}
 		               placeholder={this.getPlaceholder()}
 
@@ -25,6 +25,8 @@ class NText extends CDK.NComponent {
 
 		return (<div className={this.getComponentStyle()}>
 			{this.renderText()}
+			{this.renderNormalLine()}
+			{this.renderFocusLine()}
 		</div>);
 	}
 

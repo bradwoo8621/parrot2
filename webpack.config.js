@@ -1,5 +1,7 @@
 let path = require('path');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let autoprefixer = require('autoprefixer');
+var precss = require('precss');
 
 let extractSASS = new ExtractTextPlugin('[name].css');
 
@@ -29,8 +31,11 @@ module.exports = {
 			}
 		}, {
 			test: /\.scss$/i, 
-			loader: extractSASS.extract(['css','sass']) 
+			loader: extractSASS.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader']) 
 		}]
+	},
+    postcss: function() {
+		return [autoprefixer, precss];
 	},
 	plugins: [
     	extractSASS

@@ -1,8 +1,41 @@
+// media
+$media-xs-end:										767px;
+$media-sm-start:									768px;
+$media-sm-end:										991px;
+$media-md-start:									992px;
+$media-md-end:										1199px;
+$media-lg-start:									1200px;
+$media-lg-end:										1365px;
+$media-xl-start:									1366px;
+$media-xl-end:										1439px;
+$media-2xl-start:									1440px;
+$media-2xl-end:										1599px;
+$media-3xl-start:									1600px;
+$media-3xl-end:										1919px;
+$media-4xl-start:									1920px;
+
+$media-landscape:									(orientation : landscape);
+$media-portrait:									(orientation : portrait);
+$media-xs:											(max-width: #{$media-xs-end});
+$media-xs-landscape:								#{$media-xs} and #{$media-landscape};
+$media-xs-portrait:									#{$media-xs} and #{$media-portrait};
+$media-sm:											(min-width: #{$media-sm-start});
+$media-sm-landscape:								#{$media-sm} and #{$media-landscape};
+$media-sm-portrait:									#{$media-sm} and #{$media-portrait};
+$media-md:											(min-width: #{$media-md-start});
+$media-md-landscape:								#{$media-md} and #{$media-landscape};
+$media-md-portrait:									#{$media-md} and #{$media-portrait};
+$media-lg:											(min-width: #{$media-lg-start});
+$media-xl:											(min-width: #{$media-xl-start});
+$media-2xl:											(min-width: #{$media-2xl-start});
+$media-3xl:											(min-width: #{$media-3xl-start});
+$media-4xl:											(min-width: #{$media-4xl-start});
+
 // font
 $html-font-size:									100px;
 $font-size:											0.14rem;
 $font-family:										'Helvetica Neue', Helvetica, 'Microsoft YaHei', Arial, sans-serif;
-$line-height:										0.2rem;
+$line-height:										0.3rem;
 
 // color
 $color-primary:										#1E88E5;
@@ -11,8 +44,12 @@ $color-warning:										#FB8C00;
 $color-danger:										#e53935;
 $color-info:										#C0CA33;
 $color-font:										#757575;
-$color-border:										#546E7A;
+$color-border:										#E0E0E0;
 $container-bg-color:								#fff;
+
+// border
+$border-0:											0;
+$border-1:											1px solid $color-border;
 
 // margin
 $margin-0:											0;
