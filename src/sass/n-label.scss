@@ -1,0 +1,21 @@
+.n-label {
+	position: relative;
+	display: block;
+	border-collapse:collapse;
+	outline: none;
+	&.has-addon {
+		display: inline-table;
+		vertical-align: middle;
+		.n-label-text {
+			display: table-cell;
+			width: auto;
+		}
+	}
+	.n-label-text {
+		display: block;
+	}
+	.n-normal-line,
+	.n-focus-line {
+		display: none;
+	}
+}

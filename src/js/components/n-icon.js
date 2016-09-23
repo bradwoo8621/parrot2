@@ -26,6 +26,7 @@ class NIcon extends NComponent {
 	}
 	render() {
 		return (<i className={prefixFA(this.getRenderedClassName())}
+				   key='me'
 				   {...this.wrapMonitorsToDOM(this.getEventMonitorsOf('click'))} />);
 	}
 	// style
@@ -58,6 +59,7 @@ class NIcon extends NComponent {
 class NStackIcon extends NComponent {
 	render() {
 		return (<span className={prefixFA(this.getRenderedClassName())}
+					  key='me'
 					  {...this.wrapMonitorsToDOM(this.getEventMonitorsOf('click'))} >
 			<i className={prefixFA(classnames('!fa stack-1x', this.getForeClassName()))} />
 			<i className={prefixFA(classnames('!fa stack-2x', this.getBackClassName()))} />
@@ -86,9 +88,12 @@ class NStackIcon extends NComponent {
 	}
 }
 
+Envs.COMPONENT_TYPES.ICON = {type: 'n-icon', label: false, popover: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.ICON.type, function (options) {
 	return <NIcon {...options} />;
 });
+
+Envs.COMPONENT_TYPES.STACK_ICON = {type: 'n-stack-icon', label: false, popover: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.STACK_ICON.type, function (options) {
 	return <NStackIcon {...options} />;
 });

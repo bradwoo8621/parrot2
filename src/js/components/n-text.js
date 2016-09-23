@@ -1,7 +1,6 @@
-import {React, ReactDOM, $, classnames, Envs, NComponent, Layout} from './n-component'
-import {NIcon, NStackIcon} from './n-icon'
+import {React, ReactDOM, $, classnames, Envs, NComponent, NAddonComponent} from './n-component'
 
-class NText extends NComponent {
+class NText extends NAddonComponent {
 	// lifecycle
 	postWillUpdate() {
 		this.getComponent().off('change', this.onComponentChanged);
@@ -24,37 +23,6 @@ class NText extends NComponent {
 		this.getComponent().off('change', this.onComponentChanged);
 	}
 
-	// renderer
-	renderAddon(addon, addonIndex) {
-		// must and only have one key
-		let id = Object.keys(addon)[0];
-		let layout = new Layout(id, addon[id]);
-		return Envs.render(layout.getTypeAsString(), {
-			// primary model pass to addon
-			model: this.getPrimaryModel(),
-			layout: layout,
-			orientation: this.getOrientation(),
-			viewMode: this.isViewMode(),
-			key: addonIndex
-		});
-	}
-	renderAddons(addons) {
-		if (!addons) {
-			return null;
-		}
-
-		return (<div className='n-input-addon'>
-			{this.wrapToArray(addons).map((addon, addonIndex) => {
-				return this.renderAddon(addon, addonIndex);
-			})}
-		</div>);
-	}
-	renderLeftAddons() {
-		return this.renderAddons(this.getLeftAddons());
-	}
-	renderRightAddons() {
-		return this.renderAddons(this.getRightAddons());
-	}
 	renderText() {
 		return (<input type={this.getInputKind()}
 		               className='n-control'
@@ -74,7 +42,8 @@ class NText extends NComponent {
 			return this.renderInViewMode();
 		}
 
-		return (<div className={classnames(this.getComponentStyle(), {'has-addon': this.hasAddon()})}>
+		return (<div className={classnames(this.getComponentStyle(), {'has-addon': this.hasAddon()})}
+					 key='me'>
 			{this.renderLeftAddons()}
 			{this.renderText()}
 			{this.renderRightAddons()}
@@ -123,15 +92,6 @@ class NText extends NComponent {
 	}
 	isAutoTrim() {
 		return this.getLayoutOptionValue('trim', false);
-	}
-	getLeftAddons() {
-		return this.getLayoutOptionValue('leftAddons');
-	}
-	getRightAddons() {
-		return this.getLayoutOptionValue('rightAddons');
-	}
-	hasAddon() {
-		return this.getLeftAddons() || this.getRightAddons();
 	}
 	getComponentText() {
 		let value = this.getComponent().val();
@@ -212,9 +172,10 @@ class NText extends NComponent {
 	}
 }
 
+Envs.COMPONENT_TYPES.TEXT = {type: 'n-text'};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TEXT.type, function (options) {
 	return <NText {...options} />;
 });
 
-export {NText, NIcon, NStackIcon}
+export {NText}
 export * from './n-component'

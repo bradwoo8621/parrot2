@@ -1,17 +1,35 @@
-$color-list: $color-primary $color-info $color-danger $color-success $color-warning;
-$color-name-list: primary info danger success warning;
-
-@mixin colors($color, $color-name) {
-	.text-#{$color-name} {
-		color: $color;
-	}
-	.bg-#{$color-name} {
-		background-color: $color;
-	}
+.text-success {
+	color: $color-success;
 }
-
-
-@for $color-index from 1 through 5 {
-	@include colors(nth($color-list, $color-index),
-				    nth($color-name-list, $color-index));
+.bg-success {
+	background-color: $color-success;
+	color: $color-reverse;
+}
+.text-info {
+	color: $color-info;
+}
+.bg-info {
+	background-color: $color-info;
+	color: $color-reverse;
+}
+.text-success {
+	color: $color-success;
+}
+.bg-success {
+	background-color: $color-success;
+	color: $color-reverse;
+}
+.text-danger {
+	color: $color-danger;
+}
+.bg-danger {
+	background-color: $color-danger;
+	color: $color-reverse;
+}
+.text-warning {
+	color: $color-warning;
+}
+.bg-warning {
+	background-color: $color-warning;
+	color: $color-reverse;
 }

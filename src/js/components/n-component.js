@@ -5,6 +5,7 @@ import classnames from 'classnames'
 
 import {Envs} from '../envs'
 import {Model} from '../model/model'
+import {Layout} from '../layout/layout'
 
 let $ = jQuery;
 
@@ -70,13 +71,13 @@ class NComponent extends React.Component {
 	// first parameter is a json of pointcut methods
 	installUnderlyingMonitors() {
 		this.pointcutPreExecutor.apply(this, arguments);
-		this.addPostChangeListener(this.onModelChanged);
+		this.addPostChangeListener(this.bindToThis(this.onModelChanged));
 		this.detectMonitors(['enabled', 'visible'], this.forceUpdate);
 		this.pointcutPostExecutor.apply(this, arguments);
 	}
 	uninstallUnderlyingMonitors() {
 		this.pointcutPreExecutor.apply(this, arguments);
-		this.removePostChangeListener(this.onModelChanged);
+		this.removePostChangeListener(this.bindToThis(this.onModelChanged));
 		this.undetectMonitors(['enabled', 'visible'], this.forceUpdate);
 		this.pointcutPostExecutor.apply(this, arguments);
 	}
@@ -125,10 +126,10 @@ class NComponent extends React.Component {
 		}
 		return this;
 	}
-	onModelChanged = (evt) => {
+	onModelChanged(evt) {
 		this.forceUpdate();
 	}
-	onModelValidated = (evt) => {
+	onModelValidated(evt) {
 		this.forceUpdate();
 	}
 
@@ -436,6 +437,49 @@ class NComponent extends React.Component {
 	}
 }
 
+class NAddonComponent extends NComponent {
+	// renderer
+	renderAddon(addon, addonIndex) {
+		// must and only have one key
+		let id = Object.keys(addon)[0];
+		let layout = new Layout(id, addon[id]);
+		return Envs.render(layout.getTypeAsString(), {
+			// primary model pass to addon
+			model: this.getPrimaryModel(),
+			layout: layout,
+			orientation: this.getOrientation(),
+			viewMode: this.isViewMode(),
+			key: addonIndex
+		});
+	}
+	renderAddons(addons) {
+		if (!addons) {
+			return null;
+		}
+
+		return (<div className='n-input-addon'>
+			{this.wrapToArray(addons).map((addon, addonIndex) => {
+				return this.renderAddon(addon, addonIndex);
+			})}
+		</div>);
+	}
+	renderLeftAddons() {
+		return this.renderAddons(this.getLeftAddons());
+	}
+	renderRightAddons() {
+		return this.renderAddons(this.getRightAddons());
+	}
+	getLeftAddons() {
+		return this.getLayoutOptionValue('leftAddons');
+	}
+	getRightAddons() {
+		return this.getLayoutOptionValue('rightAddons');
+	}
+	hasAddon() {
+		return this.getLeftAddons() || this.getRightAddons();
+	}
+}
+
 export * from '../model/model'
 export * from '../layout/layout'
 export {
@@ -447,5 +491,6 @@ export {
 
 	Envs,
 
-	NComponent
+	NComponent,
+	NAddonComponent
 }

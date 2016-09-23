@@ -33,12 +33,7 @@ class Envs {
 		this.viewModeRenderers = {};
 		this.renderers = {};
 
-		this.COMPONENT_TYPES = {
-			ICON: {type: 'icon', label: false, popover: false, error: false},
-			STACK_ICON: {type: 'stack-icon', label: false, popover: false, error: false},
-			LABEL: {type: 'label'},
-			TEXT: {type: 'text'}
-		};
+		this.COMPONENT_TYPES = {};
 	}
 	// global variables
 	get CELL_WIDTH() {

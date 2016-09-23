@@ -1,7 +1,7 @@
 .n-text {
 	position: relative;
 	display: block;
-	border-collapse: separate;
+	border-collapse:collapse;
 	&.has-addon {
 		display: inline-table;
 		vertical-align: middle;

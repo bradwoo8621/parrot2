@@ -1,9 +1,7 @@
-import * as SDK from '../../src/js/components/n-text'
+import * as SDK from '../../src/js/components/n-label'
 import {NIcon, NStackIcon} from '../../src/js/components/n-icon'
-import {NLabel} from '../../src/js/components/n-label'
 
-let {React, ReactDOM, Model, Layout, NText, $, Envs} = SDK;
-
+let {React, ReactDOM, Model, Layout, NLabel, $, Envs} = SDK;
 
 $(function() {
 	let model = new Model({
@@ -29,7 +27,6 @@ $(function() {
 	});
 	let layout = new Layout('name', {
 		comp: {
-			placeholder: 'Input here',
 			leftAddons: {
 				'name': {
 					comp: {
@@ -52,54 +49,46 @@ $(function() {
 					}
 				}
 			}
-		},
-		evt: {
-			keyUp: function(evt) {
-				// console.log(this, evt);
-			}
 		}
 	});
 
 	let layout2 = new Layout('amount', {
 		comp: {
-			placeholder: 'Amount',
 			formatter: {
-				display: Envs.NUMBER_FORMATTER,
-				model: Envs.NUMBER_PARSER
+				display: Envs.NUMBER_FORMATTER
 			}
 		},
 		styles: {comp: 'text-right'}
 	});
 	let layout3 = new Layout('rate', {
 		comp: {
-			placeholder: 'Ratio',
-			kind: 'number',
+			formatter: {
+				display: Envs.NUMBER_FORMATTER
+			},
 			transformer: {
-				display: Envs.PERCENTAGE_FORMATTER,
-				model: Envs.PERCENTAGE_PARSER
+				display: Envs.PERCENTAGE_FORMATTER
 			}
 		}
 	});
-	let layout4 = new Layout('rate', {
+	let layout4 = new Layout('label', {
+		label: 'This is a label',
 		comp: {
-			placeholder: 'Ratio',
-			transformer: {
-				display: Envs.PERCENTAGE_FORMATTER,
-				model: Envs.PERCENTAGE_PARSER
+			textFromModel: false
+		}
+	});
+	let layout5 = new Layout('amount', {
+		label: function() {
+			return 'This is a label ' + this.getValueFromModel();
+		},
+		comp: {
+			formatter: {
+				display: Envs.NUMBER_FORMATTER
 			},
-			rightAddons: {
-				'label': {
-					label: '%',
-					comp: {
-						type: Envs.COMPONENT_TYPES.LABEL,
-						textFromModel: false
-					},
-					evt: {
-						click: function() {
-							alert('Sign clicked');
-						}
-					}
-				}
+			textFromModel: false
+		},
+		evt: {
+			click: function() {
+				alert(`Amount is ${this.getValueFromModel()}`);
 			}
 		}
 	});
@@ -107,18 +96,23 @@ $(function() {
 	let panel = (<div className='n-top-container'>
 		<div className='n-row'>
 			<div className='n-col-sm-6 n-col-md-3'>
-				<NText model={model} layout={layout} />
+				<NLabel model={model} layout={layout} />
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
-				<NText model={model} layout={layout2} />
+				<NLabel model={model} layout={layout2} />
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
-				<NText model={model} layout={layout3} />
+				<NLabel model={model} layout={layout3} />
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
-				<NText model={model} layout={layout4} />
+				<NLabel model={model} layout={layout4} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NLabel model={model} layout={layout5} />
 			</div>
 		</div>
 	</div>);
 	ReactDOM.render(panel, document.getElementById('main'));
+
+	window.testModel = model;
 });

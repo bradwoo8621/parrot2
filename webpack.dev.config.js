@@ -7,8 +7,9 @@ let extractSASS = new ExtractTextPlugin('[name].css');
 
 module.exports = {
 	entry: {
-		'n-text': './html-test/n-text/test.js',
 		'n-icon': './html-test/n-icon/test.js',
+		'n-label': './html-test/n-label/test.js',
+		'n-text': './html-test/n-text/test.js',
 
 		// sass
 		'style-default': './src/sass/bundle-default.scss'
