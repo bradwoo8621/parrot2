@@ -31,24 +31,20 @@ $(function() {
 		comp: {
 			placeholder: 'Input here',
 			leftAddons: {
-				'name': {
-					comp: {
-						type: Envs.COMPONENT_TYPES.ICON,
-						icon: 'ban'
-					}
+				comp: {
+					type: Envs.COMPONENT_TYPES.ICON,
+					icon: 'ban'
 				}
 			},
 			rightAddons: {
-				'name': {
-					comp: {
-						type: Envs.COMPONENT_TYPES.STACK_ICON,
-						foreicon: 'camera',
-						backicon: 'ban !text-danger'
-					},
-					evt: {
-						click: function() {
-							alert('Ban camera clicked');
-						}
+				comp: {
+					type: Envs.COMPONENT_TYPES.STACK_ICON,
+					foreicon: 'camera',
+					backicon: 'ban !text-danger'
+				},
+				evt: {
+					click: function() {
+						alert('Ban camera clicked');
 					}
 				}
 			}
@@ -88,16 +84,14 @@ $(function() {
 				model: Envs.PERCENTAGE_PARSER
 			},
 			rightAddons: {
-				'label': {
-					label: '%',
-					comp: {
-						type: Envs.COMPONENT_TYPES.LABEL,
-						textFromModel: false
-					},
-					evt: {
-						click: function() {
-							alert('Sign clicked');
-						}
+				label: '%',
+				comp: {
+					type: Envs.COMPONENT_TYPES.LABEL,
+					textFromModel: false
+				},
+				evt: {
+					click: function() {
+						alert('Sign clicked');
 					}
 				}
 			}

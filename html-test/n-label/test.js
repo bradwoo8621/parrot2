@@ -28,24 +28,20 @@ $(function() {
 	let layout = new Layout('name', {
 		comp: {
 			leftAddons: {
-				'name': {
-					comp: {
-						type: Envs.COMPONENT_TYPES.ICON,
-						icon: 'ban'
-					}
+				comp: {
+					type: Envs.COMPONENT_TYPES.ICON,
+					icon: 'ban'
 				}
 			},
 			rightAddons: {
-				'name': {
-					comp: {
-						type: Envs.COMPONENT_TYPES.STACK_ICON,
-						foreicon: 'camera',
-						backicon: 'ban !text-danger'
-					},
-					evt: {
-						click: function() {
-							alert('Ban camera clicked');
-						}
+				comp: {
+					type: Envs.COMPONENT_TYPES.STACK_ICON,
+					foreicon: 'camera',
+					backicon: 'ban !text-danger'
+				},
+				evt: {
+					click: function() {
+						alert('Ban camera clicked');
 					}
 				}
 			}

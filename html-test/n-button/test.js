@@ -1,5 +1,6 @@
 import * as SDK from '../../src/js/components/n-button'
 import {NIcon, NStackIcon} from '../../src/js/components/n-icon'
+import {NLabel} from '../../src/js/components/n-label'
 
 let {React, ReactDOM, Model, Layout, NButton, $, Envs} = SDK;
 
@@ -98,6 +99,30 @@ $(function() {
 			}
 		}
 	});
+	let layoutL = new Layout('buttonA', {
+		label: 'Button A',
+		comp: {
+			style: 'link'
+		},
+		evt: {
+			click: function(evt) {
+				alert('link clicked')
+			}
+		}
+	});
+	let layoutDD = new Layout('buttonA', {
+		label: 'Button A',
+		comp: {
+			// style: 'link'
+			dropdownItems: [{
+				label: 'Dropdown A',
+				comp: {
+					type: Envs.COMPONENT_TYPES.LABEL,
+					textFromModel: false
+				}
+			}]
+		}
+	});
 	let panel = (<div className='n-top-container' style={{marginTop: 20}}>
 		<div className='n-row'>
 			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
@@ -117,6 +142,12 @@ $(function() {
 			</div>
 			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
 				<NButton model={model} layout={layoutD} />
+			</div>
+			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
+				<NButton model={model} layout={layoutL} />
+			</div>
+			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
+				<NButton model={model} layout={layoutDD} />
 			</div>
 		</div>
 	</div>);

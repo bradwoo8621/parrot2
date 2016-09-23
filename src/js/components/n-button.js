@@ -2,13 +2,7 @@ import {React, ReactDOM, $, classnames, Envs, NComponent, Layout} from './n-comp
 
 class NButton extends NComponent {
 	renderIcon(icon) {
-		let layout = new Layout(this.getDataId(), icon);
-		return Envs.render(layout.getTypeAsString(), {
-			model: this.getPrimaryModel(),
-			layout: layout,
-			orientation: this.getOrientation(),
-			viewMode: this.isViewMode()
-		});
+		return this.renderInternalComponent(icon);
 	}
 	renderLeftIcon() {
 		let icon = this.getLeftIcon();
@@ -30,12 +24,29 @@ class NButton extends NComponent {
 			{this.renderRightIcon()}
 		</button>);
 	}
+	renderDropdownItem(item, itemIndex) {
+		return (<li key={itemIndex}>
+			{this.renderInternalComponent(item)}
+		</li>);
+	}
+	renderDropdownItems() {
+		let items = this.getDropdownItems();
+		if (!items || items.length == 0) {
+			return null;
+		}
+		return (<ul className='n-button-dropdown text-left'>
+			{items.map((item, itemIndex) => {
+				return this.renderDropdownItem(item, itemIndex);
+			})}
+		</ul>);
+	}
 	render() {
 		let className = classnames(this.getComponentStyle(),
 								   this.getButtonStyle(),
 								   {'n-button-inline': this.isInline()});
 		return (<div className={className}>
 			{this.renderText()}
+			{this.renderDropdownItems()}
 		</div>);
 	}
 
@@ -60,6 +71,9 @@ class NButton extends NComponent {
 	}
 	getRightIcon() {
 		return this.getLayoutOptionValue('rightIcon');
+	}
+	getDropdownItems() {
+		return this.wrapToArray(this.getLayoutOptionValue('dropdownItems'));
 	}
 
 	onComponentClicked = (evt) => {

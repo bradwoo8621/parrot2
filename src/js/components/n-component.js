@@ -338,6 +338,9 @@ class NComponent extends React.Component {
 		}
 	}
 	wrapToArray(value) {
+		if (this.isNoValueAssigned(value)) {
+			return [];
+		}
 		return Array.isArray(value) ? value : [value];
 	}
 	isNoValueAssigned(value) {
@@ -429,7 +432,7 @@ class NComponent extends React.Component {
 	renderInViewMode() {
 		var renderer = Envs.getViewModeRenderer(this.getLayout().getTypeAsString());
 		if (renderer) {
-			return Envs.render.call(this, renderer, {
+			return Envs.render(renderer, {
 				model: this.getModel(),
 				layout: this.getLayout(),
 				orientation: this.getOrientation(),
@@ -439,7 +442,7 @@ class NComponent extends React.Component {
 		}
 
 		var label = this.getTextInViewMode();
-		var layout = new CDK.Layout(this.getId(), CDK.$.extend(true, {}, {
+		var layout = new Layout(this.getId(), $.extend(true, {}, {
 			comp: this.getLayout().getOptions(),
 			// view css
 			css: this.getStyle('view')
@@ -452,13 +455,28 @@ class NComponent extends React.Component {
 			}
 		}));
 
-		return Envs.render.call(this, renderer, {
+		return Envs.render(renderer, {
 			model: this.getModel(),
 			layout: layout,
 			orientation: this.getOrientation(),
 			viewMode: true,
-				ref: 'view-comp'
+			ref: 'view-comp'
 		});
+	}
+	renderInternalComponent(layoutJSON, additionalProps) {
+		let layout = new Layout(this.getDataId(), layoutJSON);
+		let props = {
+			model: this.getPrimaryModel(),
+			layout: layout,
+			orientation: this.getOrientation(),
+			viewMode: this.isViewMode()
+		};
+		if (additionalProps) {
+			Object.keys(additionalProps).forEach((key) => {
+				props[key] = additionalProps[key];
+			});
+		}
+		return Envs.render(layout.getTypeAsString(), props);
 	}
 }
 
@@ -466,14 +484,8 @@ class NAddonComponent extends NComponent {
 	// renderer
 	renderAddon(addon, addonIndex) {
 		// must and only have one key
-		let id = Object.keys(addon)[0];
-		let layout = new Layout(id, addon[id]);
-		return Envs.render(layout.getTypeAsString(), {
-			// primary model pass to addon
-			model: this.getPrimaryModel(),
-			layout: layout,
-			orientation: this.getOrientation(),
-			viewMode: this.isViewMode(),
+		let layout = new Layout(this.getDataId(), addon);
+		return this.renderInternalComponent(addon, {
 			key: addonIndex
 		});
 	}

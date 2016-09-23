@@ -40,9 +40,32 @@ textarea {
 	resize: vertical;
 }
 
-button::-moz-focus-inner {
-	border: 0;
-	padding: 0; 
+button, input[type=button], input[type=submit], input[type=reset] {
+	font-family: $font-family;
+	font-size: $font-size;
+	margin: $margin-0;
+	outline: none;
+	color: $color-font;
+	display: block;
+	&::-moz-focus-inner {
+		border: 0;
+		padding: 0; 
+	}
+}
+
+ul, ol, li {
+	margin: $margin-0;
+	padding: $pad-0;
+}
+li {
+	list-style: none;
+}
+
+.text-left {
+	text-align: left;
+	input {
+		text-align: left;
+	}
 }
 
 .text-right {
@@ -67,6 +90,10 @@ button::-moz-focus-inner {
 
 .clickable {
 	cursor: pointer;
+}
+
+.link {
+	color: $color-link;
 }
 
 .n-normal-line {

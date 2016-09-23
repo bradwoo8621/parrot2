@@ -41,12 +41,35 @@
 			margin: $margin-0 $margin-3;
 		}
 	}
+	.n-button-dropdown {
+		position: absolute;
+		right: 0;
+		top: calc(100% + 2px);
+		line-height: $line-height;
+		height: $line-height;
+		margin: $margin-0;
+		padding: $pad-0;
+		min-width: 200px;
+		border: $border-1;
+		border-radius: $border-radius;
+		box-shadow: 0 2px 4px rgba(0,0,0,.175);
+	}
 	&:hover {
 		border-color: darken($color-border, 10%);
 	}
 	&.n-button-default {
 		&:hover {
 			background-color: darken($container-bg-color, 10%);
+		}
+	}
+	&.n-button-link {
+		background-color: transparent;
+		border: $border-0;
+		.n-button-text {
+			color: $color-link;
+			&:hover {
+				text-decoration: underline;
+			}
 		}
 	}
 	@include n-button-style($color-primary, primary);
