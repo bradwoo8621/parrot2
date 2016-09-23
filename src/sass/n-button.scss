@@ -1,0 +1,61 @@
+@mixin n-button-style($color, $name) {
+	&.n-button-#{$name} {
+		background-color: $color;
+		color: $color-reverse;
+		border-color: darken($color, 10%);
+		&:hover {
+			border-color: darken($color, 10%);
+			background-color: darken($color, 5%);
+		}
+		&:focus, &.focus, &.focus:focus,
+		&:active, &.active, &.active:active,
+		&.focus:active, &.active:focus {
+			border-color: darken($color, 15%);
+			background-color: darken($color, 10);
+		}
+	}
+}
+
+.n-button {
+	position: relative;
+	display: block;
+	cursor: pointer;
+	background-color: $container-bg-color;
+	border-collapse:collapse;
+	border: $border-1;
+	border-radius: $border-radius;
+	text-align: center;
+	white-space: nowrap;
+	touch-action: manipulation;
+	user-select: none;
+	line-height: calc(#{$line-height} - 2px);
+	.n-button-text {
+		display: block;
+		outline: none;
+		background-color: transparent;
+    	border: 0;
+    	color: inherit;
+		padding: $pad-0 $pad-15;
+		width: 100%;
+		.n-stack-icon {
+			margin: $margin-0 $margin-3;
+		}
+	}
+	&:hover {
+		border-color: darken($color-border, 10%);
+	}
+	&.n-button-default {
+		&:hover {
+			background-color: darken($container-bg-color, 10%);
+		}
+	}
+	@include n-button-style($color-primary, primary);
+	@include n-button-style($color-success, success);
+	@include n-button-style($color-warning, warning);
+	@include n-button-style($color-info, info);
+	@include n-button-style($color-danger, danger);
+
+	&.n-button-inline {
+		display: inline-block;
+	}
+}

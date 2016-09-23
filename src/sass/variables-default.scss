@@ -38,21 +38,20 @@ $font-family:										'Helvetica Neue', Helvetica, 'Microsoft YaHei', Arial, sa
 $line-height:										0.3rem;
 
 // color
-$color-primary:										#1E88E5;
-$color-success:										#43A047;
-$color-warning:										#FB8C00;
-$color-danger:										#e53935;
-$color-info:										#C0CA33;
+$color-primary:										#428bca;
+$color-success:										#5cb85c;
+$color-warning:										#f0ad4e;
+$color-danger:										#d9534f;
+$color-info:										#5bc0de;
 $color-font:										#757575;
-$color-border:										#E0E0E0;
-$color-reverse:										#EEEEEE;
+$color-reverse:										#fff;
 $container-bg-color:								#fff;
+$color-border:										darken($container-bg-color, 10%);
 
 // border
 $border-radius:										2px;
 $border-0:											0;
 $border-1:											1px solid $color-border;
-$border-1-primary:									1px solid $color-primary;
 
 // margin
 $margin-0:											0;

@@ -31,10 +31,18 @@ textarea {
 	font-size: $font-size;
 	color: $color-font;
 	display: block;
+	&::-ms-clear {
+	    display: none;
+	}
 }
 
 textarea {
 	resize: vertical;
+}
+
+button::-moz-focus-inner {
+	border: 0;
+	padding: 0; 
 }
 
 .text-right {
@@ -46,6 +54,7 @@ textarea {
 
 .n-control {
 	line-height: $line-height;
+	height: $line-height;
 }
 
 .n-input-addon {
@@ -75,14 +84,14 @@ textarea {
 	position: absolute;
     border: $border-0;
     border-top: 2px solid $color-primary;
-    left: 0;
+    left: 50%;
     bottom: 0;
-    width: 100%;
+    width: 0;
     margin: $margin-0;
     padding: $pad-0;
-	transform: scaleX(0);
 	transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
     &.focus {
-		transform: scaleX(1);
+    	left: 0;
+    	width: 100%;
     }
 }

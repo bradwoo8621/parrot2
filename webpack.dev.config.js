@@ -7,6 +7,7 @@ let extractSASS = new ExtractTextPlugin('[name].css');
 
 module.exports = {
 	entry: {
+		'n-button': './html-test/n-button/test.js',
 		'n-icon': './html-test/n-icon/test.js',
 		'n-label': './html-test/n-label/test.js',
 		'n-text': './html-test/n-text/test.js',

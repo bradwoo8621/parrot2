@@ -20,7 +20,7 @@ class NTextArea extends NComponent {
 	}
 
 	renderText() {
-		return (<textarea className='n-control'
+		return (<textarea className={classnames('n-control', this.getTextRowsClassName())}
 		               disabled={!this.isEnabled()}
 		               placeholder={this.getPlaceholder()}
 		               rows={this.getTextRows()}
@@ -53,12 +53,15 @@ class NTextArea extends NComponent {
 	getComponentClassName() {
 		return 'n-text-area';
 	}
+	getTextRowsClassName() {
+		return 'n-rows-' + this.getTextRows();
+	}
 	// option value
 	getPlaceholder() {
 		return this.getLayoutOptionValue('placeholder');
 	}
 	getTextRows() {
-		return this.getLayoutOptionValue('rows');
+		return this.getLayoutOptionValue('rows', 2);
 	}
 	isAutoTrim() {
 		return this.getLayoutOptionValue('trim', false);

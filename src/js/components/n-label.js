@@ -64,7 +64,7 @@ class NLabel extends NAddonComponent {
 }
 
 
-Envs.COMPONENT_TYPES.LABEL = {type: 'n-plain-label'};
+Envs.COMPONENT_TYPES.LABEL = {type: 'n-label'};
 Envs.setRenderer(Envs.COMPONENT_TYPES.LABEL.type, function (options) {
 	return <NLabel {...options} />;
 });
