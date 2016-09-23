@@ -1,6 +1,29 @@
 import {Envs} from '../envs'
 
 class Layout {
+	static buildLayoutByProps(props) {
+		let layoutJSON = {};
+		Object.keys(props).filter((key) => {
+			return key.startsWith('n-');
+		}).forEach((key) => {
+			let keys = key.substr(2).split('-');
+			let count = keys.length - 1;
+			keys.reduce((object, keySegment, index) => {
+				if (index === count) {
+					// last one
+					object[keySegment] = props[key];
+				} else {
+					let val = object[keySegment];
+					object[keySegment] = (typeof val === 'undefined' || val == null) ? {} : val;
+				}
+				return object[keySegment];
+			}, layoutJSON);
+		});
+		let layout = new Layout(layoutJSON.id, layoutJSON);
+		console.log(layout);
+		return layout;
+	}
+
 	// id: string
 	// layout: JSON
 	constructor(id, layout) {
@@ -41,6 +64,15 @@ class Layout {
 	}
 	getLabel() {
 		return this.layout.label;
+	}
+	getWidth() {
+		return this.getPosition().width;
+	}
+	getColumnIndex() {
+		return this.getPosition().col;
+	}
+	getRowIndex() {
+		return this.getPosition().row;
 	}
 	getPosition() {
 		let pos = this.layout.pos;

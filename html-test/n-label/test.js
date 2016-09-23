@@ -110,6 +110,18 @@ $(function() {
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NLabel model={model} layout={layout5} />
 			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NLabel model={model}
+						n-id='amount'
+						n-label={function() {
+							return 'This is a label ' + this.getValueFromModel();
+						}}
+						n-comp-formatter-display={Envs.NUMBER_FORMATTER}
+						n-comp-textFromModel={false}
+						n-evt-click={function() {
+							alert(`Amount is ${this.getValueFromModel()}`);
+						}} />
+			</div>
 		</div>
 	</div>);
 	ReactDOM.render(panel, document.getElementById('main'));

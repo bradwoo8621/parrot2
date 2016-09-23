@@ -12,6 +12,14 @@ let $ = jQuery;
 class NComponent extends React.Component {
 	state = {}
 
+	constructor(props) {
+		super(props);
+		if (!this.props.layout) {
+			// collect all data- attributes
+			this.layoutFromDOM = Layout.buildLayoutByProps(props);
+		}
+	}
+
 	// returns additional model only if additional model designated and @isUsingPrimaryModel is false
 	getModel() {
 		return this.isUsingPrimaryModel() ? this.getPrimaryModel() : this.getAdditionalModel();
@@ -32,7 +40,7 @@ class NComponent extends React.Component {
 		return this.getLayoutOptionValue('usePrimaryModel', false);
 	}
 	getLayout() {
-		return this.props.layout;
+		return this.props.layout || this.layoutFromDOM;
 	}
 	getOrientation() {
 		return this.props.orientation;
@@ -71,15 +79,23 @@ class NComponent extends React.Component {
 	// first parameter is a json of pointcut methods
 	installUnderlyingMonitors() {
 		this.pointcutPreExecutor.apply(this, arguments);
-		this.addPostChangeListener(this.bindToThis(this.onModelChanged));
-		this.detectMonitors(['enabled', 'visible'], this.forceUpdate);
+		this.internalInstallLifecycleMonitors();
 		this.pointcutPostExecutor.apply(this, arguments);
+	}
+	internalInstallLifecycleMonitors() {
+		this.addPostChangeListener(this.bindToThis(this.onModelChanged));
+		this.addPostValidateListener(this.bindToThis(this.onModelValidated));
+		this.detectMonitors(['enabled', 'visible'], this.forceUpdate);
 	}
 	uninstallUnderlyingMonitors() {
 		this.pointcutPreExecutor.apply(this, arguments);
-		this.removePostChangeListener(this.bindToThis(this.onModelChanged));
-		this.undetectMonitors(['enabled', 'visible'], this.forceUpdate);
+		this.internalUninstallLifecycleMonitors();
 		this.pointcutPostExecutor.apply(this, arguments);
+	}
+	internalUninstallLifecycleMonitors() {
+		this.removePostChangeListener(this.bindToThis(this.onModelChanged));
+		this.removePostValidateListener(this.bindToThis(this.onModelValidated));
+		this.undetectMonitors(['enabled', 'visible'], this.forceUpdate);
 	}
 	// life cycle pointcut executor
 	pointcutPreExecutor(pointcut) {
@@ -258,8 +274,17 @@ class NComponent extends React.Component {
 		return this.wrapOptionValue(this.getLayout().getLabel());
 	}
 	// position can be string or function
+	getWidth() {
+		return this.wrapOptionValue(this.getPosition().width);
+	}
+	getColumnIndex() {
+		return this.wrapOptionValue(this.getPosition().col);
+	}
+	getRowIndex() {
+		return this.wrapOptionValue(this.getPosition().row);
+	}
 	getPosition() {
-		return this.getLayout().getPosition();
+		return this.wrapOptionValue(this.getLayout().getPosition());
 	}
 	// styles
 	getComponentClassName() {
