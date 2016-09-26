@@ -26,7 +26,7 @@ class NButton extends NComponent {
 	}
 	renderText(dropdown) {
 		return (<button className={classnames('n-control n-btn clickable', this.getButtonStyle())}
-					  onClick={this.onComponentClicked}>
+						onClick={this.onComponentClicked}>
 			{this.renderLeftIcon()}
 			{this.getDisplayText()}
 			{this.renderRightIcon()}
@@ -36,7 +36,7 @@ class NButton extends NComponent {
 	renderSeparatedDropdownIcon(dropdown) {
 		if (dropdown.has && dropdown.separated) {
 			return (<button className={classnames('n-control n-btn n-button-dropdown-icon clickable', this.getButtonStyle())}
-					  onClick={this.onDropdownIconClicked}>
+							onClick={this.onDropdownIconClicked}>
 				<i className='fa fa-fw fa-caret-down' />
 			</button>);
 		} else {

@@ -74,24 +74,13 @@
 		}
 	}
 	&.n-button-group {
-		&:before {
-			content: '';
-			display: table;
-		}
-		&:after {
-			content: '';
-			display: table;
-			clear: both;
-		}
 		> button:first-child {
 			border-top-right-radius: 0;
 		    border-bottom-right-radius: 0;
-		    float: left;
 		    width: auto;
 		}
 		> button:last-of-type {
 			position: relative;
-		    float: left;
 			border-left: 0;
 		    border-top-left-radius: 0;
 		    border-bottom-left-radius: 0;

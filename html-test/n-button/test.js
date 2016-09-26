@@ -1,6 +1,7 @@
 import * as SDK from '../../src/js/components/n-button'
 import {NIcon, NStackIcon} from '../../src/js/components/n-icon'
 import {NLabel} from '../../src/js/components/n-label'
+import {NText} from '../../src/js/components/n-text'
 
 let {React, ReactDOM, Model, Layout, NButton, $, Envs} = SDK;
 
@@ -113,7 +114,7 @@ $(function() {
 	let layoutDD = new Layout('buttonA', {
 		label: 'Button A',
 		comp: {
-			// style: 'link'
+			style: 'link',
 			dropdownItems: [{
 				label: 'Dropdown A',
 				comp: {
@@ -134,7 +135,7 @@ $(function() {
 	let layoutDDC = new Layout('buttonA', {
 		label: 'Button A',
 		comp: {
-			style: 'danger',
+			style: 'link',
 			dropdownItems: [{
 				label: 'Dropdown A',
 				comp: {
@@ -146,6 +147,52 @@ $(function() {
 		evt: {
 			click: function() {
 				alert('clicked');
+			}
+		}
+	});
+	let layoutT = new Layout('name', {
+		comp: {
+			placeholder: 'Input here',
+			leftAddons: {
+				label: 'Hi',
+				comp: {
+					type: Envs.COMPONENT_TYPES.BUTTON,
+					style: 'link'
+				},
+				evt: {
+					click: function() {
+						alert(this.getLabel());
+					}
+				}
+			},
+			rightAddons: {
+				label: 'Bye',
+				comp: {
+					type: Envs.COMPONENT_TYPES.BUTTON,
+					style: 'link',
+					dropdownItems:  [{
+						label: 'Goodbye',
+						comp: {
+							type: Envs.COMPONENT_TYPES.LABEL,
+							textFromModel: false
+						},
+						evt: {
+							click: function() {
+								alert(this.getLabel());
+							}
+						}
+					}]
+				},
+				evt: {
+					click: function() {
+						alert(this.getLabel());
+					}
+				}
+			}
+		},
+		evt: {
+			keyUp: function(evt) {
+				// console.log(this, evt);
 			}
 		}
 	});
@@ -177,6 +224,9 @@ $(function() {
 			</div>
 			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
 				<NButton model={model} layout={layoutDDC} />
+			</div>
+			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
+				<NText model={model} layout={layoutT} />
 			</div>
 		</div>
 	</div>);
