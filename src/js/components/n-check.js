@@ -17,7 +17,8 @@ class NCheck extends NComponent {
 		}
 	}
 	renderCheck() {
-		return (<span className='n-check-box n-control'>
+		return (<span className='n-check-box n-control'
+					  tabIndex={this.getTabIndex()}>
 			<span className='n-check-box-rect' />
 		</span>);
 	}

@@ -356,6 +356,9 @@ class NComponent extends React.Component {
 	isEnabled() {
 		return this.invokeMonitorRule('enabled', true);
 	}
+	getTabIndex() {
+		return (this.isEnabled() && !this.isViewMode()) ? 0 : -1;
+	}
 	isClickable() {
 		return this.getEventMonitor('click');
 	}

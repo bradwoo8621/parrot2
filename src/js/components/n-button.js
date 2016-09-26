@@ -26,7 +26,8 @@ class NButton extends NPopoverComponent {
 	}
 	renderText(dropdown) {
 		return (<button className={classnames('n-control n-btn clickable', this.getButtonStyle())}
-						onClick={this.onComponentClicked}>
+						onClick={this.onComponentClicked}
+						{...this.wrapMonitorsToDOM(this.getEventMonitorsBut('click')) }>
 			{this.renderLeftIcon()}
 			{this.getDisplayText()}
 			{this.renderRightIcon()}

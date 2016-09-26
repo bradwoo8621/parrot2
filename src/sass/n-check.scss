@@ -11,6 +11,7 @@
 		width: 0.2rem;
 		vertical-align: middle;
 		padding: 0.05rem 0;
+		outline: none;
 		.n-check-box-rect {
 			border: 2px solid $color-font;
 			border-radius: 3px;
@@ -33,6 +34,10 @@
 			    position: relative;
 			    transition: height 0.25s linear, width 0.25s linear 0.2s;
 			}
+		}
+		&:focus .n-check-box-rect,
+		&:focus .n-check-box-rect:before {
+			border-color: $color-focus;
 		}
 	}
 	.n-check-text {

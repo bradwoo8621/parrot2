@@ -49,6 +49,7 @@ $color-reverse:										#fff;
 $container-bg-color:								#fff;
 $color-border:										darken($container-bg-color, 10%);
 $color-hover:										darken($container-bg-color, 5%);
+$color-focus:										$color-primary;
 
 // border
 $border-radius:										2px;
