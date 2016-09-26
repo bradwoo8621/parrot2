@@ -17,6 +17,10 @@
 		content: '';
 		clear: both;
 	}
+	&.n-in-form > div[class*=n-col-] {
+		margin-top: $margin-2;
+		margin-bottom: $margin-3;
+	}
 }
 
 @for $index from 1 through 20 {

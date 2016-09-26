@@ -78,7 +78,7 @@ $(function() {
 		label: 'Button A',
 		comp: {
 			style: 'danger',
-			inline: true,
+			inline: false,
 			rightIcon: {
 				comp: {
 					type: Envs.COMPONENT_TYPES.STACK_ICON,
@@ -121,10 +121,36 @@ $(function() {
 					textFromModel: false
 				}
 			}]
+		},
+		evt: {
+			dropdownOpen: function() {
+				console.log(this, 'dropdown open');
+			},
+			dropdownClose: function() {
+				console.log(this, 'dropdown close');
+			}
+		}
+	});
+	let layoutDDC = new Layout('buttonA', {
+		label: 'Button A',
+		comp: {
+			style: 'danger',
+			dropdownItems: [{
+				label: 'Dropdown A',
+				comp: {
+					type: Envs.COMPONENT_TYPES.LABEL,
+					textFromModel: false
+				}
+			}]
+		},
+		evt: {
+			click: function() {
+				alert('clicked');
+			}
 		}
 	});
 	let panel = (<div className='n-top-container' style={{marginTop: 20}}>
-		<div className='n-row'>
+		<div className='n-row n-in-form'>
 			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
 				<NButton model={model} layout={layout} />
 			</div>
@@ -148,6 +174,9 @@ $(function() {
 			</div>
 			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
 				<NButton model={model} layout={layoutDD} />
+			</div>
+			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
+				<NButton model={model} layout={layoutDDC} />
 			</div>
 		</div>
 	</div>);

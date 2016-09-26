@@ -9,7 +9,6 @@ class NLabel extends NAddonComponent {
 	}
 	render() {
 		return (<div className={classnames(this.getComponentStyle(), {'has-addon': this.hasAddon()})}
-					 tabIndex='-1'
 					 onFocus={this.onComponentFocused}
 					 onBlur={this.onComponentBlurred}
 					 key='me'>
