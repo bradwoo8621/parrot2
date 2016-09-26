@@ -15,7 +15,10 @@ module.exports = {
 		'n-text-area': './html-test/n-text-area/test.js',
 
 		// sass
-		'style-default': './src/sass/bundle-default.scss'
+		'style-default': './src/sass/bundle-default.scss',
+
+		// all
+		'nest-parrot': './src/js/parrot.js'
 	},
 	output: {
         path: path.join(__dirname, 'html-test'),
