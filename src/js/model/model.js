@@ -234,4 +234,5 @@ class Model {
 	}
 }
 
+export * from './codetable'
 export {Model, lodash}

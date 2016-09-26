@@ -1,0 +1,62 @@
+.n-check {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	padding-right: $pad-15;
+
+	.n-check-box {
+		position: relative;
+		display: inline-block;
+		width: 0.2rem;
+		vertical-align: middle;
+		padding: 0.05rem 0;
+		.n-check-box-rect {
+			border: 2px solid $color-font;
+			border-radius: 3px;
+			width: 100%;
+		    height: 100%;
+		    display: block;
+		    overflow: hidden;
+		    &:before {
+			    border-left: 3px solid $color-font;
+			    border-bottom: 3px solid $color-font;
+			    border-radius: 3px;
+			    display: block;
+			    width: 0;
+			    height: 0;
+			    transform: rotate(-45deg);
+			    content: '';
+			    box-sizing: border-box;
+			    top: -8px;
+			    left: -5px;
+			    position: relative;
+			    transition: height 0.25s linear, width 0.25s linear 0.2s;
+			}
+		}
+	}
+	.n-check-text {
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		&.n-check-text-left {
+			margin-right: $margin-15;
+		}
+		&.n-check-text-right {
+			margin-left: $margin-15;
+		}
+	}
+	&.n-checked {
+		.n-check-box .n-check-box-rect:before {
+			width: 0.2rem;
+			height: 0.2rem;
+		}
+	}
+}
+
+.n-array-check {
+	&.n-array-check-vertical {
+		> .n-check {
+			display: block;
+		}
+	}
+}

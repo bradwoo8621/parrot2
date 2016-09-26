@@ -580,6 +580,12 @@ class NPopoverComponent extends NComponent {
 	}
 }
 
+class NCodeTableComponent extends NComponent {
+	getCodeTable() {
+		return this.getLayoutOptionValue('codes');
+	}
+}
+
 export * from '../model/model'
 export * from '../layout/layout'
 export {
@@ -593,5 +599,6 @@ export {
 
 	NComponent,
 	NAddonComponent,
-	NPopoverComponent
+	NPopoverComponent,
+	NCodeTableComponent
 }
