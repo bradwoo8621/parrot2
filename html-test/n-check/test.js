@@ -6,10 +6,16 @@ $(function() {
 	let codes = new CodeTable({
 		items: [{
 			id: 1, 
-			text: 'World Map 世界地图 ; 世界地图 ; 全世界电子地图 ; 地界地图'
+			text: 'Item 1'
 		}, {
 			id: 2, 
 			text: 'Item 2'
+		}]
+	});
+	let longTextCodes = new CodeTable({
+		items: [{
+			id: 1,
+			text: 'World Map 世界地图 ; 世界地图 ; 全世界电子地图 ; 地界地图'
 		}]
 	});
 	let model = new Model({
@@ -38,7 +44,8 @@ $(function() {
 	let layoutA = new Layout('checkA', {
 		label: 'Check Me',
 		comp: {
-			codes: codes
+			codes: codes,
+			vertical: true
 		}
 	});
 	let layoutAL = new Layout('checkA', {
@@ -48,6 +55,12 @@ $(function() {
 			textOnLeft: true
 		}
 	});
+	let layoutLT = new Layout('checkB', {
+		label: 'Check Me',
+		comp: {
+			codes: longTextCodes
+		}
+	})
 
 	let panel = (<div className='n-top-container'>
 		<div className='n-row'>
@@ -62,6 +75,9 @@ $(function() {
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NArrayCheck model={model} layout={layoutAL} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NArrayCheck model={model} layout={layoutLT} />
 			</div>
 		</div>
 	</div>);

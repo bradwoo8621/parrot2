@@ -104,7 +104,7 @@ class NArrayCheck extends NCodeTableComponent {
 			}
 			this.setValueToModel(newValues);
 		} else {
-			let index = index;
+			let index = oldValues.indexOf(id);
 			if (index != -1) {
 				newValues.splice(index, 1);
 			}
