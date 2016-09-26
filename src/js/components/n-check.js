@@ -2,18 +2,18 @@ import {React, ReactDOM, $, classnames, Envs, Model, NComponent, NCodeTableCompo
 
 class NCheck extends NComponent {
 	renderText(location) {
-		return (<span className={classnames('n-check-text n-control', location)}>
+		return (<span className='n-check-text n-control'>
 			{this.getLabel()}
 		</span>)
 	}
 	renderTextOnLeft() {
 		if (this.isTextOnLeft()) {
-			return this.renderText('n-check-text-left');
+			return this.renderText();
 		}
 	}
 	renderTextOnRight() {
 		if (!this.isTextOnLeft()) {
-			return this.renderText('n-check-text-right');
+			return this.renderText();
 		}
 	}
 	renderCheck() {
@@ -22,8 +22,12 @@ class NCheck extends NComponent {
 		</span>);
 	}
 	render() {
-		let className = classnames(this.getComponentStyle(),
-								   {'n-checked': this.isChecked()});
+		let textOnLeft = this.isTextOnLeft();
+		let className = classnames(this.getComponentStyle(), {
+			'n-checked': this.isChecked(),
+			'n-check-text-left': textOnLeft,
+			'n-check-text-right': !textOnLeft
+		});
 		return (<div className={className}
 					 onClick={this.onComponentClicked}
 					 key='me'>
@@ -70,7 +74,10 @@ class NArrayCheck extends NCodeTableComponent {
 		});
 	}
 	render() {
-		return (<div className={this.getComponentStyle()}>
+		let className = classnames(this.getComponentStyle(), {
+			'n-array-check-vertical': this.isOnVertical()
+		});
+		return (<div className={className}>
 			{this.getCodeTable().map((item, itemIndex) => {
 				return this.renderCodeItem(item, itemIndex);
 			})}
@@ -82,6 +89,9 @@ class NArrayCheck extends NCodeTableComponent {
 	}
 	isTextOnLeft() {
 		return this.getLayoutOptionValue('textOnLeft', false);
+	}
+	isOnVertical() {
+		return this.getLayoutOptionValue('vertical', false);
 	}
 
 	onItemClicked(item, evt) {

@@ -2,10 +2,11 @@
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
-	padding-right: $pad-15;
+	margin-right: $margin-15;
+	word-break: break-word;
 
 	.n-check-box {
-		position: relative;
+		position: absolute;
 		display: inline-block;
 		width: 0.2rem;
 		vertical-align: middle;
@@ -38,17 +39,25 @@
 		position: relative;
 		display: inline-block;
 		vertical-align: middle;
-		&.n-check-text-left {
-			margin-right: $margin-15;
-		}
-		&.n-check-text-right {
-			margin-left: $margin-15;
-		}
+		height: inherit;
 	}
 	&.n-checked {
 		.n-check-box .n-check-box-rect:before {
 			width: 0.2rem;
 			height: 0.2rem;
+		}
+	}
+	&.n-check-text-left {
+		.n-check-text {
+			margin-right: 2 * $margin-15;
+		}
+		.n-check-box {
+			right: 0;
+		}
+	}
+	&.n-check-text-right {
+		.n-check-text {
+			margin-left: 2 * $margin-15;
 		}
 	}
 }
