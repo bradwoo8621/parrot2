@@ -34,10 +34,11 @@ class NIcon extends NComponent {
 		return '!n-icon';
 	}
 	getRenderedClassName() {
-		return classnames(this.getComponentStyle(), 
-						  {'!fa fw': this.isFontAwesome()}, 
-						  classnames(this.getFontClassName()), 
-						  {'!clickable': this.isClickable()});
+		return classnames(this.getComponentStyle(), {
+			'!fa fw': this.isFontAwesome()
+		}, classnames(this.getFontClassName()), {
+			'!clickable': this.isClickable()
+		});
 	}
 
 	// option value
@@ -71,9 +72,10 @@ class NStackIcon extends NComponent {
 	}
 	getRenderedClassName() {
 		return classnames(this.getComponentStyle(), 
-						  'stack fw', 
-						  this.getBackgroundClassName(),
-						  {'!clickable': this.isClickable()});
+						'stack fw', 
+						this.getBackgroundClassName(), {
+						  	'!clickable': this.isClickable()
+						});
 	}
 
 	// option value

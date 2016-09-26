@@ -291,14 +291,18 @@ class NComponent extends React.Component {
 		return null;
 	}
 	getComponentStyle() {
-		return classnames(this.getStyle('comp'), this.getComponentClassName(), {
-			'n-disabled': !this.isEnabled()
-		});
+		return classnames(this.getStyle('comp'), 
+						this.getComponentClassName(), {
+						'n-disabled': !this.isEnabled(),
+						'n-view-mode': this.isViewMode()
+					});
 	}
 	getCellStyle() {
-		return classnames(this.getStyle('cell'), this.getComponentClassName(), {
-			'n-disabled': !this.isEnabled()
-		});
+		return classnames(this.getStyle('cell'), 
+						this.getComponentClassName(), {
+						  	'n-disabled': !this.isEnabled(),
+							'n-view-mode': this.isViewMode()
+						});
 	}
 	getStyle(key) {
 		return this.wrapOptionValue(this.getLayout().getStyle(key));

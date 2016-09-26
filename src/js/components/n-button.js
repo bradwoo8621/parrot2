@@ -35,7 +35,9 @@ class NButton extends NPopoverComponent {
 	}
 	renderSeparatedDropdownIcon(dropdown) {
 		if (dropdown.has && dropdown.separated) {
-			return (<button className={classnames('n-control n-btn n-button-dropdown-icon clickable', this.getButtonStyle())}
+			let className = classnames('n-control n-btn n-button-dropdown-icon clickable',
+									   this.getButtonStyle());
+			return (<button className={className}
 							onClick={this.onDropdownIconClicked}>
 				<i className='fa fa-fw fa-caret-down' />
 			</button>);
@@ -61,8 +63,9 @@ class NButton extends NPopoverComponent {
 	render() {
 		let dropdown = this.prepareDropdownItems();
 
-		let className = classnames(this.getComponentStyle(),
-								   {'n-button-group': dropdown.has && dropdown.separated});
+		let className = classnames(this.getComponentStyle(), {
+			'n-button-group': dropdown.has && dropdown.separated
+		});
 		return (<div className={className}
 					 ref='me'>
 			{this.renderText(dropdown)}
