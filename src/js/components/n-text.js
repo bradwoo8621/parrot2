@@ -33,7 +33,7 @@ class NText extends NAddonComponent {
 		               onChange={this.onComponentChanged}
 		               onFocus={this.onComponentFocused}
 		               onBlur={this.onComponentBlurred}
-		               {...this.wrapMonitorsToDOM(this.getEventMonitorsBut('keyPress', 'change', 'focus', 'blur'))}
+		               {...this.getDOMMonitors()}
 
 		               ref='txt'/>);
 	}
@@ -42,8 +42,11 @@ class NText extends NAddonComponent {
 			return this.renderInViewMode();
 		}
 
-		return (<div className={classnames(this.getComponentStyle(), {'has-addon': this.hasAddon()})}
-					 key='me'>
+		let className = classnames(this.getComponentStyle(), {
+			'has-addon': this.hasAddon()
+		});
+		return (<div className={className}
+					 ref='me'>
 			{this.renderLeftAddons()}
 			{this.renderText()}
 			{this.renderRightAddons()}
@@ -97,6 +100,9 @@ class NText extends NAddonComponent {
 		let value = this.getComponent().val();
 		return this.isAutoTrim() ? value.trim() : value;
 	}
+	getDOMMonitors() {
+		return this.wrapMonitorsToDOM(this.getEventMonitorsBut('keypress', 'change', 'focus', 'blur'));
+	}
 
 	// data event
 	onComponentChanged = (evt) => {
@@ -111,7 +117,7 @@ class NText extends NAddonComponent {
 	// dom event
 	onComponentKeyPressed = (evt) => {
 		this.onComponentChanged(evt);
-		this.fireEventMonitor(evt, 'keyPress');
+		this.fireEventMonitor(evt, 'keypress');
 	}
 	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();

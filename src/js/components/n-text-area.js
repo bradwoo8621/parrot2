@@ -29,7 +29,7 @@ class NTextArea extends NComponent {
 		               onChange={this.onComponentChanged}
 		               onFocus={this.onComponentFocused}
 		               onBlur={this.onComponentBlurred}
-		               {...this.wrapMonitorsToDOM(this.getEventMonitorsBut('keyPress', 'change', 'focus', 'blur'))}
+		               {...this.getDOMMonitors()}
 
 		               ref='txt'/>);
 	}
@@ -39,7 +39,7 @@ class NTextArea extends NComponent {
 		}
 
 		return (<div className={this.getComponentStyle()}
-					 key='me'>
+					 ref='me'>
 			{this.renderText()}
 			{this.renderNormalLine()}
 			{this.renderFocusLine()}
@@ -70,6 +70,9 @@ class NTextArea extends NComponent {
 		let value = this.getComponent().val();
 		return this.isAutoTrim() ? value.trim() : value;
 	}
+	getDOMMonitors() {
+		return this.wrapMonitorsToDOM(this.getEventMonitorsBut('keypress', 'change', 'focus', 'blur'));
+	}
 
 	// data event
 	onComponentChanged = (evt) => {
@@ -84,7 +87,7 @@ class NTextArea extends NComponent {
 	// dom event
 	onComponentKeyPressed = (evt) => {
 		this.onComponentChanged(evt);
-		this.fireEventMonitor(evt, 'keyPress');
+		this.fireEventMonitor(evt, 'keypress');
 	}
 	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();

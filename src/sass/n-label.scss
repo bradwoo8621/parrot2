@@ -11,6 +11,9 @@
 			width: auto;
 		}
 	}
+	&:focus {
+		color: $color-focus;
+	}
 	.n-label-text {
 		display: block;
 	}

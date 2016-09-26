@@ -27,7 +27,7 @@ class NButton extends NPopoverComponent {
 	renderText(dropdown) {
 		return (<button className={classnames('n-control n-btn clickable', this.getButtonStyle())}
 						onClick={this.onComponentClicked}
-						{...this.wrapMonitorsToDOM(this.getEventMonitorsBut('click')) }>
+						{...this.getDOMMonitors()}>
 			{this.renderLeftIcon()}
 			{this.getDisplayText()}
 			{this.renderRightIcon()}
@@ -96,6 +96,11 @@ class NButton extends NPopoverComponent {
 	}
 	getDropdownItems() {
 		return this.wrapToArray(this.getLayoutOptionValue('dropdownItems'));
+	}
+	getDOMMonitors() {
+		return this.wrapMonitorsToDOM(
+			this.getEventMonitorsBut(
+				'click', 'popoverOpen', 'popoverClose'));
 	}
 	prepareDropdownItems() {
 		let items = this.getDropdownItems();

@@ -17,8 +17,7 @@ class NCheck extends NComponent {
 		}
 	}
 	renderCheck() {
-		return (<span className='n-check-box n-control'
-					  tabIndex={this.getTabIndex()}>
+		return (<span className='n-check-box n-control'>
 			<span className='n-check-box-rect' />
 		</span>);
 	}
@@ -31,7 +30,9 @@ class NCheck extends NComponent {
 		});
 		return (<div className={className}
 					 onClick={this.onComponentClicked}
-					 key='me'>
+					 tabIndex={this.getTabIndex()}
+					 {...this.getDOMMonitors()}
+					 ref='me'>
 			{this.renderTextOnLeft()}
 			{this.renderCheck()}
 			{this.renderTextOnRight()}
@@ -47,10 +48,16 @@ class NCheck extends NComponent {
 	isChecked() {
 		return this.getValueFromModel();
 	}
+	getDOMMonitors() {
+		return this.wrapMonitorsToDOM(this.getEventMonitorsBut('click'));
+	}
 
 	onComponentClicked = (evt) => {
 		let value = this.getValueFromModel();
 		this.setValueToModel(!value);
+		this.fireEventMonitor(evt, 'click');
+
+		$(ReactDOM.findDOMNode(this.refs.me)).focus();
 	}
 }
 
@@ -78,7 +85,9 @@ class NArrayCheck extends NCodeTableComponent {
 		let className = classnames(this.getComponentStyle(), {
 			'n-array-check-vertical': this.isOnVertical()
 		});
-		return (<div className={className}>
+		return (<div className={className}
+					 {...this.getDOMMonitors()}
+					 ref='me'>
 			{this.getCodeTable().map((item, itemIndex) => {
 				return this.renderCodeItem(item, itemIndex);
 			})}
@@ -111,6 +120,9 @@ class NArrayCheck extends NCodeTableComponent {
 			}
 			this.setValueToModel(newValues);
 		}
+	}
+	getDOMMonitors() {
+		return this.wrapMonitorsToDOM(this.getEventMonitors());
 	}
 
 	getValueFromModel() {

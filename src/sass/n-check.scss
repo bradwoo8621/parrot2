@@ -4,6 +4,7 @@
 	cursor: pointer;
 	margin-right: $margin-15;
 	word-break: break-word;
+	outline: none;
 
 	.n-check-box {
 		position: absolute;
@@ -20,8 +21,12 @@
 		    display: block;
 		    overflow: hidden;
 		    &:before {
-			    border-left: 3px solid $color-font;
-			    border-bottom: 3px solid $color-font;
+			    border-left-width: 3px;
+			    border-left-style: solid;
+			    border-left-color: $color-font;
+			    border-bottom-width: 3px;
+			    border-bottom-style: solid;
+			    border-bottom-color: $color-font;
 			    border-radius: 3px;
 			    display: block;
 			    width: 0;
@@ -35,16 +40,23 @@
 			    transition: height 0.25s linear, width 0.25s linear 0.2s;
 			}
 		}
-		&:focus .n-check-box-rect,
-		&:focus .n-check-box-rect:before {
-			border-color: $color-focus;
-		}
 	}
 	.n-check-text {
 		position: relative;
 		display: inline-block;
 		vertical-align: middle;
 		height: inherit;
+	}
+	&:focus {
+		.n-check-box .n-check-box-rect,
+		.n-check-box .n-check-box-rect:before {
+			border-color: $color-focus;
+			border-left-color: $color-focus;
+			border-bottom-color: $color-focus;
+		}
+		.n-check-text {
+			color: $color-focus;
+		}
 	}
 	&.n-checked {
 		.n-check-box .n-check-box-rect:before {

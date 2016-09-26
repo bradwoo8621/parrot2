@@ -2,16 +2,22 @@ import {React, ReactDOM, $, classnames, Envs, NComponent, NAddonComponent} from 
 
 class NLabel extends NAddonComponent {
 	renderText() {
-		return (<span className={classnames('n-label-text', {clickable: this.isClickable()})}
-					  {...this.wrapMonitorsToDOM(this.getEventMonitorsOf('click'))}>
+		let className = classnames('n-label-text', {
+			clickable: this.isClickable()
+		});
+		return (<span className={className}
+					  {...this.getDOMMonitors()}
+					  ref='lbl'>
 			{this.getDisplayText()}
 		</span>);
 	}
 	render() {
-		return (<div className={classnames(this.getComponentStyle(), {'has-addon': this.hasAddon()})}
-					 onFocus={this.onComponentFocused}
-					 onBlur={this.onComponentBlurred}
-					 key='me'>
+		let className = classnames(this.getComponentStyle(), {
+			'has-addon': this.hasAddon()
+		});
+		return (<div className={className}
+					 tabIndex={this.getTabIndex()}
+					 ref='me'>
 			{this.renderLeftAddons()}
 			{this.renderText()}
 			{this.renderRightAddons()}
@@ -45,13 +51,13 @@ class NLabel extends NAddonComponent {
 	getDisplayText() {
 		return this.isTextFromModel() ? this.formatValue(this.getValueFromModel()) : this.getLabel();
 	}
+	getDOMMonitors() {
+		return this.wrapMonitorsToDOM(this.getEventMonitors());
+	}
+	getTabIndex() {
+		return (this.isClickable() && this.isEnabled()) ? 0 : null;
+	}
 
-	onComponentFocused = (evt) => {
-		this.onComponentFocusChanged();
-	}
-	onComponentBlurred = (evt) => {
-		this.onComponentFocusChanged();
-	}
 	formatValue(value) {
 		let formatter = this.getTextFormatter();
 		if (formatter && formatter.display) {

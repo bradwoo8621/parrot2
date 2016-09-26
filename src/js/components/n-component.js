@@ -357,7 +357,7 @@ class NComponent extends React.Component {
 		return this.invokeMonitorRule('enabled', true);
 	}
 	getTabIndex() {
-		return (this.isEnabled() && !this.isViewMode()) ? 0 : -1;
+		return (this.isEnabled() && !this.isViewMode()) ? 0 : null;
 	}
 	isClickable() {
 		return this.getEventMonitor('click');
@@ -404,7 +404,7 @@ class NComponent extends React.Component {
 		let filterList = Array.prototype.slice.call(arguments, 0);
 		if (filterList.length == 0) {
 			// all
-			return this.getMonitors();
+			return monitors;
 		}
 		return Object.keys(monitors).reduce((set, key) => {
 			if (filterList.indexOf(key) == -1) {
