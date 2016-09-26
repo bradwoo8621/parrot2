@@ -1,6 +1,6 @@
-import {React, ReactDOM, $, classnames, Envs, NComponent, Layout} from './n-component'
+import {React, ReactDOM, $, classnames, Envs, NPopoverComponent, Layout} from './n-component'
 
-class NButton extends NComponent {
+class NButton extends NPopoverComponent {
 	renderIcon(icon) {
 		return this.renderInternalComponent(icon);
 	}
@@ -18,7 +18,7 @@ class NButton extends NComponent {
 	}
 	renderDropdownIcon(dropdown) {
 		if (dropdown.has && !dropdown.separated) {
-			return (<i className='fa fa-fw fa-caret-down'
+			return (<i className='fa fa-fw fa-caret-down n-button-dropdown-icon'
 					   onClick={this.onDropdownIconClicked} />);
 		} else {
 			return null;
@@ -111,14 +111,7 @@ class NButton extends NComponent {
 	onDropdownIconClicked = (evt) => {
 		evt.preventDefault();
 		evt.stopPropagation();
-		let me = $(ReactDOM.findDOMNode(this.refs.me));
-		if (me.hasClass('n-dropdown-open')) {
-			me.removeClass('n-dropdown-open');
-			this.fireEventMonitor(evt, 'dropdownOpen');
-		} else {
-			me.addClass('n-dropdown-open');
-			this.fireEventMonitor(evt, 'dropdownClose');
-		}
+		this.togglePopover();
 	}
 	onComponentClicked = (evt) => {
 		if (this.hasClickHandling()) {
@@ -128,6 +121,12 @@ class NButton extends NComponent {
 		} else if (this.hasDropdown(this.getDropdownItems())) {
 			this.onDropdownIconClicked(evt);
 		}
+	}
+	getDocumentClickHandler() {
+		return this.hidePopover;
+	}
+	getDocumentEscapePressedHandler() {
+		return this.hidePopover;
 	}
 }
 

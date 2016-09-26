@@ -124,10 +124,10 @@ $(function() {
 			}]
 		},
 		evt: {
-			dropdownOpen: function() {
+			popoverOpen: function() {
 				console.log(this, 'dropdown open');
 			},
-			dropdownClose: function() {
+			popoverClose: function() {
 				console.log(this, 'dropdown close');
 			}
 		}

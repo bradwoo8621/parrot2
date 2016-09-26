@@ -517,6 +517,69 @@ class NAddonComponent extends NComponent {
 	}
 }
 
+class NPopoverComponent extends NComponent {
+	internalInstallLifecycleMonitors() {
+		super.internalInstallLifecycleMonitors();
+		$(document).on('click', this.bindToThis(this.onDocumentClicked))
+				   .on('keyup', this.bindToThis(this.onDocumentKeyUp));
+	}
+	internalUninstallLifecycleMonitors() {
+		super.internalUninstallLifecycleMonitors();
+		$(document).off('click', this.bindToThis(this.onDocumentClicked))
+				   .off('keyup', this.bindToThis(this.onDocumentKeyUp));
+	}
+	onDocumentClicked(evt) {
+		if (evt.isDefaultPrevented()) {
+			return;
+		}
+		let handler = this.getDocumentClickHandler();
+		if (handler) {
+			handler.call(this, evt);
+		}
+	}
+	onDocumentKeyUp(evt) {
+		if (evt.isDefaultPrevented()) {
+			return;
+		}
+		let handler = null;
+		if (evt.keyCode === 27) {
+			handler = this.getDocumentEscapePressedHandler();
+		}
+		if (handler) {
+			handler.call(this, evt);
+		}
+	}
+	getDocumentClickHandler() {
+		return null;
+	}
+	getDocumentEscapePressedHandler() {
+		return null;
+	}
+
+	showPopover() {
+		let me = $(ReactDOM.findDOMNode(this.refs.me));
+		if (!me.hasClass('n-dropdown-open')) {
+			me.addClass('n-dropdown-open');
+			this.fireEventMonitor($.Event('popoverOpen', me[0]), 'popoverOpen');
+		}
+	}
+	hidePopover() {
+		let me = $(ReactDOM.findDOMNode(this.refs.me));
+		if (me.hasClass('n-dropdown-open')) {
+			me.removeClass('n-dropdown-open');
+			this.fireEventMonitor($.Event('popoverOpen', me[0]), 'popoverClose');
+		}
+	}
+	togglePopover() {
+		let me = $(ReactDOM.findDOMNode(this.refs.me));
+		if (!me.hasClass('n-dropdown-open')) {
+			this.showPopover();
+		} else {
+			this.hidePopover();
+		}
+	}
+}
+
 export * from '../model/model'
 export * from '../layout/layout'
 export {
@@ -529,5 +592,6 @@ export {
 	Envs,
 
 	NComponent,
-	NAddonComponent
+	NAddonComponent,
+	NPopoverComponent
 }
