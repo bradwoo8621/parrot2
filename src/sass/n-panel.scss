@@ -1,0 +1,41 @@
+@mixin n-panel-header-style($color, $bg-color, $name) {
+	&.n-panel-header-#{$name} {
+		background-color: $bg-color;
+		color: $color;
+		border-color: $bg-color;
+	}
+}
+
+.n-panel {
+	position: relative;
+	display: block;
+    color: $color-font;
+    background-color: $container-bg-color;
+}
+.n-panel-header {
+	position: relative;
+	display: block;
+	padding-left: $pad-15;
+	padding-right: $pad-15;
+	border: $border-1;
+	border-radius: 2px;
+	color: $color-font;
+	background-color: $container-bg-color;
+
+	@include n-panel-header-style($color-reverse, $color-primary, primary);
+	@include n-panel-header-style($color-reverse, $color-success, success);
+	@include n-panel-header-style($color-reverse, $color-warning, warning);
+	@include n-panel-header-style($color-reverse, $color-info, info);
+	@include n-panel-header-style($color-reverse, $color-danger, danger);
+	&.n-panel-header-borderless {
+		border-width: 0 0 1px;
+		border-radius: 0;
+	}
+	.n-panel-header-text {
+		font-weight: bold;
+	}
+}
+.n-panel-body {
+	position: relative;
+	display: block;
+}

@@ -1,8 +1,12 @@
-import {Envs} from '../envs'
+import {Envs, lodash} from '../envs'
 
 class Layout {
-	static buildLayoutByProps(props) {
-		let layoutJSON = {};
+	static toStereo(props) {
+		let layout = {};
+		if (!props) {
+			return layout;
+		}
+
 		Object.keys(props).filter((key) => {
 			return key.startsWith('n-');
 		}).forEach((key) => {
@@ -17,11 +21,13 @@ class Layout {
 					object[keySegment] = (typeof val === 'undefined' || val == null) ? {} : val;
 				}
 				return object[keySegment];
-			}, layoutJSON);
+			}, layout);
 		});
-		let layout = new Layout(layoutJSON.id, layoutJSON);
-		console.log(layout);
 		return layout;
+	}
+	static buildLayoutByProps(props) {
+		let layout = Layout.toStereo(props);
+		return new Layout(layout.id, layout);
 	}
 
 	// id: string
@@ -29,6 +35,16 @@ class Layout {
 	constructor(id, layout) {
 		this.id = id;
 		this.layout = layout ? layout : {};
+	}
+	mergeLayoutFromProps(props) {
+		lodash.mergeWith(this.layout, Layout.toStereo(props), function(objValue, srcValue) {
+			if (lodash.isArray(objValue)) {
+				if (lodash.isArray(srcValue)) {
+					return srcvalue;
+				}
+			}
+		});
+		return this;
 	}
 
 	getType() {

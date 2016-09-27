@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 
-import {Envs} from '../envs'
+import {Envs, lodash} from '../envs'
 import {Model} from '../model/model'
 import {Layout} from '../layout/layout'
 
@@ -15,8 +15,10 @@ class NComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		if (!this.props.layout) {
-			// collect all data- attributes
+			// collect all n- attributes
 			this.layoutFromDOM = Layout.buildLayoutByProps(props);
+		} else {
+			this.props.layout.mergeLayoutFromProps(props);
 		}
 	}
 
@@ -593,8 +595,92 @@ class NCodeTableComponent extends NComponent {
 	}
 }
 
+class NContainer extends NComponent {
+	renderLeadingChildren(propsFromParent) {
+		return React.Children.map(this.props.children, (child) => {
+			if (child.props['data-leading']) {
+				return this.renderChild(child, propsFromParent);
+			}
+		});
+	}
+	renderTailingChildren(propsFromParent) {
+		return React.Children.map(this.props.children, (child) => {
+			if (!child.props['data-leading']) {
+				return this.renderChild(child, propsFromParent);
+			}
+		});
+	}
+	renderChild(child, propsFromParent) {
+		if (typeof child.type === 'string') {
+			// plain dom node
+			return child;
+		} else {
+			// react node
+			// pass props to child
+			return React.createElement(child.type, lodash.mergeWith({}, {
+				model: this.getPrimaryModel(),
+				layout: propsFromParent ? propsFromParent[child.type.name] : null,
+				orientation: this.getOrientation(),
+				viewMode: this.isViewMode()
+			}, child.props, function(objValue, srcValue) {
+				if (lodash.isArray(objValue)) {
+					if (lodash.isArray(srcValue)) {
+						return srcvalue;
+					}
+				}
+			}));
+		}
+	}
+	renderChildren(propsFromParent) {
+		return React.Children.map(this.props.children, (child) => {
+			return this.renderChild(child, propsFromParent);
+		});
+	}
+	getChildOf(type) {
+		let children = React.Children.map(this.props.children, function(child) {
+			return (child.type === type || child.type.name === type) ? child : null;
+		});
+		if (children && children.length > 0) {
+			// return the first not null child
+			return children.find(child => {
+				return child != null;
+			});
+		} else {
+			return null;
+		}
+	}
+	getChildrenOfChild(childNodeOrType) {
+		if (!childNodeOrType) {
+			return null;
+		}
+
+		let child = null;
+		if (typeof childNodeOrType === 'string') {
+			// it's a type
+			child = this.getChildOf(childNodeOrType);
+		} else {
+			// it's a react component
+			child = childNodeOrType;
+		}
+		return child.props.children;
+	}
+	getMixedPropsBaseOnChild(child, newProps) {
+		if (!child) {
+			return newProps;
+		}
+		let props = lodash.assign({}, child.props);
+		Object.keys(newProps).forEach(key => {
+			if (typeof props[key] === 'undefined') {
+				props[key] = newProps[key];
+			}
+		});
+		return props;
+	}
+}
+
 export * from '../model/model'
 export * from '../layout/layout'
+export * from '../envs'
 export {
 	React,
 	ReactDOM,
@@ -602,10 +688,9 @@ export {
 	$,
 	classnames,
 
-	Envs,
-
 	NComponent,
 	NAddonComponent,
 	NPopoverComponent,
-	NCodeTableComponent
+	NCodeTableComponent,
+	NContainer
 }

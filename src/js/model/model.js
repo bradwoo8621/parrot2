@@ -1,4 +1,4 @@
-import lodash from 'lodash'
+import {Envs, lodash} from '../envs'
 
 class ListenerSupport {
 	constructor(id) {
@@ -235,4 +235,4 @@ class Model {
 }
 
 export * from './codetable'
-export {Model, lodash}
+export {Model}

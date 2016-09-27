@@ -1,3 +1,5 @@
+import lodash from 'lodash'
+
 class Envs {
 	constructor() {
 		this.props = {
@@ -156,4 +158,5 @@ class Envs {
 // }
 
 let envs = new Envs();
-export {envs as Envs}
+
+export {envs as Envs, lodash}
