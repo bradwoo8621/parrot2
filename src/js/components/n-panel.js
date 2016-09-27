@@ -35,14 +35,15 @@ class NPanelHeader extends NContainer {
 		return this.getLayoutOptionValue('collapsibleStyle', 'tail');
 	}
 	isExpanded() {
-		if (this.state.expanded) {
+		if (this.state.expanded == null) {
 			this.state.expanded = this.isInitExpanded();
 		}
 		return this.state.expanded;
 	}
 
 	onComponentClicked = (evt) => {
-
+		this.setState({expanded: !this.state.expanded});
+		this.fireEventMonitor(evt, 'click');
 	}
 }
 
@@ -91,7 +92,9 @@ class NPanel extends NContainer {
 				collapsibleStyle: this.getCollapsibleStyle()
 			},
 			evt: {
-				click: null
+				click: (evt) => {
+					this.setState({expanded: !this.state.expanded});
+				}
 			}
 		}, headerLayout));
 
@@ -130,9 +133,8 @@ class NPanel extends NContainer {
 		let collapsibleStyle = this.getCollapsibleStyle();
 		let className = classnames(this.getComponentStyle(),
 				this.getPanelStyle(), {
-					'n-panel-collapsible': this.isCollapsible(),
 					'n-panel-expanded': this.isExpanded()
-				}, `n-panel-${collapsibleStyle}`);
+				});
 		return (<div className={className}
 					 ref='me'>
 			{this.renderHeader()}
@@ -163,7 +165,7 @@ class NPanel extends NContainer {
 	}
 
 	isExpanded() {
-		if (!this.state.expanded) {
+		if (this.state.expanded == null) {
 			this.state.expanded = this.isInitExpanded();
 		}
 		return this.state.expanded;

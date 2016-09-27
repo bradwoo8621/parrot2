@@ -14,11 +14,15 @@ class NComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
-		if (!this.props.layout) {
+		this.buildLayout(props);
+	}
+
+	buildLayout(props) {
+		if (!props.layout) {
 			// collect all n- attributes
 			this.layoutFromDOM = Layout.buildLayoutByProps(props);
 		} else {
-			this.props.layout.mergeLayoutFromProps(props);
+			props.layout.mergeLayoutFromProps(props);
 		}
 	}
 
@@ -53,6 +57,7 @@ class NComponent extends React.Component {
 
 	// lifecycle
 	componentWillUpdate(nextProps, nextState) {
+		this.buildLayout(nextProps);
 		this.uninstallUnderlyingMonitors({
 			pre: this.preWillUpdate,
 			post: this.postWillUpdate

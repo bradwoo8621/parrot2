@@ -68,6 +68,7 @@
 		display: inline-block;
 	}
 	&.n-panel-collapsible {
+		cursor: pointer;
 		&.n-panel-collapsible-tail {
 			padding-right: 0.35rem;
 			&:after {
@@ -96,6 +97,7 @@
 			&.n-panel-collapsible-lead:before,
 			&.n-panel-collapsible-follow .n-panel-header-text:after {
 				transform: rotate(180deg);
+				margin-top: 0.01rem;
 			}
 		}
 	}
