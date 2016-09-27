@@ -32,6 +32,7 @@ class NCheck extends NComponent {
 		});
 		return (<div className={className}
 					 onClick={this.onComponentClicked}
+					 onKeyPress={this.onComponentKeyPressed}
 					 tabIndex={this.getTabIndex()}
 					 {...this.getDOMMonitors()}
 					 ref='me'>
@@ -54,7 +55,7 @@ class NCheck extends NComponent {
 		return this.getValueFromModel();
 	}
 	getDOMMonitors() {
-		return this.wrapMonitorsToDOM(this.getEventMonitorsBut('click'));
+		return this.wrapMonitorsToDOM(this.getEventMonitorsBut('click', 'keypress'));
 	}
 
 	onComponentClicked = (evt) => {
@@ -63,6 +64,13 @@ class NCheck extends NComponent {
 		this.fireEventMonitor(evt, 'click');
 
 		$(ReactDOM.findDOMNode(this.refs.me)).focus();
+	}
+	onComponentKeyPressed = (evt) => {
+		if (evt.charCode === 32) {
+			let value = this.getValueFromModel();
+			this.setValueToModel(!value);
+		}
+		this.fireEventMonitor(evt, 'keypress');
 	}
 }
 

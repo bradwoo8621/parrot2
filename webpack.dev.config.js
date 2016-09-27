@@ -13,6 +13,7 @@ module.exports = {
 		'n-check': './html-test/n-check/test.js',
 		'n-icon': './html-test/n-icon/test.js',
 		'n-label': './html-test/n-label/test.js',
+		'n-radio': './html-test/n-radio/test.js',
 		'n-text': './html-test/n-text/test.js',
 		'n-text-area': './html-test/n-text-area/test.js',
 

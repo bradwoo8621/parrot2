@@ -1,0 +1,88 @@
+.n-radio {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	margin-right: $margin-15;
+	word-break: break-word;
+	outline: none;
+
+	.n-radio-box {
+		position: absolute;
+		display: inline-block;
+		width: 0.2rem;
+		vertical-align: middle;
+		padding: 0.05rem 0;
+		outline: none;
+		.n-radio-box-rect {
+			border: 2px solid $color-font;
+			border-radius: 100%;
+			width: 100%;
+		    height: 100%;
+		    display: block;
+		    overflow: hidden;
+		    &:before {
+				background-color: $color-font;
+			    border-radius: 100%;
+			    display: block;
+			    width: 0;
+			    height: 0;
+			    content: '';
+			    box-sizing: border-box;
+			    position: relative;
+			    transition: height 0.25s linear, width 0.25s linear, margin 0.25s linear;
+			    margin-left: 0.08rem;
+			    margin-top: 0.08rem;			
+			}
+		}
+	}
+	.n-radio-text {
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		height: inherit;
+	}
+	&:focus {
+		.n-radio-box {
+			.n-radio-box-rect {
+				border-color: $color-focus;
+				&:before {
+					background-color: $color-focus;
+				}
+			}
+		}
+		.n-radio-text {
+			color: $color-focus;
+		}
+	}
+	&.n-checked {
+		.n-radio-box .n-radio-box-rect:before {
+			width: 0.14rem;
+			height: 0.14rem;
+			margin-left: 0.01rem;
+			margin-top: 0.01rem;
+		}
+	}
+	&.n-radio-text-left {
+		.n-radio-text {
+			margin-right: 2 * $margin-15;
+		}
+		.n-radio-box {
+			right: 0;
+		}
+	}
+	&.n-radio-text-right {
+		.n-radio-text {
+			margin-left: 2 * $margin-15;
+		}
+	}
+}
+
+.n-radio-group {
+	position: relative;
+	display: inline-block;
+	&.n-radio-vertical {
+		> .n-radio {
+			display: block;
+		}
+	}
+}
