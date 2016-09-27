@@ -32,19 +32,24 @@ $(function() {
 	let layout4 = new Layout('panel', {
 		label: 'A Panel',
 		comp: {
-			style: 'info'
+			style: 'info',
+			collapsible: true,
+			collapsibleStyle: 'follow'
 		}
 	});
 	let layout5 = new Layout('panel', {
 		label: 'A Panel',
 		comp: {
-			style: 'warning'
+			style: 'warning',
+			collapsible: true,
+			collapsibleStyle: 'lead'
 		}
 	});
 	let layout6 = new Layout('panel', {
 		label: 'A Panel',
 		comp: {
-			style: 'danger'
+			style: 'danger',
+			collapsible: true
 		}
 	});
 	let layout7 = new Layout('panel', {
@@ -81,8 +86,11 @@ $(function() {
 				<NPanel model={model} layout={layout7}>
 					<NPanelHeader n-comp-style='danger'>
 						<span data-leading='1'>test</span>
-						<NIcon n-comp-icon='ban'/>
+						<NIcon n-comp-icon='ban' n-evt-click={function() {console.log(this)}}/>
 					</NPanelHeader>
+					<NPanelBody n-comp-style='success'>
+						<span data-leading='1'>Body starting...</span>
+					</NPanelBody>
 				</NPanel>
 			</div>
 		</div>

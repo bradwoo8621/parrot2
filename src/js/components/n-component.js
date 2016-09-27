@@ -618,17 +618,19 @@ class NContainer extends NComponent {
 			// react node
 			// pass props to child
 			return React.createElement(child.type, lodash.mergeWith({}, {
-				model: this.getPrimaryModel(),
-				layout: propsFromParent ? propsFromParent[child.type.name] : null,
-				orientation: this.getOrientation(),
-				viewMode: this.isViewMode()
-			}, child.props, function(objValue, srcValue) {
-				if (lodash.isArray(objValue)) {
-					if (lodash.isArray(srcValue)) {
-						return srcvalue;
-					}
-				}
-			}));
+						model: this.getPrimaryModel(),
+						orientation: this.getOrientation(),
+						viewMode: this.isViewMode()
+					}, 
+					propsFromParent ? propsFromParent[child.type.name] : null, 
+					child.props, 
+					function(objValue, srcValue) {
+						if (lodash.isArray(objValue)) {
+							if (lodash.isArray(srcValue)) {
+								return srcvalue;
+							}
+						}
+					}));
 		}
 	}
 	renderChildren(propsFromParent) {
@@ -665,15 +667,28 @@ class NContainer extends NComponent {
 		return child.props.children;
 	}
 	getMixedPropsBaseOnChild(child, newProps) {
+		let props = null;
 		if (!child) {
-			return newProps;
+			props = {};
+		} else {
+			props = lodash.assign({}, child.props);
 		}
-		let props = lodash.assign({}, child.props);
 		Object.keys(newProps).forEach(key => {
 			if (typeof props[key] === 'undefined') {
 				props[key] = newProps[key];
 			}
 		});
+		let standardProps = {
+			model: this.getPrimaryModel(),
+			orientation: this.getOrientation(),
+			viewMode: this.isViewMode()
+		};
+		Object.keys(standardProps).forEach(key => {
+			if (typeof props[key] === 'undefined') {
+				props[key] = standardProps[key];
+			}
+		});
+		// console.log(props);
 		return props;
 	}
 }

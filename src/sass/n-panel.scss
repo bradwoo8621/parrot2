@@ -5,12 +5,39 @@
 		border-color: $bg-color;
 	}
 }
+@mixin n-panel-body-style($border-color, $name) {
+	&.n-panel-body-#{$name} {
+		border-color: $border-color;
+	}
+}
+
+@mixin n-panel-collapsible-collapsed() {
+	font: normal normal normal 14px/1 FontAwesome;
+	font-style: normal;
+	font-variant-ligatures: normal;
+	font-variant-caps: normal;
+	font-variant-numeric: normal;
+	font-weight: normal;
+	font-stretch: normal;
+	font-family: FontAwesome;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	font-size: 0.25rem;
+	cursor: pointer;
+	content: '\f103';
+	position: absolute;
+	top: 0;
+	margin-top: 0.03rem;
+	transition: all 0.5s;
+	padding-left: 0.1rem;
+	padding-right: 0.1rem;
+}
 
 .n-panel {
 	position: relative;
 	display: block;
-    color: $color-font;
-    background-color: $container-bg-color;
+	color: $color-font;
+	background-color: $container-bg-color;
 }
 .n-panel-header {
 	position: relative;
@@ -19,6 +46,8 @@
 	padding-right: $pad-15;
 	border: $border-1;
 	border-radius: 2px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 	color: $color-font;
 	background-color: $container-bg-color;
 
@@ -33,9 +62,65 @@
 	}
 	.n-panel-header-text {
 		font-weight: bold;
+		height: $line-height;
+		line-height: $line-height;
+		position: relative;
+		display: inline-block;
+	}
+	&.n-panel-collapsible {
+		&.n-panel-collapsible-tail {
+			padding-right: 0.35rem;
+			&:after {
+				@include n-panel-collapsible-collapsed();
+				right: 0;
+			}
+		}
+		&.n-panel-collapsible-lead {
+			padding-left: 0.35rem;
+			&:before {
+				@include n-panel-collapsible-collapsed();
+				left: 0;
+			}
+		}
+		&.n-panel-collapsible-follow {
+			.n-panel-header-text {
+				padding-right: 0.35rem;
+				&:after {
+					@include n-panel-collapsible-collapsed();
+					right: 0;
+				}
+			}
+		}
+		&.n-panel-expanded {
+			&.n-panel-collapsible-tail:after,
+			&.n-panel-collapsible-lead:before,
+			&.n-panel-collapsible-follow .n-panel-header-text:after {
+				transform: rotate(180deg);
+			}
+		}
 	}
 }
 .n-panel-body {
 	position: relative;
 	display: block;
+	padding-left: $pad-15;
+	padding-right: $pad-15;
+	border: $border-1;
+	border-top: $border-0;
+	border-radius: 2px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	color: $color-font;
+	background-color: $container-bg-color;
+
+	@include n-panel-body-style($color-primary, primary);
+	@include n-panel-body-style($color-success, success);
+	@include n-panel-body-style($color-warning, warning);
+	@include n-panel-body-style($color-info, info);
+	@include n-panel-body-style($color-danger, danger);
+
+	&.n-panel-body-borderless {
+		border-width: 0;
+		border-radius: 0;
+	}
 }
