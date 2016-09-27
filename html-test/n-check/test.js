@@ -33,12 +33,20 @@ $(function() {
 	});
 	let layout = new Layout('check', {
 		label: 'Check Me',
-		comp: {}
+		comp: {
+			labelDisplay: true
+		}
 	});
+	let layoutNoLabel = new Layout('check', {
+		label: 'Check Me',
+		comp: {
+		}
+	})
 	let layoutL = new Layout('check', {
 		label: 'Check Me',
 		comp: {
-			textOnLeft: true
+			textOnLeft: true,
+			labelDisplay: true
 		}
 	});
 	let layoutA = new Layout('checkA', {
@@ -66,6 +74,9 @@ $(function() {
 		<div className='n-row'>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NCheck model={model} layout={layout} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NCheck model={model} layout={layoutNoLabel} />
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NCheck model={model} layout={layoutL} />

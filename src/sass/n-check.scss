@@ -77,6 +77,9 @@
 			margin-left: 2 * $margin-15;
 		}
 	}
+	&.n-check-no-text .n-check-box {
+		position: relative;
+	}
 }
 
 .n-array-check {

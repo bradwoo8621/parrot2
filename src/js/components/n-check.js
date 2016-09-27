@@ -1,18 +1,18 @@
 import {React, ReactDOM, $, classnames, Envs, Model, NComponent, NCodeTableComponent} from './n-component'
 
 class NCheck extends NComponent {
-	renderText(location) {
+	renderText() {
 		return (<span className='n-check-text n-control'>
 			{this.getLabel()}
 		</span>)
 	}
-	renderTextOnLeft() {
-		if (this.isTextOnLeft()) {
+	renderTextOnLeft(options) {
+		if (options.show && options.left) {
 			return this.renderText();
 		}
 	}
-	renderTextOnRight() {
-		if (!this.isTextOnLeft()) {
+	renderTextOnRight(options) {
+		if (options.show && !options.left) {
 			return this.renderText();
 		}
 	}
@@ -22,26 +22,31 @@ class NCheck extends NComponent {
 		</span>);
 	}
 	render() {
+		let labelDisplay = this.isLabelDisplay();
 		let textOnLeft = this.isTextOnLeft();
 		let className = classnames(this.getComponentStyle(), {
 			'n-checked': this.isChecked(),
 			'n-check-text-left': textOnLeft,
-			'n-check-text-right': !textOnLeft
+			'n-check-text-right': !textOnLeft,
+			'n-check-no-text': !labelDisplay
 		});
 		return (<div className={className}
 					 onClick={this.onComponentClicked}
 					 tabIndex={this.getTabIndex()}
 					 {...this.getDOMMonitors()}
 					 ref='me'>
-			{this.renderTextOnLeft()}
+			{this.renderTextOnLeft({left: textOnLeft, show: labelDisplay})}
 			{this.renderCheck()}
-			{this.renderTextOnRight()}
+			{this.renderTextOnRight({left: textOnLeft, show: labelDisplay})}
 		</div>);
 	}
 	getComponentClassName() {
 		return 'n-check';
 	}
 
+	isLabelDisplay() {
+		return this.getLayoutOptionValue('labelDisplay', false);
+	}
 	isTextOnLeft() {
 		return this.getLayoutOptionValue('textOnLeft', false);
 	}
@@ -67,7 +72,8 @@ class NArrayCheck extends NCodeTableComponent {
 			label: item.text,
 			comp: {
 				type: Envs.COMPONENT_TYPES.CHECK,
-				textOnLeft: this.isTextOnLeft()
+				textOnLeft: this.isTextOnLeft(),
+				labelDisplay: true
 			}
 		};
 		let values = this.getValueFromModel();

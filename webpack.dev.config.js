@@ -1,9 +1,11 @@
 let path = require('path');
+let webpack = require('webpack');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let autoprefixer = require('autoprefixer');
 var precss = require('precss');
 
 let extractSASS = new ExtractTextPlugin('[name].css');
+let uglifyJS = new webpack.optimize.UglifyJsPlugin();
 
 module.exports = {
 	entry: {
@@ -18,7 +20,7 @@ module.exports = {
 		'style-default': './src/sass/bundle-default.scss',
 
 		// all
-		'nest-parrot': './src/js/parrot.js'
+		//'nest-parrot': './src/js/parrot.js'
 	},
 	output: {
         path: path.join(__dirname, 'html-test'),
@@ -46,7 +48,8 @@ module.exports = {
 		return [autoprefixer, precss];
 	},
 	plugins: [
-    	extractSASS
+    	extractSASS, 
+    	//uglifyJS
     ],
     externals: {
         // require('jquery') is external and available
