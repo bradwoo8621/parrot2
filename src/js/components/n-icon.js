@@ -26,8 +26,7 @@ class NIcon extends NComponent {
 	}
 	render() {
 		return (<i className={prefixFA(this.getRenderedClassName())}
-				   ref='me'
-				   {...this.getDOMMonitors()} />);
+				   ref='me' />);
 	}
 	// style
 	getComponentClassName() {
@@ -54,17 +53,13 @@ class NIcon extends NComponent {
 	getFontClassName() {
 		return this.getLayoutOptionValue('icon');
 	}
-	getDOMMonitors() {
-		return this.wrapMonitorsToDOM(this.getEventMonitors());
-	}
 }
 
 // only for font-awesome
 class NStackIcon extends NComponent {
 	render() {
 		return (<span className={prefixFA(this.getRenderedClassName())}
-					  ref='me'
-					  {...this.getDOMMonitors()} >
+					  ref='me' >
 			<i className={prefixFA(classnames('!fa stack-1x', this.getForeClassName()))} />
 			<i className={prefixFA(classnames('!fa stack-2x', this.getBackClassName()))} />
 		</span>);
@@ -90,9 +85,6 @@ class NStackIcon extends NComponent {
 	}
 	getBackClassName() {
 		return this.getLayoutOptionValue('backicon');
-	}
-	getDOMMonitors() {
-		return this.wrapMonitorsToDOM(this.getEventMonitors());
 	}
 }
 

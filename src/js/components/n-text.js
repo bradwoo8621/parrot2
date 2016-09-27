@@ -33,7 +33,6 @@ class NText extends NAddonComponent {
 		               onChange={this.onComponentChanged}
 		               onFocus={this.onComponentFocused}
 		               onBlur={this.onComponentBlurred}
-		               {...this.getDOMMonitors()}
 
 		               ref='txt'/>);
 	}
@@ -100,9 +99,6 @@ class NText extends NAddonComponent {
 		let value = this.getComponent().val();
 		return this.isAutoTrim() ? value.trim() : value;
 	}
-	getDOMMonitors() {
-		return this.wrapMonitorsToDOM(this.getEventMonitorsBut('keypress', 'change', 'focus', 'blur'));
-	}
 
 	// data event
 	onComponentChanged = (evt) => {
@@ -117,7 +113,7 @@ class NText extends NAddonComponent {
 	// dom event
 	onComponentKeyPressed = (evt) => {
 		this.onComponentChanged(evt);
-		this.fireEventMonitor(evt, 'keypress');
+		this.fireEventToMonitor(evt, 'keypress');
 	}
 	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();
@@ -129,7 +125,7 @@ class NText extends NAddonComponent {
 			this.getComponent().val(value);
 		}
 
-		this.fireEventMonitor(evt, 'focus');
+		this.fireEventToMonitor(evt, 'focus');
 	}
 	onComponentBlurred = (evt) => {
 		this.onComponentFocusChanged();
@@ -145,7 +141,7 @@ class NText extends NAddonComponent {
 		} else {
 			this.setValueToModel(null);
 		}
-		this.fireEventMonitor(evt, 'blur');
+		this.fireEventToMonitor(evt, 'blur');
 	}
 
 	// others

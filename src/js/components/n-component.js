@@ -390,7 +390,7 @@ class NComponent extends React.Component {
 	getEventMonitor(key) {
 		return this.getLayout().getEventMonitor(key);
 	}
-	getEventMonitorsOf() {
+	getDOMEventMonitorsOf() {
 		let monitors = this.getEventMonitors();
 		let needList = Array.prototype.slice.call(arguments, 0);
 		if (needList.length == 0) {
@@ -405,7 +405,7 @@ class NComponent extends React.Component {
 			return set;
 		}, {});
 	}
-	getEventMonitorsBut() {
+	getDOMEventMonitorsBut() {
 		let monitors = this.getEventMonitors();
 		let subset = {};
 		let filterList = Array.prototype.slice.call(arguments, 0);
@@ -433,7 +433,8 @@ class NComponent extends React.Component {
 			return set;
 		}, {});
 	}
-	fireEventMonitor(evt, key) {
+	fireEventToMonitor(evt, key) {
+		key = key ? key : evt.type;
 		let monitor = this.getEventMonitor(key);
 		if (monitor) {
 			monitor.call(this, evt);
@@ -574,14 +575,14 @@ class NPopoverComponent extends NComponent {
 		let me = $(ReactDOM.findDOMNode(this.refs.me));
 		if (!me.hasClass('n-dropdown-open')) {
 			me.addClass('n-dropdown-open');
-			this.fireEventMonitor($.Event('popoverOpen', me[0]), 'popoverOpen');
+			this.fireEventToMonitor($.Event('n-popoverOpen', {target: me[0]}));
 		}
 	}
 	hidePopover() {
 		let me = $(ReactDOM.findDOMNode(this.refs.me));
 		if (me.hasClass('n-dropdown-open')) {
 			me.removeClass('n-dropdown-open');
-			this.fireEventMonitor($.Event('popoverOpen', me[0]), 'popoverClose');
+			this.fireEventToMonitor($.Event('n-popoverClose', {target: me[0]}));
 		}
 	}
 	togglePopover() {

@@ -124,11 +124,11 @@ $(function() {
 			}]
 		},
 		evt: {
-			popoverOpen: function() {
-				console.log(this, 'dropdown open');
+			'n-popoverOpen': function(evt) {
+				console.log(this, 'dropdown open', evt);
 			},
-			popoverClose: function() {
-				console.log(this, 'dropdown close');
+			'n-popoverClose': function(evt) {
+				console.log(this, 'dropdown close', evt);
 			}
 		}
 	});

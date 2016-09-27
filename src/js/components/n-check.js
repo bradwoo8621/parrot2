@@ -34,7 +34,6 @@ class NCheck extends NComponent {
 					 onClick={this.onComponentClicked}
 					 onKeyPress={this.onComponentKeyPressed}
 					 tabIndex={this.getTabIndex()}
-					 {...this.getDOMMonitors()}
 					 ref='me'>
 			{this.renderTextOnLeft({left: textOnLeft, show: labelDisplay})}
 			{this.renderCheck()}
@@ -54,14 +53,11 @@ class NCheck extends NComponent {
 	isChecked() {
 		return this.getValueFromModel();
 	}
-	getDOMMonitors() {
-		return this.wrapMonitorsToDOM(this.getEventMonitorsBut('click', 'keypress'));
-	}
 
 	onComponentClicked = (evt) => {
 		let value = this.getValueFromModel();
 		this.setValueToModel(!value);
-		this.fireEventMonitor(evt, 'click');
+		this.fireEventToMonitor(evt, 'click');
 
 		$(ReactDOM.findDOMNode(this.refs.me)).focus();
 	}
@@ -70,7 +66,7 @@ class NCheck extends NComponent {
 			let value = this.getValueFromModel();
 			this.setValueToModel(!value);
 		}
-		this.fireEventMonitor(evt, 'keypress');
+		this.fireEventToMonitor(evt, 'keypress');
 	}
 }
 
@@ -100,7 +96,6 @@ class NArrayCheck extends NCodeTableComponent {
 			'n-array-check-vertical': this.isOnVertical()
 		});
 		return (<div className={className}
-					 {...this.getDOMMonitors()}
 					 ref='me'>
 			{this.getCodeTable().map((item, itemIndex) => {
 				return this.renderCodeItem(item, itemIndex);
@@ -134,9 +129,6 @@ class NArrayCheck extends NCodeTableComponent {
 			}
 			this.setValueToModel(newValues);
 		}
-	}
-	getDOMMonitors() {
-		return this.wrapMonitorsToDOM(this.getEventMonitors());
 	}
 
 	getValueFromModel() {

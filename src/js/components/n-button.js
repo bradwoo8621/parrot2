@@ -26,8 +26,7 @@ class NButton extends NPopoverComponent {
 	}
 	renderText(dropdown) {
 		return (<button className={classnames('n-control n-btn clickable', this.getButtonStyle())}
-						onClick={this.onComponentClicked}
-						{...this.getDOMMonitors()}>
+						onClick={this.onComponentClicked}>
 			{this.renderLeftIcon()}
 			{this.getDisplayText()}
 			{this.renderRightIcon()}
@@ -97,11 +96,6 @@ class NButton extends NPopoverComponent {
 	getDropdownItems() {
 		return this.wrapToArray(this.getLayoutOptionValue('dropdownItems'));
 	}
-	getDOMMonitors() {
-		return this.wrapMonitorsToDOM(
-			this.getEventMonitorsBut(
-				'click', 'popoverOpen', 'popoverClose'));
-	}
 	prepareDropdownItems() {
 		let items = this.getDropdownItems();
 		return {
@@ -118,15 +112,16 @@ class NButton extends NPopoverComponent {
 	}
 
 	onDropdownIconClicked = (evt) => {
-		evt.preventDefault();
-		evt.stopPropagation();
-		this.togglePopover();
+		if (!evt.isDefaultPrevented()) {
+			evt.preventDefault();
+			this.togglePopover();
+		}
 	}
 	onComponentClicked = (evt) => {
 		if (this.hasClickHandling()) {
 			// click defined, event there are dropdown items
 			// always respond click handler
-			this.fireEventMonitor(evt, 'click');
+			this.fireEventToMonitor(evt, 'click');
 		} else if (this.hasDropdown(this.getDropdownItems())) {
 			this.onDropdownIconClicked(evt);
 		}

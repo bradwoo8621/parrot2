@@ -43,7 +43,6 @@ class NRadio extends NCodeTableComponent {
 			'n-radio-vertical': this.isOnVertical()
 		});
 		return (<div className={className}
-					 {...this.getDOMMonitors()}
 					 ref='me'>
 			{this.getCodeTable().map((item, itemIndex) => {
 				return this.renderCodeItem(item, itemIndex);
@@ -61,13 +60,9 @@ class NRadio extends NCodeTableComponent {
 		return this.getLayoutOptionValue('vertical', false);
 	}
 
-	getDOMMonitors() {
-		return this.wrapMonitorsToDOM(this.getEventMonitors());
-	}
-
 	onComponentClicked(item, evt) {
 		this.setValueToModel(item.id);
-		this.fireEventMonitor(evt, 'click');
+		this.fireEventToMonitor(evt, 'click');
 		let target = $(ReactDOM.findDOMNode(evt.target));
 		if (target.hasClass('n-radio')) {
 			target.focus();
@@ -79,7 +74,7 @@ class NRadio extends NCodeTableComponent {
 		if (evt.charCode === 32) {
 			// space bar
 			this.setValueToModel(item.id);
-			this.fireEventMonitor(evt, 'keypress');
+			this.fireEventToMonitor(evt, 'keypress');
 		}
 	}
 

@@ -43,7 +43,7 @@ class NPanelHeader extends NContainer {
 
 	onComponentClicked = (evt) => {
 		this.setState({expanded: !this.state.expanded});
-		this.fireEventMonitor(evt, 'click');
+		this.fireEventToMonitor(evt, 'click');
 	}
 }
 

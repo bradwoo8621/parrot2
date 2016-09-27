@@ -6,7 +6,6 @@ class NLabel extends NAddonComponent {
 			clickable: this.isClickable()
 		});
 		return (<span className={className}
-					  {...this.getDOMMonitors()}
 					  ref='lbl'>
 			{this.getDisplayText()}
 		</span>);
@@ -50,9 +49,6 @@ class NLabel extends NAddonComponent {
 	}
 	getDisplayText() {
 		return this.isTextFromModel() ? this.formatValue(this.getValueFromModel()) : this.getLabel();
-	}
-	getDOMMonitors() {
-		return this.wrapMonitorsToDOM(this.getEventMonitors());
 	}
 	getTabIndex() {
 		return (this.isClickable() && this.isEnabled()) ? 0 : null;
