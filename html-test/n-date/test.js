@@ -1,6 +1,6 @@
 import * as SDK from '../../src/js/components/n-date'
 
-let {React, ReactDOM, Model, Layout, NDate, $, Envs} = SDK;
+let {React, ReactDOM, Model, Layout, NDate, NCalendar, $, Envs} = SDK;
 
 
 $(function() {
@@ -18,11 +18,16 @@ $(function() {
 			placeholder: 'Input here'
 		}
 	});
+	let layoutC = new Layout('date', {
+	});
 
 	let panel = (<div className='n-top-container'>
-		<div className='n-row'>
+		<div className='n-row n-in-form'>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NDate model={model} layout={layout} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NCalendar model={model} layout={layoutC} />
 			</div>
 		</div>
 	</div>);

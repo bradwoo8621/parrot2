@@ -34,7 +34,8 @@ class Envs {
 				return displayText ? (displayText / 100) : null;
 			},
 			dateValueFormat: 'YYYYMMDDHHmmss',
-			dateDisplayFormat: ['YYYY/MM/DD', 'YYYYMMDD']
+			dateDisplayFormat: ['YYYY/MM/DD', 'YYYYMMDD'],
+			dateHeaderFormat: {year: 'YYYY', month: 'MMMM'}
 		};
 		this.viewModeRenderers = {};
 		this.renderers = {};
@@ -120,6 +121,14 @@ class Envs {
 
 	set DATE_DISPLAY_FORMAT(value) {
 		this.props.dateDisplayFormat = value;
+	}
+
+	get DATE_HEADER_FORMAT() {
+		return this.props.dateHeaderFormat;
+	}
+
+	set DATE_HEADER_FORMAT(value) {
+		this.props.dateHeaderFormat = value;
 	}
 
 	getRenderer(type) {

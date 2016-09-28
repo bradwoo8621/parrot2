@@ -2,7 +2,7 @@
 	position: relative;
 	display: inline-table;
 	vertical-align: middle;
-	border-collapse:collapse;
+	border-collapse: collapse;
 	input {
 		display: table-cell;
 		width: 100%;
@@ -10,7 +10,170 @@
 	.n-input-addon {
 		.n-icon {
 			margin-left: $margin-3;
-    		margin-right: $margin-3;
+			margin-right: $margin-3;
+		}
+	}
+}
+
+.n-calendar {
+	position: relative;
+	display: inline-block;
+	border-collapse: collapse;
+	.n-calendar-date {
+		position: relative;
+		display: block;
+		border-collapse: collapse;
+		border: $border-1;
+		border-radius: $border-radius;
+		min-width: 300px;
+    	max-width: 300px;
+		.n-calendar-date-header {
+			position: relative;
+			display: inline-table;
+			vertical-align: middle;
+			border-collapse: collapse;
+			width: 100%;
+			// line-height: $line-height;
+			// height: $line-height;
+			.n-calendar-date-header-text {
+				display: table-cell;
+				width: 100%;
+				position: relative;
+				&:before {
+					display: table;
+					content: '';
+				}
+				&:after {
+					display: table;
+					content: '';
+					clear: both;
+				}
+				span {
+					padding: $pad-0 $pad-15;
+					white-space: nowrap;
+					float: left;
+					display: block;
+					position: relative;
+					width: 50%;
+					cursor: pointer;
+					&:hover {
+						text-decoration: underline;
+						color: $color-link;
+					}
+					&:first-child {
+						text-align: right;
+						padding-right: $pad-5;
+					}
+					&:last-child {
+						text-align: left;
+						padding-left: $pad-5;
+					}
+					&:first-child:last-child {
+						width: 100%;
+						text-align: center;
+					}
+				}
+			}
+			i {
+				min-width: 0.25rem;
+				display: table-cell;
+				height: $line-height;
+				line-height: $line-height;
+				vertical-align: middle;
+				font-size: 0.2rem;
+				position: relative;
+				cursor: pointer;
+			}
+		}
+		.n-calendar-date-body {
+			position: relative;
+			display: block;
+			border-collapse: collapse;
+			.n-calendar-date-body-header,
+			.n-calendar-date-body-body {
+				position: relative;
+				display: block;
+				border-collapse: collapse;
+				&:before {
+					display: table;
+					content: '';
+				}
+				&:after {
+					display: table;
+					content: '';
+					clear: both;
+				}
+			}
+			.n-calendar-date-body-header-text {
+				font-weight: bold;
+				line-height: $line-height;
+				height: $line-height;
+				float: left;
+				display: block;
+				position: relative;
+				width: percentage(1 / 7);
+				text-align: center;
+			}
+			.n-calendar-date-body-body-text {
+				line-height: $line-height;
+				height: $line-height + 0.03rem;
+				cursor: pointer;
+				float: left;
+				text-align: center;
+				&.today span {
+					background-color: $color-success;
+					color: $color-reverse;
+					font-weight: bold;
+				}
+				&.active span,
+				&.today.active span {
+					background-color: $color-primary;
+					color: $color-reverse;
+					font-weight: bold;
+				}
+				&.before,
+				&.after {
+					color: lighten($color-font, 20%);
+				}
+				&:hover span {
+					box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+				}
+				&.date, 
+				&.month, 
+				&.year {
+					display: block;
+					position: relative;
+				}
+				&.date {
+					width: percentage(1 / 7);
+				}
+				&.month {
+					width: 25%;
+					height: $line-height + 0.46rem;
+					line-height: $line-height + 0.46rem;
+					span {
+					    line-height: 0.7rem;
+					    height: 0.7rem;
+					    min-width: 0.7rem;
+					}
+				}
+				&.year {
+					width: 20%;
+					height: $line-height + 0.156rem;
+					span {
+					    line-height: 0.4rem;
+					    height: 0.4rem;
+					    min-width: 0.4rem;
+					}
+				}
+				span {
+					line-height: $line-height;
+					height: $line-height;
+					min-width: $line-height;
+					display: inline-block;
+					border-radius: 100%;
+				}
+			}
 		}
 	}
 }
