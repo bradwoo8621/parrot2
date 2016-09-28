@@ -208,6 +208,44 @@ class Model {
 		this.firePostChangeEvent(id, old, value);
 		return this;
 	}
+	add(id, value, valueIndex) {
+		let values = this.get(id);
+		if (values == null) {
+			values = [];
+			values.push(value);
+			this.setIntoJSON(id, values, this.getCurrentModel());
+			this.setChanged(true);
+			this.firePostAddEvent(id, values, value, 0);
+		} else {
+			let index = values.findIndex(elm => {
+				return elm == value;
+			});
+			if (index == -1) {
+				// not found, add to given value index
+				valueIndex = valueIndex == null ? values.length : valueIndex;
+				valueIndex = valueIndex > values.length ? values.length : valueIndex;
+				values.splice(valueIndex, 0, value);
+				this.setChanged(true);
+				this.firePostAddEvent(id, values, value, valueIndex);
+			}
+		}
+		return this;
+	}
+	remove(id, value) {
+		let values = this.get(id);
+		if (values == null || values.length == 0) {
+			// do nothing
+		} else {
+			let index = values.findIndex(elm => {
+				return elm == value;
+			});
+			if (index != -1) {
+				values.splice(index, 1);
+				this.setChanged(true);
+				this.firePostRemoveEvent(id, values, value, index);
+			}
+		}
+	}
 	setIntoJSON(id, value, json) {
 		let ids = id.split('.');
 		let count = ids.length - 1;

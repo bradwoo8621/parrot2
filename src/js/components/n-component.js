@@ -24,6 +24,9 @@ class NComponent extends React.Component {
 		} else {
 			props.layout.mergeLayoutFromProps(props);
 		}
+		// calculate enabled and visible on willMount and willUpdate
+		this.state.enabled = this.invokeMonitorRule('enabled', true);
+		this.state.visible = this.invokeMonitorRule('visible', true);
 	}
 
 	// returns additional model only if additional model designated and @isUsingPrimaryModel is false
@@ -358,16 +361,22 @@ class NComponent extends React.Component {
 		return (typeof value === 'undefined') || value == null;
 	}
 	isVisible() {
-		return this.invokeMonitorRule('visible', true);
+		if (this.state.visible == null) {
+			this.state.visible = this.invokeMonitorRule('visible', true);
+		}
+		return this.state.visible;
 	}
 	isEnabled() {
-		return this.invokeMonitorRule('enabled', true);
+		if (this.state.enabled == null) {
+			this.state.enabled = this.invokeMonitorRule('enabled', true);
+		}
+		return this.state.enabled;
 	}
 	getTabIndex() {
 		return (this.isEnabled() && !this.isViewMode()) ? 0 : null;
 	}
 	isClickable() {
-		return this.getEventMonitor('click');
+		return this.isEnabled() && this.getEventMonitor('click');
 	}
 	renderNormalLine() {
 		return <hr className={classnames('n-normal-line', this.getStyle('normal-line'))} 
@@ -444,6 +453,16 @@ class NComponent extends React.Component {
 	getTextInViewMode() {
 		return this.getValueFromModel();
 	}
+	render() {
+		if (this.isViewMode()) {
+			return this.renderInViewMode();
+		} else {
+			return this.renderInNormal();
+		}
+	}
+	isViewModeSameAsNormal() {
+		return true;
+	}
 	renderInViewMode() {
 		var renderer = Envs.getViewModeRenderer(this.getLayout().getTypeAsString());
 		if (renderer) {
@@ -454,6 +473,10 @@ class NComponent extends React.Component {
 				viewMode: true,
 				ref: 'view-comp'
 			});
+		}
+
+		if (this.isViewModeSameAsNormal()) {
+			return this.renderInNormal();
 		}
 
 		var label = this.getTextInViewMode();

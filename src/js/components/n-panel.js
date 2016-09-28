@@ -1,7 +1,7 @@
 import {React, ReactDOM, $, lodash, classnames, Envs, Layout, NCollapsibleContainer} from './n-component'
 
 class NPanelHeader extends NCollapsibleContainer {
-	render() {
+	renderInNormal() {
 		let collapsibleStyle = this.getCollapsibleStyle();
 		let className = classnames(this.getComponentStyle(),
 				this.getPanelStyle(), {
@@ -43,7 +43,7 @@ class NPanelHeader extends NCollapsibleContainer {
 }
 
 class NPanelBody extends NCollapsibleContainer {
-	render() {
+	renderInNormal() {
 		let className = classnames(this.getComponentStyle(),
 				this.getPanelStyle(), {
 					'n-panel-body-expanded': this.isExpanded(),
@@ -127,7 +127,7 @@ class NPanel extends NCollapsibleContainer {
 		return (<NPanelBody {...options}>
 		</NPanelBody>);
 	}
-	render() {
+	renderInNormal() {
 		let collapsibleStyle = this.getCollapsibleStyle();
 		let className = classnames(this.getComponentStyle(),
 				this.getPanelStyle(), {

@@ -32,11 +32,7 @@ class NTextArea extends NComponent {
 
 		               ref='txt'/>);
 	}
-	render() {
-		if (this.isViewMode()) {
-			return this.renderInViewMode();
-		}
-
+	renderInNormal() {
 		return (<div className={this.getComponentStyle()}
 					 ref='me'>
 			{this.renderText()}
@@ -44,7 +40,9 @@ class NTextArea extends NComponent {
 			{this.renderFocusLine()}
 		</div>);
 	}
-
+	isViewModeSameAsNormal() {
+		return false;
+	}
 	getComponent() {
 		return $(ReactDOM.findDOMNode(this.refs.txt));
 	}

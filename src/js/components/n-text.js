@@ -36,11 +36,7 @@ class NText extends NAddonComponent {
 
 		               ref='txt'/>);
 	}
-	render() {
-		if (this.isViewMode()) {
-			return this.renderInViewMode();
-		}
-
+	renderInNormal() {
 		let className = classnames(this.getComponentStyle(), {
 			'has-addon': this.hasAddon()
 		});
@@ -52,6 +48,9 @@ class NText extends NAddonComponent {
 			{this.renderNormalLine()}
 			{this.renderFocusLine()}
 		</div>);
+	}
+	isViewModeSameAsNormal() {
+		return false;
 	}
 
 	getValueFromModel() {

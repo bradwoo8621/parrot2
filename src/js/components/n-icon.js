@@ -24,7 +24,7 @@ class NIcon extends NComponent {
 			fontAwesome: true
 		}
 	}
-	render() {
+	renderInNormal() {
 		return (<i className={prefixFA(this.getRenderedClassName())}
 				   onClick={this.onComponentClicked}
 				   ref='me' />);
@@ -64,7 +64,7 @@ class NIcon extends NComponent {
 
 // only for font-awesome
 class NStackIcon extends NComponent {
-	render() {
+	renderInNormal() {
 		return (<span className={prefixFA(this.getRenderedClassName())}
 					  onClick={this.onComponentClicked}
 					  ref='me' >

@@ -11,7 +11,7 @@ class NLabel extends NAddonComponent {
 			{this.getDisplayText()}
 		</span>);
 	}
-	render() {
+	renderInNormal() {
 		let className = classnames(this.getComponentStyle(), {
 			'has-addon': this.hasAddon()
 		});
@@ -52,7 +52,7 @@ class NLabel extends NAddonComponent {
 		return this.isTextFromModel() ? this.formatValue(this.getValueFromModel()) : this.getLabel();
 	}
 	getTabIndex() {
-		return (this.isClickable() && this.isEnabled()) ? 0 : null;
+		return (this.isClickable()) ? 0 : null;
 	}
 
 	formatValue(value) {

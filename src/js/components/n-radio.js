@@ -38,7 +38,7 @@ class NRadio extends NCodeTableComponent {
 			{this.renderTextOnRight({left: textOnLeft, item: item})}
 		</div>);
 	}
-	render() {
+	renderInNormal() {
 		let className = classnames(this.getComponentStyle(), {
 			'n-radio-vertical': this.isOnVertical()
 		});

@@ -60,7 +60,7 @@ class NButton extends NPopoverComponent {
 			})}
 		</ul>);
 	}
-	render() {
+	renderInNormal() {
 		let dropdown = this.prepareDropdownItems();
 
 		let className = classnames(this.getComponentStyle(), {
@@ -109,7 +109,7 @@ class NButton extends NPopoverComponent {
 	}
 
 	onDropdownIconClicked = (evt) => {
-		if (!evt.isDefaultPrevented()) {
+		if (this.isEnabled() && !evt.isDefaultPrevented()) {
 			evt.preventDefault();
 			this.togglePopover();
 		}

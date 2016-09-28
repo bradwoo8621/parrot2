@@ -21,7 +21,7 @@ class NCheck extends NComponent {
 			<span className='n-check-box-rect' />
 		</span>);
 	}
-	render() {
+	renderInNormal() {
 		let labelDisplay = this.isLabelDisplay();
 		let textOnLeft = this.isTextOnLeft();
 		let className = classnames(this.getComponentStyle(), {
@@ -91,7 +91,7 @@ class NArrayCheck extends NCodeTableComponent {
 			model: model
 		});
 	}
-	render() {
+	renderInNormal() {
 		let className = classnames(this.getComponentStyle(), {
 			'n-array-check-vertical': this.isOnVertical()
 		});
