@@ -1,6 +1,6 @@
 import * as SDK from '../../src/js/components/n-date'
 
-let {React, ReactDOM, Model, Layout, NDate, NCalendar, $, Envs} = SDK;
+let {React, ReactDOM, Model, Layout, NDate, NDateCalendar, $, Envs} = SDK;
 
 
 $(function() {
@@ -27,7 +27,7 @@ $(function() {
 				<NDate model={model} layout={layout} />
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
-				<NCalendar model={model} layout={layoutC} />
+				<NDateCalendar model={model} layout={layoutC} />
 			</div>
 		</div>
 	</div>);

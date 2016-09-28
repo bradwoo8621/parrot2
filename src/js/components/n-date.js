@@ -2,7 +2,7 @@ import {React, ReactDOM, $, classnames, lodash, Envs, NComponent, NDropdownCompo
 import {NIcon} from './n-icon'
 import moment from 'moment'
 
-class NCalendar extends NComponent {
+class NDateCalendar extends NComponent {
 	static YEAR = 1
 	static MONTH = 2
 	static DAY = 4
@@ -180,15 +180,11 @@ class NCalendar extends NComponent {
 			{this.renderDateBody()}
 		</div>);
 	}
-	renderTime() {
-
-	}
 	renderInNormal() {
 		let className = classnames(this.getComponentStyle());
 		return (<div className={className}
 					 ref='me'>
 			{this.renderDate()}
-			{this.renderTime()}
 		</div>);
 	}
 	getComponentClassName() {
@@ -212,9 +208,9 @@ class NCalendar extends NComponent {
 		let format = this.getPrimaryDisplayFormat();
 		let oldDisplayType = this.state.displayType;
 		this.state.displayType = 
-				(/Y/i.test(format) ? NCalendar.YEAR : 0)
-				+ (/M/i.test(format) ? NCalendar.MONTH : 0)
-				+ (/D/i.test(format) ? NCalendar.DAY : 0);
+				(/Y/i.test(format) ? NDateCalendar.YEAR : 0)
+				+ (/M/i.test(format) ? NDateCalendar.MONTH : 0)
+				+ (/D/i.test(format) ? NDateCalendar.DAY : 0);
 		if (oldDisplayType != this.state.displayType) {
 			// display type changed
 			let currentDisplayType = this.getCurrentDisplayType();
@@ -238,13 +234,13 @@ class NCalendar extends NComponent {
 		return this.state.currentDisplayType;
 	}
 	isDayPicking() {
-		return this.getCurrentDisplayType() & NCalendar.DAY;
+		return this.getCurrentDisplayType() & NDateCalendar.DAY;
 	}
 	isMonthPicking() {
-		return this.getCurrentDisplayType() & NCalendar.MONTH;
+		return this.getCurrentDisplayType() & NDateCalendar.MONTH;
 	}
 	isYearPicking() {
-		return this.getCurrentDisplayType() & NCalendar.YEAR;
+		return this.getCurrentDisplayType() & NDateCalendar.YEAR;
 	}
 
 	getDisplayDate() {
@@ -291,7 +287,7 @@ class NCalendar extends NComponent {
 	onHeaderYearClicked = (evt) => {
 		let oldCurrentDisplayType = this.getCurrentDisplayType();
 		this.setState({
-			currentDisplayType: NCalendar.YEAR
+			currentDisplayType: NDateCalendar.YEAR
 		}, () => {
 			this.fireDisplayTypeChangeEvent(oldCurrentDisplayType);
 		});
@@ -299,7 +295,7 @@ class NCalendar extends NComponent {
 	onHeaderMonthClicked = (evt) => {
 		let oldCurrentDisplayType = this.getCurrentDisplayType();
 		this.setState({
-			currentDisplayType: NCalendar.MONTH
+			currentDisplayType: NDateCalendar.MONTH
 		}, () => {
 			this.fireDisplayTypeChangeEvent(oldCurrentDisplayType);
 		});
@@ -309,7 +305,7 @@ class NCalendar extends NComponent {
 		date.year(year);
 		this.setValueToModel(date);
 		this.setState({
-			currentDisplayType: NCalendar.MONTH
+			currentDisplayType: NDateCalendar.MONTH
 		});
 	}
 	onMonthClicked = (month, evt) => {
@@ -317,7 +313,7 @@ class NCalendar extends NComponent {
 		date.month(month);
 		this.setValueToModel(date);
 		this.setState({
-			currentDisplayType: NCalendar.DAY
+			currentDisplayType: NDateCalendar.DAY
 		});
 	}
 	onDayClicked = (date, evt) => {
@@ -329,7 +325,7 @@ class NCalendar extends NComponent {
 	}
 
 	fireDisplayTypeChangeEvent(oldDisplayType) {
-		this.fireEventToMonitor($.Event('typeChange', {
+		this.fireEventToMonitor($.Event('displayTypeChange', {
 			target: ReactDOM.findDOMNode(this.refs.me),
 			oldDisplayType: oldDisplayType,
 			newDisplayType: this.getCurrentDisplayType()
@@ -506,4 +502,4 @@ class NDate extends NDropdownComponent {
 }
 
 export * from './n-component'
-export {NDate, NCalendar, moment}
+export {NDate, NDateCalendar, moment}
