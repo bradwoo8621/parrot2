@@ -42,7 +42,15 @@ $(function() {
 		comp: {
 			style: 'warning',
 			collapsible: true,
-			collapsibleStyle: 'lead'
+			collapsibleStyle: 'lead',
+			children: {
+				'icon': {
+					comp: {
+						type: Envs.COMPONENT_TYPES.ICON,
+						icon: 'ban'
+					}
+				}
+			}
 		}
 	});
 	let layout6 = new Layout('panel', {
@@ -52,7 +60,15 @@ $(function() {
 			collapsible: true,
 			body: {
 				comp: {
-					style: 'primary'
+					style: 'primary',
+					children: {
+						'icon': {
+							comp: {
+								type: Envs.COMPONENT_TYPES.ICON,
+								icon: 'ban'
+							}
+						}
+					}
 				}
 			}
 		}
@@ -88,7 +104,7 @@ $(function() {
 					</NPanelHeader>
 					<NPanelBody>
 						<div data-leading='1'>Body starting...</div>
-						<div data-leading='1'>Body ending...</div>
+						<div>Body ending...</div>
 					</NPanelBody>
 				</NPanel>
 			</div>

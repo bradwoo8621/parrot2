@@ -12,11 +12,11 @@ class NPanelHeader extends NCollapsibleContainer {
 		return (<div className={className}
 					 onClick={this.onComponentClicked}
 					 ref='me'>
-			{this.renderLeadingChildren()}
+			{this.renderLeadingDOMChildren()}
 			<span className='n-panel-header-text'>
 				{this.getLabel()}
 			</span>
-			{this.renderTailingChildren()}
+			{this.renderTailingDOMChildren()}
 		</div>);
 	}
 	getComponentClassName() {
@@ -51,9 +51,9 @@ class NPanelBody extends NCollapsibleContainer {
 				});
 		return (<div className={className}
 					 ref='me'>
-			{this.renderLeadingChildren()}
-
-			{this.renderTailingChildren()}
+			{this.renderLeadingDOMChildren()}
+			{this.renderChildren()}
+			{this.renderTailingDOMChildren()}
 		</div>)
 	}
 	getComponentClassName() {
@@ -96,15 +96,13 @@ class NPanel extends NCollapsibleContainer {
 			}
 		}, headerLayout));
 
-		let header = this.getChildOf('NPanelHeader');
-		let options = this.getMixedPropsBaseOnChild(header, {
+		let header = this.getDOMChildOf('NPanelHeader');
+		let options = this.mixPropsFromDOMChild(header, {
 			layout: layout,
 			ref: 'header'
 		});
 
-			// {this.getChildrenOfChild(header)}
-		return (<NPanelHeader {...options}>
-		</NPanelHeader>);
+		return <NPanelHeader {...options} />;
 	}
 	renderBody() {
 		let bodyLayout = this.getPanelBodyLayout();
@@ -113,19 +111,18 @@ class NPanel extends NCollapsibleContainer {
 			dataId: this.getDataId(),
 			comp: {
 				style: this.getLayoutOptionValue('style'),
-				expanded: this.isExpanded()
+				expanded: this.isExpanded(),
+				children: this.getChildren()
 			}
 		}, bodyLayout));
 
-		let body = this.getChildOf('NPanelBody');
-		let options = this.getMixedPropsBaseOnChild(body, {
+		let body = this.getDOMChildOf('NPanelBody');
+		let options = this.mixPropsFromDOMChild(body, {
 			layout: layout,
 			ref: 'body'
 		});
 
-			// {this.getChildrenOfChild(body)}
-		return (<NPanelBody {...options}>
-		</NPanelBody>);
+		return <NPanelBody {...options} />;
 	}
 	renderInNormal() {
 		let collapsibleStyle = this.getCollapsibleStyle();

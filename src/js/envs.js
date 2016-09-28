@@ -1,6 +1,8 @@
 import lodash from 'lodash'
 
 class Envs {
+	static DEFAULT_COLUMN_INDEX = 9999
+	static DEFAULT_ROW_INDEX = 9999
 	constructor() {
 		this.props = {
 			cellWidth: 3,
@@ -30,7 +32,9 @@ class Envs {
 			},
 			percentageParser: function(displayText) {
 				return displayText ? (displayText / 100) : null;
-			}
+			},
+			dateValueFormat: 'YYYYMMDDHHmmss',
+			dateDisplayFormat: ['YYYY/MM/DD', 'YYYYMMDD']
 		};
 		this.viewModeRenderers = {};
 		this.renderers = {};
@@ -100,6 +104,22 @@ class Envs {
 
 	set PERCENTAGE_PARSER(value) {
 		this.props.percentageParser = value;
+	}
+
+	get DATE_VALUE_FORMAT() {
+		return this.props.dateValueFormat;
+	}
+
+	set DATE_VALUE_FORMAT(value) {
+		this.props.dateValueFormat = value;
+	}
+
+	get DATE_DISPLAY_FORMAT() {
+		return this.props.dateDisplayFormat;
+	}
+
+	set DATE_DISPLAY_FORMAT(value) {
+		this.props.dateDisplayFormat = value;
 	}
 
 	getRenderer(type) {

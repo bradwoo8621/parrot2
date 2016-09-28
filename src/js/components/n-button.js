@@ -1,6 +1,6 @@
-import {React, ReactDOM, $, classnames, Envs, NPopoverComponent, Layout} from './n-component'
+import {React, ReactDOM, $, classnames, Envs, NDropdownComponent, Layout} from './n-component'
 
-class NButton extends NPopoverComponent {
+class NButton extends NDropdownComponent {
 	renderIcon(icon) {
 		return this.renderInternalComponent(icon);
 	}

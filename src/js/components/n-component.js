@@ -555,7 +555,7 @@ class NAddonComponent extends NComponent {
 	}
 }
 
-class NPopoverComponent extends NComponent {
+class NDropdownComponent extends NComponent {
 	internalInstallLifecycleMonitors() {
 		super.internalInstallLifecycleMonitors();
 		$(document).on('click', this.bindToThis(this.onDocumentClicked))
@@ -625,21 +625,21 @@ class NCodeTableComponent extends NComponent {
 }
 
 class NContainer extends NComponent {
-	renderLeadingChildren(propsFromParent) {
+	renderLeadingDOMChildren(propsFromParent) {
 		return React.Children.map(this.props.children, (child) => {
 			if (child.props['data-leading']) {
-				return this.renderChild(child, propsFromParent);
+				return this.renderDOMChild(child, propsFromParent);
 			}
 		});
 	}
-	renderTailingChildren(propsFromParent) {
+	renderTailingDOMChildren(propsFromParent) {
 		return React.Children.map(this.props.children, (child) => {
 			if (!child.props['data-leading']) {
-				return this.renderChild(child, propsFromParent);
+				return this.renderDOMChild(child, propsFromParent);
 			}
 		});
 	}
-	renderChild(child, propsFromParent) {
+	renderDOMChild(child, propsFromParent) {
 		if (typeof child.type === 'string') {
 			// plain dom node
 			return child;
@@ -662,12 +662,12 @@ class NContainer extends NComponent {
 					}));
 		}
 	}
-	renderChildren(propsFromParent) {
+	renderDOMChildren(propsFromParent) {
 		return React.Children.map(this.props.children, (child) => {
-			return this.renderChild(child, propsFromParent);
+			return this.renderDOMChild(child, propsFromParent);
 		});
 	}
-	getChildOf(type) {
+	getDOMChildOf(type) {
 		let children = React.Children.map(this.props.children, function(child) {
 			return (child.type === type || child.type.name === type) ? child : null;
 		});
@@ -680,7 +680,8 @@ class NContainer extends NComponent {
 			return null;
 		}
 	}
-	getChildrenOfChild(childNodeOrType) {
+	// parameter can be string or react component
+	getDOMChildrenOfDOMChild(childNodeOrType) {
 		if (!childNodeOrType) {
 			return null;
 		}
@@ -688,14 +689,14 @@ class NContainer extends NComponent {
 		let child = null;
 		if (typeof childNodeOrType === 'string') {
 			// it's a type
-			child = this.getChildOf(childNodeOrType);
+			child = this.getDOMChildOf(childNodeOrType);
 		} else {
 			// it's a react component
 			child = childNodeOrType;
 		}
 		return child.props.children;
 	}
-	getMixedPropsBaseOnChild(child, newProps) {
+	mixPropsFromDOMChild(child, newProps) {
 		let props = null;
 		if (!child) {
 			props = {};
@@ -719,6 +720,74 @@ class NContainer extends NComponent {
 		});
 		// console.log(props);
 		return props;
+	}
+	renderChildren() {
+		let children = this.getChildren();
+		if (!children) {
+			return null;
+		}
+
+		let rows = {};
+		Object.keys(children).forEach((key) => {
+			let child = children[key];
+			let layout = new Layout(key, child);
+
+			let rowIndex = this.wrapOptionValue(layout.getRowIndex());
+			rowIndex = rowIndex == null ? Envs.DEFAULT_ROW_INDEX : rowIndex;
+			let row = rows[rowIndex];
+			if (row == null) {
+				row = {};
+				rows[rowIndex] = row;
+			}
+
+			let columnIndex = this.wrapOptionValue(layout.getColumnIndex());
+			columnIndex = columnIndex == null ? Envs.DEFAULT_COLUMN_INDEX : columnIndex;
+			let columnInRow = row[columnIndex];
+			if (columnInRow == null) {
+				columnInRow = [];
+				row[columnIndex] = columnInRow;
+			}
+			columnInRow.push(layout);
+		});
+		return Object.keys(rows).sort((index1, index2) => {
+			return index1 - index2;
+		}).map(rowIndex => {
+			return this.renderRow(rows[rowIndex], rowIndex);
+		});
+	}
+	renderRow(row, rowIndex) {
+		if (!row) {
+			return null;
+		}
+		let content = Object.keys(row).sort((index1, index2) => {
+			return index1 - index2;
+		}).map(columnIndex => {
+			return this.renderColumn(row[columnIndex]);
+		});
+		return (<div className='n-row'
+					 key={rowIndex}>
+			{content}
+		</div>);
+	}
+	renderColumn(column) {
+		if (!column) {
+			return null;
+		}
+		return column.map((layout, layoutIndex) => {
+			let props = {
+				model: this.getPrimaryModel(),
+				layout: layout,
+				orientation: this.getOrientation(),
+				viewMode: this.isViewMode(),
+				ref: layout.getId(),
+				key: layoutIndex
+			};
+			// TODO need to wrap into cell
+			return Envs.render(layout.getTypeAsString(), props);
+		});
+	}
+	getChildren() {
+		return this.getLayoutOptionValue('children');
 	}
 }
 
@@ -757,7 +826,7 @@ export {
 
 	NComponent,
 	NAddonComponent,
-	NPopoverComponent,
+	NDropdownComponent,
 	NCodeTableComponent,
 	NContainer,
 	NCollapsibleContainer

@@ -1,5 +1,6 @@
 export * from './components/n-button'
 export * from './components/n-check'
+export * from './components/n-date'
 export * from './components/n-icon'
 export * from './components/n-label'
 export * from './components/n-panel'

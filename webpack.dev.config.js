@@ -11,6 +11,7 @@ module.exports = {
 	entry: {
 		'n-button': './html-test/n-button/test.js',
 		'n-check': './html-test/n-check/test.js',
+		'n-date': './html-test/n-date/test.js',
 		'n-icon': './html-test/n-icon/test.js',
 		'n-label': './html-test/n-label/test.js',
 		'n-panel': './html-test/n-panel/test.js',
@@ -58,6 +59,7 @@ module.exports = {
         //  on the global var jQuery
         'jquery': 'jQuery',
         'lodash': '_',
+        'moment': 'moment',
 
         'react': 'React',
         'react-dom': 'ReactDOM',
