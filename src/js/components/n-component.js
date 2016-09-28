@@ -515,20 +515,20 @@ class NAddonComponent extends NComponent {
 			})}
 		</div>);
 	}
-	renderLeftAddons() {
-		return this.renderAddons(this.getLeftAddons());
+	renderLead() {
+		return this.renderAddons(this.getLead());
 	}
-	renderRightAddons() {
-		return this.renderAddons(this.getRightAddons());
+	renderTail() {
+		return this.renderAddons(this.getTail());
 	}
-	getLeftAddons() {
-		return this.getLayoutOptionValue('leftAddons');
+	getLead() {
+		return this.getLayoutOptionValue('lead');
 	}
-	getRightAddons() {
-		return this.getLayoutOptionValue('rightAddons');
+	getTail() {
+		return this.getLayoutOptionValue('tail');
 	}
 	hasAddon() {
-		return this.getLeftAddons() || this.getRightAddons();
+		return this.getLead() || this.getTail();
 	}
 }
 
@@ -575,14 +575,14 @@ class NPopoverComponent extends NComponent {
 		let me = $(ReactDOM.findDOMNode(this.refs.me));
 		if (!me.hasClass('n-dropdown-open')) {
 			me.addClass('n-dropdown-open');
-			this.fireEventToMonitor($.Event('n-popoverOpen', {target: me[0]}));
+			this.fireEventToMonitor($.Event('popoverOpen', {target: me[0]}));
 		}
 	}
 	hidePopover() {
 		let me = $(ReactDOM.findDOMNode(this.refs.me));
 		if (me.hasClass('n-dropdown-open')) {
 			me.removeClass('n-dropdown-open');
-			this.fireEventToMonitor($.Event('n-popoverClose', {target: me[0]}));
+			this.fireEventToMonitor($.Event('popoverClose', {target: me[0]}));
 		}
 	}
 	togglePopover() {
@@ -699,6 +699,29 @@ class NContainer extends NComponent {
 	}
 }
 
+class NCollapsibleContainer extends NContainer {
+	isCollapsible() {
+		return this.getLayoutOptionValue('collapsible', false);
+	}
+	isInitExpanded() {
+		return this.getLayoutOptionValue('expanded', true);
+	}
+	isExpanded() {
+		if (this.state.expanded == null) {
+			this.state.expanded = this.isInitExpanded();
+		}
+		return this.state.expanded;
+	}
+	expand() {
+		this.setState({expanded: true});
+		this.fireEventToMonitor($.Event('expand', ReactDOM.findDOMNode(this.refs.me)));	
+	}
+	collapse() {
+		this.setState({expanded: false});
+		this.fireEventToMonitor($.Event('collapse', ReactDOM.findDOMNode(this.refs.me)));	
+	}
+}
+
 export * from '../model/model'
 export * from '../layout/layout'
 export * from '../envs'
@@ -713,5 +736,6 @@ export {
 	NAddonComponent,
 	NPopoverComponent,
 	NCodeTableComponent,
-	NContainer
+	NContainer,
+	NCollapsibleContainer
 }

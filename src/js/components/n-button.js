@@ -107,9 +107,6 @@ class NButton extends NPopoverComponent {
 	hasDropdown(dropdownItems) {
 		return dropdownItems && dropdownItems.length > 0;
 	}
-	hasClickHandling() {
-		return this.getEventMonitor('click') != null;
-	}
 
 	onDropdownIconClicked = (evt) => {
 		if (!evt.isDefaultPrevented()) {
@@ -118,7 +115,7 @@ class NButton extends NPopoverComponent {
 		}
 	}
 	onComponentClicked = (evt) => {
-		if (this.hasClickHandling()) {
+		if (this.isClickable()) {
 			// click defined, event there are dropdown items
 			// always respond click handler
 			this.fireEventToMonitor(evt, 'click');

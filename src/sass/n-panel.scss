@@ -45,7 +45,7 @@
 	padding-left: $pad-15;
 	padding-right: $pad-15;
 	border: $border-1;
-	border-radius: 2px;
+	border-radius: $border-radius;
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	color: $color-font;
@@ -67,7 +67,7 @@
 		position: relative;
 		display: inline-block;
 	}
-	&.n-panel-collapsible {
+	&.n-panel-header-collapsible {
 		cursor: pointer;
 		&.n-panel-collapsible-tail {
 			padding-right: 0.35rem;
@@ -92,13 +92,17 @@
 				}
 			}
 		}
-		&.n-panel-expanded {
+		&.n-panel-header-expanded {
 			&.n-panel-collapsible-tail:after,
 			&.n-panel-collapsible-lead:before,
 			&.n-panel-collapsible-follow .n-panel-header-text:after {
 				transform: rotate(180deg);
 				margin-top: 0.01rem;
 			}
+		}
+		&.n-panel-header-collapsed {
+			border-bottom-left-radius: $border-radius;
+			border-bottom-right-radius: $border-radius;
 		}
 	}
 }
@@ -109,7 +113,7 @@
 	padding-right: $pad-15;
 	border: $border-1;
 	border-top: $border-0;
-	border-radius: 2px;
+	border-radius: $border-radius;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	color: $color-font;
@@ -124,5 +128,11 @@
 	&.n-panel-body-borderless {
 		border-width: 0;
 		border-radius: 0;
+	}
+	&.n-panel-body-expanded {
+		display: block;
+	}
+	&.n-panel-body-collapsed {
+		display: none;
 	}
 }

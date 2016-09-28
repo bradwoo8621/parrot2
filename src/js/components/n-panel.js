@@ -1,12 +1,13 @@
-import {React, ReactDOM, $, lodash, classnames, Envs, Layout, NContainer} from './n-component'
+import {React, ReactDOM, $, lodash, classnames, Envs, Layout, NCollapsibleContainer} from './n-component'
 
-class NPanelHeader extends NContainer {
+class NPanelHeader extends NCollapsibleContainer {
 	render() {
 		let collapsibleStyle = this.getCollapsibleStyle();
 		let className = classnames(this.getComponentStyle(),
 				this.getPanelStyle(), {
-					'n-panel-collapsible': this.isCollapsible(),
-					'n-panel-expanded': this.isExpanded()
+					'n-panel-header-collapsible': this.isCollapsible(),
+					'n-panel-header-expanded': this.isExpanded(),
+					'n-panel-header-collapsed': !this.isExpanded()
 				}, `n-panel-collapsible-${collapsibleStyle}`);
 		return (<div className={className}
 					 onClick={this.onComponentClicked}
@@ -24,33 +25,30 @@ class NPanelHeader extends NContainer {
 	getPanelStyle() {
 		return 'n-panel-header-' + this.getLayoutOptionValue('style', 'default');
 	}
-	isCollapsible() {
-		return this.getLayoutOptionValue('collapsible', false);
-	}
-	isInitExpanded() {
-		return this.getLayoutOptionValue('expanded', true);
-	}
 	getCollapsibleStyle() {
 		// lead/follow/tail
 		return this.getLayoutOptionValue('collapsibleStyle', 'tail');
 	}
-	isExpanded() {
-		if (this.state.expanded == null) {
-			this.state.expanded = this.isInitExpanded();
-		}
-		return this.state.expanded;
-	}
 
 	onComponentClicked = (evt) => {
-		this.setState({expanded: !this.state.expanded});
-		this.fireEventToMonitor(evt, 'click');
+		if (!this.isCollapsible()) {
+			return;
+		}
+		if (this.isExpanded()) {
+			this.collapse();
+		} else {
+			this.expand();
+		}
 	}
 }
 
-class NPanelBody extends NContainer {
+class NPanelBody extends NCollapsibleContainer {
 	render() {
 		let className = classnames(this.getComponentStyle(),
-									this.getPanelStyle());
+				this.getPanelStyle(), {
+					'n-panel-body-expanded': this.isExpanded(),
+					'n-panel-body-collapsed': !this.isExpanded()
+				});
 		return (<div className={className}
 					 ref='me'>
 			{this.renderLeadingChildren()}
@@ -64,18 +62,19 @@ class NPanelBody extends NContainer {
 	getPanelStyle() {
 		return 'n-panel-body-' + this.getLayoutOptionValue('style', 'default');
 	}
-	isInitExpanded() {
-		return this.getLayoutOptionValue('expanded', true);
+	expand() {
+		$(ReactDOM.findDOMNode(this.refs.me)).slideDown(500, () => {
+			super.expand();
+		});
 	}
-	isExpanded() {
-		if (!this.state.expanded) {
-			this.state.expanded = this.isInitExpanded();
-		}
-		return this.state.expanded;
+	collapse() {
+		$(ReactDOM.findDOMNode(this.refs.me)).slideUp(500, () => {
+			super.collapse();
+		});
 	}
 }
 
-class NPanel extends NContainer {
+class NPanel extends NCollapsibleContainer {
 	renderHeader() {
 		let headerLayout = this.getPanelHeaderLayout();
 		if (headerLayout === false) {
@@ -92,9 +91,8 @@ class NPanel extends NContainer {
 				collapsibleStyle: this.getCollapsibleStyle()
 			},
 			evt: {
-				click: (evt) => {
-					this.setState({expanded: !this.state.expanded});
-				}
+				expand: this.onExpandChanged.bind(this),
+				collapse: this.onExpandChanged.bind(this)
 			}
 		}, headerLayout));
 
@@ -104,8 +102,8 @@ class NPanel extends NContainer {
 			ref: 'header'
 		});
 
+			// {this.getChildrenOfChild(header)}
 		return (<NPanelHeader {...options}>
-			{this.getChildrenOfChild(header)}
 		</NPanelHeader>);
 	}
 	renderBody() {
@@ -125,15 +123,16 @@ class NPanel extends NContainer {
 			ref: 'body'
 		});
 
+			// {this.getChildrenOfChild(body)}
 		return (<NPanelBody {...options}>
-			{this.getChildrenOfChild(body)}
 		</NPanelBody>);
 	}
 	render() {
 		let collapsibleStyle = this.getCollapsibleStyle();
 		let className = classnames(this.getComponentStyle(),
 				this.getPanelStyle(), {
-					'n-panel-expanded': this.isExpanded()
+					'n-panel-expanded': this.isExpanded(),
+					'n-panel-collapsed': !this.isExpanded()
 				});
 		return (<div className={className}
 					 ref='me'>
@@ -169,6 +168,19 @@ class NPanel extends NContainer {
 			this.state.expanded = this.isInitExpanded();
 		}
 		return this.state.expanded;
+	}
+
+	onExpandChanged(evt) {
+		switch(evt.type) {
+			case 'expand':
+				this.refs.body.expand();
+				this.expand();
+				break;
+			case 'collapse':
+				this.refs.body.collapse();
+				this.collapse();
+				break;
+		}
 	}
 }
 

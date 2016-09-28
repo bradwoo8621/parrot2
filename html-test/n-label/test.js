@@ -27,13 +27,13 @@ $(function() {
 	});
 	let layout = new Layout('name', {
 		comp: {
-			leftAddons: {
+			lead: {
 				comp: {
 					type: Envs.COMPONENT_TYPES.ICON,
 					icon: 'ban'
 				}
 			},
-			rightAddons: {
+			tail: {
 				comp: {
 					type: Envs.COMPONENT_TYPES.STACK_ICON,
 					foreicon: 'camera',

@@ -124,10 +124,10 @@ $(function() {
 			}]
 		},
 		evt: {
-			'n-popoverOpen': function(evt) {
+			'popoverOpen': function(evt) {
 				console.log(this, 'dropdown open', evt);
 			},
-			'n-popoverClose': function(evt) {
+			'popoverClose': function(evt) {
 				console.log(this, 'dropdown close', evt);
 			}
 		}
@@ -153,7 +153,7 @@ $(function() {
 	let layoutT = new Layout('name', {
 		comp: {
 			placeholder: 'Input here',
-			leftAddons: {
+			lead: {
 				label: 'Hi',
 				comp: {
 					type: Envs.COMPONENT_TYPES.BUTTON,
@@ -165,7 +165,7 @@ $(function() {
 					}
 				}
 			},
-			rightAddons: {
+			tail: {
 				label: 'Bye',
 				comp: {
 					type: Envs.COMPONENT_TYPES.BUTTON,

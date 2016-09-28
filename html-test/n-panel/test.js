@@ -49,7 +49,12 @@ $(function() {
 		label: 'A Panel',
 		comp: {
 			style: 'danger',
-			collapsible: true
+			collapsible: true,
+			body: {
+				comp: {
+					style: 'primary'
+				}
+			}
 		}
 	});
 	let layout7 = new Layout('panel', {
@@ -77,10 +82,19 @@ $(function() {
 				<NPanel model={model} layout={layout5} />
 			</div>
 			<div className='n-col-sm-12 n-col-md-6'>
-				<NPanel model={model} layout={layout6} />
+				<NPanel model={model} layout={layout6} >
+					<NPanelHeader>
+						<span> More Text...</span>
+					</NPanelHeader>
+					<NPanelBody>
+						<div data-leading='1'>Body starting...</div>
+						<div data-leading='1'>Body ending...</div>
+					</NPanelBody>
+				</NPanel>
 			</div>
 			<div className='n-col-sm-12 n-col-md-6'>
-				<NPanel model={model} layout={layout7} />
+				<NPanel model={model} layout={layout7} >
+				</NPanel>
 			</div>
 			<div className='n-col-sm-12 n-col-md-6'>
 				<NPanel model={model} layout={layout7}>

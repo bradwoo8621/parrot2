@@ -30,13 +30,13 @@ $(function() {
 	let layout = new Layout('name', {
 		comp: {
 			placeholder: 'Input here',
-			leftAddons: {
+			lead: {
 				comp: {
 					type: Envs.COMPONENT_TYPES.ICON,
 					icon: 'ban'
 				}
 			},
-			rightAddons: {
+			tail: {
 				comp: {
 					type: Envs.COMPONENT_TYPES.STACK_ICON,
 					foreicon: 'camera',
@@ -83,7 +83,7 @@ $(function() {
 				display: Envs.PERCENTAGE_FORMATTER,
 				model: Envs.PERCENTAGE_PARSER
 			},
-			rightAddons: {
+			tail: {
 				label: '%',
 				comp: {
 					type: Envs.COMPONENT_TYPES.LABEL,

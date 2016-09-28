@@ -46,9 +46,9 @@ class NText extends NAddonComponent {
 		});
 		return (<div className={className}
 					 ref='me'>
-			{this.renderLeftAddons()}
+			{this.renderLead()}
 			{this.renderText()}
-			{this.renderRightAddons()}
+			{this.renderTail()}
 			{this.renderNormalLine()}
 			{this.renderFocusLine()}
 		</div>);

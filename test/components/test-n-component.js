@@ -145,16 +145,6 @@ describe('NComponent', function() {
 			assert.equal(comp.getEventMonitor('focus'), onFocus);
 			assert.equal(comp.getEventMonitor('blur'), onBlur);
 			assert.equal(comp.getEventMonitor('mouseOver'), onMouseOver);
-
-			let monitorsOf = comp.getEventMonitorsOf('focus', 'blur');
-			assert.equal(Object.keys(monitorsOf).length, 2);
-			assert.equal(monitorsOf.focus, onFocus);
-			assert.equal(monitorsOf.blur, onBlur);
-
-			let monitorsBut = comp.getEventMonitorsBut('blur');
-			assert.equal(Object.keys(monitorsBut).length, 2);
-			assert.equal(monitorsBut.focus, onFocus);
-			assert.equal(monitorsBut.mouseOver, onMouseOver);
 		});
 	});
 });

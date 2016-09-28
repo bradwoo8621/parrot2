@@ -6,6 +6,7 @@ class NLabel extends NAddonComponent {
 			clickable: this.isClickable()
 		});
 		return (<span className={className}
+					  onClick={this.onComponentClicked}
 					  ref='lbl'>
 			{this.getDisplayText()}
 		</span>);
@@ -17,9 +18,9 @@ class NLabel extends NAddonComponent {
 		return (<div className={className}
 					 tabIndex={this.getTabIndex()}
 					 ref='me'>
-			{this.renderLeftAddons()}
+			{this.renderLead()}
 			{this.renderText()}
-			{this.renderRightAddons()}
+			{this.renderTail()}
 			{this.renderNormalLine()}
 			{this.renderFocusLine()}
 		</div>);
@@ -60,6 +61,11 @@ class NLabel extends NAddonComponent {
 			return formatter.display.call(this, value);
 		} else {
 			return value;
+		}
+	}
+	onComponentClicked = (evt) => {
+		if (this.isClickable()) {
+			this.fireEventToMonitor(evt);
 		}
 	}
 }
