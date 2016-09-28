@@ -15,7 +15,7 @@ class NCalendar extends NComponent {
 			return null;
 		}
 		return (<div className='n-calendar-date-header-text'>
-			<span className='n-calendar-date-header-year'>
+			<span>
 				{date.format(this.getDateHeaderFormat().year) - 12}
 				{' ~ '}
 				{date.format(this.getDateHeaderFormat().year) * 1 + 12}
@@ -27,8 +27,7 @@ class NCalendar extends NComponent {
 			return null;
 		}
 		return (<div className='n-calendar-date-header-text'>
-			<span className='n-calendar-date-header-year'
-				  onClick={this.onHeaderYearClicked}>
+			<span className='clickable' onClick={this.onHeaderYearClicked}>
 				{date.format(this.getDateHeaderFormat().year)}
 			</span>
 		</div>);
@@ -38,13 +37,13 @@ class NCalendar extends NComponent {
 			return null;
 		}
 		return (<div className='n-calendar-date-header-text'>
-			<span className='n-calendar-date-header-year'
-				  onClick={this.onHeaderYearClicked}>
-				{date.format(this.getDateHeaderFormat().year)}
-			</span>
-			<span className='n-calendar-date-header-month'
-				  onClick={this.onHeaderMonthClicked}>
-				{date.format(this.getDateHeaderFormat().month)}
+			<span>
+				<span className='clickable' onClick={this.onHeaderYearClicked}>
+					{date.format(this.getDateHeaderFormat().year)}
+				</span>
+				<span className='clickable' onClick={this.onHeaderMonthClicked}>
+					{date.format(this.getDateHeaderFormat().month)}
+				</span>
 			</span>
 		</div>);
 	}
@@ -78,8 +77,14 @@ class NCalendar extends NComponent {
 		for (index = 0; index < 12; index++) {
 			years.push(year + index + 1);
 		}
+		let today = moment();
 		return years.map((year, index) => {
-			return (<span className='n-calendar-date-body-body-text year'
+			let className = classnames('n-calendar-date-body-body-text year', {
+				'today': year == today.year(),
+				'active': year == date.year()
+			});
+			return (<span className={className}
+						  onClick={this.onYearClicked.bind(this, year)}
 						  key={index}>
 				<span>{year}</span>
 			</span>);
@@ -89,9 +94,15 @@ class NCalendar extends NComponent {
 		if (!this.isMonthPicking()) {
 			return null;
 		}
+		let today = moment();
 		let months = moment.monthsShort();
 		return months.map((month, index) => {
-			return (<span className='n-calendar-date-body-body-text month'
+			let className = classnames('n-calendar-date-body-body-text month', {
+				'today': index == today.month(),
+				'active': index == date.month()
+			});
+			return (<span className={className}
+						  onClick={this.onMonthClicked.bind(this, index)}
 						  key={index}>
 				<span>{month}</span>
 			</span>);
@@ -293,9 +304,28 @@ class NCalendar extends NComponent {
 			this.fireDisplayTypeChangeEvent(oldCurrentDisplayType);
 		});
 	}
+	onYearClicked = (year, evt) => {
+		let date = this.getDisplayDate();
+		date.year(year);
+		this.setValueToModel(date);
+		this.setState({
+			currentDisplayType: NCalendar.MONTH
+		});
+	}
+	onMonthClicked = (month, evt) => {
+		let date = this.getDisplayDate();
+		date.month(month);
+		this.setValueToModel(date);
+		this.setState({
+			currentDisplayType: NCalendar.DAY
+		});
+	}
 	onDayClicked = (date, evt) => {
-		this.setValueToModel(this.parseText(date, this.getValueFormat()));
-		this.fireEventToMonitor($.Event('change', {target: ReactDOM.findDOMNode(this.refs.me)}));
+		this.setValueToModel(date);
+	}
+	// value should be moment
+	setValueToModel(value) {
+		super.setValueToModel(this.parseText(value, this.getValueFormat()));
 	}
 
 	fireDisplayTypeChangeEvent(oldDisplayType) {

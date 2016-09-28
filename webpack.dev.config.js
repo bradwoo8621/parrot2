@@ -23,7 +23,7 @@ module.exports = {
 		'style-default': './src/sass/bundle-default.scss',
 
 		// all
-		// 'nest-parrot': './src/js/parrot.js'
+		'nest-parrot': './src/js/parrot.js'
 	},
 	output: {
         path: path.join(__dirname, 'html-test'),

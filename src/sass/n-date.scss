@@ -26,7 +26,7 @@
 		border: $border-1;
 		border-radius: $border-radius;
 		min-width: 300px;
-    	max-width: 300px;
+		max-width: 300px;
 		.n-calendar-date-header {
 			position: relative;
 			display: inline-table;
@@ -39,39 +39,28 @@
 				display: table-cell;
 				width: 100%;
 				position: relative;
-				&:before {
-					display: table;
-					content: '';
-				}
-				&:after {
-					display: table;
-					content: '';
-					clear: both;
-				}
-				span {
-					padding: $pad-0 $pad-15;
-					white-space: nowrap;
-					float: left;
+				> span {
 					display: block;
+					text-align: center;
 					position: relative;
-					width: 50%;
-					cursor: pointer;
-					&:hover {
-						text-decoration: underline;
-						color: $color-link;
+					white-space: nowrap;
+					span {
+						white-space: nowrap;
+						position: relative;
+						&:last-child {
+							margin-left: $margin-5;
+						}
+						&:first-child {
+							margin-right: $margin-5;
+						}
+						&:last-child:first-child {
+							margin: $margin-0;
+						}
 					}
-					&:first-child {
-						text-align: right;
-						padding-right: $pad-5;
-					}
-					&:last-child {
-						text-align: left;
-						padding-left: $pad-5;
-					}
-					&:first-child:last-child {
-						width: 100%;
-						text-align: center;
-					}
+				}
+				span.clickable:hover {
+					text-decoration: underline;
+					color: $color-link;
 				}
 			}
 			i {
@@ -113,6 +102,10 @@
 				position: relative;
 				width: percentage(1 / 7);
 				text-align: center;
+				&:nth-child(7n),
+				&:nth-child(7n + 1) {
+					color: inherit;
+				}
 			}
 			.n-calendar-date-body-body-text {
 				line-height: $line-height;
@@ -121,9 +114,22 @@
 				float: left;
 				text-align: center;
 				&.today span {
-					background-color: $color-success;
-					color: $color-reverse;
-					font-weight: bold;
+					color: $color-success;
+					&:before,
+					&:after {
+						content: '';
+						display: block;
+						position: absolute;
+						background: $color-success;
+						width: 0.1rem;
+						height: 0.1rem;
+					}
+					&:before {
+						transform: rotate(20deg);
+					}
+					&:after {
+						transform: rotate(65deg);
+					}
 				}
 				&.active span,
 				&.today.active span {
@@ -146,24 +152,51 @@
 				}
 				&.date {
 					width: percentage(1 / 7);
+					&.today span {
+						&:before,
+						&:after {
+							bottom: 0.02rem;
+							right: 0.02rem;
+						}
+					}
+					&:not(.before):not(.after) {
+						&:nth-child(7n + 1),
+						&:nth-child(7n + 2) {
+							color: $color-danger;
+						}
+					}
 				}
 				&.month {
 					width: 25%;
 					height: $line-height + 0.46rem;
 					line-height: $line-height + 0.46rem;
 					span {
-					    line-height: 0.7rem;
-					    height: 0.7rem;
-					    min-width: 0.7rem;
+						line-height: 0.6rem;
+						height: 0.6rem;
+						min-width: 0.6rem;
+					}
+					&.today span {
+						&:before,
+						&:after {
+							bottom: 0.2rem;
+							right: 0.1rem;
+						}
 					}
 				}
 				&.year {
 					width: 20%;
 					height: $line-height + 0.156rem;
 					span {
-					    line-height: 0.4rem;
-					    height: 0.4rem;
-					    min-width: 0.4rem;
+						line-height: 0.4rem;
+						height: 0.4rem;
+						min-width: 0.4rem;
+					}
+					&.today span {
+						&:before,
+						&:after {
+							bottom: 0.05rem;
+							right: 0.05rem;
+						}
 					}
 				}
 				span {
