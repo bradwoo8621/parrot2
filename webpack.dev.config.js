@@ -52,7 +52,7 @@ module.exports = {
 	},
 	plugins: [
     	extractSASS, 
-    	//uglifyJS
+    	// uglifyJS
     ],
     externals: {
         // require('jquery') is external and available

@@ -416,7 +416,6 @@ class NComponent extends React.Component {
 	}
 	getDOMEventMonitorsBut() {
 		let monitors = this.getEventMonitors();
-		let subset = {};
 		let filterList = Array.prototype.slice.call(arguments, 0);
 		if (filterList.length == 0) {
 			// all
@@ -521,8 +520,6 @@ class NComponent extends React.Component {
 class NAddonComponent extends NComponent {
 	// renderer
 	renderAddon(addon, addonIndex) {
-		// must and only have one key
-		let layout = new Layout(this.getDataId(), addon);
 		return this.renderInternalComponent(addon, {
 			key: addonIndex
 		});

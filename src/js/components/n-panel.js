@@ -125,7 +125,6 @@ class NPanel extends NCollapsibleContainer {
 		return <NPanelBody {...options} />;
 	}
 	renderInNormal() {
-		let collapsibleStyle = this.getCollapsibleStyle();
 		let className = classnames(this.getComponentStyle(),
 				this.getPanelStyle(), {
 					'n-panel-expanded': this.isExpanded(),
