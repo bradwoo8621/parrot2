@@ -721,8 +721,8 @@ class NContainer extends NComponent {
 		// console.log(props);
 		return props;
 	}
-	renderChildren() {
-		let children = this.getChildren();
+	renderChildren(children) {
+		children = children ? children : this.getChildren();
 		if (!children) {
 			return null;
 		}
@@ -788,6 +788,18 @@ class NContainer extends NComponent {
 	}
 	getChildren() {
 		return this.getLayoutOptionValue('children');
+	}
+	renderLeadingChildren() {
+		return this.renderChildren(this.getLeadingChildren());
+	}
+	renderTailingChildren() {
+		return this.renderChildren(this.getTailingChildren());
+	}
+	getLeadingChildren() {
+		return this.getLayoutOptionValue('leadChildren');
+	}
+	getTailingChildren() {
+		return this.getLayoutOptionValue('tailChildren');
 	}
 }
 

@@ -34,7 +34,23 @@ $(function() {
 		comp: {
 			style: 'info',
 			collapsible: true,
-			collapsibleStyle: 'follow'
+			collapsibleStyle: 'follow',
+			leadChildren: {
+				'icon': {
+					comp: {
+						type: Envs.COMPONENT_TYPES.ICON,
+						icon: 'ban'
+					}
+				}
+			},
+			tailChildren: {
+				'icon': {
+					comp: {
+						type: Envs.COMPONENT_TYPES.ICON,
+						icon: 'close'
+					}
+				}
+			}
 		}
 	});
 	let layout5 = new Layout('panel', {

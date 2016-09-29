@@ -103,6 +103,18 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 	isDaySupported() {
 		return this.getDisplayType() & DAY;
 	}
+	isCloseButtonShown() {
+		return this.getLayoutOptionValue('showClose', false);
+	}
+	isNowButtonShown() {
+		return this.getLayoutOptionValue('showNow', true);
+	}
+	isClearButtonShown() {
+		return this.getLayoutOptionValue('showClear', true);
+	}
+	hasFooter() {
+		return this.isClearButtonShown() || this.isNowButtonShown() || this.isCloseButtonShown();
+	}
 
 	getValueFromModel() {
 		let value = this.formatValue(super.getValueFromModel(), this.getValueFormat());
@@ -153,6 +165,65 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		}
 	}
 };
+
+class NDateFooter extends NComponent {
+	renderClearButton() {
+		if (this.isClearButtonShown()) {
+			return (<div className='n-date-footer-button'>
+				<NIcon n-comp-icon='trash-o'
+					   model={this.getPrimaryModel()}
+					   n-evt-click={this.onClearIconClicked} />
+			</div>);
+		}
+	}
+	renderNowButton() {
+		if (this.isNowButtonShown()) {
+			return (<div className='n-date-footer-button'>
+				<NIcon n-comp-icon='crosshairs'
+					   model={this.getPrimaryModel()}
+					   n-evt-click={this.onNowIconClicked} />
+			</div>);
+		}
+	}
+	renderCloseButton() {
+		if (this.isCloseButtonShown()) {
+			return (<div className='n-date-footer-button'>
+				<NIcon n-comp-icon='close'
+					   model={this.getPrimaryModel()}
+					   n-evt-click={this.onCloseIconClicked} />
+			</div>);
+		}
+	}
+	renderInNormal() {
+		return (<div className={this.getComponentStyle()}
+					 ref='me'>
+			{this.renderClearButton()}
+			{this.renderNowButton()}
+			{this.renderCloseButton()}
+		</div>);
+	}
+	getComponentClassName() {
+		return 'n-date-footer';
+	}
+	isCloseButtonShown() {
+		return this.getLayoutOptionValue('showClose', false);
+	}
+	isNowButtonShown() {
+		return this.getLayoutOptionValue('showNow', true);
+	}
+	isClearButtonShown() {
+		return this.getLayoutOptionValue('showClear', true);
+	}
+	onClearIconClicked = (evt) => {
+		this.fireEventToMonitor(evt, 'clearClick');
+	}
+	onNowIconClicked = (evt) => {
+		this.fireEventToMonitor(evt, 'nowClick');
+	}
+	onCloseIconClicked = (evt) => {
+		this.fireEventToMonitor(evt, 'closeClick');
+	}
+}
 
 class NDateCalendar extends NDateComponent(NComponent) {
 	renderDateHeaderForYear(date) {
@@ -341,15 +412,25 @@ class NDateCalendar extends NDateComponent(NComponent) {
 			{this.renderDateBodyBody()}
 		</div>);
 	}
+	renderDateFooter() {
+		return (<NDateFooter model={this.getPrimaryModel()}
+							 n-comp-showClose={this.isCloseButtonShown()}
+							 n-comp-showClear={this.isClearButtonShown()}
+							 n-comp-showNow={this.isNowButtonShown()}
+							 n-evt-closeClick={this.onCloseClicked}
+							 n-evt-clearClick={this.onClearClicked}
+							 n-evt-nowClick={this.onNowClicked} />);
+	}
 	renderDate() {
-		return (<div className='n-calendar-date'>
+		let hasFooter = this.hasFooter();
+		return (<div className={classnames('n-calendar-date', {'n-calendar-date-no-footer': !hasFooter})}>
 			{this.renderDateHeader()}
 			{this.renderDateBody()}
+			{hasFooter ? this.renderDateFooter() : null}
 		</div>);
 	}
 	renderInNormal() {
-		let className = classnames(this.getComponentStyle());
-		return (<div className={className}
+		return (<div className={this.getComponentStyle()}
 					 ref='me'>
 			{this.renderDate()}
 		</div>);
@@ -497,6 +578,20 @@ class NDateCalendar extends NDateComponent(NComponent) {
 			newDisplayDate: date
 		}));
 	}
+	onCloseClicked = (evt) => {
+		this.fireEventToMonitor(evt, 'closeClick');
+	}
+	onNowClicked = (evt) => {
+		this.setState({
+			displayDate: moment()
+		}, () => {
+			this.fireEventToMonitor(evt, 'nowClick');
+		})
+	}
+	onClearClicked = (evt) => {
+		this.setValueToModel(null);
+		this.fireEventToMonitor(evt, 'clearClick');
+	}
 
 	fireDisplayTypeChangeEvent(oldDisplayType) {
 		this.fireEventToMonitor($.Event('displayTypeChange', {
@@ -512,7 +607,7 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 		this.getComponent().off('change', this.onComponentChanged);
 	}
 	postDidUpdate() {
-		let compValue = this.formatValue(this.getComponentText(), this.getDisplayFormats(), true);
+		let compValue = this.formatValue(this.getComponentText(), this.getDisplayFormats());
 		let modelValue = this.getValueFromModel();
 		if (!this.isSame(compValue, modelValue)) {
 			this.getComponent().val(this.parseText(modelValue, this.getPrimaryDisplayFormat()));
@@ -578,7 +673,7 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 		return $(ReactDOM.findDOMNode(this.refs.txt));
 	}
 	gatherValueFromInputAndSetToModel() {
-		let value = this.formatValue(this.getComponentText(), this.getDisplayFormats(), true);
+		let value = this.formatValue(this.getComponentText(), this.getDisplayFormats());
 		if (value == null || !value.isValid()) {
 			this.setValueToModel(null);
 		} else if (!value.isSame(this.getValueFromModel())) {

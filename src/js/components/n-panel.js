@@ -12,11 +12,13 @@ class NPanelHeader extends NCollapsibleContainer {
 		return (<div className={className}
 					 onClick={this.onComponentClicked}
 					 ref='me'>
+			{this.renderLeadingChildren()}
 			{this.renderLeadingDOMChildren()}
 			<span className='n-panel-header-text'>
 				{this.getLabel()}
 			</span>
 			{this.renderTailingDOMChildren()}
+			{this.renderTailingChildren()}
 		</div>);
 	}
 	getComponentClassName() {
@@ -88,7 +90,9 @@ class NPanel extends NCollapsibleContainer {
 				style: this.getLayoutOptionValue('style'),
 				collapsible: this.isCollapsible(),
 				expanded: this.isExpanded(),
-				collapsibleStyle: this.getCollapsibleStyle()
+				collapsibleStyle: this.getCollapsibleStyle(),
+				leadChildren: this.getLeadingChildren(),
+				tailChildren: this.getTailingChildren()
 			},
 			evt: {
 				expand: this.onExpandChanged.bind(this),

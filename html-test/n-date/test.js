@@ -23,6 +23,12 @@ $(function() {
 			range: {
 				max: moment('20161231'),
 				min: moment('20160101')
+			},
+			showClose: true
+		},
+		evt: {
+			closeClick: function(evt) {
+				console.log(this, evt);
 			}
 		}
 	});
@@ -40,10 +46,15 @@ $(function() {
 					case this.DAY:
 						return date.year() != 2012 && date.month() != 9 && date.date() != 25;
 				}
-			}
+			},
+			showClear: false,
+			showNow: false
 		}
 	});
 	let layoutNC = new Layout('date', {
+		comp: {
+			showNow: false
+		}
 	});
 	let layoutNC_YM = new Layout('date', {
 		comp: {
