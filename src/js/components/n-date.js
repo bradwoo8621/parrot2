@@ -2,14 +2,159 @@ import {React, ReactDOM, $, classnames, lodash, Envs, NComponent, NDropdownCompo
 import {NIcon} from './n-icon'
 import moment from 'moment'
 
-class NDateCalendar extends NComponent {
-	static YEAR = 1
-	static MONTH = 2
-	static DAY = 4
+const YEAR = 1;
+const MONTH = 2;
+const DAY = 4;
+const HOUR = 8;
+const MINUTE = 16;
+const SECOND = 32;
+
+const NDateComponent = (ParentClass) => class extends ParentClass {
+	constructor(props) {
+		super(props);
+		this.YEAR = YEAR;
+		this.MONTH = MONTH;
+		this.DAY = DAY;
+		this.HOUR = HOUR;
+		this.MINUTE = MINUTE;
+		this.SECOND = SECOND;
+	}
 	buildLayout(props) {
 		super.buildLayout(props);
 		this.computeDisplayType();
 	}
+	getValueFormat() {
+		return this.getLayoutOptionValue('valueFormat', Envs.DATE_VALUE_FORMAT);
+	}
+	getDisplayFormats() {
+		let formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
+		return formats.length == 0 ? this.wrapToArray(Envs.DATE_DISPLAY_FORMAT) : formats;
+	}
+	getPrimaryDisplayFormat() {
+		return this.getDisplayFormats()[0];
+	}
+	getYearStepOfMonthPanel() {
+		return this.getLayoutOptionValue('yearStep', Envs.YEAR_STEP_WHEN_MONTH);
+	}
+	// {min: moment, max: moment}
+	getDateRange() {
+		return this.getLayoutOptionValue('range');
+	}
+	getDateEnabledChecker() {
+		return this.getLayoutOptionValue('dateEnabledChecker', null, false);
+	}
+	// check the given date is enabled or not
+	// type is #YEAR, #MONTH, #DAY
+	// equals max/min value is legal
+	isDateEnabled(date, type) {
+		let pass = true;
+		let range = this.getDateRange();
+		let min = range ? range.min : null;
+		if (min) {
+			pass = !date.isBefore(min, type == YEAR ? 'year' : (type == MONTH) ? 'month': 'date');
+		}
+		let max = range ? range.max : null;
+		if (pass && max) {
+			pass = !date.isAfter(max, type == YEAR ? 'year' : (type == MONTH) ? 'month': 'date');
+		}
+
+		let checker = this.getDateEnabledChecker();
+		if (pass && checker) {
+			pass = checker.call(this, date, type);
+		}
+		return pass;
+	}
+
+	computeDisplayType() {
+		let format = this.getPrimaryDisplayFormat();
+		let oldDisplayType = this.state.displayType;
+		this.state.displayType = 
+				(/Y/i.test(format) ? YEAR : 0)
+				+ (/M/i.test(format) ? MONTH : 0)
+				+ (/D/i.test(format) ? DAY : 0);
+		if (oldDisplayType != this.state.displayType) {
+			// display type changed
+			let currentDisplayType = this.getCurrentDisplayType();
+			if ((this.state.displayType & currentDisplayType) != currentDisplayType ) {
+				// current display type cannot be supported
+				delete this.state.currentDisplayType;
+			}
+		}
+	}
+	getDisplayType() {
+		if (this.state.displayType == null) {
+			this.computeDisplayType();
+		}
+		return this.state.displayType;
+	}
+	getCurrentDisplayType() {
+		if (this.state.currentDisplayType == null) {
+			// default use the smallest unit
+			this.state.currentDisplayType = parseInt(this.state.displayType / 2) + 1;
+		}
+		return this.state.currentDisplayType;
+	}
+	isYearSupported() {
+		return this.getDisplayType() & YEAR;
+	}
+	isMonthSupported() {
+		return this.getDisplayType() & MONTH;
+	}
+	isDaySupported() {
+		return this.getDisplayType() & DAY;
+	}
+
+	getValueFromModel() {
+		let value = this.formatValue(super.getValueFromModel(), this.getValueFormat());
+		return (value == null || !value.isValid()) ? null : value;
+	}
+	setValueToModel(value) {
+		if (value == null) {
+			super.setValueToModel(null);
+		} else if (typeof value === 'string') {
+			// string value
+			let momentValue = this.formatValue(value, this.getValueFormat());
+			if (momentValue.isValid()) {
+				super.setValueToModel(momentValue.format(this.getValueFormat()));
+			} else {
+				super.setValueToModel(null);
+			}
+		} else {
+			// moment object
+			if (value.isValid()) {
+				super.setValueToModel(value.format(this.getValueFormat()));
+			} else {
+				super.setValueToModel(null);
+			}
+		}
+	}
+
+	formatValue(strValue, formats, strict) {
+		if (strValue == null || strValue.length == 0) {
+			return null;
+		} else {
+			return moment(strValue.trim(), formats, strict);
+		}
+	}
+	parseText(momentValue, format) {
+		if (momentValue == null || !momentValue.isValid()) {
+			return null;
+		} else {
+			return momentValue.format(format);
+		}
+	}
+	isSame(momentValue1, momentValue2) {
+		if (momentValue1 == null || !momentValue1.isValid()) {
+			return momentValue2 == null || !momentValue2.isValid();
+		} else if (momentValue2 == null || !momentValue2.isValid()) {
+			return false;
+		} else {
+			return momentValue1.isSame(momentValue2);
+		}
+	}
+};
+
+class NDateCalendar extends NDateComponent(NComponent) {
 	renderDateHeaderForYear(date) {
 		if (!this.isYearPicking()) {
 			return null;
@@ -51,16 +196,20 @@ class NDateCalendar extends NComponent {
 		let date = this.getDisplayDate();
 		return (<div className='n-calendar-date-header'>
 			<NIcon model={this.getPrimaryModel()}
-				   n-comp-icon='angle-double-left' />
+				   n-comp-icon='angle-double-left'
+				   n-evt-click={this.onBackwardClicked} />
 			<NIcon model={this.getPrimaryModel()}
-				   n-comp-icon='angle-left' />
+				   n-comp-icon='angle-left' 
+				   n-evt-click={this.onPreviousClicked}/>
 			{this.renderDateHeaderForDay(date)}
 			{this.renderDateHeaderForMonth(date)}
 			{this.renderDateHeaderForYear(date)}
 			<NIcon model={this.getPrimaryModel()}
-				   n-comp-icon='angle-right' />
+				   n-comp-icon='angle-right'
+				   n-evt-click={this.onNextClicked} />
 			<NIcon model={this.getPrimaryModel()}
-				   n-comp-icon='angle-double-right' />
+				   n-comp-icon='angle-double-right'
+				   n-evt-click={this.onForwardClicked} />
 		</div>);
 	}
 	renderDateBodyBodyForYear(date) {
@@ -78,13 +227,19 @@ class NDateCalendar extends NComponent {
 			years.push(year + index + 1);
 		}
 		let today = moment();
+		let activeYear = this.getValueFromModel();
+		activeYear = activeYear ? activeYear.year() : -1;
 		return years.map((year, index) => {
+			let theDate = date.clone().year(year);
+			let enabled = this.isDateEnabled(theDate, this.getCurrentDisplayType());
 			let className = classnames('n-calendar-date-body-body-text year', {
 				'today': year == today.year(),
-				'active': year == date.year()
+				'active': year == activeYear,
+				'disabled': !enabled
 			});
+			let clickHandler = enabled ? this.onYearClicked.bind(this, year) : null;
 			return (<span className={className}
-						  onClick={this.onYearClicked.bind(this, year)}
+						  onClick={clickHandler}
 						  key={index}>
 				<span>{year}</span>
 			</span>);
@@ -95,14 +250,21 @@ class NDateCalendar extends NComponent {
 			return null;
 		}
 		let today = moment();
+		let activeMonth = this.getValueFromModel();
+		let hasActiveMonth = activeMonth ? (date.year() == activeMonth.year()) : false;
+		activeMonth = activeMonth ? activeMonth.month() : -1;
 		let months = moment.monthsShort();
 		return months.map((month, index) => {
+			let theDate = date.clone().month(index);
+			let enabled = this.isDateEnabled(theDate, this.getCurrentDisplayType());
 			let className = classnames('n-calendar-date-body-body-text month', {
 				'today': index == today.month(),
-				'active': index == date.month()
+				'active': hasActiveMonth && index == activeMonth,
+				'disabled': !enabled
 			});
+			let clickHandler = enabled ? this.onMonthClicked.bind(this, index) : null;
 			return (<span className={className}
-						  onClick={this.onMonthClicked.bind(this, index)}
+						  onClick={clickHandler}
 						  key={index}>
 				<span>{month}</span>
 			</span>);
@@ -128,7 +290,9 @@ class NDateCalendar extends NComponent {
 		}
 		let days = this.buildCalendarDays(date);
 		let today = moment();
-		let activeDay = date.date();
+		let activeDay = this.getValueFromModel();
+		let hasActiveDay = activeDay ? ((date.year() == activeDay.year()) && (date.month() == activeDay.month())) : false;
+		activeDay = activeDay ? activeDay.date() : -1;
 		let before = true;
 		let after = false;
 		return days.map((day, index) => {
@@ -147,14 +311,17 @@ class NDateCalendar extends NComponent {
 			} else {
 				theDate = date.clone().date(day);
 			}
+			let enabled = this.isDateEnabled(theDate, this.getCurrentDisplayType());
 			let className = classnames('n-calendar-date-body-body-text date', {
 				'before': before,
 				'after': after,
 				'today': theDate.year() == today.year() && theDate.month() == today.month() && theDate.date() == today.date(),
-				'active': !before && !after && day == activeDay
+				'active': hasActiveDay && !before && !after && day == activeDay,
+				'disabled': !enabled
 			});
+			let clickHandler = enabled ? this.onDayClicked.bind(this, theDate) : null;
 			return (<span className={className}
-						  onClick={this.onDayClicked.bind(this, theDate)}
+						  onClick={clickHandler}
 						  key={index}>
 				<span>{day}</span>
 			</span>);
@@ -194,72 +361,28 @@ class NDateCalendar extends NComponent {
 		let format = this.getLayoutOptionValue('headerFormat');
 		return lodash.assign({}, Envs.DATE_HEADER_FORMAT, format);
 	}
-	getValueFormat() {
-		return this.getLayoutOptionValue('valueFormat', Envs.DATE_VALUE_FORMAT);
-	}
-	getDisplayFormats() {
-		let formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
-		return formats.length == 0 ? this.wrapToArray(Envs.DATE_DISPLAY_FORMAT) : formats;
-	}
-	getPrimaryDisplayFormat() {
-		return this.getDisplayFormats()[0];
-	}
-	computeDisplayType() {
-		let format = this.getPrimaryDisplayFormat();
-		let oldDisplayType = this.state.displayType;
-		this.state.displayType = 
-				(/Y/i.test(format) ? NDateCalendar.YEAR : 0)
-				+ (/M/i.test(format) ? NDateCalendar.MONTH : 0)
-				+ (/D/i.test(format) ? NDateCalendar.DAY : 0);
-		if (oldDisplayType != this.state.displayType) {
-			// display type changed
-			let currentDisplayType = this.getCurrentDisplayType();
-			if ((this.state.displayType & currentDisplayType) != currentDisplayType ) {
-				// current display type cannot be supported
-				delete this.state.currentDisplayType;
-			}
-		}
-	}
-	getDisplayType() {
-		if (this.state.displayType == null) {
-			this.computeDisplayType();
-		}
-		return this.state.displayType;
-	}
-	getCurrentDisplayType() {
-		if (this.state.currentDisplayType == null) {
-			// default use the smallest unit
-			this.state.currentDisplayType = parseInt(this.state.displayType / 2) + 1;
-		}
-		return this.state.currentDisplayType;
-	}
 	isDayPicking() {
-		return this.getCurrentDisplayType() & NDateCalendar.DAY;
+		return this.getCurrentDisplayType() & DAY;
 	}
 	isMonthPicking() {
-		return this.getCurrentDisplayType() & NDateCalendar.MONTH;
+		return this.getCurrentDisplayType() & MONTH;
 	}
 	isYearPicking() {
-		return this.getCurrentDisplayType() & NDateCalendar.YEAR;
+		return this.getCurrentDisplayType() & YEAR;
 	}
 
 	getDisplayDate() {
-		let value = this.formatValue(this.getValueFromModel(), this.getValueFormat());
-		return value == null ? moment() : value;
-	}
-	formatValue(strValue, formats, strict) {
-		if (strValue == null || strValue.length == 0) {
-			return null;
-		} else {
-			return moment(strValue.trim(), formats, strict);
+		if (this.state.displayDate == null) {
+			let value = this.getValueFromModel();
+			this.state.displayDate = value == null ? moment() : value;
+			if (!this.isDaySupported()) {
+				this.state.displayDate.date(1);
+			}
+			if (!this.isMonthSupported()) {
+				this.state.displayDate.month(0);
+			}
 		}
-	}
-	parseText(momentValue, format) {
-		if (momentValue == null || !momentValue.isValid()) {
-			return null;
-		} else {
-			return momentValue.format(format);
-		}
+		return this.state.displayDate;
 	}
 
 	buildCalendarDays(date) {
@@ -284,10 +407,15 @@ class NDateCalendar extends NComponent {
 		return days;
 	}
 
+	onModelChanged(evt) {
+		delete this.state.displayDate;
+		super.onModelChanged(evt);
+	}
+
 	onHeaderYearClicked = (evt) => {
 		let oldCurrentDisplayType = this.getCurrentDisplayType();
 		this.setState({
-			currentDisplayType: NDateCalendar.YEAR
+			currentDisplayType: YEAR
 		}, () => {
 			this.fireDisplayTypeChangeEvent(oldCurrentDisplayType);
 		});
@@ -295,7 +423,7 @@ class NDateCalendar extends NComponent {
 	onHeaderMonthClicked = (evt) => {
 		let oldCurrentDisplayType = this.getCurrentDisplayType();
 		this.setState({
-			currentDisplayType: NDateCalendar.MONTH
+			currentDisplayType: MONTH
 		}, () => {
 			this.fireDisplayTypeChangeEvent(oldCurrentDisplayType);
 		});
@@ -304,24 +432,70 @@ class NDateCalendar extends NComponent {
 		let date = this.getDisplayDate();
 		date.year(year);
 		this.setValueToModel(date);
-		this.setState({
-			currentDisplayType: NDateCalendar.MONTH
-		});
+		if (this.isMonthSupported()) {
+			this.setState({
+				currentDisplayType: MONTH
+			});
+		}
 	}
 	onMonthClicked = (month, evt) => {
 		let date = this.getDisplayDate();
 		date.month(month);
 		this.setValueToModel(date);
-		this.setState({
-			currentDisplayType: NDateCalendar.DAY
-		});
+		if (this.isDaySupported()) {
+			this.setState({
+				currentDisplayType: DAY
+			});
+		}
 	}
 	onDayClicked = (date, evt) => {
 		this.setValueToModel(date);
 	}
-	// value should be moment
-	setValueToModel(value) {
-		super.setValueToModel(this.parseText(value, this.getValueFormat()));
+	onBackwardClicked = (evt) => {
+		this.onHeaderIconClicked({
+			day: {step: -1},
+			month: {step: 0 - this.getYearStepOfMonthPanel()},
+			year: {step: -50}
+		});
+	}
+	onPreviousClicked = (evt) => {
+		this.onHeaderIconClicked({
+			day: {step: -1, unit: 'month'},
+			month: {step: -1},
+			year: {step: -25}
+		});
+	}
+	onNextClicked = (evt) => {
+		this.onHeaderIconClicked({
+			day: {step: 1, unit: 'month'},
+			month: {step: 1},
+			year: {step: 25}
+		});
+	}
+	onForwardClicked = (evt) => {
+		this.onHeaderIconClicked({
+			day: {step: 1},
+			month: {step: this.getYearStepOfMonthPanel()},
+			year: {step: 50}
+		});
+	}
+	onHeaderIconClicked(options) {
+		let oldDate = this.getDisplayDate();
+		let date = oldDate.clone();
+		if (this.isDayPicking()) {
+			// day picking panel, switch year
+			date.add.call(date, options.day.step, options.day.unit || 'year');
+		} else if (this.isMonthPicking()) {
+			date.add.call(date, options.month.step, options.month.unit || 'year');
+		} else if (this.isYearPicking()) {
+			date.add.call(date, options.year.step, options.year.unit || 'year');
+		}
+		this.setState({displayDate: date});
+		this.fireEventToMonitor($.Event('displayDateChange', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			oldDisplayDate: oldDate,
+			newDisplayDate: date
+		}));
 	}
 
 	fireDisplayTypeChangeEvent(oldDisplayType) {
@@ -333,7 +507,7 @@ class NDateCalendar extends NComponent {
 	}
 }
 
-class NDate extends NDropdownComponent {
+class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 	postWillUpdate() {
 		this.getComponent().off('change', this.onComponentChanged);
 	}
@@ -399,42 +573,9 @@ class NDate extends NDropdownComponent {
 	getPlaceholder() {
 		return this.getLayoutOptionValue('placeholder');
 	}
-	getValueFormat() {
-		return this.getLayoutOptionValue('valueFormat', Envs.DATE_VALUE_FORMAT);
-	}
-	getDisplayFormats() {
-		let formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
-		return formats.length == 0 ? this.wrapToArray(Envs.DATE_DISPLAY_FORMAT) : formats;
-	}
-	getPrimaryDisplayFormat() {
-		return this.getDisplayFormats()[0];
-	}
 
 	getComponent() {
 		return $(ReactDOM.findDOMNode(this.refs.txt));
-	}
-	getValueFromModel() {
-		return this.formatValue(super.getValueFromModel(), this.getValueFormat());
-	}
-	setValueToModel(value) {
-		if (value == null) {
-			super.setValueToModel(null);
-		} else if (typeof value === 'string') {
-			// string value
-			let momentValue = this.formatValue(value, this.getValueFormat());
-			if (momentValue.isValid()) {
-				super.setValueToModel(momentValue.format(this.getValueFormat()));
-			} else {
-				super.setValueToModel(null);
-			}
-		} else {
-			// moment object
-			if (value.isValid()) {
-				super.setValueToModel(value.format(this.getValueFormat()));
-			} else {
-				super.setValueToModel(null);
-			}
-		}
 	}
 	gatherValueFromInputAndSetToModel() {
 		let value = this.formatValue(this.getComponentText(), this.getDisplayFormats(), true);
@@ -476,30 +617,7 @@ class NDate extends NDropdownComponent {
 	getComponentText() {
 		return this.getComponent().val();
 	}
-	formatValue(strValue, formats, strict) {
-		if (strValue == null || strValue.length == 0) {
-			return null;
-		} else {
-			return moment(strValue.trim(), formats, strict);
-		}
-	}
-	parseText(momentValue, format) {
-		if (momentValue == null || !momentValue.isValid()) {
-			return null;
-		} else {
-			return momentValue.format(format);
-		}
-	}
-	isSame(momentValue1, momentValue2) {
-		if (momentValue1 == null || !momentValue1.isValid()) {
-			return momentValue2 == null || !momentValue2.isValid();
-		} else if (momentValue2 == null || !momentValue2.isValid()) {
-			return false;
-		} else {
-			return momentValue1.isSame(momentValue2);
-		}
-	}
 }
 
 export * from './n-component'
-export {NDate, NDateCalendar, moment}
+export {NDateComponent, NDate, NDateCalendar, moment}

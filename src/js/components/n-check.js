@@ -70,7 +70,7 @@ class NCheck extends NComponent {
 	}
 }
 
-class NArrayCheck extends NCodeTableComponent {
+class NArrayCheck extends NCodeTableComponent(NComponent) {
 	renderCodeItem(item, itemIndex) {
 		let layout = {
 			label: item.text,

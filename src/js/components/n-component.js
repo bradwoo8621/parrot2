@@ -321,7 +321,7 @@ class NComponent extends React.Component {
 	// get value by given key from layout
 	// or to be defaultValue if not designated in layout
 	// or to be defaultOptions from props if not designated from above
-	getLayoutOptionValue(key, defaultValue) {
+	getLayoutOptionValue(key, defaultValue, noWrap) {
 		let value = this.getLayout().getOptionValue(key);
 		if (this.isNoValueAssigned(value)) {
 			// not designated in layout
@@ -339,7 +339,7 @@ class NComponent extends React.Component {
 			}
 		}
 		// wrap value
-		return this.wrapOptionValue(value)
+		return (noWrap !== false) ? this.wrapOptionValue(value) : value;
 	}
 
 	wrapOptionValue(value) {
@@ -376,7 +376,10 @@ class NComponent extends React.Component {
 		return (this.isEnabled() && !this.isViewMode()) ? 0 : null;
 	}
 	isClickable() {
-		return this.isEnabled() && this.getEventMonitor('click');
+		return this.isEnabled() && this.isHasClickHanlder();
+	}
+	isHasClickHanlder() {
+		return this.getEventMonitor('click');
 	}
 	renderNormalLine() {
 		return <hr className={classnames('n-normal-line', this.getStyle('normal-line'))} 
@@ -552,7 +555,7 @@ class NAddonComponent extends NComponent {
 	}
 }
 
-class NDropdownComponent extends NComponent {
+const NDropdownComponent = (ParentClass) => class extends ParentClass {
 	internalInstallLifecycleMonitors() {
 		super.internalInstallLifecycleMonitors();
 		$(document).on('click', this.bindToThis(this.onDocumentClicked))
@@ -615,7 +618,7 @@ class NDropdownComponent extends NComponent {
 	}
 }
 
-class NCodeTableComponent extends NComponent {
+const NCodeTableComponent = (ParentClass) => class extends ParentClass {
 	getCodeTable() {
 		return this.getLayoutOptionValue('codes');
 	}

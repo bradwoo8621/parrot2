@@ -1,6 +1,6 @@
-import {React, ReactDOM, $, classnames, Envs, NDropdownComponent, Layout} from './n-component'
+import {React, ReactDOM, $, classnames, Envs, NComponent, NDropdownComponent, Layout} from './n-component'
 
-class NButton extends NDropdownComponent {
+class NButton extends NDropdownComponent(NComponent) {
 	renderIcon(icon) {
 		return this.renderInternalComponent(icon);
 	}
@@ -100,7 +100,7 @@ class NButton extends NDropdownComponent {
 		let items = this.getDropdownItems();
 		return {
 			has: this.hasDropdown(items),
-			separated: this.hasClickHandling(),
+			separated: this.isHasClickHanlder(),
 			items: items
 		};
 	}

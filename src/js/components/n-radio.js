@@ -1,10 +1,10 @@
 import {React, ReactDOM, $, classnames, Envs, Model, NComponent, NCodeTableComponent} from './n-component'
 
-class NRadio extends NCodeTableComponent {
+class NRadio extends NCodeTableComponent(NComponent) {
 	renderText(item) {
 		return (<span className='n-radio-text n-control'>
 			{item.text}
-		</span>)
+		</span>);
 	}
 	renderTextOnLeft(options) {
 		if (options.left) {

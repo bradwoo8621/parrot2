@@ -35,7 +35,8 @@ class Envs {
 			},
 			dateValueFormat: 'YYYYMMDDHHmmss',
 			dateDisplayFormat: ['YYYY/MM/DD', 'YYYYMMDD'],
-			dateHeaderFormat: {year: 'YYYY', month: 'MMMM'}
+			dateHeaderFormat: {year: 'YYYY', month: 'MMMM'},
+			yearStepWhenMonth: 5
 		};
 		this.viewModeRenderers = {};
 		this.renderers = {};
@@ -129,6 +130,14 @@ class Envs {
 
 	set DATE_HEADER_FORMAT(value) {
 		this.props.dateHeaderFormat = value;
+	}
+
+	get YEAR_STEP_WHEN_MONTH() {
+		return this.props.yearStepWhenMonth;
+	}
+
+	set YEAR_STEP_WHEN_MONTH(value) {
+		this.props.yearStepWhenMonth = value;
 	}
 
 	getRenderer(type) {
