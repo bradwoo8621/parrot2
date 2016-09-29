@@ -44,7 +44,8 @@ class ListenerSupport {
 		return this;
 	}
 	fireEvent(evt) {
-		this.getListeners().forEach(listener => {
+		// copy it, since component maybe uninstall listener sometimes
+		this.getListeners().slice(0).forEach(listener => {
 			// use model as context
 			listener.call(evt.model, evt);
 		});

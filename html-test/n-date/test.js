@@ -1,6 +1,6 @@
 import * as SDK from '../../src/js/components/n-date'
 
-let {React, ReactDOM, Model, Layout, NDate, NDateCalendar, $, Envs, moment} = SDK;
+let {React, ReactDOM, Model, Layout, NDate, NDateCalendar, NTimeClock, $, Envs, moment} = SDK;
 
 
 $(function() {

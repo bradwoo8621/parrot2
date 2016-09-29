@@ -74,7 +74,7 @@ $(function() {
 	});
 	let layout5 = new Layout('amount', {
 		label: function() {
-			return 'This is a label ' + this.getValueFromModel();
+			return 'This is a value ' + this.getValueFromModel();
 		},
 		comp: {
 			formatter: {
@@ -84,7 +84,7 @@ $(function() {
 		},
 		evt: {
 			click: function() {
-				alert(`Amount is ${this.getValueFromModel()}`);
+				alert(`Value of amount is ${this.getValueFromModel()}`);
 			}
 		}
 	});

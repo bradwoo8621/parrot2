@@ -164,6 +164,20 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 			return momentValue1.isSame(momentValue2);
 		}
 	}
+	onCloseClicked = (evt) => {
+		this.fireEventToMonitor(evt, 'closeClick');
+	}
+	onNowClicked = (evt) => {
+		this.setState({
+			displayDate: moment()
+		}, () => {
+			this.fireEventToMonitor(evt, 'nowClick');
+		});
+	}
+	onClearClicked = (evt) => {
+		this.setValueToModel(null);
+		this.fireEventToMonitor(evt, 'clearClick');
+	}
 };
 
 class NDateFooter extends NComponent {
@@ -511,18 +525,20 @@ class NDateCalendar extends NDateComponent(NComponent) {
 	}
 	onYearClicked = (year, evt) => {
 		let date = this.getDisplayDate();
-		date.year(year);
-		this.setValueToModel(date);
+		this.setValueToModel(date.clone().year(year));
 		if (this.isMonthSupported()) {
 			this.setState({
 				currentDisplayType: MONTH
 			});
+		} else {
+			this.setState({
+				displayDate: date
+			})
 		}
 	}
 	onMonthClicked = (month, evt) => {
 		let date = this.getDisplayDate();
-		date.month(month);
-		this.setValueToModel(date);
+		this.setValueToModel(date.month(month));
 		if (this.isDaySupported()) {
 			this.setState({
 				currentDisplayType: DAY
@@ -578,20 +594,6 @@ class NDateCalendar extends NDateComponent(NComponent) {
 			newDisplayDate: date
 		}));
 	}
-	onCloseClicked = (evt) => {
-		this.fireEventToMonitor(evt, 'closeClick');
-	}
-	onNowClicked = (evt) => {
-		this.setState({
-			displayDate: moment()
-		}, () => {
-			this.fireEventToMonitor(evt, 'nowClick');
-		})
-	}
-	onClearClicked = (evt) => {
-		this.setValueToModel(null);
-		this.fireEventToMonitor(evt, 'clearClick');
-	}
 
 	fireDisplayTypeChangeEvent(oldDisplayType) {
 		this.fireEventToMonitor($.Event('displayTypeChange', {
@@ -599,6 +601,14 @@ class NDateCalendar extends NDateComponent(NComponent) {
 			oldDisplayType: oldDisplayType,
 			newDisplayType: this.getCurrentDisplayType()
 		}));
+	}
+}
+
+class NTimeClock extends NDateComponent(NComponent) {
+	renderInNormal() {
+	}
+	getComponentClassName() {
+		return 'n-clock';
 	}
 }
 
@@ -715,4 +725,4 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 }
 
 export * from './n-component'
-export {NDateComponent, NDate, NDateCalendar, moment}
+export {NDateComponent, NDate, NDateCalendar, NTimeClock, moment}

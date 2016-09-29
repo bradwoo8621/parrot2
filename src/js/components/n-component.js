@@ -77,7 +77,7 @@ class NComponent extends React.Component {
 			pre: this.preWillUnmount,
 			post: this.postWillUnmount
 		});
-		delete this.functionList;
+		delete this.state.boundFuncList;
 	}
 	componentDidMount() {
 		this.installUnderlyingMonitors({
@@ -223,13 +223,11 @@ class NComponent extends React.Component {
 	// bind given function to this, and cache.
 	// retrieve from cache or create it.
 	bindToThis(func) {
-		let list = this.functionList;
-		if (!list) {
-			this.functionList = list = [];
+		if (this.state.boundFuncList == null) {
+			this.state.boundFuncList = [];
 		}
-		let index = list.findIndex(f => {
-			return f === func;
-		});
+		let list = this.state.boundFuncList;
+		let index = list.indexOf(func);
 		if (index === -1) {
 			list.push(func);
 			list.push(func.bind(this));
