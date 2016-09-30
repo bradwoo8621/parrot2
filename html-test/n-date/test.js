@@ -66,6 +66,10 @@ $(function() {
 			displayFormats: 'YYYY'
 		}
 	});
+	let layoutT = new Layout('time', {
+		comp: {
+		}
+	});
 
 	let panel = (<div className='n-top-container'>
 		<div className='n-row n-in-form'>
@@ -86,6 +90,9 @@ $(function() {
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NDateCalendar model={model} layout={layoutRC} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NTimeClock model={model} layout={layoutT} />
 			</div>
 		</div>
 	</div>);

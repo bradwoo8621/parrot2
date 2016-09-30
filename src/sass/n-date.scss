@@ -19,191 +19,313 @@
 	position: relative;
 	display: inline-block;
 	border-collapse: collapse;
-	.n-calendar-date {
+}
+.n-calendar-date {
+	position: relative;
+	display: block;
+	border-collapse: collapse;
+	border: $border-1;
+	border-radius: $border-radius;
+	min-width: 300px;
+	max-width: 300px;
+	// for IE9, 1px more
+	min-height: 291px;
+	max-height: 291px;
+	&.n-calendar-no-footer {
+		// for IE9, 1px more
+		min-height: 261px;
+		max-height: 261px;
+	}
+	.n-calendar-date-header {
+		position: relative;
+		display: inline-table;
+		vertical-align: middle;
+		border-collapse: collapse;
+		width: 100%;
+		// line-height: $line-height;
+		// height: $line-height;
+		.n-calendar-date-header-text {
+			display: table-cell;
+			width: 100%;
+			position: relative;
+			> span {
+				display: block;
+				text-align: center;
+				position: relative;
+				white-space: nowrap;
+				span {
+					white-space: nowrap;
+					position: relative;
+					&:last-child {
+						margin-left: $margin-5;
+					}
+					&:first-child {
+						margin-right: $margin-5;
+					}
+					&:last-child:first-child {
+						margin: $margin-0;
+					}
+				}
+			}
+			span.clickable:hover {
+				text-decoration: underline;
+				color: $color-link;
+			}
+		}
+		i {
+			min-width: 0.25rem;
+			display: table-cell;
+			height: $line-height;
+			line-height: $line-height;
+			vertical-align: middle;
+			font-size: 0.2rem;
+			position: relative;
+			cursor: pointer;
+		}
+	}
+	.n-calendar-date-body {
 		position: relative;
 		display: block;
 		border-collapse: collapse;
-		border: $border-1;
-		border-radius: $border-radius;
-		min-width: 300px;
-		max-width: 300px;
-		// for IE9, 1px more
-		min-height: 291px;
-    	max-height: 291px;
-    	&.n-calendar-date-no-footer {
-    		// for IE9, 1px more
-    		min-height: 261px;
-    		max-height: 261px;
-    	}
-		.n-calendar-date-header {
-			position: relative;
-			display: inline-table;
-			vertical-align: middle;
-			border-collapse: collapse;
-			width: 100%;
-			// line-height: $line-height;
-			// height: $line-height;
-			.n-calendar-date-header-text {
-				display: table-cell;
-				width: 100%;
-				position: relative;
-				> span {
-					display: block;
-					text-align: center;
-					position: relative;
-					white-space: nowrap;
-					span {
-						white-space: nowrap;
-						position: relative;
-						&:last-child {
-							margin-left: $margin-5;
-						}
-						&:first-child {
-							margin-right: $margin-5;
-						}
-						&:last-child:first-child {
-							margin: $margin-0;
-						}
-					}
-				}
-				span.clickable:hover {
-					text-decoration: underline;
-					color: $color-link;
-				}
-			}
-			i {
-				min-width: 0.25rem;
-				display: table-cell;
-				height: $line-height;
-				line-height: $line-height;
-				vertical-align: middle;
-				font-size: 0.2rem;
-				position: relative;
-				cursor: pointer;
-			}
-		}
-		.n-calendar-date-body {
+		height: 231px;
+		.n-calendar-date-body-header,
+		.n-calendar-date-body-body {
 			position: relative;
 			display: block;
 			border-collapse: collapse;
-			.n-calendar-date-body-header,
-			.n-calendar-date-body-body {
-				position: relative;
-				display: block;
-				border-collapse: collapse;
-				&:before {
-					display: table;
-					content: '';
-				}
-				&:after {
-					display: table;
-					content: '';
-					clear: both;
-				}
+			&:before {
+				display: table;
+				content: '';
 			}
-			.n-calendar-date-body-header-text {
+			&:after {
+				display: table;
+				content: '';
+				clear: both;
+			}
+		}
+		.n-calendar-date-body-header-text {
+			font-weight: bold;
+			line-height: $line-height;
+			height: $line-height;
+			float: left;
+			display: block;
+			position: relative;
+			width: percentage(1 / 7);
+			text-align: center;
+			&:nth-child(7n),
+			&:nth-child(7n + 1) {
+				color: inherit;
+			}
+		}
+		.n-calendar-date-body-body-text {
+			line-height: $line-height;
+			height: $line-height + 0.03rem;
+			cursor: pointer;
+			float: left;
+			text-align: center;
+			&.today {
+				color: $color-success;
 				font-weight: bold;
-				line-height: $line-height;
-				height: $line-height;
-				float: left;
+			}
+			&.active span,
+			&.today.active span {
+				background-color: $color-primary;
+				color: $color-reverse;
+				font-weight: bold;
+			}
+			&.before,
+			&.after {
+				font-style: oblique;
+			}
+			&:hover span {
+				box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+			}
+			&.date, 
+			&.month, 
+			&.year {
 				display: block;
 				position: relative;
+			}
+			&.date {
 				width: percentage(1 / 7);
-				text-align: center;
-				&:nth-child(7n),
-				&:nth-child(7n + 1) {
-					color: inherit;
+				&:not(.before):not(.after) {
+					&:nth-child(7n + 1),
+					&:nth-child(7n + 2) {
+						color: $color-danger;
+					}
 				}
 			}
-			.n-calendar-date-body-body-text {
-				line-height: $line-height;
-				height: $line-height + 0.03rem;
-				cursor: pointer;
-				float: left;
-				text-align: center;
+			&.month {
+				width: 25%;
+				height: $line-height + 0.46rem;
+				line-height: $line-height + 0.46rem;
+				span {
+					line-height: 0.6rem;
+					height: 0.6rem;
+					min-width: 0.6rem;
+				}
+			}
+			&.year {
+				width: 20%;
+				height: $line-height + 0.156rem;
+				span {
+					line-height: 0.4rem;
+					height: 0.4rem;
+					min-width: 0.4rem;
+				}
+			}
+			&.disabled {
+				cursor: not-allowed;
+				color: lighten($color-font, 20%);
+				&.date:not(.before):not(.after) {
+					&:nth-child(7n + 1),
+					&:nth-child(7n + 2) {
+						color: lighten($color-danger, 20%);
+					}
+				}
 				&.today {
-					color: $color-success;
-					font-weight: bold;
+					color: lighten($color-success, 20%);
 				}
 				&.active span,
 				&.today.active span {
-					background-color: $color-primary;
-					color: $color-reverse;
-					font-weight: bold;
-				}
-				&.before,
-				&.after {
-					font-style: oblique;
+					background-color: lighten($color-primary, 20%);
 				}
 				&:hover span {
-					box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+					box-shadow: none;
 				}
-				&.date, 
-				&.month, 
-				&.year {
-					display: block;
-					position: relative;
-				}
-				&.date {
-					width: percentage(1 / 7);
-					&:not(.before):not(.after) {
-						&:nth-child(7n + 1),
-						&:nth-child(7n + 2) {
-							color: $color-danger;
-						}
-					}
-				}
-				&.month {
-					width: 25%;
-					height: $line-height + 0.46rem;
-					line-height: $line-height + 0.46rem;
-					span {
-						line-height: 0.6rem;
-						height: 0.6rem;
-						min-width: 0.6rem;
-					}
-				}
-				&.year {
-					width: 20%;
-					height: $line-height + 0.156rem;
-					span {
-						line-height: 0.4rem;
-						height: 0.4rem;
-						min-width: 0.4rem;
-					}
-				}
-				&.disabled {
-					cursor: not-allowed;
-					color: lighten($color-font, 20%);
-					&.date:not(.before):not(.after) {
-						&:nth-child(7n + 1),
-						&:nth-child(7n + 2) {
-							color: lighten($color-danger, 20%);
-						}
-					}
-					&.today {
-						color: lighten($color-success, 20%);
-					}
-					&.active span,
-					&.today.active span {
-						background-color: lighten($color-primary, 20%);
-					}
-					&:hover span {
-						box-shadow: none;
-					}
-				}
-				span {
-					line-height: $line-height;
-					height: $line-height;
-					min-width: $line-height;
-					display: inline-block;
-					border-radius: 100%;
-				}
+			}
+			span {
+				line-height: $line-height;
+				height: $line-height;
+				min-width: $line-height;
+				display: inline-block;
+				border-radius: 100%;
 			}
 		}
 	}
 }
-.n-date-footer {
+$n-calendar-time-size-list: 92 62 32;
+.n-calendar-time {
+	position: relative;
+	display: block;
+	border-collapse: collapse;
+	border: $border-1;
+	border-radius: $border-radius;
+	min-width: 300px;
+	max-width: 300px;
+	// for IE9, 1px more
+	min-height: 291px;
+	max-height: 291px;
+	&.n-calendar-no-footer {
+		// for IE9, 1px more
+		min-height: 261px;
+		max-height: 261px;
+	}
+	.n-calendar-time-header {
+		position: relative;
+		display: block;
+		border-collapse: collapse;
+		text-align: center;
+		.n-calendar-time-header-text {
+			position: relative;
+			display: inline;
+		}
+	}
+	.n-calendar-time-body {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 231px;
+		.n-calendar-time-circle {
+			width: 100%;
+			display: inline-block;
+			position: relative;
+			svg {
+				position: absolute;
+				top: calc((100% - 2.1rem) / 2);
+				left: calc((100% - 2.1rem) / 2);
+				height: 2.1rem;
+				width: 2.1rem;
+				transform: rotate(-90deg);
+				.n-calendar-time-clock-circle {
+					@for $size-index from 1 through 3 {
+						&.size-#{nth($n-calendar-time-size-list, $size-index)} {
+							stroke-dashoffset: $pi * nth($n-calendar-time-size-list, $size-index) * 2;
+						}
+						&.size-#{nth($n-calendar-time-size-list, $size-index)} {
+							stroke-dasharray: $pi * nth($n-calendar-time-size-list, $size-index) * 2;
+						}
+					}
+					stroke-width: 20;
+					fill: none;
+					// stroke-linecap: round;
+					transition: all 1s linear;
+					stroke-opacity: 0.6;
+				}
+				.n-calendar-time-clock-circle-bg {
+					fill: none;
+					stroke-width: 102;
+					stroke-opacity: 0.05;
+					stroke-dashoffset: 0;
+					stroke: $color-base-blue-grey;
+				}
+				.n-calendar-time-clock-circle.hour {
+					@for $size-index from 1 through 3 {
+						&.size-#{nth($n-calendar-time-size-list, $size-index)} {
+							@for $index from 1 through 12 {
+								&.when-#{$index}-of-12 {
+									stroke-dashoffset: $pi * nth($n-calendar-time-size-list, $size-index) * 2 / 12 * (12 - $index);
+								}
+							}
+							@for $index from 1 through 24 {
+								&.when-#{$index}-of-24 {
+									stroke-dashoffset: $pi * nth($n-calendar-time-size-list, $size-index) * 2 / 24 * (24 - $index);
+								}
+							}
+						}
+					}
+					&.when-12-of-12,
+					&.when-0-of-24 {
+						transition: none;
+					}
+				}
+				.n-calendar-time-clock-circle.minute, 
+				.n-calendar-time-clock-circle.second {
+					@for $size-index from 1 through 3 {
+						&.size-#{nth($n-calendar-time-size-list, $size-index)} {
+							@for $index from 1 through 59 {
+								&.when-#{$index}-of-60 {
+									stroke-dashoffset: $pi * nth($n-calendar-time-size-list, $size-index) * 2 / 60 * (60 - $index);
+								}
+							}
+							&.when-0-of-60 {
+								transition: none;
+							}
+						}
+					}
+				}
+				.hour {
+					stroke: $color-primary;
+				}
+				.minute {
+					stroke: $color-info;
+				}
+				.second {
+					stroke: $color-warning;
+				}
+			}
+			span {
+				font-size: 0.36rem;
+				height: 0.4rem;
+				line-height: 0.4rem;
+				margin-top: 0.9rem;
+				display: inline-block;
+				color: $color-primary;
+			}
+		}
+	}
+}
+.n-calendar-footer {
 	display: block;
 	position: relative;
 	padding: $pad-0 $pad-15 $pad-10;
@@ -216,7 +338,7 @@
 		display: table;
 		clear: both;
 	}
-	.n-date-footer-button {
+	.n-calendar-footer-button {
 		float: left;
 		position: relative;
 		display: block;
@@ -227,15 +349,15 @@
 			cursor: pointer;
 		}
 		&:first-child:nth-last-child(4), 
-		&:first-child:nth-last-child(4) ~ .n-date-footer-button {
+		&:first-child:nth-last-child(4) ~ .n-calendar-footer-button {
 			width: percentage(1 / 4);
 		}
 		&:first-child:nth-last-child(3), 
-		&:first-child:nth-last-child(3) ~ .n-date-footer-button {
+		&:first-child:nth-last-child(3) ~ .n-calendar-footer-button {
 			width: percentage(1 / 3);
 		}
 		&:first-child:nth-last-child(2), 
-		&:first-child:nth-last-child(2) ~ .n-date-footer-button {
+		&:first-child:nth-last-child(2) ~ .n-calendar-footer-button {
 			width: percentage(1 / 2);
 		}
 		&:first-child:last-child {

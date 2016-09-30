@@ -23,6 +23,16 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		super.buildLayout(props);
 		this.computeDisplayType();
 	}
+	renderDateFooter() {
+		return (<NCalendarFooter model={this.getPrimaryModel()}
+							 n-comp-showClose={this.isCloseButtonShown()}
+							 n-comp-showClear={this.isClearButtonShown()}
+							 n-comp-showNow={this.isNowButtonShown()}
+							 n-evt-closeClick={this.onCloseClicked}
+							 n-evt-clearClick={this.onClearClicked}
+							 n-evt-nowClick={this.onNowClicked} />);
+	}
+
 	getValueFormat() {
 		return this.getLayoutOptionValue('valueFormat', Envs.DATE_VALUE_FORMAT);
 	}
@@ -70,8 +80,11 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		let oldDisplayType = this.state.displayType;
 		this.state.displayType = 
 				(/Y/i.test(format) ? YEAR : 0)
-				+ (/M/i.test(format) ? MONTH : 0)
-				+ (/D/i.test(format) ? DAY : 0);
+				+ (/M/.test(format) ? MONTH : 0)
+				+ (/D/i.test(format) ? DAY : 0)
+				+ (/H/i.test(format) ? HOUR : 0)
+				+ (/m/.test(format) ? MINUTE: 0)
+				+ (/s/.test(format) ? SECOND: 0);
 		if (oldDisplayType != this.state.displayType) {
 			// display type changed
 			let currentDisplayType = this.getCurrentDisplayType();
@@ -102,6 +115,15 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 	}
 	isDaySupported() {
 		return this.getDisplayType() & DAY;
+	}
+	isHourSupported() {
+		return this.getDisplayType() & HOUR;
+	}
+	isMinuteSupported() {
+		return this.getDisplayType() & MINUTE;
+	}
+	isSecondSupported() {
+		return this.getDisplayType() & SECOND;
 	}
 	isCloseButtonShown() {
 		return this.getLayoutOptionValue('showClose', false);
@@ -175,15 +197,18 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		});
 	}
 	onClearClicked = (evt) => {
-		this.setValueToModel(null);
+		let oldValue = this.getValueFromModel();
+		if (oldValue != null) {
+			this.setValueToModel(null);
+		}
 		this.fireEventToMonitor(evt, 'clearClick');
 	}
 };
 
-class NDateFooter extends NComponent {
+class NCalendarFooter extends NComponent {
 	renderClearButton() {
 		if (this.isClearButtonShown()) {
-			return (<div className='n-date-footer-button'>
+			return (<div className='n-calendar-footer-button'>
 				<NIcon n-comp-icon='trash-o'
 					   model={this.getPrimaryModel()}
 					   n-evt-click={this.onClearIconClicked} />
@@ -192,7 +217,7 @@ class NDateFooter extends NComponent {
 	}
 	renderNowButton() {
 		if (this.isNowButtonShown()) {
-			return (<div className='n-date-footer-button'>
+			return (<div className='n-calendar-footer-button'>
 				<NIcon n-comp-icon='crosshairs'
 					   model={this.getPrimaryModel()}
 					   n-evt-click={this.onNowIconClicked} />
@@ -201,7 +226,7 @@ class NDateFooter extends NComponent {
 	}
 	renderCloseButton() {
 		if (this.isCloseButtonShown()) {
-			return (<div className='n-date-footer-button'>
+			return (<div className='n-calendar-footer-button'>
 				<NIcon n-comp-icon='close'
 					   model={this.getPrimaryModel()}
 					   n-evt-click={this.onCloseIconClicked} />
@@ -217,7 +242,7 @@ class NDateFooter extends NComponent {
 		</div>);
 	}
 	getComponentClassName() {
-		return 'n-date-footer';
+		return 'n-calendar-footer';
 	}
 	isCloseButtonShown() {
 		return this.getLayoutOptionValue('showClose', false);
@@ -426,18 +451,9 @@ class NDateCalendar extends NDateComponent(NComponent) {
 			{this.renderDateBodyBody()}
 		</div>);
 	}
-	renderDateFooter() {
-		return (<NDateFooter model={this.getPrimaryModel()}
-							 n-comp-showClose={this.isCloseButtonShown()}
-							 n-comp-showClear={this.isClearButtonShown()}
-							 n-comp-showNow={this.isNowButtonShown()}
-							 n-evt-closeClick={this.onCloseClicked}
-							 n-evt-clearClick={this.onClearClicked}
-							 n-evt-nowClick={this.onNowClicked} />);
-	}
 	renderDate() {
 		let hasFooter = this.hasFooter();
-		return (<div className={classnames('n-calendar-date', {'n-calendar-date-no-footer': !hasFooter})}>
+		return (<div className={classnames('n-calendar-date', {'n-calendar-no-footer': !hasFooter})}>
 			{this.renderDateHeader()}
 			{this.renderDateBody()}
 			{hasFooter ? this.renderDateFooter() : null}
@@ -466,6 +482,19 @@ class NDateCalendar extends NDateComponent(NComponent) {
 		return this.getCurrentDisplayType() & YEAR;
 	}
 
+	getCurrentDisplayType() {
+		if (this.state.currentDisplayType == null) {
+			// default use the smallest unit
+			if (this.isDaySupported()) {
+				this.state.currentDisplayType = DAY;
+			} else if (this.isMonthSupported()) {
+				this.state.currentDisplayType = MONTH;
+			} else {
+				this.state.currentDisplayType = YEAR;
+			}
+		}
+		return this.state.currentDisplayType;
+	}
 	getDisplayDate() {
 		if (this.state.displayDate == null) {
 			let value = this.getValueFromModel();
@@ -605,10 +634,121 @@ class NDateCalendar extends NDateComponent(NComponent) {
 }
 
 class NTimeClock extends NDateComponent(NComponent) {
+	renderTimeBody() {
+		let date = this.getDisplayDate();
+		let circles = [{
+			class: 'second',
+			value: date.second(),
+			total: 60,
+			size: 92
+		}, {
+			class: 'minute',
+			value: date.minute(),
+			total: 60,
+			size: 62
+		}, {
+			class: 'hour',
+			value: date.hour(),
+			total: 24,
+			size: 32
+		}];
+				// <span>{value}</span>
+		return (<div className='n-calendar-time-body'>
+			<div className='n-calendar-time-circle'>
+				<svg>
+					<circle className='n-calendar-time-clock-circle-bg'
+							r='51' cx='105' cy='105' />
+					{circles.map((circle, index) => {
+						let painter = {
+							r: circle.size,
+							cx: 105,
+							cy: 105
+						};
+						return (<g key={index}>
+							<circle className={`n-calendar-time-clock-circle ${circle.class} size-${circle.size} when-${circle.value}-of-${circle.total}`}
+									{...painter} />
+						</g>);
+					})}
+				</svg>
+			</div>
+		</div>);
+	}
+	renderTimeHeader() {
+		let date = this.getDisplayDate();
+		return (<div className='n-calendar-time-header'>
+			<div className='n-calendar-time-header-text'>
+				<span>
+					{date.format(this.getTimeHeaderFormat())}
+				</span>
+			</div>
+		</div>);
+	}
+	renderTime() {
+		let hasFooter = this.hasFooter();
+		return (<div className={classnames('n-calendar-time', {'n-calendar-no-footer': !hasFooter})}>
+			{this.renderTimeHeader()}
+			{this.renderTimeBody()}
+			{hasFooter ? this.renderDateFooter() : null}
+		</div>);
+	}
 	renderInNormal() {
+		let value = this.getValueFromModel();
+		if (value == null) {
+			if (!this.state.timer) {
+				this.state.timer = setInterval(this.refreshTime.bind(this), 1000);
+			}
+		} else if (this.state.timer) {
+			clearInterval(this.state.timer);
+			delete this.state.timer;
+		}
+		return (<div className={this.getComponentStyle()}
+					 ref='me'>
+			{this.renderTime()}
+		</div>);
 	}
 	getComponentClassName() {
-		return 'n-clock';
+		return 'n-calendar';
+	}
+	getTimeHeaderFormat() {
+		let format = this.getLayoutOptionValue('headerFormat');
+		if (!format) {
+			format = 'HH:mm:ss';
+		}
+		return format;
+	}
+	getDisplayFormats() {
+		let formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
+		return formats.length == 0 ? this.wrapToArray(Envs.TIME_DISPLAY_FORMAT) : formats;
+	}
+	getCurrentDisplayType() {
+		if (this.state.currentDisplayType == null) {
+			// default use the smallest unit
+			if (this.isSecondSupported()) {
+				this.state.currentDisplayType = SECOND;
+			} else if (this.isMinuteSupported()) {
+				this.state.currentDisplayType = MINUTE;
+			} else {
+				this.state.currentDisplayType = HOUR;
+			}
+		}
+		return this.state.currentDisplayType;
+	}
+	getDisplayDate() {
+		if (this.state.displayDate == null) {
+			let value = this.getValueFromModel();
+			this.state.displayDate = value == null ? moment() : value;
+			if (!this.isMinuteSupported()) {
+				this.state.displayDate.minute(0);
+			}
+			if (!this.isSecondSupported()) {
+				this.state.displayDate.second(0);
+			}
+		}
+		return this.state.displayDate;
+	}
+	refreshTime() {
+		delete this.state.displayDate;
+		this.forceUpdate();
 	}
 }
 

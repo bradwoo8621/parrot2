@@ -51,6 +51,29 @@ $color-border:										darken($container-bg-color, 10%);
 $color-hover:										darken($container-bg-color, 5%);
 $color-focus:										$color-primary;
 
+// all the following base colors are from the material ui colors
+// and value is 600
+// https://www.materialui.co/colors
+$color-base-red:									#e53935;
+$color-base-pink:									#D81B60;
+$color-base-purple:									#8E24AA;
+$color-base-deep-purple:							#5E35B1;
+$color-base-indigo:									#3949AB;
+$color-base-blue:									#1E88E5;
+$color-base-light-blue:								#039BE5;
+$color-base-cyan:									#039BE5;
+$color-base-teal:									#00897B;
+$color-base-green:									#43A047;
+$color-base-light-green:							#7CB342;
+$color-base-lime:									#C0CA33;
+$color-base-yellow:									#FDD835;
+$color-base-amber:									#FFB300;
+$color-base-orange:									#FB8C00;
+$color-base-deep-orange:							#F4511E;
+$color-base-brown:									#6D4C41;
+$color-base-grey:									#757575;
+$color-base-blue-grey:								#546E7A;
+
 // border
 $border-radius:										2px;
 $border-0:											0;
@@ -123,3 +146,6 @@ $pad-17:											17px;
 $pad-18:											18px;
 $pad-19:											19px;
 $pad-20:											20px;
+
+// math
+$pi: 												3.14159265359;
