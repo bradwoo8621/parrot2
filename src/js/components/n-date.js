@@ -637,35 +637,46 @@ class NTimeClock extends NDateComponent(NComponent) {
 	renderTimeBody() {
 		let date = this.getDisplayDate();
 		let circles = [{
+			tip: 'Second',
 			class: 'second',
 			value: date.second(),
-			total: 60,
-			size: 92
+			total: 60
 		}, {
+			tip: 'Minute',
 			class: 'minute',
 			value: date.minute(),
-			total: 60,
-			size: 62
+			total: 60
 		}, {
+			tip: 'Hour',
 			class: 'hour',
 			value: date.hour(),
-			total: 24,
-			size: 32
+			total: 24
 		}];
-				// <span>{value}</span>
+		if (!this.isSecondSupported()) {
+			circles.splice(0, 1);
+			if (!this.isMinuteSupported()) {
+				circles.splice(0, 1);
+			}
+		}
 		return (<div className='n-calendar-time-body'>
-			<div className='n-calendar-time-circle'>
+			<div className='n-calendar-time-clock'>
 				<svg>
-					<circle className='n-calendar-time-clock-circle-bg'
+					<circle className='n-calendar-time-clock-bg'
 							r='51' cx='105' cy='105' />
 					{circles.map((circle, index) => {
+						let size = 92 - index * 30;
 						let painter = {
-							r: circle.size,
+							r: size,
 							cx: 105,
 							cy: 105
 						};
 						return (<g key={index}>
-							<circle className={`n-calendar-time-clock-circle ${circle.class} size-${circle.size} when-${circle.value}-of-${circle.total}`}
+							<title>{circle.tip}</title>
+							<circle className={`n-calendar-time-clock-circle-bg ${circle.class} size-${size}`}
+									onClick={this.onCircleClicked}
+									{...painter} />
+							<circle className={`n-calendar-time-clock-circle ${circle.class} size-${size} when-${circle.value}-of-${circle.total}`}
+									onClick={this.onCircleClicked}
 									{...painter} />
 						</g>);
 					})}
@@ -710,11 +721,7 @@ class NTimeClock extends NDateComponent(NComponent) {
 		return 'n-calendar';
 	}
 	getTimeHeaderFormat() {
-		let format = this.getLayoutOptionValue('headerFormat');
-		if (!format) {
-			format = 'HH:mm:ss';
-		}
-		return format;
+		return this.getPrimaryDisplayFormat();
 	}
 	getDisplayFormats() {
 		let formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
@@ -749,6 +756,10 @@ class NTimeClock extends NDateComponent(NComponent) {
 	refreshTime() {
 		delete this.state.displayDate;
 		this.forceUpdate();
+	}
+	onCircleClicked = (evt) => {
+		// TODO calculdate the mouse coordinates
+		console.log(evt);
 	}
 }
 

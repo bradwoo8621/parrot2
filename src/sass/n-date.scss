@@ -42,8 +42,7 @@
 		vertical-align: middle;
 		border-collapse: collapse;
 		width: 100%;
-		// line-height: $line-height;
-		// height: $line-height;
+		font-weight: bold;
 		.n-calendar-date-header-text {
 			display: table-cell;
 			width: 100%;
@@ -81,6 +80,7 @@
 			font-size: 0.2rem;
 			position: relative;
 			cursor: pointer;
+			font-weight: bold;
 		}
 	}
 	.n-calendar-date-body {
@@ -226,6 +226,8 @@ $n-calendar-time-size-list: 92 62 32;
 		display: block;
 		border-collapse: collapse;
 		text-align: center;
+		font-weight: bold;
+		font-size: 0.18rem;
 		.n-calendar-time-header-text {
 			position: relative;
 			display: inline;
@@ -236,8 +238,9 @@ $n-calendar-time-size-list: 92 62 32;
 		display: block;
 		width: 100%;
 		height: 231px;
-		.n-calendar-time-circle {
+		.n-calendar-time-clock {
 			width: 100%;
+			height: 231px;
 			display: inline-block;
 			position: relative;
 			svg {
@@ -247,6 +250,13 @@ $n-calendar-time-size-list: 92 62 32;
 				height: 2.1rem;
 				width: 2.1rem;
 				transform: rotate(-90deg);
+				.n-calendar-time-clock-bg {
+					fill: none;
+					stroke-width: 102;
+					stroke-opacity: 0.05;
+					stroke-dashoffset: 0;
+					stroke: $color-base-blue-grey;
+				}
 				.n-calendar-time-clock-circle {
 					@for $size-index from 1 through 3 {
 						&.size-#{nth($n-calendar-time-size-list, $size-index)} {
@@ -261,13 +271,14 @@ $n-calendar-time-size-list: 92 62 32;
 					// stroke-linecap: round;
 					transition: all 1s linear;
 					stroke-opacity: 0.6;
+					cursor: pointer;
 				}
 				.n-calendar-time-clock-circle-bg {
 					fill: none;
-					stroke-width: 102;
+					stroke-width: 20;
 					stroke-opacity: 0.05;
 					stroke-dashoffset: 0;
-					stroke: $color-base-blue-grey;
+					cursor: pointer;
 				}
 				.n-calendar-time-clock-circle.hour {
 					@for $size-index from 1 through 3 {
@@ -344,6 +355,8 @@ $n-calendar-time-size-list: 92 62 32;
 		display: block;
 		text-align: center;
 		font-size: 0.2rem;
+		// for IE9
+		line-height: 0.2rem;
 		i {
 			width: 0.3rem;
 			cursor: pointer;

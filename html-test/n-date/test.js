@@ -66,16 +66,29 @@ $(function() {
 			displayFormats: 'YYYY'
 		}
 	});
-	let layoutT = new Layout('time', {
+	let layoutHMS = new Layout('time', {
 		comp: {
 		}
 	});
+	let layoutHM = new Layout('time', {
+		comp: {
+			displayFormats: 'HH:mm'
+		}
+	});
+	let layoutH = new Layout('time', {
+		comp: {
+			displayFormats: 'HH'
+		}
+	});
+
 
 	let panel = (<div className='n-top-container'>
 		<div className='n-row n-in-form'>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NDate model={model} layout={layout} />
 			</div>
+		</div>
+		<div className='n-row n-in-form'>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NDateCalendar model={model} layout={layoutNC} />
 			</div>
@@ -91,8 +104,16 @@ $(function() {
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NDateCalendar model={model} layout={layoutRC} />
 			</div>
+		</div>
+		<div className='n-row n-in-form'>
 			<div className='n-col-sm-6 n-col-md-3'>
-				<NTimeClock model={model} layout={layoutT} />
+				<NTimeClock model={model} layout={layoutHMS} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NTimeClock model={model} layout={layoutHM} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NTimeClock model={model} layout={layoutH} />
 			</div>
 		</div>
 	</div>);
