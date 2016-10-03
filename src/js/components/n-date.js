@@ -594,7 +594,7 @@ class NDateCalendar extends NDateComponent(NComponent) {
 		} else {
 			this.setState({
 				displayDate: date
-			})
+			});
 		}
 	}
 	onMonthClicked = (month, evt) => {
@@ -1045,7 +1045,7 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 	}
 	getDocumentClickHandler() {
 		return (evt) => {
-			if (!$.contains(this.refs.me, evt.target)) {
+			if ($(evt.target).closest($(ReactDOM.findDOMNode(this.refs.me))).length == 0) {
 				this.hideDropdown();
 			}
 		}

@@ -556,15 +556,15 @@ class NAddonComponent extends NComponent {
 const NDropdownComponent = (ParentClass) => class extends ParentClass {
 	internalInstallLifecycleMonitors() {
 		super.internalInstallLifecycleMonitors();
-		$(document).on('click', this.bindToThis(this.onDocumentClicked))
+		$(document).on('mousedown', this.bindToThis(this.onDocumentMouseDown))
 				   .on('keyup', this.bindToThis(this.onDocumentKeyUp));
 	}
 	internalUninstallLifecycleMonitors() {
 		super.internalUninstallLifecycleMonitors();
-		$(document).off('click', this.bindToThis(this.onDocumentClicked))
+		$(document).off('mousedown', this.bindToThis(this.onDocumentMouseDown))
 				   .off('keyup', this.bindToThis(this.onDocumentKeyUp));
 	}
-	onDocumentClicked(evt) {
+	onDocumentMouseDown(evt) {
 		if (evt.isDefaultPrevented()) {
 			return;
 		}
