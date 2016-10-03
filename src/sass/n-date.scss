@@ -385,3 +385,25 @@ $n-calendar-time-size-list: 92 62 32;
 		width: 100%;
 	}
 }
+
+.n-date {
+	> .n-calendar,
+	> .n-datetime-calendar {
+		position: absolute;
+	    display: none;
+	    left: 0;
+	    top: calc(100% + 1px);
+	    line-height: 0.3rem;
+	    margin: 0;
+	    padding: 0;
+	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.175);
+	    background-color: $container-bg-color;
+	    z-index: $dropdown-z-index;
+	}
+	&.n-dropdown-open {
+		> .n-calendar,
+		> .n-datetime-calendar {
+			display: block;
+		}
+	}
+}

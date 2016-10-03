@@ -19,6 +19,12 @@ $(function() {
 			placeholder: 'Input here'
 		}
 	});
+	let layoutDT = new Layout('date', {
+		comp: {
+			placeholder: 'Input here',
+			displayFormats: 'YYYY/MM/DD HH:mm:ss'
+		}
+	});
 	let layoutR = new Layout('date', {
 		comp: {
 			range: {
@@ -87,6 +93,9 @@ $(function() {
 		<div className='n-row n-in-form'>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NDate model={model} layout={layout} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NDate model={model} layout={layoutDT} />
 			</div>
 		</div>
 		<div className='n-row n-in-form'>

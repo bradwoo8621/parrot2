@@ -18,6 +18,10 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		this.HOUR = HOUR;
 		this.MINUTE = MINUTE;
 		this.SECOND = SECOND;
+
+		this.onNowClicked = this.onNowClicked.bind(this);
+		this.onClearClicked = this.onClearClicked.bind(this);
+		this.onCloseClicked = this.onCloseClicked.bind(this);
 	}
 	buildLayout(props) {
 		super.buildLayout(props);
@@ -197,22 +201,29 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 			return momentValue1.isSame(momentValue2);
 		}
 	}
-	onCloseClicked = (evt) => {
+	onCloseClicked(evt) {
 		this.fireEventToMonitor(evt, 'closeClick');
 	}
-	onNowClicked = (evt) => {
-		this.setState({
-			displayDate: moment()
-		}, () => {
+	onNowClicked(evt) {
+		this.setDisplayToNow(() => {
 			this.fireEventToMonitor(evt, 'nowClick');
 		});
 	}
-	onClearClicked = (evt) => {
+	onClearClicked(evt) {
+		this.clearValue();
+		this.fireEventToMonitor(evt, 'clearClick');
+	}
+
+	setDisplayToNow(callback) {
+		this.setState({
+			displayDate: moment()
+		}, callback);
+	}
+	clearValue() {
 		let oldValue = this.getValueFromModel();
 		if (oldValue != null) {
 			this.setValueToModel(null);
 		}
-		this.fireEventToMonitor(evt, 'clearClick');
 	}
 };
 
@@ -560,7 +571,7 @@ class NDateCalendar extends NDateComponent(NComponent) {
 	}
 	onYearClicked = (year, evt) => {
 		let date = this.getDisplayDate();
-		this.setValueToModel(date.clone().year(year));
+		this.setValueToModel(this.applyTimeToValue(date.clone().year(year)));
 		if (this.isMonthSupported()) {
 			this.setState({
 				currentDisplayType: MONTH
@@ -573,7 +584,7 @@ class NDateCalendar extends NDateComponent(NComponent) {
 	}
 	onMonthClicked = (month, evt) => {
 		let date = this.getDisplayDate();
-		this.setValueToModel(date.month(month));
+		this.setValueToModel(this.applyTimeToValue(date.clone().month(month)));
 		if (this.isDaySupported()) {
 			this.setState({
 				currentDisplayType: DAY
@@ -581,7 +592,7 @@ class NDateCalendar extends NDateComponent(NComponent) {
 		}
 	}
 	onDayClicked = (date, evt) => {
-		this.setValueToModel(date);
+		this.setValueToModel(this.applyTimeToValue(date));
 	}
 	onBackwardClicked = (evt) => {
 		this.onHeaderIconClicked({
@@ -636,6 +647,17 @@ class NDateCalendar extends NDateComponent(NComponent) {
 			oldDisplayType: oldDisplayType,
 			newDisplayType: this.getCurrentDisplayType()
 		}));
+	}
+
+	applyTimeToValue(date) {
+		let oldValue = this.getValueFromModel();
+		if (oldValue == null) {
+			let now = moment();
+			date.hour(now.hour())
+				.minute(now.minute())
+				.second(now.second());
+		}
+		return date;
 	}
 }
 
@@ -756,7 +778,6 @@ class NTimeClock extends NDateComponent(NComponent) {
 	getDisplayDate() {
 		if (this.state.displayDate == null) {
 			let value = this.getValueFromModel();
-			console.log(value);
 			this.state.displayDate = value == null ? moment() : value;
 			if (!this.isMinuteSupported()) {
 				this.state.displayDate.minute(0);
@@ -833,25 +854,24 @@ class NTimeClock extends NDateComponent(NComponent) {
 
 class NDateTimeCalendar extends NDateComponent(NComponent) {
 	renderInNormal() {
-		return (<div className={this.getComponentStyle()}>
-			<NDateCalendar model={this.getModel()}
-						   n-id={this.getDataId()}
-						   n-comp-valueFormat={this.getValueFormat()}
-						   n-comp-displayFormats={this.getDisplayFormats()}
-						   n-comp-range={this.getDateRange()}
-						   n-comp-dateEnabledChecker={this.getDateEnabledChecker()}
-						   n-comp-dateHeaderFormat={this.getLayoutOptionValue('dateHeaderFormat')}
-						   n-comp-showNow={false}
-						   n-comp-showClear={false} />
-			<NTimeClock model={this.getModel()}
-						n-id={this.getDataId()}
-						n-comp-valueFormat={this.getValueFormat()}
-						n-comp-displayFormats={this.getDisplayFormats()}
-						n-comp-range={this.getDateRange()}
-						n-comp-dateEnabledChecker={this.getDateEnabledChecker()}
-						n-comp-timeHeaderFormat={this.getLayoutOptionValue('timeHeaderFormat')}
-						n-comp-showNow={false}
-						n-comp-showClear={false} />
+		let options = {
+			model: this.getModel(),
+			'n-id': this.getDataId(),
+			'n-comp-valueFormat': this.getValueFormat(),
+			'n-comp-displayFormats': this.getDisplayFormats(),
+			'n-comp-range': this.getDateRange(),
+			'n-comp-dateEnabledChecker': this.getDateEnabledChecker(),
+			'n-comp-dateHeaderFormat': this.getLayoutOptionValue('dateHeaderFormat'),
+			'n-comp-timeHeaderFormat': this.getLayoutOptionValue('timeHeaderFormat'),
+			'n-comp-showNow': false,
+			'n-comp-showClear': false
+		};
+		return (<div className={this.getComponentStyle()}
+					 ref='me'>
+			<NDateCalendar {...options}
+						   ref='date' />
+			<NTimeClock {...options}
+						ref='time' />
 			{this.renderDateFooter()}
 		</div>);
 	}
@@ -861,6 +881,11 @@ class NDateTimeCalendar extends NDateComponent(NComponent) {
 	getDisplayFormats() {
 		let formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
 		return formats.length == 0 ? this.wrapToArray(Envs.DATE_TIME_DISPLAY_FORMAT) : formats;
+	}
+	onNowClicked(evt) {
+		this.refs.date.setDisplayToNow();
+		this.refs.time.setDisplayToNow();
+		super.onNowClicked(evt);
 	}
 }
 
@@ -884,7 +909,31 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 		this.getComponent().off('change', this.onComponentChanged);
 	}
 	renderDropdown() {
-
+		let hasDate = this.isDateSupported();
+		let hasTime = this.isTimeSupported();
+		let options = {
+			model: this.getModel(),
+			'n-id': this.getDataId(),
+			'n-comp-valueFormat': this.getValueFormat(),
+			'n-comp-displayFormats': this.getDisplayFormats(),
+			'n-comp-range': this.getDateRange(),
+			'n-comp-dateEnabledChecker': this.getDateEnabledChecker(),
+			'n-comp-dateHeaderFormat': this.getLayoutOptionValue('dateHeaderFormat'),
+			'n-comp-timeHeaderFormat': this.getLayoutOptionValue('timeHeaderFormat'),
+			'n-comp-showNow': true,
+			'n-comp-showClear': true,
+			'n-comp-showClose': true,
+			'n-evt-closeClick': () => {
+				this.hidePopover();
+			}
+		};
+		if (hasDate && hasTime) {
+			return <NDateTimeCalendar {...options} />;
+		} else if (hasDate) {
+			return <NDateCalendar {...options} />;
+		} else {
+			return <NTimeClock {...options} />
+		}
 	}
 	renderCalendarIcon() {
 		return (<div className='n-input-addon'>
@@ -969,6 +1018,20 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 	}
 	onCalendarIconClicked = (evt) => {
 		$(ReactDOM.findDOMNode(this.refs.txt)).focus();
+		if (this.isEnabled() && !evt.isDefaultPrevented()) {
+			evt.preventDefault();
+			this.togglePopover();
+		}
+	}
+	getDocumentClickHandler() {
+		return (evt) => {
+			if (!$.contains(this.refs.me, evt.target)) {
+				this.hidePopover();
+			}
+		}
+	}
+	getDocumentEscapePressedHandler() {
+		return this.hidePopover;
 	}
 
 	getComponentText() {
