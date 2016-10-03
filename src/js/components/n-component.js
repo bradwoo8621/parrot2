@@ -592,26 +592,29 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 		return null;
 	}
 
-	showPopover() {
+	isDropdownShown() {
+		return $(ReactDOM.findDOMNode(this.refs.me)).hasClass('n-dropdown-open');
+	}
+	showDropdown() {
 		let me = $(ReactDOM.findDOMNode(this.refs.me));
 		if (!me.hasClass('n-dropdown-open')) {
 			me.addClass('n-dropdown-open');
 			this.fireEventToMonitor($.Event('popoverOpen', {target: me[0]}));
 		}
 	}
-	hidePopover() {
+	hideDropdown() {
 		let me = $(ReactDOM.findDOMNode(this.refs.me));
 		if (me.hasClass('n-dropdown-open')) {
 			me.removeClass('n-dropdown-open');
 			this.fireEventToMonitor($.Event('popoverClose', {target: me[0]}));
 		}
 	}
-	togglePopover() {
+	toggleDropdown() {
 		let me = $(ReactDOM.findDOMNode(this.refs.me));
 		if (!me.hasClass('n-dropdown-open')) {
-			this.showPopover();
+			this.showDropdown();
 		} else {
-			this.hidePopover();
+			this.hideDropdown();
 		}
 	}
 }

@@ -16,7 +16,9 @@ $(function() {
 	});
 	let layout = new Layout('date', {
 		comp: {
-			placeholder: 'Input here'
+			placeholder: 'Input here',
+			defaultDateTime: moment().add(-25, 'year'),
+			defaultDisplayType: 1
 		}
 	});
 	let layoutDT = new Layout('date', {
@@ -60,7 +62,11 @@ $(function() {
 	});
 	let layoutNC = new Layout('date', {
 		comp: {
-			showNow: false
+			showNow: false,
+			defaultDisplayType: 1,
+			defaultDateTime: function() {
+				return moment().add(-25, 'year');
+			}
 		}
 	});
 	let layoutNC_YM = new Layout('date', {
@@ -134,5 +140,4 @@ $(function() {
 	</div>);
 	ReactDOM.render(panel, document.getElementById('main'));
 	window.model = model;
-		
 });

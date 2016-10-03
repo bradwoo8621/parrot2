@@ -22,6 +22,15 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		this.onNowClicked = this.onNowClicked.bind(this);
 		this.onClearClicked = this.onClearClicked.bind(this);
 		this.onCloseClicked = this.onCloseClicked.bind(this);
+
+		let defaultDate = this.getLayoutOptionValue('defaultDateTime');
+		if (defaultDate) {
+			this.state.displayDate = defaultDate.clone();
+		}
+		let defaultDisplayType = this.getLayoutOptionValue('defaultDisplayType');
+		if (defaultDisplayType) {
+			this.state.currentDisplayType = defaultDisplayType;
+		}
 	}
 	buildLayout(props) {
 		super.buildLayout(props);
@@ -107,8 +116,19 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 	}
 	getCurrentDisplayType() {
 		if (this.state.currentDisplayType == null) {
-			// default use the smallest unit
-			this.state.currentDisplayType = parseInt(this.state.displayType / 2) + 1;
+			if (this.isSecondSupported()) {
+				this.state.currentDisplayType = SECOND;
+			} else if (this.isMinuteSupported()) {
+				this.state.currentDisplayType = MINUTE;
+			} else if (this.isHourSupported()) {
+				this.state.currentDisplayType = HOUR;
+			} else if (this.isDaySupported()) {
+				this.state.currentDisplayType = DAY;
+			} else if (this.isMonthSupported()) {
+				this.state.currentDisplayType = MONTH;
+			} else {
+				this.state.currentDisplayType = YEAR;
+			}
 		}
 		return this.state.currentDisplayType;
 	}
@@ -163,18 +183,10 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		} else if (typeof value === 'string') {
 			// string value
 			let momentValue = this.formatValue(value, this.getValueFormat());
-			if (momentValue.isValid()) {
-				super.setValueToModel(momentValue.format(this.getValueFormat()));
-			} else {
-				super.setValueToModel(null);
-			}
+			super.setValueToModel(this.parseText(momentValue, this.getValueFormat()));
 		} else {
 			// moment object
-			if (value.isValid()) {
-				super.setValueToModel(value.format(this.getValueFormat()));
-			} else {
-				super.setValueToModel(null);
-			}
+			super.setValueToModel(this.parseText(value, this.getValueFormat()));
 		}
 	}
 
@@ -224,6 +236,9 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		if (oldValue != null) {
 			this.setValueToModel(null);
 		}
+	}
+	resetDisplayOptions(options) {
+		this.setState(options);
 	}
 };
 
@@ -838,8 +853,8 @@ class NTimeClock extends NDateComponent(NComponent) {
 			value = value.clone();
 		}
 		if (target.hasClass('hour')) {
-			let hour = Math.round(degree / 360 * 24);
-			value.hour(hour);
+			let v = Math.round(degree / 360 * 24);
+			value.hour(v);
 		} else {
 			let v = Math.round(degree / 360 * 60);
 			if (target.hasClass('minute')) {
@@ -887,6 +902,10 @@ class NDateTimeCalendar extends NDateComponent(NComponent) {
 		this.refs.time.setDisplayToNow();
 		super.onNowClicked(evt);
 	}
+	resetDisplayOptions(options) {
+		this.refs.date.setState(options);
+		this.refs.time.setState(options);
+	}
 }
 
 class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
@@ -924,8 +943,9 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 			'n-comp-showClear': true,
 			'n-comp-showClose': true,
 			'n-evt-closeClick': () => {
-				this.hidePopover();
-			}
+				this.hideDropdown();
+			},
+			ref: 'dropdown'
 		};
 		if (hasDate && hasTime) {
 			return <NDateTimeCalendar {...options} />;
@@ -1020,18 +1040,35 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 		$(ReactDOM.findDOMNode(this.refs.txt)).focus();
 		if (this.isEnabled() && !evt.isDefaultPrevented()) {
 			evt.preventDefault();
-			this.togglePopover();
+			this.showDropdown();
 		}
 	}
 	getDocumentClickHandler() {
 		return (evt) => {
 			if (!$.contains(this.refs.me, evt.target)) {
-				this.hidePopover();
+				this.hideDropdown();
 			}
 		}
 	}
 	getDocumentEscapePressedHandler() {
-		return this.hidePopover;
+		return this.hideDropdown;
+	}
+	showDropdown() {
+		if (!this.isDropdownShown()) {
+			let value = this.getValueFromModel();
+			if (value == null) {			
+				this.refs.dropdown.resetDisplayOptions({
+					displayDate: this.getLayoutOptionValue('defaultDateTime'),
+					currentDisplayType: this.getLayoutOptionValue('defaultDisplayType')
+				});
+			} else {
+				this.refs.dropdown.resetDisplayOptions({
+					displayDate: value,
+					currentDisplayType: this.getLayoutOptionValue('defaultDisplayType')
+				});
+			}
+		}
+		super.showDropdown();
 	}
 
 	getComponentText() {

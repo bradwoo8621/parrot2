@@ -54,7 +54,8 @@ class NButton extends NDropdownComponent(NComponent) {
 		if (!dropdown.has) {
 			return null;
 		}
-		return (<ul className='n-button-dropdown text-left'>
+		return (<ul className='n-button-dropdown text-left'
+					ref='dropdown'>
 			{dropdown.items.map((item, itemIndex) => {
 				return this.renderDropdownItem(item, itemIndex);
 			})}
@@ -111,7 +112,7 @@ class NButton extends NDropdownComponent(NComponent) {
 	onDropdownIconClicked = (evt) => {
 		if (this.isEnabled() && !evt.isDefaultPrevented()) {
 			evt.preventDefault();
-			this.togglePopover();
+			this.showDropdown();
 		}
 	}
 	onComponentClicked = (evt) => {
@@ -124,10 +125,10 @@ class NButton extends NDropdownComponent(NComponent) {
 		}
 	}
 	getDocumentClickHandler() {
-		return this.hidePopover;
+		return this.hideDropdown;
 	}
 	getDocumentEscapePressedHandler() {
-		return this.hidePopover;
+		return this.hideDropdown;
 	}
 }
 
