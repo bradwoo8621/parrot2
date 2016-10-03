@@ -110,6 +110,17 @@ $(function() {
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NTimeClock model={model} layout={layoutHMS} />
 			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NTimeClock model={model} layout={layoutHM} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NTimeClock model={model} layout={layoutH} />
+			</div>
+		</div>
+		<div className='n-row n-in-form'>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NDateTimeCalendar model={model} n-id='datetime' />
+			</div>
 		</div>
 	</div>);
 	ReactDOM.render(panel, document.getElementById('main'));

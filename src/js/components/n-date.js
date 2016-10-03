@@ -801,11 +801,17 @@ class NTimeClock extends NDateComponent(NComponent) {
 		let value = this.getValueFromModel();
 		if (value == null) {
 			value = moment();
-			if (!value.isDaySupported()) {
+			if (!this.isDaySupported()) {
 				value.date(1);
 			}
-			if (!value.isMonthSupported()) {
+			if (!this.isMonthSupported()) {
 				value.month(0);
+			}
+			if (!this.isMinuteSupported()) {
+				value.minute(0);
+			}
+			if (!this.isSecondSupported()) {
+				value.second(0);
 			}
 		} else {
 			value = value.clone();

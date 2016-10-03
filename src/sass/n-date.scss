@@ -328,29 +328,6 @@ $n-calendar-time-size-list: 92 62 32;
 		}
 	}
 }
-.n-datetime-calendar {
-	position: relative;
-	display: inline-block;
-	border-collapse: collapse;
-	border: $border-1;
-	border-radius: $border-radius;
-	min-width: 600px;
-    max-width: 600px;
-	@include float-layout-container();
-	.n-calendar {
-		float: left;
-		width: 50%;
-		display: block;
-		.n-calendar-date,
-		.n-calendar-time {
-			border-color: transparent;
-		}
-	}
-	.n-calendar-footer {
-		float: left;
-		width: 100%;
-	}
-}
 .n-calendar-footer {
 	display: block;
 	position: relative;
@@ -383,5 +360,28 @@ $n-calendar-time-size-list: 92 62 32;
 		&:first-child:last-child {
 			width: 100%;
 		}
+	}
+}
+.n-datetime-calendar {
+	position: relative;
+	display: inline-block;
+	border-collapse: collapse;
+	border: $border-1;
+	border-radius: $border-radius;
+	min-width: 600px;
+    max-width: 600px;
+	@include float-layout-container();
+	.n-calendar {
+		float: left;
+		width: 50%;
+		display: block;
+		.n-calendar-date,
+		.n-calendar-time {
+			border-color: transparent;
+		}
+	}
+	.n-calendar-footer {
+		float: left;
+		width: 100%;
 	}
 }
