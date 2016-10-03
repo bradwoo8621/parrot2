@@ -149,3 +149,16 @@ $pad-20:											20px;
 
 // math
 $pi: 												3.14159265359;
+
+// float layout
+@mixin float-layout-container() {
+	&:before {
+		display: table;
+		content: '';
+	}
+	&:after {
+		display: table;
+		content: '';
+		clear: both;
+	}
+}

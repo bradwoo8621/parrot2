@@ -1,11 +1,12 @@
 import * as SDK from '../../src/js/components/n-date'
 
-let {React, ReactDOM, Model, Layout, NDate, NDateCalendar, NTimeClock, $, Envs, moment} = SDK;
+let {React, ReactDOM, Model, Layout, NDate, NDateCalendar, NTimeClock, NDateTimeCalendar, $, Envs, moment} = SDK;
 
 
 $(function() {
 	let model = new Model({
-		date: '2015'
+		date: '2015',
+		time: '20160101130506'
 	});
 	model.addPostChangeListener('date', function(evt) {
 		console.log({
@@ -109,14 +110,9 @@ $(function() {
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NTimeClock model={model} layout={layoutHMS} />
 			</div>
-			<div className='n-col-sm-6 n-col-md-3'>
-				<NTimeClock model={model} layout={layoutHM} />
-			</div>
-			<div className='n-col-sm-6 n-col-md-3'>
-				<NTimeClock model={model} layout={layoutH} />
-			</div>
 		</div>
 	</div>);
 	ReactDOM.render(panel, document.getElementById('main'));
 	window.model = model;
+		
 });

@@ -25,6 +25,7 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 	}
 	renderDateFooter() {
 		return (<NCalendarFooter model={this.getPrimaryModel()}
+							 n-id={this.getDataId()}
 							 n-comp-showClose={this.isCloseButtonShown()}
 							 n-comp-showClear={this.isClearButtonShown()}
 							 n-comp-showNow={this.isNowButtonShown()}
@@ -116,6 +117,9 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 	isDaySupported() {
 		return this.getDisplayType() & DAY;
 	}
+	isDateSupported() {
+		return this.isYearSupported();
+	}
 	isHourSupported() {
 		return this.getDisplayType() & HOUR;
 	}
@@ -124,6 +128,9 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 	}
 	isSecondSupported() {
 		return this.getDisplayType() & SECOND;
+	}
+	isTimeSupported() {
+		return this.isHourSupported();
 	}
 	isCloseButtonShown() {
 		return this.getLayoutOptionValue('showClose', false);
@@ -138,6 +145,10 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		return this.isClearButtonShown() || this.isNowButtonShown() || this.isCloseButtonShown();
 	}
 
+	onModelChanged(evt) {
+		delete this.state.displayDate;
+		super.onModelChanged(evt);
+	}
 	getValueFromModel() {
 		let value = this.formatValue(super.getValueFromModel(), this.getValueFormat());
 		return (value == null || !value.isValid()) ? null : value;
@@ -469,7 +480,7 @@ class NDateCalendar extends NDateComponent(NComponent) {
 		return 'n-calendar';
 	}
 	getDateHeaderFormat() {
-		let format = this.getLayoutOptionValue('headerFormat');
+		let format = this.getLayoutOptionValue('dateHeaderFormat');
 		return lodash.assign({}, Envs.DATE_HEADER_FORMAT, format);
 	}
 	isDayPicking() {
@@ -529,11 +540,6 @@ class NDateCalendar extends NDateComponent(NComponent) {
 			days.push(index + 1);
 		}
 		return days;
-	}
-
-	onModelChanged(evt) {
-		delete this.state.displayDate;
-		super.onModelChanged(evt);
 	}
 
 	onHeaderYearClicked = (evt) => {
@@ -721,7 +727,14 @@ class NTimeClock extends NDateComponent(NComponent) {
 		return 'n-calendar';
 	}
 	getTimeHeaderFormat() {
-		return this.getPrimaryDisplayFormat();
+		let format = this.getLayoutOptionValue('timeHeaderFormat', Envs.TIME_HEADER_FORMAT);
+		if (this.isMinuteSupported()) {
+			format += ':mm';
+		}
+		if (this.isSecondSupported()) {
+			format += ':ss';
+		}
+		return format;
 	}
 	getDisplayFormats() {
 		let formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
@@ -743,6 +756,7 @@ class NTimeClock extends NDateComponent(NComponent) {
 	getDisplayDate() {
 		if (this.state.displayDate == null) {
 			let value = this.getValueFromModel();
+			console.log(value);
 			this.state.displayDate = value == null ? moment() : value;
 			if (!this.isMinuteSupported()) {
 				this.state.displayDate.minute(0);
@@ -758,8 +772,89 @@ class NTimeClock extends NDateComponent(NComponent) {
 		this.forceUpdate();
 	}
 	onCircleClicked = (evt) => {
-		// TODO calculdate the mouse coordinates
-		console.log(evt);
+		let target = $(evt.target);
+		let clientX = evt.clientX,
+			clientY = evt.clientY;
+		let targetOffset = target.closest('svg').offset();
+		let x = clientX + $(document).scrollLeft() - (targetOffset.left + 105);
+		let y = -1 * (clientY + $(document).scrollTop() - (targetOffset.top + 105));
+		let degree = 0;
+		if (x == 0) {
+			degree = (y >= 0) ? 90 : 270;
+		} else {
+			degree = Math.atan(y / x) * 180 / Math.PI;
+			// transform to coordinate system degree
+			if (x > 0 && y >= 0) {
+				// do nothing
+			} else if (x < 0) {
+				degree += 180;
+			} else {
+				degree += 360;
+			}
+		}
+		// transform to real clock coordinate system
+		if (degree <= 90) {
+			degree = 90 - degree;
+		} else {
+			degree = 450 - degree;
+		}
+		let value = this.getValueFromModel();
+		if (value == null) {
+			value = moment();
+			if (!value.isDaySupported()) {
+				value.date(1);
+			}
+			if (!value.isMonthSupported()) {
+				value.month(0);
+			}
+		} else {
+			value = value.clone();
+		}
+		if (target.hasClass('hour')) {
+			let hour = Math.round(degree / 360 * 24);
+			value.hour(hour);
+		} else {
+			let v = Math.round(degree / 360 * 60);
+			if (target.hasClass('minute')) {
+				value.minute(v);
+			} else {
+				value.second(v);
+			}
+		}
+		this.setValueToModel(value);
+	}
+}
+
+class NDateTimeCalendar extends NDateComponent(NComponent) {
+	renderInNormal() {
+		return (<div className={this.getComponentStyle()}>
+			<NDateCalendar model={this.getModel()}
+						   n-id={this.getDataId()}
+						   n-comp-valueFormat={this.getValueFormat()}
+						   n-comp-displayFormats={this.getDisplayFormats()}
+						   n-comp-range={this.getDateRange()}
+						   n-comp-dateEnabledChecker={this.getDateEnabledChecker()}
+						   n-comp-dateHeaderFormat={this.getLayoutOptionValue('dateHeaderFormat')}
+						   n-comp-showNow={false}
+						   n-comp-showClear={false} />
+			<NTimeClock model={this.getModel()}
+						n-id={this.getDataId()}
+						n-comp-valueFormat={this.getValueFormat()}
+						n-comp-displayFormats={this.getDisplayFormats()}
+						n-comp-range={this.getDateRange()}
+						n-comp-dateEnabledChecker={this.getDateEnabledChecker()}
+						n-comp-timeHeaderFormat={this.getLayoutOptionValue('timeHeaderFormat')}
+						n-comp-showNow={false}
+						n-comp-showClear={false} />
+			{this.renderDateFooter()}
+		</div>);
+	}
+	getComponentClassName() {
+		return 'n-datetime-calendar';
+	}
+	getDisplayFormats() {
+		let formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
+		return formats.length == 0 ? this.wrapToArray(Envs.DATE_TIME_DISPLAY_FORMAT) : formats;
 	}
 }
 
@@ -876,4 +971,4 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 }
 
 export * from './n-component'
-export {NDateComponent, NDate, NDateCalendar, NTimeClock, moment}
+export {NDateComponent, NDate, NDateCalendar, NTimeClock, NDateTimeCalendar, moment}

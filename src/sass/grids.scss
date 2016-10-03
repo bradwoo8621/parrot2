@@ -8,15 +8,7 @@
 	margin-left: $margin--15;
 	margin-right: $margin--15;
 	position: relative;
-	&:before {
-		display: table;
-		content: '';
-	}
-	&:after {
-		display: table;
-		content: '';
-		clear: both;
-	}
+	@include float-layout-container();
 	&.n-in-form > div[class*=n-col-] {
 		margin-top: $margin-2;
 		margin-bottom: $margin-3;

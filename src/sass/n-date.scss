@@ -93,15 +93,7 @@
 			position: relative;
 			display: block;
 			border-collapse: collapse;
-			&:before {
-				display: table;
-				content: '';
-			}
-			&:after {
-				display: table;
-				content: '';
-				clear: both;
-			}
+			@include float-layout-container();
 		}
 		.n-calendar-date-body-header-text {
 			font-weight: bold;
@@ -336,19 +328,34 @@ $n-calendar-time-size-list: 92 62 32;
 		}
 	}
 }
+.n-datetime-calendar {
+	position: relative;
+	display: inline-block;
+	border-collapse: collapse;
+	border: $border-1;
+	border-radius: $border-radius;
+	min-width: 600px;
+    max-width: 600px;
+	@include float-layout-container();
+	.n-calendar {
+		float: left;
+		width: 50%;
+		display: block;
+		.n-calendar-date,
+		.n-calendar-time {
+			border-color: transparent;
+		}
+	}
+	.n-calendar-footer {
+		float: left;
+		width: 100%;
+	}
+}
 .n-calendar-footer {
 	display: block;
 	position: relative;
 	padding: $pad-0 $pad-15 $pad-10;
-	&:before {
-		content: '';
-		display: table;
-	}
-	&:after {
-		content: '';
-		display: table;
-		clear: both;
-	}
+	@include float-layout-container();
 	.n-calendar-footer-button {
 		float: left;
 		position: relative;
