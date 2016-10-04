@@ -308,7 +308,7 @@ class NComponent extends React.Component {
 	getCellStyle() {
 		return classnames(this.getStyle('cell'), 
 						this.getComponentClassName(), {
-						  	'n-disabled': !this.isEnabled(),
+							'n-disabled': !this.isEnabled(),
 							'n-view-mode': this.isViewMode()
 						});
 	}
@@ -554,23 +554,12 @@ class NAddonComponent extends NComponent {
 }
 
 const NDropdownComponent = (ParentClass) => class extends ParentClass {
-	internalInstallLifecycleMonitors() {
-		super.internalInstallLifecycleMonitors();
-		$(document).on('mousedown', this.bindToThis(this.onDocumentMouseDown))
-				   .on('keyup', this.bindToThis(this.onDocumentKeyUp));
-	}
-	internalUninstallLifecycleMonitors() {
-		super.internalUninstallLifecycleMonitors();
-		$(document).off('mousedown', this.bindToThis(this.onDocumentMouseDown))
-				   .off('keyup', this.bindToThis(this.onDocumentKeyUp));
-	}
 	onDocumentMouseDown(evt) {
 		if (evt.isDefaultPrevented()) {
 			return;
 		}
-		let handler = this.getDocumentClickHandler();
-		if (handler) {
-			handler.call(this, evt);
+		if ($(evt.target).closest($(ReactDOM.findDOMNode(this.refs.me))).length == 0) {
+			this.hideDropdown();
 		}
 	}
 	onDocumentKeyUp(evt) {
@@ -579,17 +568,8 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 		}
 		let handler = null;
 		if (evt.keyCode === 27) {
-			handler = this.getDocumentEscapePressedHandler();
+			this.hideDropdown();
 		}
-		if (handler) {
-			handler.call(this, evt);
-		}
-	}
-	getDocumentClickHandler() {
-		return null;
-	}
-	getDocumentEscapePressedHandler() {
-		return null;
 	}
 
 	isDropdownShown() {
@@ -598,15 +578,20 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 	showDropdown() {
 		let me = $(ReactDOM.findDOMNode(this.refs.me));
 		if (!me.hasClass('n-dropdown-open')) {
+			$(document).on('mousedown', this.bindToThis(this.onDocumentMouseDown))
+					   .on('keyup', this.bindToThis(this.onDocumentKeyUp));
 			me.addClass('n-dropdown-open');
-			this.fireEventToMonitor($.Event('popoverOpen', {target: me[0]}));
+			this.recalcDropdownPosition(this.getDropdown(), me);
+			this.fireEventToMonitor($.Event('dropdownOpen', {target: me[0]}));
 		}
 	}
 	hideDropdown() {
 		let me = $(ReactDOM.findDOMNode(this.refs.me));
 		if (me.hasClass('n-dropdown-open')) {
+			$(document).off('mousedown', this.bindToThis(this.onDocumentMouseDown))
+					   .off('keyup', this.bindToThis(this.onDocumentKeyUp));
 			me.removeClass('n-dropdown-open');
-			this.fireEventToMonitor($.Event('popoverClose', {target: me[0]}));
+			this.fireEventToMonitor($.Event('dropdownClose', {target: me[0]}));
 		}
 	}
 	toggleDropdown() {
@@ -616,6 +601,76 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 		} else {
 			this.hideDropdown();
 		}
+	}
+	getDropdown() {
+		return $(ReactDOM.findDOMNode(this.refs.dropdown));
+	}
+	recalcDropdownPosition(dropdown, container) {
+		var styles = {};
+		styles.width = container.outerWidth();
+		var offset = container.offset();
+		// 1px offset
+		// set the real top, assumpt it is on bottom
+		styles.top = offset.top + container.outerHeight() + 1;
+		styles.left = offset.left;
+
+		var onTop = false;
+		var rightToLeft = false;
+		var realHeight = dropdown.outerHeight();
+		var realWidth = dropdown.outerWidth();
+		// check dropdown in top or bottom
+		// TODO why outerHeight() here? according to jQuery's document, height() is the correct choice.
+		// TODO but in Chrome 53.0.2785.116 m, height() returns same as $(document).height().
+		// TODO and in Firefox 46.0.1, also same as Chrome.
+		// TODO in IE11 or down to 10/9, exactly returns the value which described on jQuery doc.
+		// TODO it really sucks
+		if ((styles.top + realHeight) > ($(window).outerHeight() + $(window).scrollTop())) {
+			// cannot show in bottom and in current viewport
+			// check it is enough top or not
+			if ((offset.top - $(window).scrollTop()) >= realHeight) {
+				// enough
+				styles.top = offset.top - realHeight;
+				onTop = true;
+			} else if ((styles.top + realHeight) <= $(document).height()) {
+				// can show in bottom and in current document
+				onTop = false;
+			} else if (offset.top < realHeight) {
+				// cannot show in top and in current document
+				onTop = false;
+			} else {
+				styles.top = offset.top - realHeight - 1;
+				onTop = true;
+			}
+		} else {
+			// can show in bottom and in current viewport
+			onTop = false;
+		}
+
+		// check dropdown to left or right
+		if (realWidth > styles.width) {
+			var width = $(window).width();
+			if ((styles.left + realWidth) <= width) {
+				// normal from left to right, do nothing
+			} else if ((styles.left + styles.width) >= realWidth) {
+				// from right to left
+				styles.left = styles.left + styles.width - realWidth;
+				rightToLeft = true;
+			} else {
+				// still left to right, do nothing
+			}
+		}
+
+		if (onTop) {
+			container.addClass('n-dropdown-top').removeClass('n-dropdown-bottom');
+		} else {
+			container.removeClass('n-dropdown-top').addClass('n-dropdown-bottom');
+		}
+		if (rightToLeft) {
+			container.addClass('n-dropdown-r2l').removeClass('n-dropdown-l2r');
+		} else {
+			container.addClass('n-dropdown-l2r').removeClass('n-dropdown-r2l');
+		}
+		// dropdown.css({top: styles.top, left: styles.left});
 	}
 }
 

@@ -945,6 +945,7 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 			'n-evt-closeClick': () => {
 				this.hideDropdown();
 			},
+			'n-styles-comp': 'n-dropdown',
 			ref: 'dropdown'
 		};
 		if (hasDate && hasTime) {
@@ -1042,16 +1043,6 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 			evt.preventDefault();
 			this.showDropdown();
 		}
-	}
-	getDocumentClickHandler() {
-		return (evt) => {
-			if ($(evt.target).closest($(ReactDOM.findDOMNode(this.refs.me))).length == 0) {
-				this.hideDropdown();
-			}
-		}
-	}
-	getDocumentEscapePressedHandler() {
-		return this.hideDropdown;
 	}
 	showDropdown() {
 		if (!this.isDropdownShown()) {

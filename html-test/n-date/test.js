@@ -27,6 +27,12 @@ $(function() {
 			displayFormats: 'YYYY/MM/DD HH:mm:ss'
 		}
 	});
+	let layoutOnlyTime = new Layout('date', {
+		comp: {
+			placeholder: 'Input here',
+			displayFormats: 'HH:mm:ss'
+		}
+	});
 	let layoutR = new Layout('date', {
 		comp: {
 			range: {
@@ -101,6 +107,10 @@ $(function() {
 				<NDate model={model} layout={layout} />
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
 				<NDate model={model} layout={layoutDT} />
 			</div>
 		</div>
@@ -135,6 +145,11 @@ $(function() {
 		<div className='n-row n-in-form'>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NDateTimeCalendar model={model} n-id='datetime' />
+			</div>
+		</div>
+		<div className='n-row n-in-form'>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NDate model={model} layout={layoutOnlyTime} />
 			</div>
 		</div>
 	</div>);

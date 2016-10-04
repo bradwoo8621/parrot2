@@ -53,19 +53,6 @@
 	position: relative;
 	display: inline-block;
 	.n-button-dropdown {
-		position: absolute;
-		display: none;
-		left: 0;
-		top: calc(100% + 1px);
-		line-height: $line-height;
-		margin: $margin-0;
-		padding: $pad-0;
-		min-width: 200px;
-		border: $border-1;
-		border-radius: $border-radius;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, .175);
-		background-color: $container-bg-color;
-		z-index: $dropdown-z-index;
 		li > .n-label {
 			padding-left: $pad-15;
 			padding-right: $pad-15;
@@ -88,11 +75,6 @@
 		    border-bottom-left-radius: 0;
 		    width: auto;
 		    padding: $pad-0;
-		}
-	}
-	&.n-dropdown-open {
-		.n-button-dropdown {
-			display: block;
 		}
 	}
 }
