@@ -37,13 +37,7 @@ class Layout {
 		this.layout = layout ? layout : {};
 	}
 	mergeLayoutFromProps(props) {
-		lodash.mergeWith(this.layout, Layout.toStereo(props), function(objValue, srcValue) {
-			if (lodash.isArray(objValue)) {
-				if (lodash.isArray(srcValue)) {
-					return srcvalue;
-				}
-			}
-		});
+		this.layout = Envs.merge({}, this.layout, Layout.toStereo(props));
 		return this;
 	}
 
@@ -63,7 +57,7 @@ class Layout {
 		return this.getType().type;
 	}
 	buildDefaultType(type) {
-		type = type ? type : 'Text';
+		type = type ? type : 'n-text';
 		return {
 			type: type,
 			label: typeof type.label !== 'undefined' ? type.label : true,

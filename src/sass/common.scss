@@ -16,6 +16,7 @@ body {
 	font-family: $font-family;
     line-height: $line-height;
     background-color: $container-bg-color;
+    overflow-y: scroll;
 }
 
 input[type=text],

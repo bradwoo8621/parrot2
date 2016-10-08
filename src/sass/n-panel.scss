@@ -3,6 +3,25 @@
 		background-color: $bg-color;
 		color: $color;
 		border-color: $bg-color;
+		.n-check {
+			.n-check-box {
+				.n-check-box-rect {
+					border-color: $color;
+					&:before {
+						border-color: $color;
+					}
+				}
+			}
+			&:focus {
+				.n-check-box .n-check-box-rect,
+				.n-check-box .n-check-box-rect:before {
+					border-color: $color;
+				}
+				.n-check-text {
+					color: $color;
+				}
+			}
+		}
 	}
 }
 @mixin n-panel-body-style($border-color, $name) {
@@ -103,6 +122,17 @@
 		&.n-panel-header-collapsed {
 			border-bottom-left-radius: $border-radius;
 			border-bottom-right-radius: $border-radius;
+		}
+	}
+	> .n-row {
+		display: inline-block;
+		margin-left: $margin-0;
+		margin-right: $margin-0;
+		&.n-leading {
+			margin-right: $margin-5;
+		}
+		&.n-tailing {
+			margin-left: $margin-5;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 import * as SDK from '../../src/js/components/n-panel'
 import {NIcon} from '../../src/js/components/n-icon'
+import {NCheck} from '../../src/js/components/n-check'
 
 let {
 	React, 
@@ -42,7 +43,9 @@ $(function() {
 		}
 	});
 	let layout4 = new Layout('panel', {
-		label: 'A Panel',
+		label: function() {
+			return 'A Panel Of ' + (this.isExpanded() ? 'Expanded' : 'Collapsed');
+		},
 		comp: {
 			style: 'info',
 			collapsible: true,
@@ -85,7 +88,12 @@ $(function() {
 		label: 'A Panel',
 		comp: {
 			style: 'danger',
-			collapsible: true,
+			collapsible: function() {
+				return this.getModel().get('checked');
+			},
+			expanded: function() {
+				return this.getModel().get('checked') === true;
+			},
 			body: {
 				comp: {
 					style: 'primary',
@@ -94,6 +102,26 @@ $(function() {
 							comp: {
 								type: Envs.COMPONENT_TYPES.ICON,
 								icon: 'ban'
+							}
+						}
+					}
+				}
+			},
+			tailChildren: {
+				'checked': {
+					label: 'Check Me',
+					comp: {
+						type: Envs.COMPONENT_TYPES.CHECK,
+						labelDisplay: true
+					},
+					evt: {
+						click: function(evt) {
+							evt.preventDefault();
+							let checked = this.getModel().get('checked');
+							if (checked) {
+								this.getContainer().expand();
+							} else {
+								this.getContainer().collapse();
 							}
 						}
 					}

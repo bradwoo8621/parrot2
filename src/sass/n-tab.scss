@@ -1,0 +1,99 @@
+@mixin n-tab-header-style($color, $bg-color, $name) {
+	&.n-tab-header-#{$name} {
+		border-bottom-color: $bg-color;
+		> .n-tab-header-item.active {
+			background-color: $bg-color;
+			color: $color;
+			border-color: $bg-color;
+		}
+	}
+}
+@mixin n-tab-header-item-style($color, $bg-color, $name) {
+	&.n-tab-header-item-#{$name} {
+		background-color: $bg-color;
+		color: $color;
+		border-color: $bg-color;
+	}
+}
+
+@mixin n-tab-body-style($border-color, $name) {
+	&.n-tab-body-#{$name} {
+		border-color: $border-color;
+	}
+}
+
+.n-tab {
+}
+.n-tab-header {
+	@include float-layout-container();
+	overflow: hidden;
+	white-space: nowrap;
+	border-bottom: $border-1;
+	@include n-tab-header-style($color-reverse, $color-primary, primary);
+	@include n-tab-header-style($color-reverse, $color-success, success);
+	@include n-tab-header-style($color-reverse, $color-warning, warning);
+	@include n-tab-header-style($color-reverse, $color-info, info);
+	@include n-tab-header-style($color-reverse, $color-danger, danger);
+
+	.n-tab-header-item {
+		display: inline-block;
+		padding: $pad-0 $pad-15;
+		border: $border-1;
+		border-color: transparent;
+		border-bottom: $border-0;
+		border-top-left-radius: $border-radius;
+		border-top-right-radius: $border-radius;
+		@include n-tab-header-item-style($color-reverse, $color-primary, primary);
+		@include n-tab-header-item-style($color-reverse, $color-success, success);
+		@include n-tab-header-item-style($color-reverse, $color-warning, warning);
+		@include n-tab-header-item-style($color-reverse, $color-info, info);
+		@include n-tab-header-item-style($color-reverse, $color-danger, danger);
+		&.active {
+			cursor: default;
+		}
+		&:not(:first-child) {
+			margin-left: $margin-2;
+		}
+		.n-tab-header-text {
+			font-weight: bold;
+		    height: $line-height;
+		    line-height: $line-height;
+		    position: relative;
+		    display: inline-block;
+		}
+		> .n-row {
+			display: inline-block;
+			margin-left: $margin-0;
+			margin-right: $margin-0;
+			&.n-leading {
+				margin-right: $margin-5;
+			}
+			&.n-tailing {
+				margin-left: $margin-5;
+			}
+		}
+	}
+	&.n-tab-header-default {
+		// border-bottom-color: transparent;
+		> .n-tab-header-item.active {
+			background-color: $container-bg-color;
+			border-color: $color-border;
+			border-top-color: $color-border;
+			border-left: $border-1;
+			border-right: $border-1;
+			color: $color-font;
+		}
+	}
+}
+.n-tab-body {
+	border: $border-1;
+    border-top: $border-0;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    padding: $pad-5 $pad-15 * 2;
+	@include n-tab-body-style($color-primary, primary);
+	@include n-tab-body-style($color-success, success);
+	@include n-tab-body-style($color-warning, warning);
+	@include n-tab-body-style($color-info, info);
+	@include n-tab-body-style($color-danger, danger);
+}

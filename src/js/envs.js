@@ -195,6 +195,19 @@ class Envs {
 			return renderer.call(this, options);
 		}
 	}
+
+	// utils
+	// lodash mergeWith
+	merge() {
+		return lodash.mergeWith.apply(lodash, 
+					Array.prototype.slice.call(arguments, 0).concat(function(objValue, srcValue) {
+						if (lodash.isArray(objValue)) {
+							if (lodash.isArray(srcValue)) {
+								return srcvalue;
+							}
+						}
+					}));
+	}
 }
 
 

@@ -42,7 +42,7 @@ class NPanelHeader extends NCollapsibleContainer {
 	}
 
 	onComponentClicked = (evt) => {
-		if (!this.isCollapsible()) {
+		if (!this.isCollapsible() || evt.isDefaultPrevented()) {
 			return;
 		}
 		if (this.isExpanded()) {
@@ -94,7 +94,7 @@ class NPanel extends NCollapsibleContainer {
 			return null;
 		}
 
-		let layout = new Layout(this.getDataId(), lodash.assign({
+		let layout = new Layout(this.getDataId(), Envs.merge({}, {
 			label: this.getLabel(),
 			dataId: this.getDataId(),
 			comp: {
@@ -122,7 +122,7 @@ class NPanel extends NCollapsibleContainer {
 	renderBody() {
 		let bodyLayout = this.getPanelBodyLayout();
 
-		let layout = new Layout(this.getDataId(), lodash.assign({
+		let layout = new Layout(this.getDataId(), Envs.merge({}, {
 			dataId: this.getDataId(),
 			comp: {
 				style: this.getLayoutOptionValue('style'),
@@ -255,6 +255,10 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.PANEL_BODY.type, function (options) {
 Envs.COMPONENT_TYPES.PANEL = {type: 'n-panel', label: false, popover: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.PANEL.type, function (options) {
 	return <NPanel {...options} />;
+});
+Envs.COMPONENT_TYPES.ARRAY_PANEL = {type: 'n-array-panel', label: false, popover: false, error: false};
+Envs.setRenderer(Envs.COMPONENT_TYPES.ARRAY_PANEL.type, function (options) {
+	return <NArrayPanel {...options} />;
 });
 
 export {NArrayPanel, NPanel, NPanelHeader, NPanelBody}

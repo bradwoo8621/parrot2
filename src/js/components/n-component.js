@@ -95,7 +95,7 @@ class NComponent extends React.Component {
 	internalInstallLifecycleMonitors() {
 		this.addPostChangeListener(this.bindToThis(this.onModelChanged));
 		this.addPostValidateListener(this.bindToThis(this.onModelValidated));
-		this.detectMonitors(['enabled', 'visible'], this.forceUpdate);
+		this.detectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected);
 	}
 	uninstallUnderlyingMonitors() {
 		this.pointcutPreExecutor.apply(this, arguments);
@@ -105,7 +105,7 @@ class NComponent extends React.Component {
 	internalUninstallLifecycleMonitors() {
 		this.removePostChangeListener(this.bindToThis(this.onModelChanged));
 		this.removePostValidateListener(this.bindToThis(this.onModelValidated));
-		this.undetectMonitors(['enabled', 'visible'], this.forceUpdate);
+		this.undetectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected);
 	}
 	// life cycle pointcut executor
 	pointcutPreExecutor(pointcut) {
@@ -156,6 +156,9 @@ class NComponent extends React.Component {
 		this.forceUpdate();
 	}
 	onModelValidated(evt) {
+		this.forceUpdate();
+	}
+	onMonitorChangeDetected(evt) {
 		this.forceUpdate();
 	}
 
@@ -446,7 +449,7 @@ class NComponent extends React.Component {
 		key = key ? key : evt.type;
 		let monitor = this.getEventMonitor(key);
 		if (monitor) {
-			monitor.call(this, evt);
+			return monitor.call(this, evt);
 		}
 	}
 
@@ -507,7 +510,8 @@ class NComponent extends React.Component {
 			model: this.getPrimaryModel(),
 			layout: layout,
 			orientation: this.getOrientation(),
-			viewMode: this.isViewMode()
+			viewMode: this.isViewMode(),
+			container: this
 		};
 		if (additionalProps) {
 			Object.keys(additionalProps).forEach((key) => {
@@ -515,6 +519,9 @@ class NComponent extends React.Component {
 			});
 		}
 		return Envs.render(layout.getTypeAsString(), props);
+	}
+	getContainer() {
+		return this.props.container;
 	}
 }
 
@@ -702,20 +709,13 @@ class NContainer extends NComponent {
 		} else {
 			// react node
 			// pass props to child
-			return React.createElement(child.type, lodash.mergeWith({}, {
+			return React.createElement(child.type, Envs.merge({}, {
 						model: this.getPrimaryModel(),
 						orientation: this.getOrientation(),
 						viewMode: this.isViewMode()
 					}, 
 					propsFromParent ? propsFromParent[child.type.name] : null, 
-					child.props, 
-					function(objValue, srcValue) {
-						if (lodash.isArray(objValue)) {
-							if (lodash.isArray(srcValue)) {
-								return srcvalue;
-							}
-						}
-					}));
+					child.props));
 		}
 	}
 	renderDOMChildren(propsFromParent) {
@@ -777,7 +777,7 @@ class NContainer extends NComponent {
 		// console.log(props);
 		return props;
 	}
-	renderChildren(children) {
+	renderChildren(children, className) {
 		children = children ? children : this.getChildren();
 		if (!children) {
 			return null;
@@ -808,10 +808,10 @@ class NContainer extends NComponent {
 		return Object.keys(rows).sort((index1, index2) => {
 			return index1 - index2;
 		}).map(rowIndex => {
-			return this.renderRow(rows[rowIndex], rowIndex);
+			return this.renderRow(rows[rowIndex], rowIndex, className);
 		});
 	}
-	renderRow(row, rowIndex) {
+	renderRow(row, rowIndex, className) {
 		if (!row) {
 			return null;
 		}
@@ -820,7 +820,7 @@ class NContainer extends NComponent {
 		}).map(columnIndex => {
 			return this.renderColumn(row[columnIndex]);
 		});
-		return (<div className='n-row'
+		return (<div className={classnames('n-row', className)}
 					 key={rowIndex}>
 			{content}
 		</div>);
@@ -836,7 +836,8 @@ class NContainer extends NComponent {
 				orientation: this.getOrientation(),
 				viewMode: this.isViewMode(),
 				ref: layout.getId(),
-				key: layoutIndex
+				key: layoutIndex,
+				container: this
 			};
 			// TODO need to wrap into cell
 			return Envs.render(layout.getTypeAsString(), props);
@@ -846,10 +847,10 @@ class NContainer extends NComponent {
 		return this.getLayoutOptionValue('children');
 	}
 	renderLeadingChildren() {
-		return this.renderChildren(this.getLeadingChildren());
+		return this.renderChildren(this.getLeadingChildren(), 'n-leading');
 	}
 	renderTailingChildren() {
-		return this.renderChildren(this.getTailingChildren());
+		return this.renderChildren(this.getTailingChildren(), 'n-tailing');
 	}
 	getLeadingChildren() {
 		return this.getLayoutOptionValue('leadChildren', {});
