@@ -136,3 +136,7 @@
 		display: none;
 	}
 }
+
+.n-array-panel > .n-panel:not(:last-child) {
+	margin-bottom: $margin-5;
+}

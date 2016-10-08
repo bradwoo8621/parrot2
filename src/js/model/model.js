@@ -53,7 +53,8 @@ class ListenerSupport {
 }
 
 class Model {
-	constructor(initDataJSON) {
+	static ALL = '--all'
+	constructor(initDataJSON, noBase) {
 		// initialize listeners
 		this.listeners = ['change', 'add', 'remove', 'validate'].reduce(function(listeners, type) {
 			listeners[type] = {
@@ -63,7 +64,11 @@ class Model {
 			return listeners;
 		}, {});
 		this.baseModel = initDataJSON;
-		this.currentModel = lodash.cloneDeep(initDataJSON);
+		if (noBase === true) {
+			this.currentModel = lodash.cloneDeep(initDataJSON);
+		} else {
+			this.currentModel = this.baseModel;
+		}
 		this.changed = false;
 	}
 	getListenersByTimeAndType(time, type) {
@@ -138,11 +143,12 @@ class Model {
 		});
 		return this;
 	}
-	firePostChangeEvent(id, oldValue, newValue) {
+	firePostChangeEvent(id, oldValue, newValue, index) {
 		return this.fireEvent({
 			id: id,
 			old: oldValue,
 			new: newValue,
+			index: index,
 			type: 'change',
 			time: 'post',
 			model: this
@@ -247,6 +253,21 @@ class Model {
 			}
 		}
 	}
+	update(id, oldValue, newValue) {
+		let values = this.get(id);
+		if (values == null || values.length == 0) {
+			// do nothing
+		} else {
+			let index = values.findIndex(elm => {
+				return elm == oldValue;
+			});
+			if (index != -1) {
+				values.splice(index, 1, newValue);
+				this.setChanged(true);
+				this.firePostChangeEvent(id, oldValue, newValue, index);
+			}
+		}
+	}
 	setIntoJSON(id, value, json) {
 		let ids = id.split('.');
 		let count = ids.length - 1;
@@ -270,6 +291,15 @@ class Model {
 
 	setChanged(changed) {
 		this.changed = changed;
+	}
+
+	parent(parent) {
+		if (parent) {
+			this.parent = parent;
+			return this;
+		} else {
+			return this.parent;
+		}
 	}
 }
 

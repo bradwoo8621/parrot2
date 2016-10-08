@@ -65,7 +65,7 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		return this.getLayoutOptionValue('range');
 	}
 	getDateEnabledChecker() {
-		return this.getLayoutOptionValue('dateEnabledChecker', null, false);
+		return this.getLayoutOptionValue('dateEnabledChecker', null, true);
 	}
 	// check the given date is enabled or not
 	// type is #YEAR, #MONTH, #DAY

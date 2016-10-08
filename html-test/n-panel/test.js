@@ -1,10 +1,22 @@
 import * as SDK from '../../src/js/components/n-panel'
 import {NIcon} from '../../src/js/components/n-icon'
 
-let {React, ReactDOM, CodeTable, Model, Layout, NPanel, NPanelHeader, NPanelBody, $, Envs} = SDK;
+let {
+	React, 
+	ReactDOM, 
+	CodeTable, 
+	Model, 
+	Layout, 
+	NPanel, 
+	NPanelHeader, 
+	NPanelBody, 
+	NArrayPanel,
+	$, 
+	Envs} = SDK;
 
 $(function() {
 	let model = new Model({
+		items: [{}, {}]
 	});
 	model.addPostChangeListener('panel', function(evt) {
 		console.log({
@@ -96,6 +108,19 @@ $(function() {
 		}
 	});
 
+	let layoutAP = new Layout('items', {
+		label: function() {
+			return `Item ${this.getLayoutOptionValue('itemIndex')}`;
+		},
+		comp: {
+			style: 'primary',
+			collapsible: true,
+			expanded: function() {
+				return this.getLayoutOptionValue('itemIndex') == 0;
+			}
+		}
+	});
+
 	let panel = (<div className='n-top-container'>
 		<div className='n-row n-in-form'>
 			<div className='n-col-sm-12 n-col-md-6'>
@@ -138,6 +163,9 @@ $(function() {
 						<span data-leading='1'>Body starting...</span>
 					</NPanelBody>
 				</NPanel>
+			</div>
+			<div className='n-col-sm-12 n-col-md-6'>
+				<NArrayPanel model={model} layout={layoutAP} />
 			</div>
 		</div>
 	</div>);

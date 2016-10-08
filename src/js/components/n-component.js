@@ -337,7 +337,7 @@ class NComponent extends React.Component {
 			}
 		}
 		// wrap value
-		return (noWrap !== false) ? this.wrapOptionValue(value) : value;
+		return (noWrap !== true) ? this.wrapOptionValue(value) : value;
 	}
 
 	wrapOptionValue(value) {
@@ -852,10 +852,10 @@ class NContainer extends NComponent {
 		return this.renderChildren(this.getTailingChildren());
 	}
 	getLeadingChildren() {
-		return this.getLayoutOptionValue('leadChildren');
+		return this.getLayoutOptionValue('leadChildren', {});
 	}
 	getTailingChildren() {
-		return this.getLayoutOptionValue('tailChildren');
+		return this.getLayoutOptionValue('tailChildren', {});
 	}
 }
 
@@ -874,11 +874,60 @@ class NCollapsibleContainer extends NContainer {
 	}
 	expand() {
 		this.setState({expanded: true});
-		this.fireEventToMonitor($.Event('expand', ReactDOM.findDOMNode(this.refs.me)));	
+		this.fireEventToMonitor($.Event('expand', {
+			target: ReactDOM.findDOMNode(this.refs.me)
+		}));	
 	}
 	collapse() {
 		this.setState({expanded: false});
-		this.fireEventToMonitor($.Event('collapse', ReactDOM.findDOMNode(this.refs.me)));	
+		this.fireEventToMonitor($.Event('collapse', {
+			target: ReactDOM.findDOMNode(this.refs.me)
+		}));	
+	}
+}
+
+class NHierarchyComponent extends NContainer {
+	internalInstallLifecycleMonitors() {
+		super.internalInstallLifecycleMonitors();
+		this.addPostAddListener(this.bindToThis(this.onModelChanged));
+		this.addPostRemoveListener(this.bindToThis(this.onModelChanged));
+	}
+	internalUninstallLifecycleMonitors() {
+		super.internalUninstallLifecycleMonitors();
+		this.removePostAddListener(this.bindToThis(this.onModelChanged));
+		this.removePostRemoveListener(this.bindToThis(this.onModelChanged));
+	}
+	createItemModel(itemJSON, itemIndex) {
+		let model = new Model(itemJSON, true).parent(this.getPrimaryModel());
+		model.addPostChangeListener(Model.ALL, (evt) => {
+			this.onItemModelChanged(evt, itemIndex);
+		});
+		return model;
+	}
+	createItemLayoutOptions(itemModel, itemIndex) {
+		let layoutOptions = this.getLayout().getOptions();
+		let itemLayoutOptions = {};
+		Object.keys(layoutOptions).forEach(key => {
+			itemLayoutOptions[key] = this.getLayoutOptionValue(key, null, true);
+		});
+		return itemLayoutOptions;
+	}
+	onModelChanged(evt) {
+		if (!this.state.itemChanged) {
+			super.onModelChanged(evt);
+		}
+	}
+	onItemModelChanged(evt, itemIndex) {
+		// fire update event, ignore the property information
+		this.state.itemChanged = true;
+		evt.model.parent().update(this.getDataId(), evt.model.getCurrentModel(), evt.model.getCurrentModel(), itemIndex);
+		delete this.state.itemChanged;
+		this.fireEventToMonitor($.Event('itemChange', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			itemModel: evt.model,
+			itemIndex: itemIndex,
+			originalEvent: evt
+		}));
 	}
 }
 
@@ -897,5 +946,6 @@ export {
 	NDropdownComponent,
 	NCodeTableComponent,
 	NContainer,
-	NCollapsibleContainer
+	NCollapsibleContainer,
+	NHierarchyComponent
 }

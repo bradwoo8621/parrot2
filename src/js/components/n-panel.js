@@ -1,4 +1,13 @@
-import {React, ReactDOM, $, lodash, classnames, Envs, Layout, NCollapsibleContainer} from './n-component'
+import {
+	React, 
+	ReactDOM, 
+	$, 
+	lodash, 
+	classnames, 
+	Envs, 
+	Layout, 
+	NCollapsibleContainer, 
+	NHierarchyComponent} from './n-component'
 
 class NPanelHeader extends NCollapsibleContainer {
 	renderInNormal() {
@@ -12,13 +21,13 @@ class NPanelHeader extends NCollapsibleContainer {
 		return (<div className={className}
 					 onClick={this.onComponentClicked}
 					 ref='me'>
-			{this.renderLeadingChildren()}
 			{this.renderLeadingDOMChildren()}
+			{this.renderLeadingChildren()}
 			<span className='n-panel-header-text'>
 				{this.getLabel()}
 			</span>
-			{this.renderTailingDOMChildren()}
 			{this.renderTailingChildren()}
+			{this.renderTailingDOMChildren()}
 		</div>);
 	}
 	getComponentClassName() {
@@ -54,7 +63,9 @@ class NPanelBody extends NCollapsibleContainer {
 		return (<div className={className}
 					 ref='me'>
 			{this.renderLeadingDOMChildren()}
+			{this.renderLeadingChildren()}
 			{this.renderChildren()}
+			{this.renderTailingChildren()}
 			{this.renderTailingDOMChildren()}
 		</div>)
 	}
@@ -184,6 +195,55 @@ class NPanel extends NCollapsibleContainer {
 	}
 }
 
+class NArrayPanel extends NHierarchyComponent {
+	renderItem(item, itemIndex) {
+		let model = this.createItemModel(item, itemIndex);
+		let layoutOptions = this.createItemLayoutOptions(model, itemIndex);
+		let layout = new Layout(this.getId(), {
+			label: this.getLayout().getLabel(),
+			dataId: this.getDataId(),
+			comp: layoutOptions
+		})
+		return <NPanel model={model}
+					   layout={layout}
+					   orientation={this.getOrientation()}
+					   viewMode={this.isViewMode()}
+					   n-comp-itemIndex={itemIndex}
+					   n-evt-collapse={this.onItemCollapsed.bind(this, model, itemIndex)}
+					   n-evt-expand={this.onItemExpanded.bind(this, model, itemIndex)}
+					   key={itemIndex}/>;
+	}
+	renderInNormal() {
+		return (<div className={this.getComponentStyle()}
+					 ref='me'>
+			{this.getValueFromModel().map((item, itemIndex) => {
+				return this.renderItem(item, itemIndex);
+			})}
+		</div>);
+	}
+	getComponentClassName() {
+		return 'n-array-panel';
+	}
+	getValueFromModel() {
+		let value = super.getValueFromModel();
+		return value ? value : [];
+	}
+	onItemCollapsed(itemModel, itemIndex) {
+		this.fireEventToMonitor($.Event('itemCollapse', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			itemModel: itemModel,
+			itemIndex: itemIndex
+		}));
+	}
+	onItemExpanded(itemModel, itemIndex) {
+		this.fireEventToMonitor($.Event('itemExpand', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			itemModel: itemModel,
+			itemIndex: itemIndex
+		}));
+	}
+}
+
 Envs.COMPONENT_TYPES.PANEL_HEADER = {type: 'n-panel-header', label: false, popover: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.PANEL_HEADER.type, function (options) {
 	return <NPanelHeader {...options} />;
@@ -197,5 +257,5 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.PANEL.type, function (options) {
 	return <NPanel {...options} />;
 });
 
-export {NPanel, NPanelHeader, NPanelBody}
+export {NArrayPanel, NPanel, NPanelHeader, NPanelBody}
 export * from './n-component'
