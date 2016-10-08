@@ -37,7 +37,13 @@ class Layout {
 		this.layout = layout ? layout : {};
 	}
 	mergeLayoutFromProps(props) {
-		this.layout = Envs.merge({}, this.layout, Layout.toStereo(props));
+		let fromProps = Layout.toStereo(props);
+		if (Object.keys(fromProps).length == 0) {
+			// no additional, do nothing
+			return this;
+		} else {
+			this.layout = Envs.merge({}, this.layout, Layout.toStereo(props));
+		}
 		return this;
 	}
 

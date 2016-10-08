@@ -35,7 +35,7 @@ describe('Layout', function() {
 	describe('#getType', function() {
 		it('--Should have a default type', function() {
 			let type = layout.getType();
-			assert.equal('Text', type.type);
+			assert.equal('n-text', type.type);
 			assert.equal(true, type.error);
 			assert.equal(true, type.popover);
 			assert.equal(true, type.label);

@@ -65,9 +65,9 @@ class Model {
 		}, {});
 		this.baseModel = initDataJSON;
 		if (noBase === true) {
-			this.currentModel = lodash.cloneDeep(initDataJSON);
-		} else {
 			this.currentModel = this.baseModel;
+		} else {
+			this.currentModel = lodash.cloneDeep(initDataJSON);
 		}
 		this.changed = false;
 	}
