@@ -162,10 +162,10 @@ class NTabBody extends NTabContainer(NContainer) {
 
 class NTab extends NTabContainer(NContainer) {
 	renderHeader() {
-		let headerLayout = this.getTabHeaderLayout();
-		let layout = new Layout(this.getDataId(), Envs.merge({}, {
+		let layout = Envs.merge({}, {
 			dataId: this.getDataId(),
 			comp: {
+				type: Envs.COMPONENT_TYPES.TAB_HEADER,
 				style: this.getLayoutOptionValue('style'),
 				tabs: this.getTabs(),
 				leadChildren: this.getLeadingChildren(),
@@ -175,35 +175,30 @@ class NTab extends NTabContainer(NContainer) {
 				active: this.onItemActived,
 				shouldActive: this.onItemShouldActive
 			}
-		}, headerLayout));
+		}, this.getTabHeaderLayout());
 
 		let header = this.getDOMChildOf('NTabHeader');
-		let options = this.mixPropsFromDOMChild(header, {
-			layout: layout,
+
+		return this.renderInternalComponent(layout, header ? header.props : null, {
 			ref: 'header'
 		});
-
-		return <NTabHeader {...options} />;
 	}
 	renderContent() {
-		let bodyLayout = this.getTabBodyLayout();
-
-		let layout = new Layout(this.getDataId(), Envs.merge({}, {
+		let layout = Envs.merge({}, {
 			dataId: this.getDataId(),
 			comp: {
+				type: Envs.COMPONENT_TYPES.TAB_BODY,
 				style: this.getLayoutOptionValue('style'),
 				tabs: this.getTabs(),
 				children: this.getChildren()
 			}
-		}, bodyLayout));
+		}, this.getTabBodyLayout());
 
 		let body = this.getDOMChildOf('NTabBody');
-		let options = this.mixPropsFromDOMChild(body, {
-			layout: layout,
+
+		return this.renderInternalComponent(layout, body ? body.props : null, {
 			ref: 'body'
 		});
-
-		return <NTabBody {...options} />;
 	}
 	renderInNormal() {
 		let className = classnames(this.getComponentStyle(), this.getTabStyle());

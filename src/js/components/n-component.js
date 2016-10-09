@@ -504,7 +504,7 @@ class NComponent extends React.Component {
 			ref: 'view-comp'
 		});
 	}
-	renderInternalComponent(layoutJSON, additionalProps) {
+	renderInternalComponent(layoutJSON) {
 		let layout = new Layout(this.getDataId(), layoutJSON);
 		let props = {
 			model: this.getPrimaryModel(),
@@ -513,10 +513,9 @@ class NComponent extends React.Component {
 			viewMode: this.isViewMode(),
 			container: this
 		};
-		if (additionalProps) {
-			Object.keys(additionalProps).forEach((key) => {
-				props[key] = additionalProps[key];
-			});
+		if (arguments.length > 1) {
+			Envs.merge.apply(Envs, 
+				[props].concat(Array.prototype.slice.call(arguments, 1)));
 		}
 		return Envs.render(layout.getTypeAsString(), props);
 	}
@@ -751,31 +750,6 @@ class NContainer extends NComponent {
 			child = childNodeOrType;
 		}
 		return child.props.children;
-	}
-	mixPropsFromDOMChild(child, newProps) {
-		let props = null;
-		if (!child) {
-			props = {};
-		} else {
-			props = lodash.assign({}, child.props);
-		}
-		Object.keys(newProps).forEach(key => {
-			if (typeof props[key] === 'undefined') {
-				props[key] = newProps[key];
-			}
-		});
-		let standardProps = {
-			model: this.getPrimaryModel(),
-			orientation: this.getOrientation(),
-			viewMode: this.isViewMode()
-		};
-		Object.keys(standardProps).forEach(key => {
-			if (typeof props[key] === 'undefined') {
-				props[key] = standardProps[key];
-			}
-		});
-		// console.log(props);
-		return props;
 	}
 	renderChildren(children, className) {
 		children = children ? children : this.getChildren();

@@ -123,6 +123,17 @@ $(function() {
 							} else {
 								this.getContainer().collapse();
 							}
+						},
+						keypress: function(evt) {
+							if (evt.charCode === 32) {
+								evt.preventDefault();
+								let checked = this.getModel().get('checked');
+								if (checked) {
+									this.getContainer().expand();
+								} else {
+									this.getContainer().collapse();
+								}
+							}
 						}
 					}
 				}

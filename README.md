@@ -1,7 +1,7 @@
-# Parrot
+# Parrot2
 A model based web framework base on Bootstrap and ReactJS.  
 
-Parrot is a sub module of NEST.
+Parrot2 is a sub module of NEST.
 
 ![](http://bradwoo8621.github.io/parrot/guide/img/nest-transparent.png)  
 ![](http://bradwoo8621.github.io/parrot/guide/img/parrot-transparent.png)

@@ -1,4 +1,12 @@
-import {React, ReactDOM, $, classnames, lodash, Envs, NComponent, NDropdownComponent} from './n-component'
+import {
+	React, 
+	ReactDOM, 
+	$, 
+	classnames, 
+	lodash, 
+	Envs, 
+	NComponent, 
+	NDropdownComponent} from './n-component'
 import {NIcon} from './n-icon'
 import moment from 'moment'
 
@@ -38,13 +46,15 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 	}
 	renderDateFooter() {
 		return (<NCalendarFooter model={this.getPrimaryModel()}
-							 n-id={this.getDataId()}
-							 n-comp-showClose={this.isCloseButtonShown()}
-							 n-comp-showClear={this.isClearButtonShown()}
-							 n-comp-showNow={this.isNowButtonShown()}
-							 n-evt-closeClick={this.onCloseClicked}
-							 n-evt-clearClick={this.onClearClicked}
-							 n-evt-nowClick={this.onNowClicked} />);
+								 n-id={this.getDataId()}
+								 n-comp-showClose={this.isCloseButtonShown()}
+								 n-comp-showClear={this.isClearButtonShown()}
+								 n-comp-showNow={this.isNowButtonShown()}
+								 n-evt-closeClick={this.onCloseClicked}
+								 n-evt-clearClick={this.onClearClicked}
+								 n-evt-nowClick={this.onNowClicked}
+								 container={this}
+								 ref='footer' />);
 	}
 
 	getValueFormat() {
@@ -242,31 +252,53 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 	}
 };
 
-class NCalendarFooter extends NComponent {
+const NIconRenderer = (ParentClass) => class extends ParentClass {
+	renderIcon(options) {
+		return this.renderInternalComponent({
+			comp: {
+				type: Envs.COMPONENT_TYPES.ICON,
+				icon: options.icon
+			},
+			evt: {
+				click: options.click
+			}
+		}, {
+			ref: options.ref
+		});
+	}
+}
+
+class NCalendarFooter extends NIconRenderer(NComponent) {
 	renderClearButton() {
 		if (this.isClearButtonShown()) {
 			return (<div className='n-calendar-footer-button'>
-				<NIcon n-comp-icon='trash-o'
-					   model={this.getPrimaryModel()}
-					   n-evt-click={this.onClearIconClicked} />
+				{this.renderIcon({
+					icon: 'trash-o',
+					click: this.onClearIconClicked,
+					ref: 'clear-btn'
+				})}
 			</div>);
 		}
 	}
 	renderNowButton() {
 		if (this.isNowButtonShown()) {
 			return (<div className='n-calendar-footer-button'>
-				<NIcon n-comp-icon='crosshairs'
-					   model={this.getPrimaryModel()}
-					   n-evt-click={this.onNowIconClicked} />
+				{this.renderIcon({
+					icon: 'crosshairs',
+					click: this.onNowIconClicked,
+					ref: 'now-btn'
+				})}
 			</div>);
 		}
 	}
 	renderCloseButton() {
 		if (this.isCloseButtonShown()) {
 			return (<div className='n-calendar-footer-button'>
-				<NIcon n-comp-icon='close'
-					   model={this.getPrimaryModel()}
-					   n-evt-click={this.onCloseIconClicked} />
+				{this.renderIcon({
+					icon: 'close',
+					click: this.onCloseIconClicked,
+					ref: 'close-btn'
+				})}
 			</div>);
 		}
 	}
@@ -301,7 +333,7 @@ class NCalendarFooter extends NComponent {
 	}
 }
 
-class NDateCalendar extends NDateComponent(NComponent) {
+class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 	renderDateHeaderForYear(date) {
 		if (!this.isYearPicking()) {
 			return null;
@@ -342,21 +374,29 @@ class NDateCalendar extends NDateComponent(NComponent) {
 	renderDateHeader() {
 		let date = this.getDisplayDate();
 		return (<div className='n-calendar-date-header'>
-			<NIcon model={this.getPrimaryModel()}
-				   n-comp-icon='angle-double-left'
-				   n-evt-click={this.onBackwardClicked} />
-			<NIcon model={this.getPrimaryModel()}
-				   n-comp-icon='angle-left' 
-				   n-evt-click={this.onPreviousClicked}/>
+			{this.renderIcon({
+				icon: 'angle-double-left',
+				click: this.onBackwardClicked,
+				ref: 'backward-btn'
+			})}
+			{this.renderIcon({
+				icon: 'angle-left',
+				click: this.onPreviousClicked,
+				ref: 'previous-btn'
+			})}
 			{this.renderDateHeaderForDay(date)}
 			{this.renderDateHeaderForMonth(date)}
 			{this.renderDateHeaderForYear(date)}
-			<NIcon model={this.getPrimaryModel()}
-				   n-comp-icon='angle-right'
-				   n-evt-click={this.onNextClicked} />
-			<NIcon model={this.getPrimaryModel()}
-				   n-comp-icon='angle-double-right'
-				   n-evt-click={this.onForwardClicked} />
+			{this.renderIcon({
+				icon: 'angle-right',
+				click: this.onNextClicked,
+				ref: 'next-btn'
+			})}
+			{this.renderIcon({
+				icon: 'angle-double-right',
+				click: this.onForwardClicked,
+				ref: 'forward-btn'
+			})}
 		</div>);
 	}
 	renderDateBodyBodyForYear(date) {
@@ -884,8 +924,10 @@ class NDateTimeCalendar extends NDateComponent(NComponent) {
 		return (<div className={this.getComponentStyle()}
 					 ref='me'>
 			<NDateCalendar {...options}
+						   container={this}
 						   ref='date' />
 			<NTimeClock {...options}
+						container={this}
 						ref='time' />
 			{this.renderDateFooter()}
 		</div>);
@@ -908,7 +950,7 @@ class NDateTimeCalendar extends NDateComponent(NComponent) {
 	}
 }
 
-class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
+class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))) {
 	postWillUpdate() {
 		this.getComponent().off('change', this.onComponentChanged);
 	}
@@ -946,6 +988,7 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 				this.hideDropdown();
 			},
 			'n-styles-comp': 'n-dropdown',
+			container: this,
 			ref: 'dropdown'
 		};
 		if (hasDate && hasTime) {
@@ -958,12 +1001,16 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 	}
 	renderCalendarIcon() {
 		return (<div className='n-input-addon'>
-			<NIcon model={this.getPrimaryModel()} 
-				   n-comp-icon='close'
-				   n-evt-click={this.onClearIconClicked} />
-			<NIcon model={this.getPrimaryModel()} 
-				   n-comp-icon='calendar'
-				   n-evt-click={this.onCalendarIconClicked} />
+			{this.renderIcon({
+				icon: 'close',
+				click: this.onClearIconClicked,
+				ref: 'clear-btn'
+			})}
+			{this.renderIcon({
+				icon: 'calendar',
+				click: this.onCalendarIconClicked,
+				ref: 'dropdown-btn'
+			})}
 		</div>);
 	}
 	renderText() {
@@ -1066,6 +1113,23 @@ class NDate extends NDateComponent(NDropdownComponent(NComponent)) {
 		return this.getComponent().val();
 	}
 }
+
+Envs.COMPONENT_TYPES.DATE_CALENDAR = {type: 'n-date-calendar', label: false, popover: false, error: false};
+Envs.setRenderer(Envs.COMPONENT_TYPES.DATE_CALENDAR.type, function (options) {
+	return <NDateCalendar {...options} />;
+});
+Envs.COMPONENT_TYPES.TIME_CLOCK = {type: 'n-time-clock', label: false, popover: false, error: false};
+Envs.setRenderer(Envs.COMPONENT_TYPES.TIME_CLOCK.type, function (options) {
+	return <NTimeClock {...options} />;
+});
+Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR = {type: 'n-date-time-calendar', label: false, popover: false, error: false};
+Envs.setRenderer(Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR.type, function (options) {
+	return <NDateTimeCalendar {...options} />;
+});
+Envs.COMPONENT_TYPES.DATE_PICKER = {type: 'n-date-picker', label: false, popover: false, error: false};
+Envs.setRenderer(Envs.COMPONENT_TYPES.DATE_PICKER.type, function (options) {
+	return <NDate {...options} />;
+});
 
 export * from './n-component'
 export {NDateComponent, NDate, NDateCalendar, NTimeClock, NDateTimeCalendar, moment}

@@ -94,10 +94,11 @@ class NPanel extends NCollapsibleContainer {
 			return null;
 		}
 
-		let layout = new Layout(this.getDataId(), Envs.merge({}, {
+		let layout = Envs.merge({}, {
 			label: this.getLabel(),
 			dataId: this.getDataId(),
 			comp: {
+				type: Envs.COMPONENT_TYPES.PANEL_HEADER,
 				style: this.getLayoutOptionValue('style'),
 				collapsible: this.isCollapsible(),
 				expanded: this.isExpanded(),
@@ -109,35 +110,29 @@ class NPanel extends NCollapsibleContainer {
 				expand: this.onExpandChanged.bind(this),
 				collapse: this.onExpandChanged.bind(this)
 			}
-		}, headerLayout));
+		}, headerLayout);
 
 		let header = this.getDOMChildOf('NPanelHeader');
-		let options = this.mixPropsFromDOMChild(header, {
-			layout: layout,
+		return this.renderInternalComponent(layout, header ? header.props : null, {
 			ref: 'header'
 		});
-
-		return <NPanelHeader {...options} />;
 	}
 	renderBody() {
-		let bodyLayout = this.getPanelBodyLayout();
-
-		let layout = new Layout(this.getDataId(), Envs.merge({}, {
+		let layout = Envs.merge({}, {
 			dataId: this.getDataId(),
 			comp: {
+				type: Envs.COMPONENT_TYPES.PANEL_BODY,
 				style: this.getLayoutOptionValue('style'),
 				expanded: this.isExpanded(),
 				children: this.getChildren()
 			}
-		}, bodyLayout));
+		}, this.getPanelBodyLayout());
 
 		let body = this.getDOMChildOf('NPanelBody');
-		let options = this.mixPropsFromDOMChild(body, {
-			layout: layout,
+
+		return this.renderInternalComponent(layout, body ? body.props : null, {
 			ref: 'body'
 		});
-
-		return <NPanelBody {...options} />;
 	}
 	renderInNormal() {
 		let className = classnames(this.getComponentStyle(),
