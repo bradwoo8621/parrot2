@@ -224,16 +224,73 @@ class Envs {
 	}
 
 	// utils
-	// lodash mergeWith
-	merge() {
-		return lodash.mergeWith.apply(lodash, 
-					Array.prototype.slice.call(arguments, 0).concat(function(objValue, srcValue) {
-						if (lodash.isArray(objValue)) {
-							if (lodash.isArray(srcValue)) {
-								return srcValue;
-							}
+	// deep merge to a plain object from other plain objects
+	// argument 0: target object, will be modified. new {} created if it is null.
+	// arguments 1 ~ n: source objects, will not be modified. null or undefined objects are ignored.
+	// only recursive plain object will be deep merged
+	// if source value is an array, target value will be replaced anyway. and if element is
+	//		1. plain object: recursive clone and assign to target array
+	//		2. array: recursive clone and assign to target array
+	//		3. others: assign to target array directly
+	// if source value is a plain object, 
+	//		1. target value is a plain object: recursive deep merge
+	//		2. others: recursive clone and assign to target value
+	// if source value is other types, assign to target value directly
+	deepMergeTo() {
+		if (arguments.length < 2) {
+			throw 'At least two argument.';
+		}
+		let target = arguments[0] ? arguments[0] : {};
+		if (!lodash.isPlainObject(target)) {
+			throw 'Target object must be a plain object.';
+		}
+		let sources = Array.prototype.slice.call(arguments, 1);
+		sources.forEach((source, sourceIndex) => {
+			if (source == null) {
+				// ignore the null source object
+				return;
+			}
+			if (!lodash.isPlainObject(source)) {
+				throw `Source object at index[${sourceIndex + 1}] must be a plain object.`;
+			}
+			Object.keys(source).forEach((key) => {
+				let sourceValue = source[key];
+				if (sourceValue == null) {
+					// ignore the null or undefined value
+					return;
+				}
+				if (lodash.isPlainObject(sourceValue)) {
+					// source value is a plain object
+					let targetValue = target[key];
+					if (!lodash.isPlainObject(targetValue)) {
+						// target value is not a plain object
+						// create new {} to be target value and copy from source value
+						target[key] = this.deepMergeTo({}, sourceValue);
+					} else {
+						// target value is a plain object
+						this.deepMergeTo(targetValue, sourceValue);
+					}
+				} else if (lodash.isArray(sourceValue)) {
+					// source value is an array
+					// replace target value anyway
+					target[key] = [];
+					sourceValue.forEach((value) => {
+						if (lodash.isPlainObject(value)) {
+							target[key].push(this.deepMergeTo({}, value));
+						} else if (lodash.isArray(value)) {
+							target[key].push(this.deepMergeTo({}, {array: value}).array);
+						} else {
+							target[key].push(value);
 						}
-					}));
+					});
+				} else {
+					// neither plain object nor array
+					// copy to target directly
+					target[key] = sourceValue;
+				}
+			});
+		});
+		return target;
 	}
 }
 

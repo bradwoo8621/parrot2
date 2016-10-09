@@ -94,7 +94,7 @@ class NPanel extends NCollapsibleContainer {
 			return null;
 		}
 
-		let layout = Envs.merge({}, {
+		let layout = Envs.deepMergeTo({}, {
 			label: this.getLabel(),
 			dataId: this.getDataId(),
 			comp: {
@@ -118,7 +118,7 @@ class NPanel extends NCollapsibleContainer {
 		});
 	}
 	renderBody() {
-		let layout = Envs.merge({}, {
+		let layout = Envs.deepMergeTo({}, {
 			dataId: this.getDataId(),
 			comp: {
 				type: Envs.COMPONENT_TYPES.PANEL_BODY,

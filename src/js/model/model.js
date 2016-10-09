@@ -70,6 +70,7 @@ class Model {
 			this.currentModel = lodash.cloneDeep(initDataJSON);
 		}
 		this.changed = false;
+		this.undivided = true;
 	}
 	getListenersByTimeAndType(time, type) {
 		return this.listeners[type][time];

@@ -42,7 +42,7 @@ class Layout {
 			// no additional, do nothing
 			return this;
 		} else {
-			this.layout = Envs.merge({}, this.layout, Layout.toStereo(props));
+			Envs.deepMergeTo(this.layout, Layout.toStereo(props));
 		}
 		return this;
 	}

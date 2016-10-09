@@ -83,13 +83,13 @@ class NTabHeaderItem extends NContainer {
 class NTabHeader extends NTabContainer(NContainer) {
 	renderItem(tab, tabIndex) {
 		let options = {
-			model: tab.model ? tab.model : this.getPrimaryModel(),
+			model: tab.model ? tab.model : this.getModel(),
 			orientation: this.getOrientation(),
 			viewMode: this.isViewMode(),
 			layout: new Layout(this.getId(), {
 				dataId: this.getDataId(),
 				label: tab.label ? tab.label : this.getLayout().getLabel(),
-				comp: Envs.merge({}, {
+				comp: Envs.deepMergeTo({}, {
 					leadChildren: this.getLeadingChildren(),
 					tailChildren: this.getTailingChildren(),
 					active: tabIndex == this.getActiveTabIndex(),
@@ -148,7 +148,7 @@ class NTabBody extends NTabContainer(NContainer) {
 		};
 		let tab = this.getActiveTab();
 		if (tab.children) {
-			children = Envs.merge({}, children, {
+			children = Envs.deepMergeTo({}, children, {
 				children: tab.children
 			});
 		}
@@ -167,15 +167,15 @@ class NTabBody extends NTabContainer(NContainer) {
 	getTabStyle() {
 		return 'n-tab-body-' + this.getLayoutOptionValue('style', 'default');
 	}
-	getPrimaryModel() {
+	getModel() {
 		let tab = this.getActiveTab();
-		return tab.model ? tab.model : super.getPrimaryModel();
+		return tab.model ? tab.model : super.getModel();
 	}
 }
 
 class NTab extends NTabContainer(NContainer) {
 	renderHeader() {
-		let layout = Envs.merge({}, {
+		let layout = Envs.deepMergeTo({}, {
 			label: this.getLayout().getLabel(),
 			dataId: this.getDataId(),
 			comp: {
@@ -198,7 +198,7 @@ class NTab extends NTabContainer(NContainer) {
 		});
 	}
 	renderContent() {
-		let layout = Envs.merge({}, {
+		let layout = Envs.deepMergeTo({}, {
 			dataId: this.getDataId(),
 			comp: {
 				type: Envs.COMPONENT_TYPES.TAB_BODY,
@@ -236,12 +236,11 @@ class NTab extends NTabContainer(NContainer) {
 	}
 	onItemActived(evt) {
 		this.refs.body.setActiveTabIndex(evt.tabIndex);
-		super.setActiveTabIndex(evt.tabIndex);
-		// this.fireEventToMonitor($.Event('active', {
-		// 	target: ReactDOM.findDOMNode(this.refs.me),
-		// 	tab: evt.tab,
-		// 	tabIndex: evt.tabIndex
-		// }));
+		this.fireEventToMonitor($.Event('active', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			tab: evt.tab,
+			tabIndex: evt.tabIndex
+		}));
 	}
 	onItemShouldActive = (evt) => {
 		return this.fireEventToMonitor($.Event('shouldActive', {
@@ -253,16 +252,25 @@ class NTab extends NTabContainer(NContainer) {
 	setActiveTabIndex(tabIndex) {
 		this.refs.header.setActiveTabIndex(tabIndex);
 	}
+	getActiveTabIndex() {
+		return this.refs.header.getActiveTabIndex();
+	}
 }
 
 class NArrayTab extends NTabContainer(NHierarchyComponent) {
+	buildLayout(props) {
+		super.buildLayout(props);
+		delete this.state.tabs;
+		this.state.tabs = this.getTabs();
+	}
 	renderInNormal() {
 		let layoutJSON = {
 			label: this.getLayout().getLabel(),
 			dataId: this.getDataId(),
-			comp: Envs.merge({
-				type: Envs.COMPONENT_TYPES.TAB
-			}, this.getLayout().getOptions(), {tabs: this.getTabs()}),
+			comp: Envs.deepMergeTo({
+				type: Envs.COMPONENT_TYPES.TAB,
+				tabs: this.getTabs()
+			}, this.getLayout().getOptions()),
 			evt: {
 				active: this.onItemActived,
 				shouldActive: this.onItemShouldActive
@@ -282,6 +290,9 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 		return this.getLayoutOptionValue('addable');
 	}
 	getTabs() {
+		if (this.state.tabs) {
+			return this.state.tabs;
+		}
 		let tabs = this.getValueFromModel().map((item, itemIndex) => {
 			let model = this.createItemModel(item, itemIndex);
 			return {
@@ -366,8 +377,14 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 		}
 	}
 	addItem(item) {
-		this.getPrimaryModel().add(this.getDataId(), item);
+		this.getModel().add(this.getDataId(), item);
 		this.setActiveTabIndex(this.getValueFromModel().length - 1);
+	}
+	setActiveTabIndex(tabIndex) {
+		this.refs.tab.setActiveTabIndex(tabIndex);
+	}
+	getActiveTabIndex() {
+		return this.refs.tab.getActiveTabIndex();
 	}
 }
 

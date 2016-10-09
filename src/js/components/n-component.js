@@ -46,7 +46,7 @@ class NComponent extends React.Component {
 	// when additional model is not designated in layout
 	// @getAdditionalModel will returns primary model instead
 	isUsingPrimaryModel() {
-		return this.getLayoutOptionValue('usePrimaryModel', false);
+		return this.getLayoutOptionValue('usePrimaryModel', true);
 	}
 	getLayout() {
 		return this.props.layout || this.layoutFromDOM;
@@ -507,14 +507,14 @@ class NComponent extends React.Component {
 	renderInternalComponent(layoutJSON) {
 		let layout = new Layout(this.getDataId(), layoutJSON);
 		let props = {
-			model: this.getPrimaryModel(),
+			model: this.getModel(),
 			layout: layout,
 			orientation: this.getOrientation(),
 			viewMode: this.isViewMode(),
 			container: this
 		};
 		if (arguments.length > 1) {
-			Envs.merge.apply(Envs, 
+			Envs.deepMergeTo.apply(Envs, 
 				[props].concat(Array.prototype.slice.call(arguments, 1)));
 		}
 		return Envs.render(layout.getTypeAsString(), props);
@@ -708,19 +708,14 @@ class NContainer extends NComponent {
 		} else {
 			// react node
 			// pass props to child
-			return React.createElement(child.type, Envs.merge({}, {
-						model: this.getPrimaryModel(),
+			return React.createElement(child.type, Envs.deepMergeTo({
+						model: this.getModel(),
 						orientation: this.getOrientation(),
 						viewMode: this.isViewMode()
 					}, 
 					propsFromParent ? propsFromParent[child.type.name] : null, 
 					child.props));
 		}
-	}
-	renderDOMChildren(propsFromParent) {
-		return React.Children.map(this.props.children, (child) => {
-			return this.renderDOMChild(child, propsFromParent);
-		});
 	}
 	getDOMChildOf(type) {
 		let children = React.Children.map(this.props.children, function(child) {
@@ -805,7 +800,7 @@ class NContainer extends NComponent {
 		}
 		return column.map((layout, layoutIndex) => {
 			let props = {
-				model: this.getPrimaryModel(),
+				model: this.getModel(),
 				layout: layout,
 				orientation: this.getOrientation(),
 				viewMode: this.isViewMode(),
@@ -874,7 +869,7 @@ class NHierarchyComponent extends NContainer {
 	}
 	createItemModel(itemJSON, itemIndex) {
 		return new Model(itemJSON, true)
-			.setParent(this.getPrimaryModel())
+			.setParent(this.getModel())
 			.addPostChangeListener(Model.ALL, (evt) => {
 				this.onItemModelChanged(evt, itemIndex);
 			});
@@ -888,15 +883,11 @@ class NHierarchyComponent extends NContainer {
 		return itemLayoutOptions;
 	}
 	onModelChanged(evt) {
-		if (!this.state.itemChanged) {
-			super.onModelChanged(evt);
-		}
+		super.onModelChanged(evt);
 	}
 	onItemModelChanged(evt, itemIndex) {
 		// fire update event, ignore the property information
-		this.state.itemChanged = true;
 		evt.model.getParent().update(this.getDataId(), evt.model.getCurrentModel(), evt.model.getCurrentModel(), itemIndex);
-		delete this.state.itemChanged;
 		this.fireEventToMonitor($.Event('itemChange', {
 			target: ReactDOM.findDOMNode(this.refs.me),
 			itemModel: evt.model,

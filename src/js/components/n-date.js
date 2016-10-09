@@ -45,7 +45,7 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		this.computeDisplayType();
 	}
 	renderDateFooter() {
-		return (<NCalendarFooter model={this.getPrimaryModel()}
+		return (<NCalendarFooter model={this.getModel()}
 								 n-id={this.getDataId()}
 								 n-comp-showClose={this.isCloseButtonShown()}
 								 n-comp-showClear={this.isClearButtonShown()}
