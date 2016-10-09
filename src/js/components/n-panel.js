@@ -206,6 +206,8 @@ class NArrayPanel extends NHierarchyComponent {
 					   n-comp-itemIndex={itemIndex}
 					   n-evt-collapse={this.onItemCollapsed.bind(this, model, itemIndex)}
 					   n-evt-expand={this.onItemExpanded.bind(this, model, itemIndex)}
+					   container={this}
+					   ref={`item-${itemIndex}`}
 					   key={itemIndex}/>;
 	}
 	renderInNormal() {

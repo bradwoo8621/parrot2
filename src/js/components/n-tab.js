@@ -5,8 +5,10 @@ import {
 	lodash, 
 	classnames, 
 	Envs, 
+	Model,
 	Layout, 
-	NContainer} from './n-component'
+	NContainer,
+	NHierarchyComponent} from './n-component'
 
 const NTabContainer = (ParentClass) => class extends ParentClass {
 	getTabs() {
@@ -45,12 +47,15 @@ class NTabHeaderItem extends NContainer {
 			active: this.getLayoutOptionValue('active'),
 			clickable: this.isClickable()
 		});
+		// TODO for unknow reason, styles is broken when no text inside of span
+		// TODO an unicode white space added
+		let label = this.getLabel();
 		return (<li className={className}
 					onClick={this.onItemClicked}
 					ref='me'>
 			{this.renderLeadingChildren()}
 			<span className='n-tab-header-text'>
-				{this.getLabel()}
+				{label ? label : '\u00a0'}
 			</span>
 			{this.renderTailingChildren()}
 		</li>);
@@ -78,16 +83,17 @@ class NTabHeaderItem extends NContainer {
 class NTabHeader extends NTabContainer(NContainer) {
 	renderItem(tab, tabIndex) {
 		let options = {
-			model: this.getPrimaryModel(),
+			model: tab.model ? tab.model : this.getPrimaryModel(),
 			orientation: this.getOrientation(),
 			viewMode: this.isViewMode(),
 			layout: new Layout(this.getId(), {
 				dataId: this.getDataId(),
-				label: tab.label,
+				label: tab.label ? tab.label : this.getLayout().getLabel(),
 				comp: Envs.merge({}, {
 					leadChildren: this.getLeadingChildren(),
 					tailChildren: this.getTailingChildren(),
 					active: tabIndex == this.getActiveTabIndex(),
+					tabIndex: tabIndex
 				}, tab),
 				evt: {
 					click: this.onItemActived.bind(this, tab, tabIndex)
@@ -95,6 +101,7 @@ class NTabHeader extends NTabContainer(NContainer) {
 			})
 		};
 		return <NTabHeaderItem {...options}
+							   container={this}
 							   key={tabIndex} />;
 	}
 	renderInNormal() {
@@ -120,10 +127,12 @@ class NTabHeader extends NTabContainer(NContainer) {
 		}));
 		if (can === false) {
 			// cannot active, do nothing
+		} else if (typeof can === 'undefined') {
+			this.setActiveTabIndex(tabIndex);
 		} else if (typeof can.done === 'function') {
 			can.done(() => {
 				this.setActiveTabIndex(tabIndex);
-			})
+			});
 		} else {
 			this.setActiveTabIndex(tabIndex);
 		}
@@ -158,11 +167,16 @@ class NTabBody extends NTabContainer(NContainer) {
 	getTabStyle() {
 		return 'n-tab-body-' + this.getLayoutOptionValue('style', 'default');
 	}
+	getPrimaryModel() {
+		let tab = this.getActiveTab();
+		return tab.model ? tab.model : super.getPrimaryModel();
+	}
 }
 
 class NTab extends NTabContainer(NContainer) {
 	renderHeader() {
 		let layout = Envs.merge({}, {
+			label: this.getLayout().getLabel(),
 			dataId: this.getDataId(),
 			comp: {
 				type: Envs.COMPONENT_TYPES.TAB_HEADER,
@@ -172,7 +186,7 @@ class NTab extends NTabContainer(NContainer) {
 				tailChildren: this.getTailingChildren()
 			},
 			evt: {
-				active: this.onItemActived,
+				active: this.onItemActived.bind(this),
 				shouldActive: this.onItemShouldActive
 			}
 		}, this.getTabHeaderLayout());
@@ -220,13 +234,14 @@ class NTab extends NTabContainer(NContainer) {
 	getTabBodyLayout() {
 		return this.getLayoutOptionValue('body');
 	}
-	onItemActived = (evt) => {
+	onItemActived(evt) {
 		this.refs.body.setActiveTabIndex(evt.tabIndex);
-		this.fireEventToMonitor($.Event('active', {
-			target: ReactDOM.findDOMNode(this.refs.me),
-			tab: evt.tab,
-			tabIndex: evt.tabIndex
-		}))
+		super.setActiveTabIndex(evt.tabIndex);
+		// this.fireEventToMonitor($.Event('active', {
+		// 	target: ReactDOM.findDOMNode(this.refs.me),
+		// 	tab: evt.tab,
+		// 	tabIndex: evt.tabIndex
+		// }));
 	}
 	onItemShouldActive = (evt) => {
 		return this.fireEventToMonitor($.Event('shouldActive', {
@@ -234,6 +249,125 @@ class NTab extends NTabContainer(NContainer) {
 			tab: evt.tab,
 			tabIndex: evt.tabIndex
 		}));
+	}
+	setActiveTabIndex(tabIndex) {
+		this.refs.header.setActiveTabIndex(tabIndex);
+	}
+}
+
+class NArrayTab extends NTabContainer(NHierarchyComponent) {
+	renderInNormal() {
+		let layoutJSON = {
+			label: this.getLayout().getLabel(),
+			dataId: this.getDataId(),
+			comp: Envs.merge({
+				type: Envs.COMPONENT_TYPES.TAB
+			}, this.getLayout().getOptions(), {tabs: this.getTabs()}),
+			evt: {
+				active: this.onItemActived,
+				shouldActive: this.onItemShouldActive
+			}
+		};
+		return (<div className={this.getComponentStyle()}
+					 ref='me'>
+			{this.renderInternalComponent(layoutJSON, {
+				ref: 'tab'
+			})}
+		</div>);
+	}
+	getComponentClassName() {
+		return 'n-array-tab';
+	}
+	isAddable() {
+		return this.getLayoutOptionValue('addable');
+	}
+	getTabs() {
+		let tabs = this.getValueFromModel().map((item, itemIndex) => {
+			let model = this.createItemModel(item, itemIndex);
+			return {
+				model: model
+			};
+		});
+		if (this.isAddable()) {
+			tabs.push({
+				label: Envs.TAB_ADD_TEXT,
+				model: new Model({}),
+				leadChildren: {
+					icon: {
+						comp: {
+							type: Envs.COMPONENT_TYPES.ICON,
+							icon: Envs.TAB_ADD_ICON
+						}
+					}
+				},
+				children: function() {
+					return {
+						label: {
+							label: Envs.TAB_NO_ITEM_TEXT,
+							comp: {
+								type: Envs.COMPONENT_TYPES.LABEL,
+								textFromModel: false
+							}
+						}
+					}
+				}
+			});
+		}
+		return tabs;
+	}
+	getValueFromModel() {
+		let value = super.getValueFromModel();
+		return value ? value : [];
+	}
+	onModelChanged(evt) {
+		if (evt.type === 'remove') {
+			let activeTabIndex = this.getActiveTabIndex();
+			if (activeTabIndex >= this.getValueFromModel().length) {
+				this.state.activeTabIndex = this.getValueFromModel().length - 1;
+			}
+		}
+		super.onModelChanged(evt);
+	}
+	onItemActived = (evt) => {
+		this.fireEventToMonitor($.Event('active', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			tab: evt.tab,
+			tabIndex: evt.tabIndex
+		}));
+	}
+	onItemShouldActive = (evt) => {
+		if (this.isAddable() && evt.tabIndex == this.getValueFromModel().length) {
+			// add tab clicked
+			this.onAddClicked(evt);
+			return false;
+		} else {
+			return this.fireEventToMonitor($.Event('shouldActive', {
+				target: ReactDOM.findDOMNode(this.refs.me),
+				tab: evt.tab,
+				tabIndex: evt.tabIndex
+			}));
+		}
+	}
+	onAddClicked(evt) {
+		let monitor = this.getEventMonitor('addClick');
+		if (monitor) {
+			let ret = monitor.call(this, evt);
+			if (ret == null) {
+				// do nothing
+			} else if (typeof ret.done === 'function') {
+				ret.done((item) => {
+					this.addItem(item);
+				});
+			} else {
+				this.addItem(ret);
+			}
+		} else {
+			this.addItem({});
+		}
+	}
+	addItem(item) {
+		this.getPrimaryModel().add(this.getDataId(), item);
+		this.setActiveTabIndex(this.getValueFromModel().length - 1);
 	}
 }
 
@@ -249,6 +383,10 @@ Envs.COMPONENT_TYPES.TAB = {type: 'n-tab', label: false, popover: false, error: 
 Envs.setRenderer(Envs.COMPONENT_TYPES.TAB.type, function (options) {
 	return <NTab {...options} />;
 });
+Envs.COMPONENT_TYPES.ARRAY_TAB = {type: 'n-array-tab', label: false, popover: false, error: false};
+Envs.setRenderer(Envs.COMPONENT_TYPES.ARRAY_TAB.type, function (options) {
+	return <NArrayTab {...options} />;
+});
 
-export {NTab, NTabHeader, NTabBody}
+export {NArrayTab, NTab, NTabHeader, NTabBody}
 export * from './n-component'

@@ -10,12 +10,19 @@ let {
 	Model, 
 	Layout, 
 	NTab,
+	NArrayTab,
 	$, 
 	Envs} = SDK;
 
 $(function() {
 	let model = new Model({
-		items: [{}, {}],
+		items: [{
+			name: 'name a',
+			age: 15
+		}, {
+			name: 'name b',
+			age: 20
+		}],
 		amount: 5
 	});
 	// model.addPostChangeListener('panel', function(evt) {
@@ -83,10 +90,36 @@ $(function() {
 		}
 	});
 
+	let layoutAT = new Layout('items', {
+		label: function() {
+			return this.getModel().get('name');
+		},
+		comp: {
+			addable: true,
+			children: {
+				age: {}
+			},
+			leadChildren: {
+				icon: {
+					comp: {
+						type: Envs.COMPONENT_TYPES.ICON,
+						icon: function() {
+							let age = this.getModel().get('age');
+							return age >= 18 ? 'user' : 'child';
+						}
+					}
+				}
+			}
+		}
+	});
+
 	let panel = (<div className='n-top-container'>
 		<div className='n-row n-in-form'>
 			<div className='n-col-sm-12 n-col-md-6'>
 				<NTab model={model} layout={layout} />
+			</div>
+			<div className='n-col-sm-12 n-col-md-6'>
+				<NArrayTab model={model} layout={layoutAT} />
 			</div>
 		</div>
 	</div>);

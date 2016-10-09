@@ -39,7 +39,10 @@ class Envs {
 			timeDisplayFormat: 'HH:mm:ss',
 			timeHeaderFormat: 'A hh',
 			dateTimeDisplayFormat: 'YYYY/MM/DD HH:mm:ss',
-			yearStepWhenMonth: 5
+			yearStepWhenMonth: 5,
+			tabAddText: 'Add',
+			tabAddIcon: 'plus-square',
+			tabNoItemText: 'No Item'
 		};
 		this.viewModeRenderers = {};
 		this.renderers = {};
@@ -167,6 +170,30 @@ class Envs {
 		this.props.timeHeaderFormat = value;
 	}
 
+	get TAB_ADD_TEXT() {
+		return this.props.tabAddText;
+	}
+
+	set TAB_ADD_TEXT(value) {
+		this.props.tabAddText = value;
+	}
+
+	get TAB_ADD_ICON() {
+		return this.props.tabAddIcon;
+	}
+
+	set TAB_ADD_ICON(value) {
+		this.props.tabAddIcon = value;
+	}
+
+	get TAB_NO_ITEM_TEXT() {
+		return this.props.tabNoItemText;
+	}
+
+	set TAB_NO_ITEM_TEXT(value) {
+		this.props.TAB_NO_ITEM_TEXT = value;
+	}
+
 	getRenderer(type) {
 		return this.renderers[type];
 	}
@@ -203,7 +230,7 @@ class Envs {
 					Array.prototype.slice.call(arguments, 0).concat(function(objValue, srcValue) {
 						if (lodash.isArray(objValue)) {
 							if (lodash.isArray(srcValue)) {
-								return srcvalue;
+								return srcValue;
 							}
 						}
 					}));

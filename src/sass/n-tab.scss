@@ -24,6 +24,8 @@
 
 .n-tab {
 }
+.n-array-tab {
+}
 .n-tab-header {
 	@include float-layout-container();
 	overflow: hidden;
@@ -37,6 +39,7 @@
 
 	.n-tab-header-item {
 		display: inline-block;
+		position: relative;
 		padding: $pad-0 $pad-15;
 		border: $border-1;
 		border-color: transparent;

@@ -873,11 +873,11 @@ class NHierarchyComponent extends NContainer {
 		this.removePostRemoveListener(this.bindToThis(this.onModelChanged));
 	}
 	createItemModel(itemJSON, itemIndex) {
-		let model = new Model(itemJSON, true).parent(this.getPrimaryModel());
-		model.addPostChangeListener(Model.ALL, (evt) => {
-			this.onItemModelChanged(evt, itemIndex);
-		});
-		return model;
+		return new Model(itemJSON, true)
+			.setParent(this.getPrimaryModel())
+			.addPostChangeListener(Model.ALL, (evt) => {
+				this.onItemModelChanged(evt, itemIndex);
+			});
 	}
 	createItemLayoutOptions(itemModel, itemIndex) {
 		let layoutOptions = this.getLayout().getOptions();
@@ -895,7 +895,7 @@ class NHierarchyComponent extends NContainer {
 	onItemModelChanged(evt, itemIndex) {
 		// fire update event, ignore the property information
 		this.state.itemChanged = true;
-		evt.model.parent().update(this.getDataId(), evt.model.getCurrentModel(), evt.model.getCurrentModel(), itemIndex);
+		evt.model.getParent().update(this.getDataId(), evt.model.getCurrentModel(), evt.model.getCurrentModel(), itemIndex);
 		delete this.state.itemChanged;
 		this.fireEventToMonitor($.Event('itemChange', {
 			target: ReactDOM.findDOMNode(this.refs.me),

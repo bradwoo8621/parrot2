@@ -284,22 +284,18 @@ class Model {
 		}, json);
 		return this;
 	}
-
 	isChanged() {
 		return this.changed;
 	}
-
 	setChanged(changed) {
 		this.changed = changed;
 	}
-
-	parent(parent) {
-		if (parent) {
-			this.parent = parent;
-			return this;
-		} else {
-			return this.parent;
-		}
+	setParent(parent) {
+		this.parent = parent;
+		return this;
+	}
+	getParent() {
+		return this.parent;
 	}
 }
 
