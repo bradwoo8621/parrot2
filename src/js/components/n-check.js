@@ -139,12 +139,12 @@ class NArrayCheck extends NCodeTableComponent(NComponent) {
 
 class NToggle extends NComponent {
 	renderInNormal() {
-		return (<div className={this.getComponentStyle()}
+		return (<div className={classnames('n-control', this.getComponentStyle())}
 					 onClick={this.onComponentClicked}
 					 onKeyUp={this.onComponentKeyUp}
 					 tabIndex={this.getTabIndex()}
 					 ref='me'>
-			<span className={classnames('n-toggle-button n-control', 
+			<span className={classnames('n-toggle-button', 
 										this.getToggleStyle(), 
 										{'n-checked': this.isChecked()})} />
 		</div>);
