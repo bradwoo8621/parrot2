@@ -54,6 +54,9 @@
 		&.active {
 			cursor: default;
 		}
+		&.n-tab-header-item-add-button.active {
+			cursor: pointer;
+		}
 		&:not(:first-child) {
 			margin-left: $margin-2;
 		}

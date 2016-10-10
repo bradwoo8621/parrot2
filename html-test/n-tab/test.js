@@ -95,7 +95,9 @@ $(function() {
 			return this.getModel().get('name');
 		},
 		comp: {
+			style: 'primary',
 			addable: true,
+			removable: true,
 			children: {
 				age: {}
 			},

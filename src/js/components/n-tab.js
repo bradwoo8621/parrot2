@@ -72,7 +72,7 @@ class NTabHeaderItem extends NContainer {
 		}
 	}
 	onItemClicked = (evt) => {
-		if (this.isClickable()) {
+		if (this.isClickable() && !evt.isDefaultPrevented()) {
 			this.fireEventToMonitor($.Event('click', {
 				target: ReactDOM.findDOMNode(this.refs.me)
 			}));
@@ -289,20 +289,43 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 	isAddable() {
 		return this.getLayoutOptionValue('addable');
 	}
+	isRemovable() {
+		return this.getLayoutOptionValue('removable');
+	}
+	isCanRemove(itemModel, itemIndex) {
+		let can = this.getLayoutOptionValue('canRemove', null, true);
+		return can ? can.call(this, itemModel, itemIndex) : true;
+	}
 	getTabs() {
 		if (this.state.tabs) {
 			return this.state.tabs;
 		}
+		let removable = this.isRemovable();
 		let tabs = this.getValueFromModel().map((item, itemIndex) => {
 			let model = this.createItemModel(item, itemIndex);
-			return {
+			let tab = {
 				model: model
 			};
+			if (removable && this.isCanRemove(model, itemIndex)) {
+				tab.tailChildren = {
+					icon: {
+						comp: {
+							type: Envs.COMPONENT_TYPES.ICON,
+							icon: Envs.TAB_REMOVE_ICON
+						},
+						evt: {
+							click: this.onRemoveClicked.bind(this, model, itemIndex)
+						}
+					}
+				}
+			}
+			return tab;
 		});
 		if (this.isAddable()) {
 			tabs.push({
 				label: Envs.TAB_ADD_TEXT,
 				model: new Model({}),
+				style: 'add-button',
 				leadChildren: {
 					icon: {
 						comp: {
@@ -376,9 +399,63 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 			this.addItem({});
 		}
 	}
+	onRemoveClicked(itemModel, itemIndex, evt) {
+		evt.preventDefault();
+		let can = this.fireEventToMonitor($.Event('shouldRemove', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			data: itemModel,
+			dataIndex: itemIndex
+		}));
+		if (can === false) {
+			// cannot active, do nothing
+		} else if (typeof can === 'undefined') {
+			this.removeItem(itemModel.getCurrentModel(), itemIndex);
+		} else if (typeof can.done === 'function') {
+			can.done(() => {
+				this.removeItem(itemModel.getCurrentModel(), itemIndex);
+			});
+		} else {
+			this.removeItem(itemModel.getCurrentModel(), itemIndex);
+		}
+	}
 	addItem(item) {
 		this.getModel().add(this.getDataId(), item);
 		this.setActiveTabIndex(this.getValueFromModel().length - 1);
+	}
+	removeItem(item, itemIndex) {
+		let activeTabIndex = this.getActiveTabIndex();
+		this.getModel().remove(this.getDataId(), item);
+		let length = this.getValueFromModel().length;
+		if (itemIndex === 0) {
+			// removed is the first one
+			if (activeTabIndex === 0) {
+				// the original active is the first one
+				// then do nothing, keep the first one active, no matter what it is
+			} else {
+				// keep the original active
+				this.setActiveTabIndex(activeTabIndex - 1);
+			}
+		} else if (itemIndex === length) {
+			// removed is the last one
+			if (activeTabIndex === itemIndex) {
+				// the original active is the last one
+				// let the previous one active
+				this.setActiveTabIndex(length - 1);
+			} else {
+				// the original active is some one before removed
+				// then do nothing, keep the original active, no matter what it is
+			}
+		} else {
+			// removed is neither first nor last
+			if (activeTabIndex > itemIndex) {
+				// removed is before the original active
+				// keep the original active
+				this.setActiveTabIndex(activeTabIndex - 1);
+			} else {
+				// removed is active or original active one is before removed
+				// then do nothing, keep the original active, no matter what it is
+			}
+		}
 	}
 	setActiveTabIndex(tabIndex) {
 		this.refs.tab.setActiveTabIndex(tabIndex);

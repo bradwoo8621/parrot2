@@ -42,6 +42,7 @@ class Envs {
 			yearStepWhenMonth: 5,
 			tabAddText: 'Add',
 			tabAddIcon: 'plus-square',
+			tabRemoveIcon: 'close',
 			tabNoItemText: 'No Item'
 		};
 		this.viewModeRenderers = {};
@@ -184,6 +185,14 @@ class Envs {
 
 	set TAB_ADD_ICON(value) {
 		this.props.tabAddIcon = value;
+	}
+
+	get TAB_REMOVE_ICON() {
+		return this.props.tabRemoveIcon;
+	}
+
+	set TAB_REMOVE_ICON(value) {
+		this.props.tabRemoveIcon = value;
 	}
 
 	get TAB_NO_ITEM_TEXT() {
