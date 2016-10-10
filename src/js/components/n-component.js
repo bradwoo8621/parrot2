@@ -572,7 +572,6 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 		if (evt.isDefaultPrevented()) {
 			return;
 		}
-		let handler = null;
 		if (evt.keyCode === 27) {
 			this.hideDropdown();
 		}
