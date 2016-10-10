@@ -3,7 +3,7 @@ import {NIcon, NStackIcon} from '../../src/js/components/n-icon'
 import {NLabel} from '../../src/js/components/n-label'
 import {NText} from '../../src/js/components/n-text'
 
-let {React, ReactDOM, Model, Layout, NButton, $, Envs} = SDK;
+let {React, ReactDOM, Model, Layout, NButton, NButtonBar, $, Envs} = SDK;
 
 
 $(function() {
@@ -196,6 +196,34 @@ $(function() {
 			}
 		}
 	});
+	let layoutBB = new Layout('button-bar', {
+		comp: {
+			buttons: [{
+				label: 'Plane'
+			}, {
+				label: 'Car'
+			}, {
+				label: 'Dashboard',
+				comp: {
+					style: 'primary',
+					leftIcon: {
+						comp: {
+							type: Envs.COMPONENT_TYPES.ICON,
+							icon: 'dashboard'
+						}
+					}
+				},
+				evt: {
+					click: function(evt) {
+						alert('Dashboard Clicked');
+					}
+				},
+				styles: {
+					comp: 'float-left'
+				}
+			}]
+		}
+	});
 	let panel = (<div className='n-top-container' style={{marginTop: 20}}>
 		<div className='n-row n-in-form'>
 			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
@@ -227,6 +255,11 @@ $(function() {
 			</div>
 			<div className='n-col-sm-3 n-col-md-3 n-col-lg-3'>
 				<NText model={model} layout={layoutT} />
+			</div>
+		</div>
+		<div className='n-row n-in-form'>
+			<div className='n-col-sm-12 n-col-md-6'>
+				<NButtonBar model={model} layout={layoutBB} />
 			</div>
 		</div>
 	</div>);

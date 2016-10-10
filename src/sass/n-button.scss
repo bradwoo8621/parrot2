@@ -78,3 +78,16 @@
 		}
 	}
 }
+.n-button-bar {
+	display: block;
+	position: relative;
+	@include float-layout-container();
+
+	> .n-button {
+		margin-right: $margin-5;
+		&.n-float-right {
+			margin-right: $margin-0;
+			margin-left: $margin-5;
+		}
+	}
+}

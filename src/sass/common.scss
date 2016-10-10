@@ -64,18 +64,23 @@ li {
 	list-style: none;
 }
 
-.text-left {
+.n-text-left {
 	text-align: left;
 	input {
 		text-align: left;
 	}
 }
-
-.text-right {
+.n-text-right {
 	text-align: right;
 	input {
 		text-align: right;
 	}
+}
+.n-float-left {
+	float: left;
+}
+.n-float-right {
+	float: right;
 }
 
 .n-control {
@@ -92,11 +97,11 @@ li {
     white-space: nowrap;
 }
 
-.clickable {
+.n-clickable {
 	cursor: pointer;
 }
 
-.link {
+.n-link {
 	color: $color-link;
 }
 

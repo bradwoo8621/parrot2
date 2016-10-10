@@ -351,7 +351,7 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 			return null;
 		}
 		return (<div className='n-calendar-date-header-text'>
-			<span className='clickable' onClick={this.onHeaderYearClicked}>
+			<span className='n-clickable' onClick={this.onHeaderYearClicked}>
 				{date.format(this.getDateHeaderFormat().year)}
 			</span>
 		</div>);
@@ -362,10 +362,10 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 		}
 		return (<div className='n-calendar-date-header-text'>
 			<span>
-				<span className='clickable' onClick={this.onHeaderYearClicked}>
+				<span className='n-clickable' onClick={this.onHeaderYearClicked}>
 					{date.format(this.getDateHeaderFormat().year)}
 				</span>
-				<span className='clickable' onClick={this.onHeaderMonthClicked}>
+				<span className='n-clickable' onClick={this.onHeaderMonthClicked}>
 					{date.format(this.getDateHeaderFormat().month)}
 				</span>
 			</span>

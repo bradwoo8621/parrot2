@@ -86,3 +86,47 @@
 		}
 	}
 }
+
+.n-radio-button-group {
+	position: relative;
+	display: inline-block;
+	> .n-button {
+		&:first-child {
+			.n-btn {
+				border-left-width: $border-1-width;
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+				border-top-left-radius: $border-radius;
+				border-bottom-left-radius: $border-radius;
+			}
+		}
+		.n-btn {
+			border-left-width: $border-0;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			padding-right: $pad-5;
+			&:after {
+				font: normal normal normal 14px/1 FontAwesome;
+				font-style: normal;
+				font-variant-ligatures: normal;
+				font-variant-caps: normal;
+				font-variant-numeric: normal;
+				font-weight: normal;
+				font-stretch: normal;
+				font-family: FontAwesome;
+				text-rendering: auto;
+				-webkit-font-smoothing: antialiased;
+				cursor: pointer;
+				content: '\f00c';
+				padding-left: $pad-5;
+				opacity: 0;
+				transition: opacity 0.3s ease;
+			}
+		}
+		&.n-checked {
+			.n-btn:after {
+				opacity: 1;
+			}
+		}
+	}
+}

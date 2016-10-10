@@ -44,8 +44,8 @@ const NTabContainer = (ParentClass) => class extends ParentClass {
 class NTabHeaderItem extends NContainer {
 	renderInNormal() {
 		let className = classnames(this.getComponentStyle(), this.getItemStyle(), {
-			active: this.getLayoutOptionValue('active'),
-			clickable: this.isClickable()
+			'n-active': this.getLayoutOptionValue('active'),
+			'n-clickable': this.isClickable()
 		});
 		// TODO for unknow reason, styles is broken when no text inside of span
 		// TODO an unicode white space added

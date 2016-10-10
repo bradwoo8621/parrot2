@@ -43,7 +43,7 @@ $(function() {
 			placeholder: 'Amount',
 			rows: 1
 		},
-		styles: {comp: 'text-right'}
+		styles: {comp: 'n-text-right'}
 	});
 	let layout3 = new Layout('rate', {
 		comp: {

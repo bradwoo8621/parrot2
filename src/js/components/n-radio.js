@@ -83,10 +83,72 @@ class NRadio extends NCodeTableComponent(NComponent) {
 	}
 }
 
+class NRadioButton extends NCodeTableComponent(NComponent) {
+	renderCodeItem(item, itemIndex) {
+		let checked = this.isChecked(item);
+		let layout = {
+			label: item.text,
+			comp: {
+				type: Envs.COMPONENT_TYPES.BUTTON,
+				style: this.getStyle()
+			},
+			evt: {
+				click: this.onItemClicked.bind(this, item, itemIndex)
+			}
+		};
+		if (checked) {
+			let checkedStyle = this.getCheckedStyle();
+			if (checkedStyle) {
+				layout.comp.style = checkedStyle;
+			}
+			layout.styles = {comp: 'n-checked'};
+		}
+		if (item.icon) {
+			layout.comp.leftIcon = {
+				comp: {
+					type: Envs.COMPONENT_TYPES.ICON,
+					icon: item.icon
+				}
+			};
+		}
+		return this.renderInternalComponent(layout, {
+			key: itemIndex
+		});
+	}
+	renderInNormal() {
+		return (<div className={this.getComponentStyle()}
+					 ref='me'>
+			{this.getCodeTable().map((item, itemIndex) => {
+				return this.renderCodeItem(item, itemIndex);
+			})}
+		</div>);
+	}
+	getComponentClassName() {
+		return 'n-radio-button-group';
+	}
+	getStyle() {
+		return this.getLayoutOptionValue('style');
+	}
+	getCheckedStyle() {
+		return this.getLayoutOptionValue('checkedStyle');
+	}
+	isChecked(item) {
+		return this.getValueFromModel() == item.id;
+	}
+	onItemClicked(item, itemIndex, evt) {
+		this.setValueToModel(item.id);
+		this.fireEventToMonitor(evt, 'click');
+	}
+}
+
 Envs.COMPONENT_TYPES.RADIO = {type: 'n-radio'};
 Envs.setRenderer(Envs.COMPONENT_TYPES.RADIO.type, function (options) {
 	return <NRadio {...options} />;
 });
+Envs.COMPONENT_TYPES.RADIO_BUTTON = {type: 'n-radio-button'};
+Envs.setRenderer(Envs.COMPONENT_TYPES.RADIO_BUTTON.type, function (options) {
+	return <NRadioButton {...options} />;
+});
 
-export {NRadio}
+export {NRadio, NRadioButton}
 export * from './n-component'

@@ -1,7 +1,7 @@
 @mixin n-tab-header-style($color, $bg-color, $name) {
 	&.n-tab-header-#{$name} {
 		border-bottom-color: $bg-color;
-		> .n-tab-header-item.active {
+		> .n-tab-header-item.n-active {
 			background-color: $bg-color;
 			color: $color;
 			border-color: $bg-color;
@@ -51,10 +51,10 @@
 		@include n-tab-header-item-style($color-reverse, $color-warning, warning);
 		@include n-tab-header-item-style($color-reverse, $color-info, info);
 		@include n-tab-header-item-style($color-reverse, $color-danger, danger);
-		&.active {
+		&.n-active {
 			cursor: default;
 		}
-		&.n-tab-header-item-add-button.active {
+		&.n-tab-header-item-add-button.n-active {
 			cursor: pointer;
 		}
 		&:not(:first-child) {
@@ -81,7 +81,7 @@
 	}
 	&.n-tab-header-default {
 		// border-bottom-color: transparent;
-		> .n-tab-header-item.active {
+		> .n-tab-header-item.n-active {
 			background-color: $container-bg-color;
 			border-color: $color-border;
 			border-top-color: $color-border;

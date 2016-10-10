@@ -1,4 +1,13 @@
-import {React, ReactDOM, $, classnames, Envs, NComponent, NDropdownComponent, Layout} from './n-component'
+import {
+	React, 
+	ReactDOM, 
+	$, 
+	classnames, 
+	Envs, 
+	NComponent, 
+	NDropdownComponent,
+	NContainer,
+	Layout} from './n-component'
 
 class NButton extends NDropdownComponent(NComponent) {
 	renderIcon(icon) {
@@ -25,7 +34,7 @@ class NButton extends NDropdownComponent(NComponent) {
 		}
 	}
 	renderText(dropdown) {
-		return (<button className={classnames('n-control n-btn clickable', this.getButtonStyle())}
+		return (<button className={classnames('n-control n-btn n-clickable', this.getButtonStyle())}
 						onClick={this.onComponentClicked}>
 			{this.renderLeftIcon()}
 			{this.getDisplayText()}
@@ -35,7 +44,7 @@ class NButton extends NDropdownComponent(NComponent) {
 	}
 	renderSeparatedDropdownIcon(dropdown) {
 		if (dropdown.has && dropdown.separated) {
-			let className = classnames('n-control n-btn n-button-dropdown-icon clickable',
+			let className = classnames('n-control n-btn n-button-dropdown-icon n-clickable',
 									   this.getButtonStyle());
 			return (<button className={className}
 							onClick={this.onDropdownIconClicked}>
@@ -54,7 +63,7 @@ class NButton extends NDropdownComponent(NComponent) {
 		if (!dropdown.has) {
 			return null;
 		}
-		return (<ul className='n-button-dropdown n-dropdown text-left'
+		return (<ul className='n-button-dropdown n-dropdown n-text-left'
 					ref='dropdown'>
 			{dropdown.items.map((item, itemIndex) => {
 				return this.renderDropdownItem(item, itemIndex);
@@ -126,10 +135,54 @@ class NButton extends NDropdownComponent(NComponent) {
 	}
 }
 
+class NButtonBar extends NContainer {
+	renderButtons() {
+		let buttons = this.getButtons();
+		return buttons.map((button, buttonIndex) => {
+			if (!button.comp) {
+				button.comp = {};
+			}
+			if (!button.comp.type) {
+				button.comp.type = Envs.COMPONENT_TYPES.BUTTON;
+			}
+			if (!button.styles) {
+				button.styles = {};
+			}
+			if (!button.styles.comp) {
+				button.styles.comp = 'n-float-right';
+			}
+			return this.renderInternalComponent(button, {
+				key: buttonIndex
+			});
+		});
+	}
+	renderInNormal() {
+		return (<div className={this.getComponentStyle()}
+					 ref='me'>
+			{this.renderLeadingDOMChildren()}
+			{this.renderLeadingChildren()}
+			{this.renderButtons()}
+			{this.renderTailingChildren()}
+			{this.renderTailingDOMChildren()}
+		</div>);
+	}
+	getComponentClassName() {
+		return 'n-button-bar';
+	}
+	getButtons() {
+		let buttons = this.getLayoutOptionValue('buttons');
+		return buttons ? buttons : [];
+	}
+}
+
 Envs.COMPONENT_TYPES.BUTTON = {type: 'n-button'};
 Envs.setRenderer(Envs.COMPONENT_TYPES.BUTTON.type, function (options) {
 	return <NButton {...options} />;
 });
+Envs.COMPONENT_TYPES.BUTTON_BAR = {type: 'n-button-bar'};
+Envs.setRenderer(Envs.COMPONENT_TYPES.BUTTON_BAR.type, function (options) {
+	return <NButtonBar {...options} />;
+});
 
-export {NButton}
+export {NButton, NButtonBar}
 export * from './n-component'

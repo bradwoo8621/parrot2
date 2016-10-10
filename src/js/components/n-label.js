@@ -3,7 +3,7 @@ import {React, ReactDOM, $, classnames, Envs, NComponent, NAddonComponent} from 
 class NLabel extends NAddonComponent {
 	renderText() {
 		let className = classnames('n-label-text', {
-			clickable: this.isClickable()
+			'n-clickable': this.isClickable()
 		});
 		return (<span className={className}
 					  onClick={this.onComponentClicked}

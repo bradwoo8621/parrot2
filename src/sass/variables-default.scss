@@ -77,7 +77,8 @@ $color-base-blue-grey:								#546E7A;
 // border
 $border-radius:										2px;
 $border-0:											0;
-$border-1:											1px solid $color-border;
+$border-1-width:									1px;
+$border-1:											$border-1-width solid $color-border;
 
 // dropdown
 $dropdown-z-index:									100;

@@ -37,7 +37,7 @@ class NIcon extends NComponent {
 		return classnames(this.getComponentStyle(), {
 			'!fa fw': this.isFontAwesome()
 		}, classnames(this.getFontClassName()), {
-			'!clickable': this.isClickable()
+			'!n-clickable': this.isClickable()
 		});
 	}
 
@@ -80,7 +80,7 @@ class NStackIcon extends NComponent {
 		return classnames(this.getComponentStyle(), 
 						'stack fw', 
 						this.getBackgroundClassName(), {
-						  	'!clickable': this.isClickable()
+						  	'!n-clickable': this.isClickable()
 						});
 	}
 

@@ -64,7 +64,7 @@ $(function() {
 				model: Envs.NUMBER_PARSER
 			}
 		},
-		styles: {comp: 'text-right'}
+		styles: {comp: 'n-text-right'}
 	});
 	let layout3 = new Layout('rate', {
 		comp: {

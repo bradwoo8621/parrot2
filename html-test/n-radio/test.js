@@ -1,12 +1,24 @@
 import * as SDK from '../../src/js/components/n-radio'
+import {NButton} from '../../src/js/components/n-button'
+import {NIcon} from '../../src/js/components/n-icon'
 
-let {React, ReactDOM, CodeTable, Model, Layout, NRadio, $, Envs} = SDK;
+let {
+	React, 
+	ReactDOM, 
+	CodeTable, 
+	Model, 
+	Layout, 
+	NRadio,
+	NRadioButton,
+	$, 
+	Envs} = SDK;
 
 $(function() {
 	let codes = new CodeTable({
 		items: [{
 			id: 1, 
-			text: 'Item 1'
+			text: 'Item 1',
+			icon: 'plane'
 		}, {
 			id: 2, 
 			text: 'Item 2'
@@ -51,7 +63,15 @@ $(function() {
 		comp: {
 			codes: longTextCodes
 		}
-	})
+	});
+	let layoutRB = new Layout('value', {
+		label: 'Check Me',
+		comp: {
+			codes: codes,
+			style: 'primary',
+			checkedStyle: 'success'
+		}
+	});
 
 	let panel = (<div className='n-top-container'>
 		<div className='n-row'>
@@ -66,6 +86,11 @@ $(function() {
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NRadio model={model} layout={layoutLT} />
+			</div>
+		</div>
+		<div className='n-row'>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NRadioButton model={model} layout={layoutRB} />
 			</div>
 		</div>
 	</div>);
