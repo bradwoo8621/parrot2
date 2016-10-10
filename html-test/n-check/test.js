@@ -1,6 +1,16 @@
 import * as SDK from '../../src/js/components/n-check'
 
-let {React, ReactDOM, CodeTable, Model, Layout, NCheck, NArrayCheck, $, Envs} = SDK;
+let {
+	React, 
+	ReactDOM, 
+	CodeTable, 
+	Model, 
+	Layout, 
+	NCheck, 
+	NArrayCheck,
+	NToggle,
+	$, 
+	Envs} = SDK;
 
 $(function() {
 	let codes = new CodeTable({
@@ -68,7 +78,11 @@ $(function() {
 		comp: {
 			codes: longTextCodes
 		}
-	})
+	});
+	let layoutTG = new Layout('check', {
+		comp: {
+		}
+	});
 
 	let panel = (<div className='n-top-container'>
 		<div className='n-row'>
@@ -89,6 +103,15 @@ $(function() {
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NArrayCheck model={model} layout={layoutLT} />
+			</div>
+		</div>
+		<div className='n-row'>
+			<div className='n-col-sm-12 n-col-md-6'>
+				<NToggle model={model} layout={layoutTG} />
+				<NToggle model={model} n-id='check' n-comp-style='success' />
+				<NToggle model={model} n-id='check' n-comp-style='danger' />
+				<NToggle model={model} n-id='check' n-comp-style='info' />
+				<NToggle model={model} n-id='check' n-comp-style='warning' />
 			</div>
 		</div>
 	</div>);

@@ -137,6 +137,54 @@ class NArrayCheck extends NCodeTableComponent(NComponent) {
 	}
 }
 
+class NToggle extends NComponent {
+	renderInNormal() {
+		return (<div className={this.getComponentStyle()}
+					 onClick={this.onComponentClicked}
+					 onKeyUp={this.onComponentKeyUp}
+					 tabIndex={this.getTabIndex()}
+					 ref='me'>
+			<span className={classnames('n-toggle-button n-control', 
+										this.getToggleStyle(), 
+										{'n-checked': this.isChecked()})} />
+		</div>);
+	}
+	getComponentClassName() {
+		return 'n-toggle';
+	}
+	isChecked() {
+		return this.getValueFromModel();
+	}
+	getToggleStyle() {
+		return 'n-toggle-' + this.getLayoutOptionValue('style', 'primary');
+	}
+	onComponentClicked = (evt) => {
+		let value = this.getValueFromModel();
+		this.setValueToModel(!value);
+		this.fireEventToMonitor(evt, 'click');
+
+		$(ReactDOM.findDOMNode(this.refs.me)).focus();
+	}
+	onComponentKeyUp = (evt) => {
+		let keycode = evt.keyCode;
+		let value = this.getValueFromModel();
+		if (keycode === 37) {
+			// left
+			if (!value) {
+				this.setValueToModel(true);
+				evt.preventDefault();
+			}
+		} else if (keycode === 39) {
+			// right
+			if (value) {
+				this.setValueToModel(false);
+				evt.preventDefault();
+			}
+		}
+		this.fireEventToMonitor(evt);
+	}
+}
+
 Envs.COMPONENT_TYPES.CHECK = {type: 'n-check'};
 Envs.setRenderer(Envs.COMPONENT_TYPES.CHECK.type, function (options) {
 	return <NCheck {...options} />;
@@ -145,8 +193,10 @@ Envs.COMPONENT_TYPES.ARRAY_CHECK = {type: 'n-array-check'};
 Envs.setRenderer(Envs.COMPONENT_TYPES.ARRAY_CHECK.type, function (options) {
 	return <NArrayCheck {...options} />;
 });
+Envs.COMPONENT_TYPES.TOGGLE = {type: 'n-toggle'};
+Envs.setRenderer(Envs.COMPONENT_TYPES.TOGGLE.type, function (options) {
+	return <NToggle {...options} />;
+});
 
-
-
-export {NCheck, NArrayCheck}
+export {NCheck, NArrayCheck, NToggle}
 export * from './n-component'

@@ -38,11 +38,8 @@ class Layout {
 	}
 	mergeLayoutFromProps(props) {
 		let fromProps = Layout.toStereo(props);
-		if (Object.keys(fromProps).length == 0) {
-			// no additional, do nothing
-			return this;
-		} else {
-			Envs.deepMergeTo(this.layout, Layout.toStereo(props));
+		if (Object.keys(fromProps).length != 0) {
+			this.layout = Envs.deepMergeTo({}, this.layout, Layout.toStereo(props));
 		}
 		return this;
 	}

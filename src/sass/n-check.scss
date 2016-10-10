@@ -91,3 +91,51 @@
 		}
 	}
 }
+
+@mixin n-toggle-style($color, $name) {
+	&.n-toggle-#{$name} {
+		background-color: $color;
+		border-color: $color;
+	}
+}
+
+.n-toggle {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	outline: none;
+	padding: $pad-2 $pad-0;
+	.n-toggle-button {
+		display: block;
+		position: relative;
+		width: 0.45rem;
+		height: 0.26rem;
+		border-radius: 0.14rem;
+		background-color: lighten($color-base-blue-grey, 20%);
+		border: $border-1-width solid lighten($color-base-blue-grey, 20%);
+		&:before {
+			display: block;
+			content: '';
+			position: absolute;
+			background-color: $container-bg-color;
+			width: 0.22rem;
+			height: 0.22rem;
+			top: 0.01rem;
+			right: 0.01rem;
+			border-radius: 0.12rem;
+			border: $border-1;
+			transition: all 0.3s ease;
+		}
+		&.n-checked {
+			background-color: $color-primary;
+			border-color: $color-primary;
+			@include n-toggle-style($color-success, success);
+			@include n-toggle-style($color-warning, warning);
+			@include n-toggle-style($color-info, info);
+			@include n-toggle-style($color-danger, danger);
+			&:before {
+				right: 0.2rem;
+			}
+		}
+	}
+}

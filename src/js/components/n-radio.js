@@ -90,7 +90,7 @@ class NRadioButton extends NCodeTableComponent(NComponent) {
 			label: item.text,
 			comp: {
 				type: Envs.COMPONENT_TYPES.BUTTON,
-				style: this.getStyle()
+				style: this.getButtonStyle()
 			},
 			evt: {
 				click: this.onItemClicked.bind(this, item, itemIndex)
@@ -126,7 +126,7 @@ class NRadioButton extends NCodeTableComponent(NComponent) {
 	getComponentClassName() {
 		return 'n-radio-button-group';
 	}
-	getStyle() {
+	getButtonStyle() {
 		return this.getLayoutOptionValue('style');
 	}
 	getCheckedStyle() {
