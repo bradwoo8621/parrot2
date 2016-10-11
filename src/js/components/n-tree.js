@@ -139,6 +139,10 @@ class NTree extends NCodeTableComponent(NComponent) {
 		return item.children && item.children.length > 0;
 	}
 
+	expandTo(nodeLevel) {
+		// TODO 
+	}
+
 	onItemClicked(item, itemIndex, parent, evt) {
 		let target = $(evt.target);
 		let children = target.siblings('ul');

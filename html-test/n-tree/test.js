@@ -53,6 +53,14 @@ $(function() {
 		label: 'Tree',
 		comp: {
 			codes: codes,
+			noWrap: false
+		}
+	});
+	let layoutNR = new Layout('value', {
+		label: 'Tree',
+		comp: {
+			codes: codes,
+			showRoot: false
 		}
 	});
 	let layoutMM = new Layout('value', {
@@ -69,6 +77,9 @@ $(function() {
 		<div className='n-row n-in-form'>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NTree model={model} layout={layout} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NTree model={model} layout={layoutNR} />
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NTree model={model} layout={layoutMM} />

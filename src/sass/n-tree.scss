@@ -15,16 +15,6 @@
 		display: inline-block;
 		position: relative;
 		padding-left: 0.2rem;
-		&.n-tree-node-root {
-			padding-left: $pad-0;
-			margin-right: $margin-15;
-			> li {
-				&:before,
-				&:after {
-					display: none;
-				}
-			}
-		}
 		li {
 			display: block;
 			position: relative;
@@ -103,6 +93,16 @@
 				&.n-tree-node-collapsed > .n-tree-node-text:after {
 					height: 0;
 				}
+			}
+		}
+	}
+	> ul.n-tree-node {
+		padding-left: $pad-0;
+		margin-right: $margin-15;
+		> li {
+			&:before,
+			&:after {
+				display: none;
 			}
 		}
 	}
