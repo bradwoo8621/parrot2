@@ -43,7 +43,12 @@ class Envs {
 			tabAddText: 'Add',
 			tabAddIcon: 'plus-square',
 			tabRemoveIcon: 'close',
-			tabNoItemText: 'No Item'
+			tabNoItemText: 'No Item',
+			treeRootText: 'Root',
+			treeRootIcon: 'bars',
+			treeBranchIcon: 'folder-o',
+			treeLeafIcon: 'file-o',
+			treeMaxHeight: 300
 		};
 		this.viewModeRenderers = {};
 		this.renderers = {};
@@ -201,6 +206,46 @@ class Envs {
 
 	set TAB_NO_ITEM_TEXT(value) {
 		this.props.TAB_NO_ITEM_TEXT = value;
+	}
+
+	get TREE_ROOT_TEXT() {
+		return this.props.treeRootText;
+	}
+
+	set TREE_ROOT_TEXT(value) {
+		this.props.treeRootText = value;
+	}
+
+	get TREE_ROOT_ICON() {
+		return this.props.treeRootIcon;
+	}
+
+	set TREE_ROOT_ICON(value) {
+		this.props.treeRootIcon = value;
+	}
+
+	get TREE_BRANCH_ICON() {
+		return this.props.treeBranchIcon;
+	}
+
+	set TREE_BRANCH_ICON(value) {
+		this.props.treeBranchIcon = value;
+	}
+
+	get TREE_LEAF_ICON() {
+		return this.props.treeLeafIcon;
+	}
+
+	set TREE_LEAF_ICON(value) {
+		this.props.treeLeafIcon = value;
+	}
+
+	get TREE_MAX_HEIGHT() {
+		return this.props.treeMaxHeight;
+	}
+
+	set TREE_MAX_HEIGHT(value) {
+		this.props.treeMaxHeight = value;
 	}
 
 	getRenderer(type) {

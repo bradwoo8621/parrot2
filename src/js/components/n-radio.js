@@ -1,4 +1,12 @@
-import {React, ReactDOM, $, classnames, Envs, Model, NComponent, NCodeTableComponent} from './n-component'
+import {
+	React, 
+	ReactDOM, 
+	$, 
+	classnames, 
+	Envs, 
+	Model, 
+	NComponent, 
+	NCodeTableComponent} from './n-component'
 
 class NRadio extends NCodeTableComponent(NComponent) {
 	renderText(item) {

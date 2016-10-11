@@ -1,0 +1,109 @@
+.n-tree {
+	display: block;
+	position: relative;
+	border: $border-1;
+	border-radius: $border-radius;
+	overflow: auto;
+	padding-left: $pad-15;
+	padding-right: $pad-15;
+	&.n-tree-nowrap {
+		.n-tree-node-text {
+			white-space: nowrap;
+		}
+	}
+	ul.n-tree-node {
+		display: inline-block;
+		position: relative;
+		padding-left: 0.2rem;
+		&.n-tree-node-root {
+			padding-left: $pad-0;
+			margin-right: $margin-15;
+			> li {
+				&:before,
+				&:after {
+					display: none;
+				}
+			}
+		}
+		li {
+			display: block;
+			position: relative;
+			&.n-tree-node-expanded {
+			}
+			&.n-tree-node-collapsed {
+				> ul {
+					display: none;
+				}
+			}
+			&:before {
+				content: '';
+				position: absolute;
+				display: block;
+				border-left: $border-1-width dotted $color-border;
+				bottom: 0.16rem;
+				left: -0.14rem;
+				height: 100%;
+				width: 0.01rem;
+			}
+			&:first-child:before {
+				height: calc(100% - 0.08rem);
+			}
+			&:last-child:before {
+				top: -0.16rem;
+				height: $line-height;
+			}
+			&:after {
+				content: '';
+				position: absolute;
+				display: block;
+				border-top: $border-1-width dotted $color-border;
+				width: 0.12rem;
+				top: 0.14rem;
+				left: -0.14rem;
+			}
+			.n-tree-node-icon {
+				width: 0.2rem;
+				text-align: left;
+				position: relative;
+				line-height: $line-height;
+				height: $line-height;
+				cursor: pointer;
+				float: left;
+				&:hover + .n-tree-node-text {
+					color: $color-link;
+					text-decoration: underline;
+				}
+			}
+			.n-tree-node-text {
+				display: inline-block;
+				position: relative;
+				width: calc(100% - 0.2rem);
+				cursor: pointer;
+				&:hover {
+					color: $color-link;
+					text-decoration: underline;
+				}
+			}
+			// if node nowrap then the following styles are unnecessary
+			&.n-tree-node-branch {
+				> .n-tree-node-text:after {
+					content: '';
+					position: absolute;
+					display: block;
+					left: -0.14rem;
+					top: 0.24rem;
+					height: calc(100% - 0.24rem);
+					border-left: $border-1-width dotted $color-border;
+					transition: height 0.1s ease;
+				}
+				&.n-tree-node-expanded > .n-tree-node-text:after,
+				&.n-tree-node-onexpand > .n-tree-node-text:after {
+					height: calc(100% - 0.24rem) !important;
+				}
+				&.n-tree-node-collapsed > .n-tree-node-text:after {
+					height: 0;
+				}
+			}
+		}
+	}
+}

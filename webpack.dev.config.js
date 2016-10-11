@@ -19,6 +19,7 @@ module.exports = {
 		'n-tab': './html-test/n-tab/test.js',
 		'n-text': './html-test/n-text/test.js',
 		'n-text-area': './html-test/n-text-area/test.js',
+		'n-tree': './html-test/n-tree/test.js',
 
 		// sass
 		'style-default': './src/sass/bundle-default.scss',
