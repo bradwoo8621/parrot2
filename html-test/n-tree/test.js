@@ -24,7 +24,14 @@ $(function() {
 			text: 'World Map 世界地图 ; 世界地图 ; 全世界电子地图 ; 地界地图',
 			children: [{
 				id: 31,
-				text: 'Asia'
+				text: 'Asia',
+				children: [{
+					id: 311,
+					text: 'Japan'
+				}, {
+					id: 312,
+					text: 'Korea'
+				}]
 			}, {
 				id: 32,
 				text: 'Europe'
