@@ -2,7 +2,7 @@
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
-	margin-right: $margin-15;
+	// margin-right: $margin-15;
 	outline: none;
 	.n-check-box {
 		position: absolute;
@@ -69,11 +69,12 @@
 		}
 	}
 	&.n-check-no-text {
-		.n-check-box {
-			// position: relative;
-		}
+		width: 0.2rem;
+		// .n-check-box {
+		// 	// position: relative;
+		// }
 		.n-check-text {
-			margin-left: 0.25rem;
+			margin-left: $margin-0;
 		}
 	}
 }
@@ -81,9 +82,13 @@
 .n-array-check {
 	position: relative;
 	display: inline-block;
+	.n-check:not(:last-child) {
+		margin-right: $margin-15;
+	}
 	&.n-array-check-vertical {
 		> .n-check {
 			display: block;
+			margin-right: $margin-0;
 		}
 	}
 }
@@ -100,7 +105,7 @@
 	display: inline-block;
 	cursor: pointer;
 	outline: none;
-	width: 0.49rem;
+	width: 0.45rem;
 	.n-toggle-button {
 		display: inline-block;
 		position: absolute;

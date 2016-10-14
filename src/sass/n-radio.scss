@@ -2,7 +2,7 @@
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
-	margin-right: $margin-15;
+	// margin-right: $margin-15;
 	outline: none;
 	.n-radio-box {
 		position: absolute;
@@ -75,9 +75,13 @@
 .n-radio-group {
 	position: relative;
 	display: inline-block;
+	.n-radio:not(:last-child) {
+		margin-right: $margin-15;
+	}
 	&.n-radio-vertical {
 		> .n-radio {
 			display: block;
+			margin-right: $margin-0;
 		}
 	}
 }
