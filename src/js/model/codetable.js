@@ -1,12 +1,12 @@
 class CodeTable {
 	constructor(options) {
-		this.items = options.items ? options.items : [];
+		this.array = options.items ? options.items : [];
 		this.sorter = options.sorter;
 		this.renderer = options.renderer;
 		this.tiler = options.tiler;
 
 		this.mapping = {};
-		this.items.map(item => {
+		this.array.map(item => {
 			let renderer = this.getRenderer();
 			return renderer ? renderer.call(this, item) : item;
 		}).sort((item1, item2) => {
@@ -21,6 +21,11 @@ class CodeTable {
 		if (!this.tiler) {
 			this.tiler = function(item, map) {
 				map[item.id] = item;
+				if (item.children && item.children.length != 0) {
+					item.children.forEach(child => {
+						this.getTiler().call(this, child, map);
+					});
+				}
 			};
 		}
 		return this.tiler;
@@ -40,13 +45,24 @@ class CodeTable {
 	}
 
 	map(func) {
-		return this.items.map(func);
+		if (typeof func === 'undefined') {
+			return this.mapping;
+		} else {
+			return this.array.map(func);
+		}
 	}
 	forEach(func) {
-		return this.items.forEach(func);
+		return this.array.forEach(func);
 	}
 	filter(func) {
-		return this.items.filter(func);
+		return this.array.filter(func);
+	}
+	items() {
+		return this.array;
+	}
+
+	ready() {
+		return true;
 	}
 }
 

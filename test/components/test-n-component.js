@@ -147,4 +147,66 @@ describe('NComponent', function() {
 			assert.equal(comp.getEventMonitor('mouseOver'), onMouseOver);
 		});
 	});
+	describe('#handleEventResult', function() {
+			let testValue = null;
+			let model = new Model({});
+			let layout = new Layout('test-id', {});
+			let comp = new NComponent({
+				model: model,
+				layout: layout
+			});
+			options = {
+				handler: (data) => {
+					if (data === 'promise') {
+						testValue = 'promise';
+					} else {
+						testValue = 'normal';
+					}
+				},
+				undefined: () => {
+					testValue = 'undefined';
+				},
+				null: () => {
+					testValue = 'null';
+				},
+				false: () => {
+					testValue = 'false';
+				},
+				a: (value) => {
+					testValue = value;
+				}
+			};
+			let filter = function(keys) {
+				return Object.keys(options).reduce(function(prev, next) {
+					if (keys.indexOf(next) != -1) {
+						prev[next] = options[next];
+					}
+					return prev;
+				}, {});
+			}
+			comp.handleEventResult(undefined, options);
+			assert.equal(testValue, 'undefined');
+			comp.handleEventResult(undefined, filter(['handler', 'null']));
+			assert.equal(testValue, 'null');
+			comp.handleEventResult(null, filter(['handler', 'undefined']));
+			assert.equal(testValue, 'normal');
+			comp.handleEventResult(null, filter(['handler', 'null']));
+			assert.equal(testValue, 'null');
+
+			comp.handleEventResult(false, options);
+			assert.equal(testValue, 'false');
+			comp.handleEventResult('a', options);
+			assert.equal(testValue, 'a');
+			comp.handleEventResult('a', filter(['handler', 'undefined', 'null']));
+			assert.equal(testValue, 'normal');
+
+			
+			comp.handleEventResult(function() {
+				return {
+					done: function(func) {
+						func('promise');
+					}
+				}
+			}(), options);
+	});
 });

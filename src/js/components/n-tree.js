@@ -2,20 +2,36 @@ import {
 	React, 
 	ReactDOM, 
 	$, 
+	lodash,
 	classnames, 
 	Envs, 
 	Model, 
+	Layout,
 	NComponent, 
 	NCodeTableComponent} from './n-component'
 import {NIcon} from './n-icon'
+import {NCheck} from './n-check'
 
 class NTree extends NCodeTableComponent(NComponent) {
+	static ROOT_ID = '-root'
 	constructor(props) {
 		super(props);
-		this.state.initExpandLevel = this.getInitExpandLevel();
+		this.state.expandStatus = this.getInitExpandLevel();
+	}
+	buildLayout(props) {
+		super.buildLayout(props);
+		this.state.nodeCheckable = this.isNodeCheckable();
 	}
 	postDidMount() {
-		delete this.state.initExpandLevel;
+		this.state.expandStatus = [];
+		$(ReactDOM.findDOMNode(this.refs.me))
+					.find('li')
+					.each((index, dom) => {
+						let node = $(dom);
+						if (node.hasClass('n-tree-node-expanded')) {
+							this.state.expandStatus.push(node.attr('data-node-id'));
+						}
+				  	});
 	}
 	renderNodeIcon(item, itemIndex, parent) {
 		let clickHandler;
@@ -48,6 +64,19 @@ class NTree extends NCodeTableComponent(NComponent) {
 		};
 		return this.renderInternalComponent(layout);
 	}
+	renderNodeCheck(item, itemIndex, parent) {
+		let model = new Model({value: this.isItemChecked(item)})
+							.addPostChangeListener('value', (evt) => {
+								this.onItemCheckChanged(item, evt.new);
+							});
+		let layout = new Layout('value', {
+			comp: {
+				type: Envs.COMPONENT_TYPES.CHECK
+			}
+		});
+		return <NCheck model={model}
+					   layout={layout} />;
+	}
 	renderChildrenNodes(parent, nodeLevel) {
 		if (this.hasChildren(parent)) {
 			return (<ul className='n-tree-node'
@@ -60,17 +89,20 @@ class NTree extends NCodeTableComponent(NComponent) {
 	}
 	renderNode(item, itemIndex, parent, nodeLevel) {
 		let hasChildren = this.hasChildren(item);
+		let expanded = this.isNodeExpanded(nodeLevel, item.id);
 		let className = classnames({
 			'n-tree-node-branch': hasChildren,
 			'n-tree-node-leaf': !hasChildren,
-			'n-tree-node-expanded': nodeLevel <= this.state.initExpandLevel,
-			'n-tree-node-collapsed': nodeLevel > this.state.initExpandLevel
+			'n-tree-node-expanded': expanded,
+			'n-tree-node-collapsed': !expanded
 		});
+		let checkable = this.isNodeCanCheck(item);
 		return (<li className={className}
 					data-node-id={item.id}
 					data-node-level={nodeLevel}
 					key={itemIndex}>
 			{this.renderNodeIcon(item, itemIndex, parent)}
+			{checkable ? this.renderNodeCheck(item, itemIndex, parent) : null}
 			<span className='n-tree-node-text'
 				  tabIndex='0'
 				  onClick={hasChildren ? this.onItemClicked : null}
@@ -89,26 +121,15 @@ class NTree extends NCodeTableComponent(NComponent) {
 		</ul>);
 	}
 	renderRoot() {
-		let className = classnames('n-tree-node-branch', {
-			'n-tree-node-expanded': 0 <= this.state.initExpandLevel,
-			'n-tree-node-collapsed': 0 > this.state.initExpandLevel
-		});
+		let item = {
+			id: NTree.ROOT_ID,
+			text: this.getRootText(),
+			icon: this.getRootIcon(),
+			children: this.getCodeTable().items()
+		};
 		return (<ul className='n-tree-node n-tree-node-root'
 					data-node-level='0'>
-			<li className={className}
-				data-node-level='0'>
-				<NIcon model={this.getModel()}
-					   n-comp-icon={this.getRootIcon()}
-					   n-styles-comp='!n-tree-node-icon'
-					   n-evt-click={this.onItemClicked} />
-				<span className='n-tree-node-text'
-					  tabIndex='0'
-					  onClick={this.onItemClicked}
-					  onKeyDown={this.onItemKeyDown}>
-					{this.getRootText()}
-				</span>
-				{this.renderTopLevelNodes()}
-			</li>
+			{this.renderNode(item, 0, null, 0)}
 		</ul>);
 	}
 	renderInNormal() {
@@ -161,10 +182,203 @@ class NTree extends NCodeTableComponent(NComponent) {
 	getInitExpandLevel() {
 		return this.getLayoutOptionValue('expandLevel', 0);
 	}
+	isNodeCheckable() {
+		return this.getLayoutOptionValue('checkable', false);
+	}
+	isMultipleCheck() {
+		return this.isHierarchyCheck() || this.getLayoutOptionValue('multiple', true);
+	}
+	isHierarchyCheck() {
+		return this.getLayoutOptionValue('hierarchy', false);
+	}
+	isNodeCanCheck(item) {
+		if (!this.state.nodeCheckable) {
+			return false;
+		}
+		if (item.id === NTree.ROOT_ID && !this.isHierarchyCheck()) {
+			return false;
+		}
+		let canCheck = this.getLayoutOptionValue('canCheck', null, true);
+		return canCheck ? canCheck.call(this, item) : true;
+	}
 	hasChildren(item) {
 		return item.children && item.children.length > 0;
 	}
-
+	isNodeExpanded(nodeLevel, nodeId) {
+		if (typeof this.state.expandStatus === 'number') {
+			return nodeLevel <= this.state.expandStatus;
+		} else if (lodash.isArray(this.state.expandStatus)) {
+			return this.state.expandStatus.indexOf(nodeId + '') != -1;
+		} else {
+			throw {
+				message: 'Unsupported expanding status',
+				status: this.state.expandStatus
+			};
+		}
+	}
+	getValueFromModel() {
+		if (this.isMultipleCheck()) {
+			let values = super.getValueFromModel();
+			return values ? values : [];
+		} else {
+			return super.getValueFromModel();
+		}
+	}
+	isItemChecked(item) {
+		if (item.id === NTree.ROOT_ID) {
+			return this.state.rootChecked;
+		}
+		if (this.isMultipleCheck()) {
+			return this.getValueFromModel().find((value) => {
+				return value == item.id;
+			});
+		} else {
+			return this.getValueFromModel() == item.id;
+		}
+	}
+	computeItemsNeedChangeCheckStatus(item, checked) {
+		let ids = [item.id];
+		let itemMap = this.getCodeTable().map();
+		if (this.isHierarchyCheck()) {
+			// all its children should be changed same as parameter 'checked'
+			// scan ancestors, 
+			// if all directly children are checked, then the ancestor should be checked
+			// if checked is false, then all ancesstors should be unchecked
+			let node = $(ReactDOM.findDOMNode(this.refs.me))
+								.find('li').filter((index, dom) => {
+									return $(dom).attr('data-node-id') == item.id;
+								});
+			// find all children
+			node.find('li').each((index, dom) => {
+				let id = $(dom).attr('data-node-id');
+				let itemChecked = this.isItemChecked({id: id});
+				if (itemChecked != checked) {
+					ids.push(id);
+				}
+			});
+			// find ancestors
+			let reachRoot = item.id === NTree.ROOT_ID;
+			let ignoreChild = item;
+			while(!reachRoot) {
+				// parent is ul, parent's parent is li
+				let parent = node.parent().parent();
+				let id = parent.attr('data-node-id');
+				let parentChecked = this.isItemChecked({id: id});
+				if (parentChecked != checked) {
+					if (!checked) {
+						// current unchecked
+						ids.push(id);
+					} else {
+						// current checked
+						let children = null;
+						if (id === NTree.ROOT_ID) {
+							children = this.getCodeTable().items();
+						} else {
+							children = itemMap[id].children;
+						}
+						let uncheckedChildFound = children.some((child) => {
+							if (child.id != ignoreChild.id) {
+								let childChecked = this.isItemChecked(child);
+								if (!childChecked) {
+									return true;
+								}
+							}
+						});
+						if (uncheckedChildFound) {
+							// do nothing, and break
+							break;
+						} else {
+							ids.push(id);
+						}
+					}
+				} else {
+					// parent check same as current
+					break;
+				}
+				ignoreChild = parent;
+				reachRoot = id === NTree.ROOT_ID;
+				node = parent;
+			}
+		}
+		return ids.map((id) => {
+			if (id === NTree.ROOT_ID) {
+				return {id: id};
+			}
+			return itemMap[id];
+		});
+	}
+	onItemCheckChanged(item, checked) {
+		let items = this.computeItemsNeedChangeCheckStatus(item, checked);
+		this.handleEventResult(this.shouldItemCheckChanged(items, checked), {
+			handler: this.onItemsCheckChanged.bind(this, items, checked)
+		});
+	}
+	onItemsCheckChanged(originalItems, checked, newItems) {
+		let items = newItems ? newItems : originalItems;
+		if (items.length === 0) {
+			// do nothing
+			return;
+		}
+		if (!this.isHierarchyCheck()) {
+			// never consider the root node, it will not be checked
+			this.setValueToModel(checked ? items[0].id : null);
+			this.itemCheckChanged(items, checked);
+		} else {
+			let values = this.getValueFromModel();
+			values = values == null ? [] : this.wrapToArray(values);
+			values = values.slice(0);
+			if (checked) {
+				items.forEach((item) => {
+					let index = values.findIndex((value) => {
+						return value == item.id;
+					});
+					if (index === -1) {
+						if (item.id === NTree.ROOT_ID) {
+							this.state.rootChecked = true;
+						} else {
+							values.push(item.id);
+						}
+					}
+				});
+			} else {
+				items.forEach((item) => {
+					if (item.id === NTree.ROOT_ID) {
+						this.state.rootChecked = false;
+					} else {
+						let index = values.findIndex((value) => {
+							return value == item.id;
+						});
+						if (index !== -1) {
+							values.splice(index, 1);
+						}
+					}
+				});
+			}
+			// never put root into values
+			this.setValueToModel(values);
+			this.itemCheckChanged(items, checked);
+		}
+	}
+	shouldItemCheckChanged(items, checked) {
+		return this.fireEventToMonitor($.Event('shouldItemCheckChange'), {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			items: items,
+			checked: checked
+		});
+	}
+	itemCheckChanged(items, checked) {
+		this.fireEventToMonitor($.Event('itemCheckChange', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			items: items,
+			checked: checked
+		}));
+	}
+	nodeExpandChanged(node, expanded) {
+		this.fireEventToMonitor($.Event(expanded ? 'nodeExpand' : 'nodeCollapse', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			node: node
+		}));
+	}
 	// node should be a <li> dom node
 	// make sure parent of node is expanded
 	focusNode(node) {
@@ -201,27 +415,28 @@ class NTree extends NCodeTableComponent(NComponent) {
 	expandAll() {
 		this.expandTo(9999);
 	}
+	emitNodeAsExpand(node) {
+		let nodeId = node.attr('data-node-id');
+		if (!this.isNodeExpanded(node.attr('data-node-level'), nodeId)) {
+			this.state.expandStatus.push(nodeId);
+		}
+	}
 	expandNode(node, animation) {
 		let children = node.children('ul');
 		if (children.length > 0) {
 			if (!children.is(':visible')) {
+				this.emitNodeAsExpand(node);
 				if (animation === false) {
 					node.addClass('n-tree-node-expanded')
 						.removeClass('n-tree-node-collapsed');
-					this.fireEventToMonitor($.Event('nodeExpand', {
-						target: ReactDOM.findDOMNode(this.refs.me),
-						node: node
-					}));
+					this.nodeExpandChanged(node, true);
 				} else {
 					node.addClass('n-tree-node-onexpand');
-					children.slideDown(500, () => {
+					children.slideDown(300, () => {
 						node.addClass('n-tree-node-expanded')
 							.removeClass('n-tree-node-collapsed n-tree-node-onexpand');
 						children.css('display', '');
-						this.fireEventToMonitor($.Event('nodeExpand', {
-							target: ReactDOM.findDOMNode(this.refs.me),
-							node: node
-						}));
+						this.nodeExpandChanged(node, true);
 					});
 				}
 			}
@@ -239,26 +454,31 @@ class NTree extends NCodeTableComponent(NComponent) {
 						}
 				  });
 	}
+	collapseAll() {
+		this.collapseTo(-1);
+	}
+	emitNodeAsCollapse(node) {
+		let nodeId = node.attr('data-node-id');
+		let index = this.state.expandStatus.indexOf(nodeId);
+		if (index != -1) {
+			this.state.expandStatus.splice(index, 1);
+		}
+	}
 	collapseNode(node, animation) {
 		let children = node.children('ul');
 		if (children.length > 0) {
 			if (children.is(':visible')) {
+				this.emitNodeAsCollapse(node);
 				if (animation === false) {
 					node.addClass('n-tree-node-collapsed')
 						.removeClass('n-tree-node-expanded');
-					this.fireEventToMonitor($.Event('nodeCollapse', {
-						target: ReactDOM.findDOMNode(this.refs.me),
-						node: node
-					}));
+					this.nodeExpandChanged(node, false);
 				} else {
-					children.slideUp(500, () => {
+					children.slideUp(300, () => {
 						node.addClass('n-tree-node-collapsed')
 							.removeClass('n-tree-node-expanded');
 						children.css('display', '');
-						this.fireEventToMonitor($.Event('nodeCollapse', {
-							target: ReactDOM.findDOMNode(this.refs.me),
-							node: node
-						}));
+						this.nodeExpandChanged(node, false);
 					});
 				}
 			}
@@ -268,25 +488,19 @@ class NTree extends NCodeTableComponent(NComponent) {
 		let children = node.children('ul');
 		if (children.length > 0) {
 			if (children.is(':visible')) {
-				children.slideUp(500, () => {
+				children.slideUp(300, () => {
 					node.addClass('n-tree-node-collapsed')
 							.removeClass('n-tree-node-expanded');
 					children.css('display', '');
-					this.fireEventToMonitor($.Event('nodeCollapse', {
-						target: ReactDOM.findDOMNode(this.refs.me),
-						node: node
-					}));
+					this.nodeExpandChanged(node, false);
 				});
 			} else {
 				node.addClass('n-tree-node-onexpand');
-				children.slideDown(500, () => {
+				children.slideDown(300, () => {
 					node.addClass('n-tree-node-expanded')
 							.removeClass('n-tree-node-collapsed n-tree-node-onexpand');
 					children.css('display', '');
-					this.fireEventToMonitor($.Event('nodeExpand', {
-						target: ReactDOM.findDOMNode(this.refs.me),
-						node: node
-					}));
+					this.nodeExpandChanged(node, true);
 				});
 			}
 		}

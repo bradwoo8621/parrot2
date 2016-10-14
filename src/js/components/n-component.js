@@ -452,6 +452,26 @@ class NComponent extends React.Component {
 			return monitor.call(this, evt);
 		}
 	}
+	handleEventResult(returnValue, options) {
+		if (returnValue != null && typeof returnValue.done === 'function') {
+			returnValue.done(() => {
+				options.handler.call(Array.prototype.slice.call(arguments, 0));
+			});
+		} else {
+			let handler = null;
+			if (typeof returnValue === 'undefined') {
+				handler = options.undefined || options.null;
+			} else if (returnValue == null) {
+				handler = options.null;
+			} else {
+				handler = options[returnValue];
+			}
+			if (handler == null) {
+				handler = options.handler;
+			}
+			handler.call(this, returnValue);
+		}
+	}
 
 	getTextInViewMode() {
 		return this.getValueFromModel();

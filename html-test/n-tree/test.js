@@ -75,7 +75,21 @@ $(function() {
 		comp: {
 			codes: codes,
 			minHeight: 200,
-			maxHeight: 250
+			maxHeight: 250,
+			checkable: true,
+			canCheck: function(item) {
+				return item.id != '1';
+			},
+			multiple: false
+		}
+	});
+	let layoutMMH = new Layout('values', {
+		label: 'Tree',
+		comp: {
+			codes: codes,
+			minHeight: 200,
+			checkable: true,
+			hierarchy: true
 		}
 	});
 
@@ -90,6 +104,9 @@ $(function() {
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NTree model={model} layout={layoutMM} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NTree model={model} layout={layoutMMH} />
 			</div>
 		</div>
 	</div>);

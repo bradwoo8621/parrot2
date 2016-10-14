@@ -100,6 +100,16 @@
 					height: 0;
 				}
 			}
+			.n-check {
+				float: left;
+				margin-right: $margin-10;
+				+ .n-tree-node-text {
+					width: calc(100% - 0.5rem);
+					&:after {
+						left: -0.44rem;
+					}
+				}
+			}
 		}
 	}
 	> ul.n-tree-node {

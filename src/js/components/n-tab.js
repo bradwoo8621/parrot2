@@ -125,17 +125,11 @@ class NTabHeader extends NTabContainer(NContainer) {
 			tab: tab,
 			tabIndex: tabIndex
 		}));
-		if (can === false) {
-			// cannot active, do nothing
-		} else if (typeof can === 'undefined') {
-			this.setActiveTabIndex(tabIndex);
-		} else if (typeof can.done === 'function') {
-			can.done(() => {
-				this.setActiveTabIndex(tabIndex);
-			});
-		} else {
-			this.setActiveTabIndex(tabIndex);
-		}
+
+		this.handleEventResult(can, {
+			handler: () => {this.setActiveTabIndex(tabIndex)},
+			false: () => {}
+		});
 	}
 }
 
@@ -386,15 +380,10 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 		let monitor = this.getEventMonitor('addClick');
 		if (monitor) {
 			let ret = monitor.call(this, evt);
-			if (ret == null) {
-				// do nothing
-			} else if (typeof ret.done === 'function') {
-				ret.done((item) => {
-					this.addItem(item);
-				});
-			} else {
-				this.addItem(ret);
-			}
+			this.handleEventResult(ret, {
+				handler: (item) => {this.addItem(item);},
+				null: () => {}
+			})
 		} else {
 			this.addItem({});
 		}
@@ -406,17 +395,12 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 			data: itemModel,
 			dataIndex: itemIndex
 		}));
-		if (can === false) {
-			// cannot active, do nothing
-		} else if (typeof can === 'undefined') {
-			this.removeItem(itemModel.getCurrentModel(), itemIndex);
-		} else if (typeof can.done === 'function') {
-			can.done(() => {
+		this.handleEventResult(can, {
+			false: () => {},
+			handler: () => {
 				this.removeItem(itemModel.getCurrentModel(), itemIndex);
-			});
-		} else {
-			this.removeItem(itemModel.getCurrentModel(), itemIndex);
-		}
+			}
+		})
 	}
 	addItem(item) {
 		this.getModel().add(this.getDataId(), item);
