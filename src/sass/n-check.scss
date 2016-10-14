@@ -2,7 +2,6 @@
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
-	// margin-right: $margin-15;
 	outline: none;
 	.n-check-box {
 		position: absolute;
@@ -70,9 +69,6 @@
 	}
 	&.n-check-no-text {
 		width: 0.2rem;
-		// .n-check-box {
-		// 	// position: relative;
-		// }
 		.n-check-text {
 			margin-left: $margin-0;
 		}
