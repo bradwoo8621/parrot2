@@ -1,9 +1,9 @@
 import {React, ReactDOM, $, classnames, Envs, Model, NComponent, NCodeTableComponent} from './n-component'
 
 class NCheck extends NComponent {
-	renderText() {
+	renderText(label) {
 		return (<span className='n-check-text n-control'>
-			{this.getLabel()}
+			{label ? label : this.getLabel()}
 		</span>)
 	}
 	renderTextOnLeft(options) {
@@ -14,6 +14,8 @@ class NCheck extends NComponent {
 	renderTextOnRight(options) {
 		if (options.show && !options.left) {
 			return this.renderText();
+		} else if (!options.show) {
+			return this.renderText('\u00a0');
 		}
 	}
 	renderCheck() {
@@ -147,6 +149,7 @@ class NToggle extends NComponent {
 			<span className={classnames('n-toggle-button', 
 										this.getToggleStyle(), 
 										{'n-checked': this.isChecked()})} />
+			<span className='n-toggle-text n-control'>{'\u00a0'}</span>
 		</div>);
 	}
 	getComponentClassName() {

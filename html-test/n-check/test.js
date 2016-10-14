@@ -83,7 +83,8 @@ $(function() {
 		comp: {
 		}
 	});
-
+	/*
+	*/
 	let panel = (<div className='n-top-container'>
 		<div className='n-row'>
 			<div className='n-col-sm-6 n-col-md-3'>

@@ -102,7 +102,9 @@
 			}
 			.n-check {
 				float: left;
-				margin-right: $margin-10;
+				.n-check-text {
+					margin-left: 0.1rem;
+				}
 				+ .n-tree-node-text {
 					width: calc(100% - 0.5rem);
 					&:after {
