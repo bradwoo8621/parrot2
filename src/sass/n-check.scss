@@ -26,9 +26,9 @@
 				transform: rotate(-45deg);
 				content: '';
 				position: relative;
-				transition: height 0.25s linear, width 0.25s linear 0.2s;
 				margin-top: -0.08rem;
 				margin-left: -0.05rem;
+				transition: none;
 			}
 		}
 	}
@@ -52,6 +52,7 @@
 		.n-check-box .n-check-box-rect:before {
 			width: 0.2rem;
 			height: 0.2rem;
+			transition: height 0.25s linear, width 0.25s linear 0.2s;
 		}
 	}
 	&.n-check-text-left {

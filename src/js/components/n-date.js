@@ -7,6 +7,7 @@ import {
 	Envs, 
 	NComponent, 
 	NDropdownComponent} from './n-component'
+import {NIcon} from './n-icon'
 import moment from 'moment'
 
 const YEAR = 1;

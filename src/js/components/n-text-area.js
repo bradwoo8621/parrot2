@@ -74,6 +74,7 @@ class NTextArea extends NComponent {
 		let newValue = this.getComponentText();
 		let oldValue = this.getValueFromModel();
 		if (!this.textEquals(newValue, oldValue)) {
+			evt.preventDefault();
 			this.setValueToModel(newValue);
 		}
 	}
