@@ -66,6 +66,7 @@ class NCheck extends NComponent {
 	}
 	onComponentKeyPressed = (evt) => {
 		if (evt.charCode === 32) {
+			evt.preventDefault();
 			let value = this.getValueFromModel();
 			this.setValueToModel(!value);
 		}

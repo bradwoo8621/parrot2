@@ -493,7 +493,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 			}
 		}
 	}
-	toggleNodeExpand(node) {
+	toggleNodeExpand(node, callback) {
 		let children = node.children('ul');
 		if (children.length > 0) {
 			if (children.is(':visible')) {
@@ -501,6 +501,9 @@ class NTree extends NCodeTableComponent(NComponent) {
 					node.addClass('n-tree-node-collapsed')
 							.removeClass('n-tree-node-expanded');
 					children.css('display', '');
+					if (callback) {
+						callback.call(this);
+					}
 					this.nodeExpandChanged(node, false);
 				});
 			} else {
@@ -509,13 +512,18 @@ class NTree extends NCodeTableComponent(NComponent) {
 					node.addClass('n-tree-node-expanded')
 							.removeClass('n-tree-node-collapsed n-tree-node-onexpand');
 					children.css('display', '');
+					if (callback) {
+						callback.call(this);
+					}
 					this.nodeExpandChanged(node, true);
 				});
 			}
 		}
 	}
 	onItemClicked = (evt) => {
-		this.toggleNodeExpand($(evt.target).closest('li'));
+		this.toggleNodeExpand($(evt.target).closest('li'), () => {
+			evt.preventDefault();
+		});
 		this.fireEventToMonitor(evt);
 	}
 	onItemSpaceKeyDown(evt) {
@@ -535,7 +543,9 @@ class NTree extends NCodeTableComponent(NComponent) {
 		if (children.length > 0 && children.is(':visible')) {
 			// has children and expanded now
 			// collapse it
-			this.toggleNodeExpand($(evt.target).closest('li'));
+			this.toggleNodeExpand($(evt.target).closest('li'), () => {
+				evt.preventDefault();
+			});
 		} else {
 			// focus parent node
 			let parentNode = target.closest('ul').parent();
@@ -552,7 +562,9 @@ class NTree extends NCodeTableComponent(NComponent) {
 		if (children.length > 0 && !children.is(':visible')) {
 			// has children and collapsed now
 			// expand it
-			this.toggleNodeExpand($(evt.target).closest('li'));
+			this.toggleNodeExpand($(evt.target).closest('li'), () => {
+				evt.preventDefault();
+			});
 		} else if (children.length > 0) {
 			evt.preventDefault();
 			evt.stopPropagation();

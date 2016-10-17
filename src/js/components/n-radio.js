@@ -69,6 +69,7 @@ class NRadio extends NCodeTableComponent(NComponent) {
 	}
 
 	onComponentClicked(item, evt) {
+		evt.preventDefault();
 		this.setValueToModel(item.id);
 		this.fireEventToMonitor(evt, 'click');
 		let target = $(ReactDOM.findDOMNode(evt.target));
@@ -79,11 +80,12 @@ class NRadio extends NCodeTableComponent(NComponent) {
 		}
 	}
 	onComponentKeyPressed(item, evt) {
-		if (evt.charCode === 32) {
+		if (evt.charCode === 32 && item.id != this.getValueFromModel()) {
 			// space bar
+			evt.preventDefault();
 			this.setValueToModel(item.id);
-			this.fireEventToMonitor(evt, 'keypress');
 		}
+		this.fireEventToMonitor(evt, 'keypress');
 	}
 
 	isChecked(item) {
@@ -144,7 +146,10 @@ class NRadioButton extends NCodeTableComponent(NComponent) {
 		return this.getValueFromModel() == item.id;
 	}
 	onItemClicked(item, itemIndex, evt) {
-		this.setValueToModel(item.id);
+		if (item.id != this.getValueFromModel()) {
+			evt.preventDefault();
+			this.setValueToModel(item.id);
+		}
 		this.fireEventToMonitor(evt, 'click');
 	}
 }

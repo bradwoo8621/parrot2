@@ -45,6 +45,7 @@ class NPanelHeader extends NCollapsibleContainer {
 		if (!this.isCollapsible() || evt.isDefaultPrevented()) {
 			return;
 		}
+		evt.preventDefault();
 		if (this.isExpanded()) {
 			this.collapse();
 		} else {

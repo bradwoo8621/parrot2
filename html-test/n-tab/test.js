@@ -86,6 +86,7 @@ $(function() {
 				}
 			},
 			active: function(evt) {
+				console.log(evt.ndata);
 			}
 		}
 	});

@@ -75,9 +75,7 @@ class NTabHeaderItem extends NContainer {
 	}
 	onItemClicked = (evt) => {
 		if (this.isClickable() && !evt.isDefaultPrevented()) {
-			this.fireEventToMonitor($.Event('click', {
-				target: ReactDOM.findDOMNode(this.refs.me)
-			}));
+			this.fireEventToMonitor(evt);
 		}
 	}
 }
@@ -121,15 +119,20 @@ class NTabHeader extends NTabContainer(NContainer) {
 	getTabStyle() {
 		return 'n-tab-header-' + this.getLayoutOptionValue('style', 'default');
 	}
-	onItemActived(tab, tabIndex) {
+	onItemActived(tab, tabIndex, evt) {
+		evt.preventDefault();
 		let can = this.fireEventToMonitor($.Event('shouldActive', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			tab: tab,
-			tabIndex: tabIndex
+			ndata: {
+				tab: tab,
+				tabIndex: tabIndex
+			}
 		}));
 
 		this.handleEventResult(can, {
-			handler: () => {this.setActiveTabIndex(tabIndex)},
+			handler: () => {
+				this.setActiveTabIndex(tabIndex)
+			},
 			false: () => {}
 		});
 	}
@@ -231,12 +234,12 @@ class NTab extends NTabContainer(NContainer) {
 		return this.getLayoutOptionValue('body');
 	}
 	onItemActived(evt) {
-		this.refs.body.setActiveTabIndex(evt.tabIndex);
+		this.refs.body.setActiveTabIndex(evt.ndata.tabIndex);
 		this.fireEventToMonitor($.Event('active', {
 			target: ReactDOM.findDOMNode(this.refs.me),
 			ndata: {
-				tab: evt.tab,
-				tabIndex: evt.tabIndex
+				tab: evt.ndata.tab,
+				tabIndex: evt.ndata.tabIndex
 			}
 		}));
 	}
@@ -244,8 +247,8 @@ class NTab extends NTabContainer(NContainer) {
 		return this.fireEventToMonitor($.Event('shouldActive', {
 			target: ReactDOM.findDOMNode(this.refs.me),
 			ndata: {
-				tab: evt.tab,
-				tabIndex: evt.tabIndex
+				tab: evt.ndata.tab,
+				tabIndex: evt.ndata.tabIndex
 			}
 		}));
 	}

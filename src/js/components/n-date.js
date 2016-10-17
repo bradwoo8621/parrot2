@@ -227,11 +227,13 @@ const NDateComponent = (ParentClass) => class extends ParentClass {
 		this.fireEventToMonitor(evt, 'closeClick');
 	}
 	onNowClicked(evt) {
+		evt.preventDefault();
 		this.setDisplayToNow(() => {
 			this.fireEventToMonitor(evt, 'nowClick');
 		});
 	}
 	onClearClicked(evt) {
+		evt.preventDefault();
 		this.clearValue();
 		this.fireEventToMonitor(evt, 'clearClick');
 	}
@@ -609,6 +611,7 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 	}
 
 	onHeaderYearClicked = (evt) => {
+		evt.preventDefault();
 		let oldCurrentDisplayType = this.getCurrentDisplayType();
 		this.setState({
 			currentDisplayType: YEAR
@@ -617,6 +620,7 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 		});
 	}
 	onHeaderMonthClicked = (evt) => {
+		evt.preventDefault();
 		let oldCurrentDisplayType = this.getCurrentDisplayType();
 		this.setState({
 			currentDisplayType: MONTH
@@ -625,6 +629,7 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 		});
 	}
 	onYearClicked = (year, evt) => {
+		evt.preventDefault();
 		let date = this.getDisplayDate();
 		this.setValueToModel(this.applyTimeToValue(date.clone().year(year)));
 		if (this.isMonthSupported()) {
@@ -638,6 +643,7 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 		}
 	}
 	onMonthClicked = (month, evt) => {
+		evt.preventDefault();
 		let date = this.getDisplayDate();
 		this.setValueToModel(this.applyTimeToValue(date.clone().month(month)));
 		if (this.isDaySupported()) {
@@ -647,9 +653,11 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 		}
 	}
 	onDayClicked = (date, evt) => {
+		evt.preventDefault();
 		this.setValueToModel(this.applyTimeToValue(date));
 	}
 	onBackwardClicked = (evt) => {
+		evt.preventDefault();
 		this.onHeaderIconClicked({
 			day: {step: -1},
 			month: {step: 0 - this.getYearStepOfMonthPanel()},
@@ -657,6 +665,7 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 		});
 	}
 	onPreviousClicked = (evt) => {
+		evt.preventDefault();
 		this.onHeaderIconClicked({
 			day: {step: -1, unit: 'month'},
 			month: {step: -1},
@@ -664,6 +673,7 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 		});
 	}
 	onNextClicked = (evt) => {
+		evt.preventDefault();
 		this.onHeaderIconClicked({
 			day: {step: 1, unit: 'month'},
 			month: {step: 1},
@@ -671,6 +681,7 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 		});
 	}
 	onForwardClicked = (evt) => {
+		evt.preventDefault();
 		this.onHeaderIconClicked({
 			day: {step: 1},
 			month: {step: this.getYearStepOfMonthPanel()},
@@ -678,6 +689,7 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 		});
 	}
 	onHeaderIconClicked(options) {
+		evt.preventDefault();
 		let oldDate = this.getDisplayDate();
 		let date = oldDate.clone();
 		if (this.isDayPicking()) {
@@ -907,6 +919,7 @@ class NTimeClock extends NDateComponent(NComponent) {
 				value.second(v);
 			}
 		}
+		evt.preventDefault();
 		this.setValueToModel(value);
 	}
 }
@@ -1071,6 +1084,7 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 
 	// dom event
 	onComponentKeyPressed = (evt) => {
+		evt.preventDefault();
 		this.onComponentChanged(evt);
 		this.fireEventToMonitor(evt, 'keypress');
 	}
@@ -1085,10 +1099,12 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 		this.fireEventToMonitor(evt, 'blur');
 	}
 	onClearIconClicked = (evt) => {
+		evt.preventDefault();
 		this.setValueToModel(null);
 		$(ReactDOM.findDOMNode(this.refs.txt)).focus();
 	}
 	onCalendarIconClicked = (evt) => {
+		evt.preventDefault();
 		$(ReactDOM.findDOMNode(this.refs.txt)).focus();
 		if (this.isEnabled() && !evt.isDefaultPrevented()) {
 			evt.preventDefault();
