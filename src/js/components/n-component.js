@@ -90,7 +90,24 @@ class NComponent extends React.Component {
 	installUnderlyingMonitors() {
 		this.pointcutPreExecutor.apply(this, arguments);
 		this.internalInstallLifecycleMonitors();
+		this.internalInstallDOMListeners();
 		this.pointcutPostExecutor.apply(this, arguments);
+	}
+	internalInstallDOMListeners() {
+		let listeners = this.getDOMEventMonitors();
+		let me = $(ReactDOM.findDOMNode(this.refs.me));
+		Object.keys(listeners).forEach((key) => {
+			let listener = listeners[key];
+			if (typeof listener === 'function') {
+				me.on(key, this.bindToThis(listener));
+			} else {
+				if (listener.once) {
+					me.one(key, listener.selector, listener.data, this.bindToThis(listener.handler));
+				} else {
+					me.on(key, listener.selector, listener.data, this.bindToThis(listener.handler));
+				}
+			}
+		});
 	}
 	internalInstallLifecycleMonitors() {
 		this.addPostChangeListener(this.bindToThis(this.onModelChanged));
@@ -100,7 +117,20 @@ class NComponent extends React.Component {
 	uninstallUnderlyingMonitors() {
 		this.pointcutPreExecutor.apply(this, arguments);
 		this.internalUninstallLifecycleMonitors();
+		this.internalUninstallDOMListeners();
 		this.pointcutPostExecutor.apply(this, arguments);
+	}
+	internalUninstallDOMListeners() {
+		let listeners = this.getDOMEventMonitors();
+		let me = $(ReactDOM.findDOMNode(this.refs.me));
+		Object.keys(listeners).forEach((key) => {
+			let listener = listeners[key];
+			if (typeof listener === 'function') {
+				me.off(key, this.bindToThis(listener));
+			} else {
+				me.off(key, listener.selector, listener.data, this.bindToThis(listener.handler));
+			}
+		});
 	}
 	internalUninstallLifecycleMonitors() {
 		this.removePostChangeListener(this.bindToThis(this.onModelChanged));
@@ -403,33 +433,27 @@ class NComponent extends React.Component {
 	getEventMonitor(key) {
 		return this.getLayout().getEventMonitor(key);
 	}
-	getDOMEventMonitorsOf() {
+	// event monitors which starts with 'jq.'
+	// these monitors are added via jquery at didMount and didUpdate,
+	// removed at willUnmount and willUpdate
+	// value of event key can be function or a json contains once, selector, data, handler.
+	// eg.
+	// 'jq.click': function(evt) {}
+	// or
+	// 'jq.click': {
+	//		once: true,
+	//		selector: 'input',
+	//		data: {data: 'some data'},
+	//		handler: function(evt) {}
+	// }
+	// only handler is required, other 3 attributes are optional
+	getDOMEventMonitors() {
 		let monitors = this.getEventMonitors();
-		let needList = Array.prototype.slice.call(arguments, 0);
-		if (needList.length == 0) {
-			// nothing
-			return {};
-		}
-		return needList.reduce((set, key) => {
-			let monitor = monitors[key];
-			if (monitor) {
-				set[key] = monitors[key];
-			}
-			return set;
-		}, {});
-	}
-	getDOMEventMonitorsBut() {
-		let monitors = this.getEventMonitors();
-		let filterList = Array.prototype.slice.call(arguments, 0);
-		if (filterList.length == 0) {
-			// all
-			return monitors;
-		}
 		return Object.keys(monitors).reduce((set, key) => {
-			if (filterList.indexOf(key) == -1) {
-			let monitor = monitors[key];
+			if (key.startsWith('jq.')) {
+				let monitor = monitors[key];
 				if (monitor) {
-					set[key] = monitors[key];
+					set[key.substr(3)] = monitors[key];
 				}
 			}
 			return set;

@@ -72,6 +72,9 @@ class NTree extends NCodeTableComponent(NComponent) {
 		let layout = new Layout('value', {
 			comp: {
 				type: Envs.COMPONENT_TYPES.CHECK
+			},
+			evt: {
+				'jq.keydown': this.onItemKeyDown
 			}
 		});
 		return <NCheck model={model}
@@ -229,9 +232,9 @@ class NTree extends NCodeTableComponent(NComponent) {
 			return this.state.rootChecked;
 		}
 		if (this.isMultipleCheck()) {
-			return this.getValueFromModel().find((value) => {
+			return this.getValueFromModel().findIndex((value) => {
 				return value == item.id;
-			});
+			}) !== -1;
 		} else {
 			return this.getValueFromModel() == item.id;
 		}
@@ -295,7 +298,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 					// parent check same as current
 					break;
 				}
-				ignoreChild = parent;
+				ignoreChild = {id: id};
 				reachRoot = id === NTree.ROOT_ID;
 				node = parent;
 			}
@@ -515,6 +518,16 @@ class NTree extends NCodeTableComponent(NComponent) {
 		this.toggleNodeExpand($(evt.target).closest('li'));
 		this.fireEventToMonitor(evt);
 	}
+	onItemSpaceKeyDown(evt) {
+		let target = $(evt.target);
+		let prev = target.prev();
+		if (target[0].tagName === 'SPAN' && prev.hasClass('n-check')) {
+			let id = target.parent().attr('data-node-id');
+			this.onItemCheckChanged({
+				id: id
+			}, !prev.hasClass('n-checked'));
+		}
+	}
 	onItemLeftArrowKeyDown(evt) {
 		let target = $(evt.target);
 		let children = target.siblings('ul');
@@ -613,6 +626,9 @@ class NTree extends NCodeTableComponent(NComponent) {
 	onItemKeyDown = (evt) => {
 		let keycode = evt.keyCode;
 		switch(keycode) {
+			case 32: 
+				this.onItemSpaceKeyDown(evt);
+				break;
 			case 37:
 				this.onItemLeftArrowKeyDown(evt);
 				break;
