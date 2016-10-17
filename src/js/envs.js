@@ -48,7 +48,8 @@ class Envs {
 			treeRootIcon: 'bars',
 			treeBranchIcon: 'folder-o',
 			treeLeafIcon: 'file-o',
-			treeMaxHeight: 300
+			treeMaxHeight: 300,
+			listMaxHeight: 300
 		};
 		this.viewModeRenderers = {};
 		this.renderers = {};
@@ -246,6 +247,14 @@ class Envs {
 
 	set TREE_MAX_HEIGHT(value) {
 		this.props.treeMaxHeight = value;
+	}
+
+	get LIST_MAX_HEIGHT() {
+		return this.props.listMaxHeight;
+	}
+
+	set LIST_MAX_HEIGHT(value) {
+		this.props.listMaxHeight = value;
 	}
 
 	getRenderer(type) {

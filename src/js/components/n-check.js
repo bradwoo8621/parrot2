@@ -57,6 +57,7 @@ class NCheck extends NComponent {
 	}
 
 	onComponentClicked = (evt) => {
+		evt.preventDefault();
 		let value = this.getValueFromModel();
 		this.setValueToModel(!value);
 		this.fireEventToMonitor(evt, 'click');

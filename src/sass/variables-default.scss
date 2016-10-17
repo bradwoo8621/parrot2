@@ -49,6 +49,7 @@ $color-reverse:										#fff;
 $container-bg-color:								#fff;
 $color-border:										darken($container-bg-color, 10%);
 $color-hover:										darken($container-bg-color, 5%);
+$color-bg-focus:									darken($container-bg-color, 15%);
 $color-focus:										$color-primary;
 
 // all the following base colors are from the material ui colors

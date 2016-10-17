@@ -522,6 +522,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 		let target = $(evt.target);
 		let prev = target.prev();
 		if (target[0].tagName === 'SPAN' && prev.hasClass('n-check')) {
+			evt.preventDefault();
 			let id = target.parent().attr('data-node-id');
 			this.onItemCheckChanged({
 				id: id

@@ -14,6 +14,7 @@ module.exports = {
 		'n-date': './html-test/n-date/test.js',
 		'n-icon': './html-test/n-icon/test.js',
 		'n-label': './html-test/n-label/test.js',
+		'n-list': './html-test/n-list/test.js',
 		'n-panel': './html-test/n-panel/test.js',
 		'n-radio': './html-test/n-radio/test.js',
 		'n-tab': './html-test/n-tab/test.js',
