@@ -71,7 +71,6 @@ class NRadio extends NCodeTableComponent(NComponent) {
 	onComponentClicked(item, evt) {
 		evt.preventDefault();
 		this.setValueToModel(item.id);
-		this.fireEventToMonitor(evt, 'click');
 		let target = $(ReactDOM.findDOMNode(evt.target));
 		if (target.hasClass('n-radio')) {
 			target.focus();
@@ -85,7 +84,6 @@ class NRadio extends NCodeTableComponent(NComponent) {
 			evt.preventDefault();
 			this.setValueToModel(item.id);
 		}
-		this.fireEventToMonitor(evt, 'keypress');
 	}
 
 	isChecked(item) {
@@ -150,7 +148,6 @@ class NRadioButton extends NCodeTableComponent(NComponent) {
 			evt.preventDefault();
 			this.setValueToModel(item.id);
 		}
-		this.fireEventToMonitor(evt, 'click');
 	}
 }
 

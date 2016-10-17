@@ -207,7 +207,6 @@ class NList extends NCodeTableComponent(NComponent) {
 	}
 	onItemClicked = (evt) => {
 		this.onItemSpaceKeyDown(evt);
-		this.fireEventToMonitor(evt);
 	}
 	onItemSpaceKeyDown(evt) {
 		if (evt.isDefaultPrevented()) {
@@ -226,7 +225,7 @@ class NList extends NCodeTableComponent(NComponent) {
 		let prev = target.prev('.n-list-item');
 		if (prev.length !== 0) {
 			evt.preventDefault();
-			evt.stopPropagation();
+			// evt.stopPropagation();
 			this.focusItem(prev);
 		}
 	}
@@ -235,7 +234,7 @@ class NList extends NCodeTableComponent(NComponent) {
 		let next = target.next('.n-list-item');
 		if (next.length !== 0) {
 			evt.preventDefault();
-			evt.stopPropagation();
+			// evt.stopPropagation();
 			this.focusItem(next);
 		}
 	}
@@ -252,7 +251,6 @@ class NList extends NCodeTableComponent(NComponent) {
 				this.onItemDownArrowKeyDown(evt);
 				break;
 		}
-		this.fireEventToMonitor(evt);
 	}
 	onItemMouseEntered = (evt) => {
 		let bg = $(ReactDOM.findDOMNode(this.refs.background));

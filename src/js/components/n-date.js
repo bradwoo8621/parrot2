@@ -1001,7 +1001,8 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 			'n-comp-showNow': true,
 			'n-comp-showClear': true,
 			'n-comp-showClose': true,
-			'n-evt-closeClick': () => {
+			'n-evt-closeClick': (evt) => {
+				evt.preventDefault();
 				this.hideDropdown();
 			},
 			'n-styles-comp': 'n-dropdown',
@@ -1086,17 +1087,14 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 	onComponentKeyPressed = (evt) => {
 		evt.preventDefault();
 		this.onComponentChanged(evt);
-		this.fireEventToMonitor(evt, 'keypress');
 	}
 	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();
-		this.fireEventToMonitor(evt, 'focus');
 	}
 	onComponentBlurred = (evt) => {
 		this.onComponentFocusChanged();
 		this.gatherValueFromInputAndSetToModel();
 		this.getComponent().val(this.parseText(this.getValueFromModel(), this.getPrimaryDisplayFormat()));
-		this.fireEventToMonitor(evt, 'blur');
 	}
 	onClearIconClicked = (evt) => {
 		evt.preventDefault();

@@ -60,7 +60,6 @@ class NCheck extends NComponent {
 		evt.preventDefault();
 		let value = this.getValueFromModel();
 		this.setValueToModel(!value);
-		this.fireEventToMonitor(evt, 'click');
 
 		$(ReactDOM.findDOMNode(this.refs.me)).focus();
 	}
@@ -70,7 +69,6 @@ class NCheck extends NComponent {
 			let value = this.getValueFromModel();
 			this.setValueToModel(!value);
 		}
-		this.fireEventToMonitor(evt, 'keypress');
 	}
 }
 
@@ -164,9 +162,9 @@ class NToggle extends NComponent {
 		return 'n-toggle-' + this.getLayoutOptionValue('style', 'primary');
 	}
 	onComponentClicked = (evt) => {
+		evt.preventDefault();
 		let value = this.getValueFromModel();
 		this.setValueToModel(!value);
-		this.fireEventToMonitor(evt, 'click');
 
 		$(ReactDOM.findDOMNode(this.refs.me)).focus();
 	}
@@ -176,17 +174,16 @@ class NToggle extends NComponent {
 		if (keycode === 37) {
 			// left
 			if (!value) {
-				this.setValueToModel(true);
 				evt.preventDefault();
+				this.setValueToModel(true);
 			}
 		} else if (keycode === 39) {
 			// right
 			if (value) {
-				this.setValueToModel(false);
 				evt.preventDefault();
+				this.setValueToModel(false);
 			}
 		}
-		this.fireEventToMonitor(evt);
 	}
 }
 

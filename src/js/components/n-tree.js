@@ -655,7 +655,6 @@ class NTree extends NCodeTableComponent(NComponent) {
 				this.onItemDownArrowKeyDown(evt);
 				break;
 		}
-		this.fireEventToMonitor(evt);
 	}
 }
 

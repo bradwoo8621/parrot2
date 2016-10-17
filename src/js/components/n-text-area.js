@@ -82,15 +82,12 @@ class NTextArea extends NComponent {
 	// dom event
 	onComponentKeyPressed = (evt) => {
 		this.onComponentChanged(evt);
-		this.fireEventToMonitor(evt, 'keypress');
 	}
 	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();
-		this.fireEventToMonitor(evt, 'focus');
 	}
 	onComponentBlurred = (evt) => {
 		this.onComponentFocusChanged();
-		this.fireEventToMonitor(evt, 'blur');
 	}
 
 	// others

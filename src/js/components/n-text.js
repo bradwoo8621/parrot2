@@ -113,7 +113,6 @@ class NText extends NAddonComponent {
 	// dom event
 	onComponentKeyPressed = (evt) => {
 		this.onComponentChanged(evt);
-		this.fireEventToMonitor(evt);
 	}
 	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();
@@ -122,15 +121,15 @@ class NText extends NAddonComponent {
 		let value = this.getValueFromModel();
 		if (value != this.getComponent().val()) {
 			// might be formatted or something else, however not same
+			evt.preventDefault();
 			this.getComponent().val(value);
 		}
-
-		this.fireEventToMonitor(evt);
 	}
 	onComponentBlurred = (evt) => {
 		this.onComponentFocusChanged();
 
 		let text = this.formatValue(this.getComponentText());
+		evt.preventDefault();
 		if (text) {
 			let value = this.formatValue(this.getValueFromModel());
 			if (text != value) {
@@ -141,7 +140,6 @@ class NText extends NAddonComponent {
 		} else {
 			this.setValueToModel(null);
 		}
-		this.fireEventToMonitor(evt);
 	}
 
 	// others
