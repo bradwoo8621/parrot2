@@ -72,7 +72,7 @@ $(function() {
 		},
 		evt: {
 			shouldActive: function(evt) {
-				switch(evt.tabIndex) {
+				switch(evt.ndata.tabIndex) {
 					case 2:
 						return false;
 					case 3:

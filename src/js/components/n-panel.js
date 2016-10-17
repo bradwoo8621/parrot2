@@ -228,15 +228,19 @@ class NArrayPanel extends NHierarchyComponent {
 	onItemCollapsed(itemModel, itemIndex) {
 		this.fireEventToMonitor($.Event('itemCollapse', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			itemModel: itemModel,
-			itemIndex: itemIndex
+			ndata: {
+				itemModel: itemModel,
+				itemIndex: itemIndex
+			}
 		}));
 	}
 	onItemExpanded(itemModel, itemIndex) {
 		this.fireEventToMonitor($.Event('itemExpand', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			itemModel: itemModel,
-			itemIndex: itemIndex
+			ndata: {
+				itemModel: itemModel,
+				itemIndex: itemIndex
+			}
 		}));
 	}
 }

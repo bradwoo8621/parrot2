@@ -34,8 +34,10 @@ const NTabContainer = (ParentClass) => class extends ParentClass {
 		}, () => {
 			this.fireEventToMonitor($.Event('active', {
 				target: ReactDOM.findDOMNode(this.refs.me),
-				tab: this.getActiveTab(),
-				tabIndex: tabIndex
+				ndata: {
+					tab: this.getActiveTab(),
+					tabIndex: tabIndex
+				}
 			}));
 		});
 	}
@@ -232,15 +234,19 @@ class NTab extends NTabContainer(NContainer) {
 		this.refs.body.setActiveTabIndex(evt.tabIndex);
 		this.fireEventToMonitor($.Event('active', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			tab: evt.tab,
-			tabIndex: evt.tabIndex
+			ndata: {
+				tab: evt.tab,
+				tabIndex: evt.tabIndex
+			}
 		}));
 	}
 	onItemShouldActive = (evt) => {
 		return this.fireEventToMonitor($.Event('shouldActive', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			tab: evt.tab,
-			tabIndex: evt.tabIndex
+			ndata: {
+				tab: evt.tab,
+				tabIndex: evt.tabIndex
+			}
 		}));
 	}
 	setActiveTabIndex(tabIndex) {
@@ -359,20 +365,24 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 	onItemActived = (evt) => {
 		this.fireEventToMonitor($.Event('active', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			tab: evt.tab,
-			tabIndex: evt.tabIndex
+			ndata: {
+				tab: evt.tab,
+				tabIndex: evt.tabIndex
+			}
 		}));
 	}
 	onItemShouldActive = (evt) => {
-		if (this.isAddable() && evt.tabIndex == this.getValueFromModel().length) {
+		if (this.isAddable() && evt.ndata.tabIndex == this.getValueFromModel().length) {
 			// add tab clicked
 			this.onAddClicked(evt);
 			return false;
 		} else {
 			return this.fireEventToMonitor($.Event('shouldActive', {
 				target: ReactDOM.findDOMNode(this.refs.me),
-				tab: evt.tab,
-				tabIndex: evt.tabIndex
+				ndata: {
+					tab: evt.tab,
+					tabIndex: evt.tabIndex
+				}
 			}));
 		}
 	}

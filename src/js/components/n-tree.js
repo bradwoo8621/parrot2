@@ -362,21 +362,27 @@ class NTree extends NCodeTableComponent(NComponent) {
 	shouldItemCheckChanged(items, checked) {
 		return this.fireEventToMonitor($.Event('shouldItemCheckChange'), {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			items: items,
-			checked: checked
+			ndata: {
+				items: items,
+				checked: checked
+			}
 		});
 	}
 	itemCheckChanged(items, checked) {
 		this.fireEventToMonitor($.Event('itemCheckChange', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			items: items,
-			checked: checked
+			ndata: {
+				items: items,
+				checked: checked
+			}
 		}));
 	}
 	nodeExpandChanged(node, expanded) {
 		this.fireEventToMonitor($.Event(expanded ? 'nodeExpand' : 'nodeCollapse', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			node: node
+			ndata: {
+				node: node
+			}
 		}));
 	}
 	// node should be a <li> dom node

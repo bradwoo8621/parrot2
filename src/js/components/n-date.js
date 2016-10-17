@@ -691,16 +691,20 @@ class NDateCalendar extends NIconRenderer(NDateComponent(NComponent)) {
 		this.setState({displayDate: date});
 		this.fireEventToMonitor($.Event('displayDateChange', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			oldDisplayDate: oldDate,
-			newDisplayDate: date
+			ndata: {
+				oldDisplayDate: oldDate,
+				newDisplayDate: date
+			}
 		}));
 	}
 
 	fireDisplayTypeChangeEvent(oldDisplayType) {
 		this.fireEventToMonitor($.Event('displayTypeChange', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			oldDisplayType: oldDisplayType,
-			newDisplayType: this.getCurrentDisplayType()
+			ndata: {
+				oldDisplayType: oldDisplayType,
+				newDisplayType: this.getCurrentDisplayType()
+			}
 		}));
 	}
 

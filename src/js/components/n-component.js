@@ -909,9 +909,11 @@ class NHierarchyComponent extends NContainer {
 		evt.model.getParent().update(this.getDataId(), evt.model.getCurrentModel(), evt.model.getCurrentModel(), itemIndex);
 		this.fireEventToMonitor($.Event('itemChange', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			itemModel: evt.model,
-			itemIndex: itemIndex,
-			originalEvent: evt
+			ndata: {
+				itemModel: evt.model,
+				itemIndex: itemIndex,
+				originalEvent: evt
+			}
 		}));
 	}
 }
