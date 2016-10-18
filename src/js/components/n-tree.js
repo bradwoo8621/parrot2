@@ -148,7 +148,11 @@ class NTree extends NCodeTableComponent(NComponent) {
 		});
 		return (<div className={className}
 					 style={styles}
+					 onMouseMove={this.onMouseMoved}
+					 onMouseLeave={this.onMouseLeft}
 					 ref='me'>
+			<div className='n-tree-background' 
+				 ref='background' />
 			{showRoot ? this.renderRoot() : this.renderTopLevelNodes()}
 		</div>);
 	}
@@ -493,17 +497,15 @@ class NTree extends NCodeTableComponent(NComponent) {
 			}
 		}
 	}
-	toggleNodeExpand(node, callback) {
+	toggleNodeExpand(node, evt) {
 		let children = node.children('ul');
 		if (children.length > 0) {
+			evt.preventDefault();
 			if (children.is(':visible')) {
 				children.slideUp(300, () => {
 					node.addClass('n-tree-node-collapsed')
 							.removeClass('n-tree-node-expanded');
 					children.css('display', '');
-					if (callback) {
-						callback.call(this);
-					}
 					this.nodeExpandChanged(node, false);
 				});
 			} else {
@@ -512,19 +514,14 @@ class NTree extends NCodeTableComponent(NComponent) {
 					node.addClass('n-tree-node-expanded')
 							.removeClass('n-tree-node-collapsed n-tree-node-onexpand');
 					children.css('display', '');
-					if (callback) {
-						callback.call(this);
-					}
 					this.nodeExpandChanged(node, true);
 				});
 			}
 		}
 	}
 	onItemClicked = (evt) => {
-		this.toggleNodeExpand($(evt.target).closest('li'), () => {
-			evt.preventDefault();
-		});
-		this.fireEventToMonitor(evt);
+		evt.preventDefault()
+		this.toggleNodeExpand($(evt.target).closest('li'), evt);
 	}
 	onItemSpaceKeyDown(evt) {
 		let target = $(evt.target);
@@ -543,15 +540,12 @@ class NTree extends NCodeTableComponent(NComponent) {
 		if (children.length > 0 && children.is(':visible')) {
 			// has children and expanded now
 			// collapse it
-			this.toggleNodeExpand($(evt.target).closest('li'), () => {
-				evt.preventDefault();
-			});
+			this.toggleNodeExpand($(evt.target).closest('li'), evt);
 		} else {
 			// focus parent node
 			let parentNode = target.closest('ul').parent();
 			if (parentNode[0].tagName === 'LI') {
 				evt.preventDefault();
-				evt.stopPropagation();
 				this.focusNode(parentNode);
 			}
 		}
@@ -562,12 +556,9 @@ class NTree extends NCodeTableComponent(NComponent) {
 		if (children.length > 0 && !children.is(':visible')) {
 			// has children and collapsed now
 			// expand it
-			this.toggleNodeExpand($(evt.target).closest('li'), () => {
-				evt.preventDefault();
-			});
+			this.toggleNodeExpand($(evt.target).closest('li'), evt);
 		} else if (children.length > 0) {
 			evt.preventDefault();
-			evt.stopPropagation();
 			// already expanded, focus the first child
 			this.focusNode(children.children('li').first());
 		}
@@ -583,7 +574,6 @@ class NTree extends NCodeTableComponent(NComponent) {
 			if (parentNode[0].tagName === 'LI') {
 				// has parent node, focus it
 				evt.preventDefault();
-				evt.stopPropagation();
 				this.focusNode(parentNode);
 			}
 		} else {
@@ -594,7 +584,6 @@ class NTree extends NCodeTableComponent(NComponent) {
 				if (children.length == 0 || !children.is(':visible')) {
 					// no child or collapsed, focus previous node
 					evt.preventDefault();
-					evt.stopPropagation();
 					this.focusNode(startNode);
 					break;
 				} else {
@@ -610,7 +599,6 @@ class NTree extends NCodeTableComponent(NComponent) {
 			// has children and expanded now
 			// focus the first child
 			evt.preventDefault();
-			evt.stopPropagation();
 			this.focusNode(children.children('li').first())
 		} else {
 			// no child, find the next visible node
@@ -629,7 +617,6 @@ class NTree extends NCodeTableComponent(NComponent) {
 					}
 				} else {
 					evt.preventDefault();
-					evt.stopPropagation();
 					this.focusNode(nextNode);
 					break;
 				}
@@ -655,6 +642,37 @@ class NTree extends NCodeTableComponent(NComponent) {
 				this.onItemDownArrowKeyDown(evt);
 				break;
 		}
+	}
+	onMouseMoved = (evt) => {
+		let bg = $(ReactDOM.findDOMNode(this.refs.background));
+		let container = $(ReactDOM.findDOMNode(this.refs.me));
+		let containerOffset = container.offset();
+		let top = evt.clientY - containerOffset.top;
+		let found = container.find('.n-tree-node-text').toArray().some((dom) => {
+			let text = $(dom);
+			let offset = text.offset();
+			let textTop = offset.top - containerOffset.top;
+			if (textTop <= top && textTop + text.outerHeight() >= top) {
+				bg.css({
+					display: 'block',
+					left: container.scrollLeft(),
+					top: textTop + container.scrollTop() - 1,
+					height: text.outerHeight()
+				});
+				return true;
+			}
+		});
+		if (!found) {
+			bg.css({
+				display: 'none'
+			});
+		}
+	}
+	onMouseLeft = (evt) => {
+		let bg = $(ReactDOM.findDOMNode(this.refs.background));
+		bg.css({
+			display: 'none'
+		});
 	}
 }
 

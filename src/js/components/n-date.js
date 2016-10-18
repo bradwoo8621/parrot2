@@ -1097,13 +1097,13 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 		this.getComponent().val(this.parseText(this.getValueFromModel(), this.getPrimaryDisplayFormat()));
 	}
 	onClearIconClicked = (evt) => {
-		evt.preventDefault();
-		this.setValueToModel(null);
+		if (this.isEnabled()) {
+			evt.preventDefault();
+			this.setValueToModel(null);
+		}
 		$(ReactDOM.findDOMNode(this.refs.txt)).focus();
 	}
 	onCalendarIconClicked = (evt) => {
-		evt.preventDefault();
-		$(ReactDOM.findDOMNode(this.refs.txt)).focus();
 		if (this.isEnabled() && !evt.isDefaultPrevented()) {
 			evt.preventDefault();
 			this.showDropdown();

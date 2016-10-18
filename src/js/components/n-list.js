@@ -225,7 +225,6 @@ class NList extends NCodeTableComponent(NComponent) {
 		let prev = target.prev('.n-list-item');
 		if (prev.length !== 0) {
 			evt.preventDefault();
-			// evt.stopPropagation();
 			this.focusItem(prev);
 		}
 	}
@@ -234,7 +233,6 @@ class NList extends NCodeTableComponent(NComponent) {
 		let next = target.next('.n-list-item');
 		if (next.length !== 0) {
 			evt.preventDefault();
-			// evt.stopPropagation();
 			this.focusItem(next);
 		}
 	}
@@ -261,7 +259,7 @@ class NList extends NCodeTableComponent(NComponent) {
 		bg.css({
 			display: 'block',
 			left: container.scrollLeft(),
-			top: targetOffset.top - containerOffset.top + container.scrollTop(),
+			top: targetOffset.top - containerOffset.top + container.scrollTop() - 1,
 			height: target.outerHeight()
 		});
 	}

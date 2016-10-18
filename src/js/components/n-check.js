@@ -87,7 +87,7 @@ class NArrayCheck extends NCodeTableComponent(NComponent) {
 		let data = {};
 		data[id] = values.indexOf(item.id) != -1;
 		let model = new Model(data);
-		model.addPostChangeListener(id, this.onItemClicked.bind(this, item));
+		model.addPostChangeListener(id, this.onItemCheckChanged.bind(this, item));
 		return this.renderInternalComponent(layout, {
 			key: itemIndex,
 			model: model
@@ -115,7 +115,7 @@ class NArrayCheck extends NCodeTableComponent(NComponent) {
 		return this.getLayoutOptionValue('vertical', false);
 	}
 
-	onItemClicked(item, evt) {
+	onItemCheckChanged(item, evt) {
 		let id = item.id;
 		let oldValues = this.getValueFromModel();
 		let newValues = oldValues.slice(0);

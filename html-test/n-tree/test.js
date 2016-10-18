@@ -74,6 +74,7 @@ $(function() {
 		label: 'Tree',
 		comp: {
 			codes: codes,
+			noWrap: false,
 			minHeight: 200,
 			maxHeight: 250,
 			checkable: true,

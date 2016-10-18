@@ -11,6 +11,13 @@
 			white-space: nowrap;
 		}
 	}
+	.n-tree-background {
+		display: none;
+		position: absolute;
+		background-color: $color-hover;
+		width: 100%;
+		z-index: -1;
+	}
 	ul.n-tree-node {
 		display: inline-block;
 		position: relative;

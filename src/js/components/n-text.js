@@ -129,15 +129,16 @@ class NText extends NAddonComponent {
 		this.onComponentFocusChanged();
 
 		let text = this.formatValue(this.getComponentText());
-		evt.preventDefault();
 		if (text) {
 			let value = this.formatValue(this.getValueFromModel());
 			if (text != value) {
 				// this moment, value of component is not formatted
+				evt.preventDefault();
 				this.setValueToModel(text);
 			}
 			this.getComponent().val(this.formatValue(text));
 		} else {
+			evt.preventDefault();
 			this.setValueToModel(null);
 		}
 	}
