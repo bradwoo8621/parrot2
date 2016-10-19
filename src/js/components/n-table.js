@@ -192,28 +192,28 @@ class NTableBody extends NTableContainer(NHierarchyComponent) {
 		</div>);
 	}
 	getComponentClassName() {
-		return 'n-table';
+		return 'n-table-body';
 	}
 	getTableBodyStyle() {
 		return 'n-table-body-' + this.getLayoutOptionValue('style', 'default');
 	}
 
 	sortColumn(column, sortType) {
-		let promise = $.Deferred().promise();
+		let deferred = $.Deferred();
 
 		sortType = sortType ? sortType : NTable.ASC;		
 		let sorter = this.getSorter(column);
 		sorter = sorter ? sorter : this.getDefaultSorter();
 		this.handleEventResult(sorter.call(this, column, sortType), {
 			handler: () => {
-				promise.resolve();
+				deferred.resolve();
 				this.onColumnSorted(column, sortType);
 			},
 			fail: () => {
-				promise.reject();
+				deferred.reject();
 			}
 		});
-		return promise;
+		return deferred.promise();
 	}
 	onColumnSorted(column, sortType) {
 		this.forceUpdate();
