@@ -10,13 +10,71 @@ import {
 	NHierarchyComponent} from './n-component'
 import {NIcon} from './n-icon'
 
-class NTable extends NHierarchyComponent {
-	static ASC = 'asc'
-	static DESC = 'desc'
+const NTableContainer = (ParentClass) => class extends ParentClass {
 	buildLayout(props) {
 		super.buildLayout(props);
 		this.state.sortable = this.getSortable();
 	}
+
+	getColumns() {
+		return this.getLayoutOptionValue('columns');
+	}
+	getColumnWidthClassName(width) {
+		return this.getWidthClassName(width);
+	}
+	getValueFromModel() {
+		let values = super.getValueFromModel();
+		return values == null ? [] : values;
+	}
+	isSortable() {
+		return this.state.sortable;
+	}
+	getSortable() {
+		return this.getLayoutOptionValue('sortable', false);
+	}
+	getSorter(column) {
+		if (column.sorter) {
+			return column.sorter;
+		}
+		return this.getLayoutOptionValue('sorter', null, true);
+	}
+	getColumnSortType(column) {
+		let status = this.state.sortStatus;
+		if (status && status[0] == column.dataId) {
+			return status[1];
+		} else {
+			return null;
+		}
+	}
+	getDefaultSorter(column, sortType) {
+		return (column, sortType) => {
+			let values = this.getValueFromModel();
+			let dataId = column.dataId;
+			let dataType = column.dataType;
+			values.sort((a, b) => {
+				let ret = 0;
+				let valueA = a[dataId];
+				let valueB = b[dataId];
+				if (dataType === 'number')  {
+					valueA = valueA == null ? -Infinity : valueA;
+					valueB = valueB == null ? -Infinity : valueB;
+					ret = valueA - valueB;
+				} else {
+					valueA = valueA == null ? '' : (valueA + '');
+					valueB = valueB == null ? '' : (valueB + '');
+					ret = valueA.localeCompare(valueB);
+				}
+				if (sortType === NTable.ASC) {
+					return ret;
+				} else {
+					return 0 - ret;
+				}
+			});
+		};
+	}
+}
+
+class NTableHeader extends NTableContainer(NHierarchyComponent) {
 	renderHeaderSortIcon(column) {
 		if (!this.isSortable() && !column.sorter) {
 			return null;
@@ -47,21 +105,59 @@ class NTable extends NHierarchyComponent {
 								   this.getColumnWidthClassName(column.width));
 		return (<div className={className}
 					 key={columnIndex}>
+			{this.renderLeadingChildren()}
 			{column.title}
 			{this.renderHeaderSortIcon(column)}
+			{this.renderTailingChildren()}
 		</div>);
 	}
-	renderHeader() {
-		let className = classnames('n-table-header',
+	renderInNormal() {
+		let className = classnames(this.getComponentStyle(),
 								   'n-row',
-								   `n-table-header-${this.getTableStyle()}`);
+								   this.getTableHeaderStyle());
 		return (<div className={className}
-					 ref='header'>
+					 ref='me'>
 			{this.getColumns().map((column, columnIndex) => {
 				return this.renderHeaderCell(column, columnIndex);
 			})}
 		</div>);
 	}
+
+	getComponentClassName() {
+		return 'n-table-header';
+	}
+	getTableHeaderStyle() {
+		return 'n-table-header-' + this.getLayoutOptionValue('style', 'default');
+	}
+	onHeaderSortIconClicked(column, evt) {
+		evt.preventDefault();
+		let sortType = this.getColumnSortType(column);
+		if (sortType === NTable.ASC) {
+			sortType = NTable.DESC;
+		} else {
+			sortType = NTable.ASC;
+		}
+		let ret = this.fireEventToMonitor($.Event('columnSort', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			nData: {
+				column: column,
+				sortType: sortType
+			}
+		}));
+		this.handleEventResult(ret, {
+			handler: () => {
+				this.setState({
+					sortStatus: [column.dataId, sortType]
+				});
+			},
+			false: () => {
+				this.forceUpdate();
+			}
+		});
+	}
+}
+
+class NTableBody extends NTableContainer(NHierarchyComponent) {
 	renderBodyCell(rowModel, rowIndex, column, columnIndex) {
 		let className = classnames('n-table-body-cell',
 								   this.getColumnWidthClassName(column.width));
@@ -84,16 +180,99 @@ class NTable extends NHierarchyComponent {
 			})}
 		</div>);
 	}
-	renderBody() {
-		let className = classnames('n-table-body',
-								   `n-table-body-${this.getTableStyle()}`);
+	renderInNormal() {
+		let className = classnames(this.getComponentStyle(),
+								   this.getTableBodyStyle());
 		return (<div className={className}
-					 ref='body'>
+					 ref='me'>
 			{this.getValueFromModel().map((row, rowIndex) => {
 				let rowModel = this.createItemModel(row, rowIndex);
 				return this.renderBodyRow(rowModel, rowIndex);
 			})}
 		</div>);
+	}
+	getComponentClassName() {
+		return 'n-table';
+	}
+	getTableBodyStyle() {
+		return 'n-table-body-' + this.getLayoutOptionValue('style', 'default');
+	}
+
+	sortColumn(column, sortType) {
+		let promise = $.Deferred().promise();
+
+		sortType = sortType ? sortType : NTable.ASC;		
+		let sorter = this.getSorter(column);
+		sorter = sorter ? sorter : this.getDefaultSorter();
+		this.handleEventResult(sorter.call(this, column, sortType), {
+			handler: () => {
+				promise.resolve();
+				this.onColumnSorted(column, sortType);
+			},
+			fail: () => {
+				promise.reject();
+			}
+		});
+		return promise;
+	}
+	onColumnSorted(column, sortType) {
+		this.forceUpdate();
+		this.fireEventToMonitor($.Event('columnSort', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			nData: {
+				column: column,
+				sortType: sortType
+			}
+		}));
+	}
+}
+
+class NTable extends NTableContainer(NHierarchyComponent) {
+	static ASC = 'asc'
+	static DESC = 'desc'
+	renderHeader() {
+		let layout = Envs.deepMergeTo({}, {
+			label: this.getLayout().getLabel(),
+			dataId: this.getDataId(),
+			comp: {
+				type: Envs.COMPONENT_TYPES.TABLE_HEADER,
+				style: this.getLayoutOptionValue('style'),
+				sortable: this.getLayoutOptionValue('sortable', false),
+				sorter: this.getLayoutOptionValue('sorter', null, true),
+				columns: this.getColumns(),
+				leadChildren: this.getLeadingChildren(),
+				tailChildren: this.getTailingChildren()
+			},
+			evt: {
+				columnSort: this.onHeaderColumnSorting.bind(this)
+			}
+		}, this.getTableHeaderLayout());
+
+		let header = this.getDOMChildOf('NTableHeader');
+
+		return this.renderInternalComponent(layout, header ? header.props : null, {
+			ref: 'header'
+		});
+	}
+	renderBody() {
+		let layout = Envs.deepMergeTo({}, {
+			label: this.getLayout().getLabel(),
+			dataId: this.getDataId(),
+			comp: {
+				type: Envs.COMPONENT_TYPES.TABLE_BODY,
+				style: this.getLayoutOptionValue('style'),
+				columns: this.getColumns()
+			},
+			evt: {
+				columnSort: this.onBodyColumnSorted.bind(this)
+			}
+		}, this.getTableBodyLayout());
+
+		let header = this.getDOMChildOf('NTableBody');
+
+		return this.renderInternalComponent(layout, header ? header.props : null, {
+			ref: 'body'
+		});
 	}
 	renderFooter() {
 		let className = classnames('n-table-footer',
@@ -120,87 +299,39 @@ class NTable extends NHierarchyComponent {
 	getTableStyle() {
 		return this.getLayoutOptionValue('style', 'default');
 	}
-	isSortable() {
-		return this.state.sortable;
+	getTableHeaderLayout() {
+		return this.getLayoutOptionValue('header');
 	}
-	getSortable() {
-		return this.getLayoutOptionValue('sortable', false);
-	}
-	getSorter(column) {
-		if (column.sorter) {
-			return column.sorter;
-		}
-		return this.getLayoutOptionValue('sorter', null, true);
-	}
-	getColumnSortType(column) {
-		let status = this.state.sortStatus;
-		if (status && status[0] == column.dataId) {
-			return status[1];
-		} else {
-			return null;
-		}
-	}
-	getColumnWidthClassName(width) {
-		return this.getWidthClassName(width);
-	}
-	getColumns() {
-		return this.getLayoutOptionValue('columns');
+	getTableBodyLayout() {
+		return this.getLayoutOptionValue('body');
 	}
 
-	getValueFromModel() {
-		let values = super.getValueFromModel();
-		return values == null ? [] : values;
+	onHeaderColumnSorting(evt) {
+		return this.refs.body.sortColumn(evt.nData.column, evt.nData.sortType);
 	}
-	sortColumn(column, sortType) {
-		let values = this.getValueFromModel();
-		let dataId = column.dataId;
-		let dataType = column.dataType;
-		values.sort((a, b) => {
-			let ret = 0;
-			let valueA = a[dataId];
-			let valueB = b[dataId];
-			if (dataType === 'number')  {
-				valueA = valueA == null ? -Infinity : valueA;
-				valueB = valueB == null ? -Infinity : valueB;
-				ret = valueA - valueB;
-			} else {
-				valueA = valueA == null ? '' : (valueA + '');
-				valueB = valueB == null ? '' : (valueB + '');
-				ret = valueA.localeCompare(valueB);
+	onBodyColumnSorted(evt) {
+		this.fireEventToMonitor($.Event('columnSort', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			nData: {
+				column: evt.nData.column,
+				sortType: evt.nData.sortType
 			}
-			if (sortType === NTable.ASC) {
-				return ret;
-			} else {
-				return 0 - ret;
-			}
-		});
-	}
-	onHeaderSortIconClicked(column, evt) {
-		evt.preventDefault();
-		let sortType = this.getColumnSortType(column);
-		if (sortType === NTable.ASC) {
-			sortType = NTable.DESC;
-		} else {
-			sortType = NTable.ASC;
-		}
-		
-		let sorter = this.getSorter(column);
-		sorter = sorter ? sorter : this.sortColumn;
-
-		this.handleEventResult(sorter.call(this, column, sortType), {
-			handler: () => {
-				this.setState({
-					sortStatus: [column.dataId, sortType]
-				});
-			}
-		});
+		}));
 	}
 }
 
+Envs.COMPONENT_TYPES.TABLE_HEADER = {type: 'n-table-header', label: false, popover: false, error: false};
+Envs.setRenderer(Envs.COMPONENT_TYPES.TABLE_HEADER.type, function (options) {
+	return <NTableHeader {...options} />;
+});
+Envs.COMPONENT_TYPES.TABLE_BODY = {type: 'n-table-body', label: false, popover: false, error: false};
+Envs.setRenderer(Envs.COMPONENT_TYPES.TABLE_BODY.type, function (options) {
+	return <NTableBody {...options} />;
+});
 Envs.COMPONENT_TYPES.TABLE = {type: 'n-table', label: false, popover: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TABLE.type, function (options) {
 	return <NTable {...options} />;
 });
 
-export {NTable}
+export {NTable, NTableHeader, NTableBody}
 export * from './n-component'

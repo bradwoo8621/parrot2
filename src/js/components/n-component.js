@@ -500,6 +500,10 @@ class NComponent extends React.Component {
 		if (returnValue != null && typeof returnValue.done === 'function') {
 			returnValue.done(() => {
 				options.handler.call(Array.prototype.slice.call(arguments, 0));
+			}).fail(() => {
+				if (options.fail) {
+					options.fail.call(Array.prototype.slice.call(arguments, 0));
+				}
 			});
 		} else {
 			let handler = null;
