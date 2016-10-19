@@ -24,20 +24,26 @@ $(function() {
 		comp: {
 			columns: [{
 				title: 'Name',
+				dataId: 'name',
 				width: {sm: 4, md: 4, lg: 4}
 			}, {
 				title: 'Age',
+				dataId: 'age',
 				width: {sm: 4, md: 4, lg: 4}
 			}, {
 				title: 'Column C',
+				dataId: 'columnC',
 				width: {sm: 4, md: 4, lg: 4}
 			}, {
 				title: 'Column D',
+				dataId: 'columnD',
 				width: {sm: 6, md: 4, lg: 4}
 			}, {
 				title: 'Column E',
+				dataId: 'columnE',
 				width: {sm: 6, md: 4, lg: 4}
 			}],
+			sortable: true
 		},
 		styles: {
 			comp: 'n-row-md-20c n-row-lg-20c'

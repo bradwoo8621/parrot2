@@ -51,6 +51,8 @@ $color-border:										darken($container-bg-color, 10%);
 $color-hover:										darken($container-bg-color, 5%);
 $color-bg-focus:									darken($container-bg-color, 15%);
 $color-focus:										$color-primary;
+$color-odd-row:										#ECEFF1;
+$color-even-row:									inherit;
 
 // all the following base colors are from the material ui colors
 // and value is 600

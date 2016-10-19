@@ -1,10 +1,22 @@
+@mixin n-table-header-style($color, $bg-color, $name) {
+	&.n-table-header-#{$name} {
+		background-color: $bg-color;
+		color: $color;
+		border-color: $bg-color;
+	}
+}
+@mixin n-table-body-style($border-color, $name) {
+	&.n-table-body-#{$name} {
+		border-color: $border-color;
+	}
+}
+
 .n-table {
 	position: relative;
 	display: block;
-	border: $border-1;
-	border-radius: $border-radius;
+	background-color: $container-bg-color;
 	.n-table-header,
-	.n-table-body,
+	.n-table-body-row,
 	.n-table-footer {
 		display: block;
 		position: relative;
@@ -14,16 +26,74 @@
 		}
 	}
 	.n-table-header {
-		border-bottom: $border-2;
-		.n-table-header-column {
+		border: $border-1;
+		border-radius: $border-radius;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		color: $color-font;
+		background-color: $container-bg-color;
+		@include n-table-header-style($color-reverse, $color-primary, primary);
+		@include n-table-header-style($color-reverse, $color-success, success);
+		@include n-table-header-style($color-reverse, $color-warning, warning);
+		@include n-table-header-style($color-reverse, $color-info, info);
+		@include n-table-header-style($color-reverse, $color-danger, danger);
+		&.n-table-header-borderless {
+			border-width: 0 0 1px;
+			border-radius: 0;
+		}
+		.n-table-header-cell {
 			float: left;
 			display: block;
 			position: relative;
 			word-wrap: break-word;
 			max-width: 100%;
+			.n-table-sort-icon {
+				position: absolute;
+				top: 0;
+				right: 0;
+				line-height: $line-height;
+				opacity: 0.5;
+    			font-size: 0.7em;
+			}
 		}
 	}
 	.n-table-body {
+		display: block;
+		position: relative;
+		border: $border-1;
+		border-top: $border-0;
+		border-radius: $border-radius;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		color: $color-font;
+		background-color: $container-bg-color;
+		@include n-table-body-style($color-primary, primary);
+		@include n-table-body-style($color-success, success);
+		@include n-table-body-style($color-warning, warning);
+		@include n-table-body-style($color-info, info);
+		@include n-table-body-style($color-danger, danger);
+		&.n-table-body-borderless {
+			border-width: 0;
+			border-radius: 0;
+		}
+		.n-table-body-row {
+			&.n-table-body-row-odd {
+				background-color: $color-odd-row;
+			}
+			&.n-table-body-row-even {
+				background-color: $color-even-row;
+			}
+			&:hover {
+				background-color: $color-hover;
+			}
+			.n-table-body-cell {
+				float: left;
+				display: block;
+				position: relative;
+				word-wrap: break-word;
+				max-width: 100%;
+			}
+		}
 	}
 	.n-table-footer {
 	}
