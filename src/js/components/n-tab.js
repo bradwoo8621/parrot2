@@ -395,7 +395,7 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 			let ret = monitor.call(this, evt);
 			this.handleEventResult(ret, {
 				handler: (item) => {this.addItem(item);},
-				null: () => {}
+				false: () => {}
 			})
 		} else {
 			this.addItem({});
