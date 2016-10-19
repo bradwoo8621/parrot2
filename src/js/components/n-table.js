@@ -244,7 +244,7 @@ class NTable extends NTableContainer(NHierarchyComponent) {
 				tailChildren: this.getTailingChildren()
 			},
 			evt: {
-				columnSort: this.onHeaderColumnSorting.bind(this)
+				columnSort: this.onHeaderColumnSorting
 			}
 		}, this.getTableHeaderLayout());
 
@@ -264,7 +264,7 @@ class NTable extends NTableContainer(NHierarchyComponent) {
 				columns: this.getColumns()
 			},
 			evt: {
-				columnSort: this.onBodyColumnSorted.bind(this)
+				columnSort: this.onBodyColumnSorted
 			}
 		}, this.getTableBodyLayout());
 
@@ -306,10 +306,10 @@ class NTable extends NTableContainer(NHierarchyComponent) {
 		return this.getLayoutOptionValue('body');
 	}
 
-	onHeaderColumnSorting(evt) {
+	onHeaderColumnSorting = (evt) => {
 		return this.refs.body.sortColumn(evt.nData.column, evt.nData.sortType);
 	}
-	onBodyColumnSorted(evt) {
+	onBodyColumnSorted = (evt) => {
 		this.fireEventToMonitor($.Event('columnSort', {
 			target: ReactDOM.findDOMNode(this.refs.me),
 			nData: {
