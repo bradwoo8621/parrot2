@@ -317,7 +317,8 @@ class NTree extends NCodeTableComponent(NComponent) {
 	onItemCheckChanged(item, checked) {
 		let items = this.computeItemsNeedChangeCheckStatus(item, checked);
 		this.handleEventResult(this.shouldItemCheckChanged(items, checked), {
-			handler: this.onItemsCheckChanged.bind(this, items, checked)
+			handler: this.onItemsCheckChanged.bind(this, items, checked),
+			false: () => {}
 		});
 	}
 	onItemsCheckChanged(originalItems, checked, newItems) {

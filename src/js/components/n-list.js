@@ -184,7 +184,8 @@ class NList extends NCodeTableComponent(NComponent) {
 						this.itemCheckChanged(item, false);
 					}
 				}
-			}
+			},
+			false: () => {}
 		});
 	}
 	shouldItemCheckChanged(item, checked) {
