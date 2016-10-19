@@ -149,9 +149,12 @@ class NTableHeader extends NTableContainer(NHierarchyComponent) {
 				this.setState({
 					sortStatus: [column.dataId, sortType]
 				});
+			}
+			fail: () => {
+				//this.forceUpdate();
 			},
 			false: () => {
-				this.forceUpdate();
+				//this.forceUpdate();
 			}
 		});
 	}
@@ -210,6 +213,9 @@ class NTableBody extends NTableContainer(NHierarchyComponent) {
 				this.onColumnSorted(column, sortType);
 			},
 			fail: () => {
+				deferred.reject();
+			},
+			false: () => {
 				deferred.reject();
 			}
 		});
