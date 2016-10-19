@@ -1,0 +1,30 @@
+.n-table {
+	position: relative;
+	display: block;
+	border: $border-1;
+	border-radius: $border-radius;
+	.n-table-header,
+	.n-table-body,
+	.n-table-footer {
+		display: block;
+		position: relative;
+		&.n-row {
+			margin-left: $margin-0;
+			margin-right: $margin-0;
+		}
+	}
+	.n-table-header {
+		border-bottom: $border-2;
+		.n-table-header-column {
+			float: left;
+			display: block;
+			position: relative;
+			word-wrap: break-word;
+			max-width: 100%;
+		}
+	}
+	.n-table-body {
+	}
+	.n-table-footer {
+	}
+}

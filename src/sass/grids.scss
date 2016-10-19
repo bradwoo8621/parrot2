@@ -104,3 +104,8 @@ $media-name-list: xs sm md lg xl 2xl 3xl 4xl;
 	@include grids(nth($media-list, $media-index),
 				  nth($media-name-list, $media-index));
 }
+@for $media-index from 1 through 8 {
+	.hidden-#{nth($media-name-list, $media-index)} {
+		display: none !important;
+	}
+}

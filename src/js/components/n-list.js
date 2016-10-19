@@ -62,8 +62,6 @@ class NList extends NCodeTableComponent(NComponent) {
 					 data-item-id={item.id}
 					 onClick={this.onItemClicked}
 					 onKeyDown={this.onItemKeyDown}
-					 onMouseEnter={this.onItemMouseEntered}
-					 onMouseLeave={this.onItemMouseLeft}
 					 key={itemIndex}>
 			{this.renderItemIcon(item)}
 			{checkable ? this.renderItemCheck(item) : null}
@@ -84,6 +82,8 @@ class NList extends NCodeTableComponent(NComponent) {
 		});
 		return (<div className={className}
 					 style={styles}
+					 onMouseMove={this.onMouseMoved}
+					 onMouseLeave={this.onMouseLeft}
 					 ref='me'>
 			<div className='n-list-background'
 				 ref='background' />
@@ -250,20 +250,32 @@ class NList extends NCodeTableComponent(NComponent) {
 				break;
 		}
 	}
-	onItemMouseEntered = (evt) => {
+	onMouseMoved = (evt) => {
 		let bg = $(ReactDOM.findDOMNode(this.refs.background));
-		let target = $(evt.target);
-		let targetOffset = target.offset();
 		let container = $(ReactDOM.findDOMNode(this.refs.me));
 		let containerOffset = container.offset();
-		bg.css({
-			display: 'block',
-			left: container.scrollLeft(),
-			top: targetOffset.top - containerOffset.top + container.scrollTop() - 1,
-			height: target.outerHeight()
+		let top = evt.clientY - containerOffset.top;
+		let found = container.find('.n-list-item-text').toArray().some((dom) => {
+			let text = $(dom);
+			let offset = text.offset();
+			let textTop = offset.top - containerOffset.top;
+			if (textTop <= top && textTop + text.outerHeight() >= top) {
+				bg.css({
+					display: 'block',
+					left: container.scrollLeft(),
+					top: textTop + container.scrollTop() - 1,
+					height: text.outerHeight()
+				});
+				return true;
+			}
 		});
+		if (!found) {
+			bg.css({
+				display: 'none'
+			});
+		}
 	}
-	onItemMouseLeft = (evt) => {
+	onMouseLeft = (evt) => {
 		let bg = $(ReactDOM.findDOMNode(this.refs.background));
 		bg.css({
 			display: 'none'

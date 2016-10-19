@@ -18,6 +18,7 @@ module.exports = {
 		'n-panel': './html-test/n-panel/test.js',
 		'n-radio': './html-test/n-radio/test.js',
 		'n-tab': './html-test/n-tab/test.js',
+		'n-table': './html-test/n-table/test.js',
 		'n-text': './html-test/n-text/test.js',
 		'n-text-area': './html-test/n-text-area/test.js',
 		'n-tree': './html-test/n-tree/test.js',

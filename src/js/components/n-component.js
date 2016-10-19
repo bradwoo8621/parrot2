@@ -92,6 +92,9 @@ class NComponent extends React.Component {
 		this.internalInstallLifecycleMonitors();
 		this.internalInstallDOMListeners();
 		this.pointcutPostExecutor.apply(this, arguments);
+		this.doAfterRender();
+	}
+	doAfterRender() {
 	}
 	internalInstallDOMListeners() {
 		let listeners = this.getDOMEventMonitors();
@@ -316,16 +319,33 @@ class NComponent extends React.Component {
 	}
 	// position can be string or function
 	getWidth() {
-		return this.wrapOptionValue(this.getPosition().width);
+		return this.wrapOptionValue(this.getLayout().getWidth());
+	}
+	getWidthClassName(width) {
+		if (width == null) {
+			return '';
+		}
+		width = width ? width : this.getWidth();
+		let type = typeof width;
+		if (type === 'number' || type === 'string') {
+			// only returns xs and sm, cover all sizes
+			return `n-col-xs-${width} n-col-sm-${width}`;
+		} else {
+			return classnames(Object.keys(width).reduce((prev, next) => {
+				let value = width[next];
+				prev[`n-col-${next}-${value}`] = true;
+				return prev;
+			}, {}));
+		}
 	}
 	getColumnIndex() {
-		return this.wrapOptionValue(this.getPosition().col);
+		return this.wrapOptionValue(this.getLayout().getColumnIndex());
 	}
 	getRowIndex() {
-		return this.wrapOptionValue(this.getPosition().row);
+		return this.wrapOptionValue(this.getLayout().getRowIndex());
 	}
 	getPosition() {
-		return this.wrapOptionValue(this.getLayout().getPosition());
+		return this.getLayout().getPosition();
 	}
 	// styles
 	getComponentClassName() {

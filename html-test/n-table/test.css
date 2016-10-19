@@ -1,0 +1,12 @@
+@media (min-width: 1200px) {
+	.n-table.n-row-lg-20c > .n-table-header.n-row > .n-col-lg-4,
+	.n-table.n-row-lg-20c > .n-table-body.n-row > .n-col-lg-4 {
+		width: 20%;
+	}
+}
+@media (min-width: 992px) {
+	.n-table.n-row-lg-20c > .n-table-header.n-row > .n-col-lg-4,
+	.n-table.n-row-lg-20c > .n-table-body.n-row > .n-col-lg-4 {
+		width: 20%;
+	}
+}

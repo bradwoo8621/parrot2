@@ -49,7 +49,8 @@ class Envs {
 			treeBranchIcon: 'folder-o',
 			treeLeafIcon: 'file-o',
 			treeMaxHeight: 300,
-			listMaxHeight: 300
+			listMaxHeight: 300,
+			tableColumnsOfGrid: 12
 		};
 		this.viewModeRenderers = {};
 		this.renderers = {};
@@ -255,6 +256,14 @@ class Envs {
 
 	set LIST_MAX_HEIGHT(value) {
 		this.props.listMaxHeight = value;
+	}
+
+	get TABLE_COLUMNS_OF_GRID() {
+		return this.props.tableColumnsOfGrid;
+	}
+
+	set TABLE_COLUMNS_OF_GRID(value) {
+		this.props.tableColumnsOfGrid = value;
 	}
 
 	getRenderer(type) {
