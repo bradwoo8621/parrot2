@@ -149,7 +149,7 @@ class NTableHeader extends NTableContainer(NHierarchyComponent) {
 				this.setState({
 					sortStatus: [column.dataId, sortType]
 				});
-			}
+			},
 			fail: () => {
 				//this.forceUpdate();
 			},
