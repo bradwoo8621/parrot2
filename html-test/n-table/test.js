@@ -46,7 +46,12 @@ $(function() {
 				},
 				width: {xs: 'hidden', sm: 'index'}
 			}, {
-				header: '',
+				header: {
+					comp: {
+						type: Envs.COMPONENT_TYPES.CHECK,
+						// TODO 
+					}
+				},
 				dataId: 'selected',
 				sorter: false,
 				body: {

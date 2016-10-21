@@ -10,6 +10,7 @@ require("babel-register")({
 });
 
 const SDK = require('../../src/js/components/n-component');
+const $ = require('jquery-deferred');
 let {Model, Layout, NComponent} = SDK;
 
 const assert = require('assert');
@@ -201,12 +202,8 @@ describe('NComponent', function() {
 			assert.equal(testValue, 'normal');
 
 			
-			comp.handleEventResult(function() {
-				return {
-					done: function(func) {
-						func('promise');
-					}
-				}
-			}(), options);
+			comp.handleEventResult($.Deferred(function(d) {
+				d.resolve();
+			}).promise(), options);
 	});
 });

@@ -498,6 +498,7 @@ class NComponent extends React.Component {
 	}
 	handleEventResult(returnValue, options) {
 		if (returnValue != null && typeof returnValue.done === 'function') {
+			console.log(returnValue);
 			returnValue.done(() => {
 				options.handler.call(Array.prototype.slice.call(arguments, 0));
 			}).fail(() => {
