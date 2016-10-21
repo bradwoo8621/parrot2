@@ -105,7 +105,10 @@ $media-name-list: xs sm md lg xl 2xl 3xl 4xl;
 				  nth($media-name-list, $media-index));
 }
 @for $media-index from 1 through 8 {
-	.hidden-#{nth($media-name-list, $media-index)} {
-		display: none !important;
+	@media#{nth($media-list, $media-index)} {
+		.hidden-#{nth($media-name-list, $media-index)},
+		.n-col-#{nth($media-name-list, $media-index)}-hidden {
+			display: none !important;
+		}
 	}
 }

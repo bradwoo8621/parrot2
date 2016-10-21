@@ -813,7 +813,7 @@ class NContainer extends NComponent {
 		}
 		return child.props.children;
 	}
-	renderChildren(children, className) {
+	renderChildren(children, className, model) {
 		children = children ? children : this.getChildren();
 		if (!children) {
 			return null;
@@ -844,30 +844,30 @@ class NContainer extends NComponent {
 		return Object.keys(rows).sort((index1, index2) => {
 			return index1 - index2;
 		}).map(rowIndex => {
-			return this.renderRow(rows[rowIndex], rowIndex, className);
+			return this.renderRow(rows[rowIndex], rowIndex, className, model);
 		});
 	}
-	renderRow(row, rowIndex, className) {
+	renderRow(row, rowIndex, className, model) {
 		if (!row) {
 			return null;
 		}
 		let content = Object.keys(row).sort((index1, index2) => {
 			return index1 - index2;
 		}).map(columnIndex => {
-			return this.renderColumn(row[columnIndex]);
+			return this.renderColumn(row[columnIndex], model);
 		});
 		return (<div className={classnames('n-row', className)}
 					 key={rowIndex}>
 			{content}
 		</div>);
 	}
-	renderColumn(column) {
+	renderColumn(column, model) {
 		if (!column) {
 			return null;
 		}
 		return column.map((layout, layoutIndex) => {
 			let props = {
-				model: this.getModel(),
+				model: model ? model : this.getModel(),
 				layout: layout,
 				orientation: this.getOrientation(),
 				viewMode: this.isViewMode(),

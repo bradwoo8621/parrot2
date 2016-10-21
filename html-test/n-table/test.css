@@ -1,12 +1,78 @@
-@media (min-width: 1200px) {
-	.n-table.n-row-lg-20c > .n-table-header.n-row > .n-col-lg-4,
-	.n-table.n-row-lg-20c > .n-table-body.n-row > .n-col-lg-4 {
-		width: 20%;
+.n-col-xs-index,
+.n-col-xs-select,
+.n-col-xs-12-40,
+.n-col-sm-index,
+.n-col-sm-select,
+.n-col-sm-4-40 {
+	position: relative;
+	min-height: 1px;
+}
+.n-col-sm-index {
+	padding-left: 10px;
+	padding-right: 0;
+	text-align: right;
+}
+.n-col-sm-select {
+	padding-left: 10px;
+	padding-right: 0;
+}
+.n-col-sm-4-40 {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+@media (max-width: 767px) {
+	.n-col-xs-index,
+	.n-col-xs-select,
+	.n-col-xs-12-40 {
+		float: left;
+	}
+	.n-table > .n-table-header.n-row > .n-col-xs-select {
+		display: none;
+	}
+
+	.n-table > .n-table-body > .n-table-body-row.n-row > .n-col-xs-select {
+		width: 40px;
+		left: calc(100% - 40px);
+	}
+	.n-table > .n-table-body > .n-table-body-row.n-row > .n-col-xs-12-40 {
+		width: calc(100% - 40px);
+		right: 40px;
+	}
+}
+@media (min-width: 768px) {
+	.n-col-sm-index,
+	.n-col-sm-select,
+	.n-col-sm-4-40 {
+		float: left;
+	}
+	.n-table > .n-table-header.n-row > .n-col-sm-index,
+	.n-table > .n-table-body > .n-table-body-row.n-row > .n-col-sm-index,
+	.n-table > .n-table-header.n-row > .n-col-sm-select,
+	.n-table > .n-table-body > .n-table-body-row.n-row > .n-col-sm-select {
+		width: 40px;
+	}
+	.n-table > .n-table-header.n-row > .n-col-sm-4-40,
+	.n-table > .n-table-body > .n-table-body-row.n-row > .n-col-sm-4-40 {
+		width: calc(33.33333% - 40px);
 	}
 }
 @media (min-width: 992px) {
+	.n-table.n-row-md-20c > .n-table-header.n-row > .n-col-md-4,
+	.n-table.n-row-md-20c > .n-table-body > .n-table-body-row.n-row > .n-col-md-4 {
+		width: 20%;
+	}
+	.n-table.n-row-md-20c > .n-table-header.n-row > .n-col-md-4-40,
+	.n-table.n-row-md-20c > .n-table-body > .n-table-body-row.n-row > .n-col-md-4-40 {
+		width: calc(20% - 40px);
+	}
+}
+@media (min-width: 1200px) {
 	.n-table.n-row-lg-20c > .n-table-header.n-row > .n-col-lg-4,
 	.n-table.n-row-lg-20c > .n-table-body > .n-table-body-row.n-row > .n-col-lg-4 {
 		width: 20%;
+	}
+	.n-table.n-row-md-20c > .n-table-header.n-row > .n-col-lg-4-40,
+	.n-table.n-row-md-20c > .n-table-body > .n-table-body-row.n-row > .n-col-lg-4-40 {
+		width: calc(20% - 40px);
 	}
 }

@@ -76,7 +76,7 @@ const NTableContainer = (ParentClass) => class extends ParentClass {
 
 class NTableHeader extends NTableContainer(NHierarchyComponent) {
 	renderHeaderSortIcon(column) {
-		if (!this.isSortable() && !column.sorter) {
+		if ((!this.isSortable() && !column.sorter) || column.sorter === false) {
 			return null;
 		}
 		let layout = {
@@ -100,13 +100,32 @@ class NTableHeader extends NTableContainer(NHierarchyComponent) {
 		};
 		return this.renderInternalComponent(layout);
 	}
+	renderHeaderCellContent(column) {
+		let title = column.header;
+		let type = typeof title;
+		if (type === 'function') {
+			title = title.call(this, column);
+			type = typeof title;
+		}
+		if (type === 'string') {
+			return <span className='n-table-header-title'>{title}</span>;
+		} else if (type === 'object' && title.comp && title.comp.type) {
+			// a component
+			return this.renderInternalComponent(Envs.deepMergeTo({
+				dataId: column.dataId
+			}, title));
+		} else {
+			// component set
+			return this.renderChildren(title);
+		}
+	}
 	renderHeaderCell(column, columnIndex) {
 		let className = classnames('n-table-header-cell',
 								   this.getColumnWidthClassName(column.width));
 		return (<div className={className}
 					 key={columnIndex}>
 			{this.renderLeadingChildren()}
-			{column.title}
+			{this.renderHeaderCellContent(column)}
 			{this.renderHeaderSortIcon(column)}
 			{this.renderTailingChildren()}
 		</div>);
@@ -161,12 +180,34 @@ class NTableHeader extends NTableContainer(NHierarchyComponent) {
 }
 
 class NTableBody extends NTableContainer(NHierarchyComponent) {
+	renderBodyCellContent(rowModel, rowIndex, column) {
+		let body = column.body;
+		if (!body) {
+			return <span>{rowModel.get(column.dataId)}</span>;
+		} else {
+			if (typeof body === 'function') {
+				body = body.call(this, rowModel, column);
+			}
+			if (body.comp && body.comp.type) {
+				return this.renderInternalComponent(Envs.deepMergeTo({
+					dataId: column.dataId,
+					comp: {
+						rowIndex: rowIndex
+					}
+				}, body), {
+					model: rowModel
+				});
+			} else {
+				return this.renderChildren(body, null, rowModel);
+			}
+		}
+	}
 	renderBodyCell(rowModel, rowIndex, column, columnIndex) {
 		let className = classnames('n-table-body-cell',
 								   this.getColumnWidthClassName(column.width));
 		return (<div className={className}
 					 key={columnIndex}>
-			{rowModel.get(column.dataId)}
+			{this.renderBodyCellContent(rowModel, rowIndex, column)}
 		</div>);
 	}
 	renderBodyRow(rowModel, rowIndex) {

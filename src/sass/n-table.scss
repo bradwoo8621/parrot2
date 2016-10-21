@@ -42,7 +42,6 @@
 			border-radius: 0;
 		}
 		.n-table-header-cell {
-			float: left;
 			display: block;
 			position: relative;
 			word-wrap: break-word;
@@ -54,6 +53,10 @@
 				line-height: $line-height;
 				opacity: 0.5;
     			font-size: 0.7em;
+			}
+			> .n-row {
+				margin-left: $margin-0;
+				margin-right: $margin-0;
 			}
 		}
 	}
@@ -87,11 +90,14 @@
 				background-color: $color-hover;
 			}
 			.n-table-body-cell {
-				float: left;
 				display: block;
 				position: relative;
 				word-wrap: break-word;
 				max-width: 100%;
+				> .n-row {
+					margin-left: $margin-0;
+					margin-right: $margin-0;
+				}
 			}
 		}
 	}

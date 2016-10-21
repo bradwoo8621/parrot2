@@ -73,6 +73,7 @@
 		width: 0.2rem;
 		.n-check-text {
 			margin-left: $margin-0;
+			user-select: none;
 		}
 	}
 }
@@ -141,5 +142,7 @@
 	.n-toggle-text {
 		position: relative;
 		display: inline-block;
+		height: inherit;
+		user-select: none;
 	}
 }
