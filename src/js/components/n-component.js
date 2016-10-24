@@ -329,7 +329,10 @@ class NComponent extends React.Component {
 	}
 	// position can be string or function
 	getWidth() {
-		return this.wrapOptionValue(this.getLayout().getWidth());
+		return this.wrapOptionValue(this.getLayout().getWidth(), this.getDefaultCellWidth());
+	}
+	getDefaultCellWidth() {
+		return Envs.CELL_WIDTH;
 	}
 	getLabelWidth() {
 		return this.getLayoutOptionValue('labelWidth', Envs.LABEL_WIDTH);
@@ -384,10 +387,12 @@ class NComponent extends React.Component {
 		}
 	}
 	getWidthClassName(width) {
+		if (arguments.length === 0) {
+			throw 'Width cannot be undefined';
+		}
 		if (width == null) {
 			return '';
 		}
-		width = width ? width : this.getWidth();
 		let type = typeof width;
 		if (type === 'number' || type === 'string') {
 			// only returns xs and sm, cover all sizes
@@ -593,16 +598,21 @@ class NComponent extends React.Component {
 		}
 		let label = this.getLabel();
 		let labelShown = this.isLabelShown();
+		let cellClassName = this.getWidthClassName(this.getWidth());
 		if (labelShown && label) {
 			let labelWidth = this.getLabelWidth();
 			let compWidth = this.getComponentInternalWidth(labelWidth);
-			return (<div className={classnames('n-row', this.getLabelPosition())}>
+			return (<div className={classnames('n-row', this.getLabelPosition(), cellClassName)}>
 				<div className={classnames('n-comp-label', this.getWidthClassName(labelWidth))}>
 					{label}
 				</div>
 				<div className={classnames('n-comp', this.getWidthClassName(compWidth))}>
 					{this.renderComponent()}
 				</div>
+			</div>);
+		} else if (cellClassName) {
+			return (<div className={cellClassName}>
+				{this.renderComponent()}
 			</div>);
 		} else {
 			return this.renderComponent();

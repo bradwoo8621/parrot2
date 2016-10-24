@@ -96,7 +96,7 @@
     border-top: $border-0;
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
-    padding: $pad-5 $pad-15 * 2;
+    padding: $pad-5 $pad-15;
 	@include n-tab-body-style($color-primary, primary);
 	@include n-tab-body-style($color-success, success);
 	@include n-tab-body-style($color-warning, warning);

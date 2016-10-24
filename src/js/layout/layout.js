@@ -110,7 +110,7 @@ class Layout {
 	}
 	getDefaultPosition(width, columnIndex, rowIndex) {
 		return {
-			width: width ? width : Envs.CELL_WIDTH,
+			width: width,
 			col: columnIndex ? columnIndex : 9999,
 			row: rowIndex ? rowIndex : 9999
 		};

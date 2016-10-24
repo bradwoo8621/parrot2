@@ -75,11 +75,12 @@ $(function() {
 			collapsible: true,
 			collapsibleStyle: 'lead',
 			children: {
-				'icon': {
+				icon: {
 					comp: {
 						type: Envs.COMPONENT_TYPES.ICON,
 						icon: 'ban'
-					}
+					},
+					pos: {width: 3}
 				}
 			}
 		}
@@ -102,7 +103,8 @@ $(function() {
 							comp: {
 								type: Envs.COMPONENT_TYPES.ICON,
 								icon: 'ban'
-							}
+							},
+							pos: {width: 3}
 						}
 					}
 				}
