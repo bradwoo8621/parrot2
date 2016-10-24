@@ -28,6 +28,7 @@ $(function() {
 		});
 	});
 	let layout = new Layout('name', {
+		label: 'Name',
 		comp: {
 			placeholder: 'Input here',
 			lead: {
@@ -57,12 +58,14 @@ $(function() {
 	});
 
 	let layout2 = new Layout('amount', {
+		label: 'Amount',
 		comp: {
 			placeholder: 'Amount',
 			formatter: {
 				display: Envs.NUMBER_FORMATTER,
 				model: Envs.NUMBER_PARSER
-			}
+			},
+			labelPosition: 'left'
 		},
 		styles: {comp: 'n-text-right'}
 	});

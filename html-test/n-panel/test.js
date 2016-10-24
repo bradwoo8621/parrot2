@@ -111,30 +111,19 @@ $(function() {
 				'checked': {
 					label: 'Check Me',
 					comp: {
-						type: Envs.COMPONENT_TYPES.CHECK,
+						type: Envs.COMPONENT_TYPES.CHECK_NL,
 						labelDisplay: true
-					},
-					evt: {
-						click: function(evt) {
-							evt.preventDefault();
-							let checked = this.getModel().get('checked');
-							if (checked) {
-								this.getContainer().expand();
-							} else {
-								this.getContainer().collapse();
-							}
-						},
-						keypress: function(evt) {
-							if (evt.charCode === 32) {
-								evt.preventDefault();
-								let checked = this.getModel().get('checked');
-								if (checked) {
-									this.getContainer().expand();
-								} else {
-									this.getContainer().collapse();
-								}
-							}
-						}
+					}
+				}
+			},
+			watch: {
+				depends: 'checked',
+				rule: function() {
+					let checked = this.getModel().get('checked');
+					if (checked) {
+						this.expand();
+					} else {
+						this.collapse();
 					}
 				}
 			}

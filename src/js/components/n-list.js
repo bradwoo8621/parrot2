@@ -46,7 +46,7 @@ class NList extends NCodeTableComponent(NComponent) {
 							});
 		let layout = new Layout('value', {
 			comp: {
-				type: Envs.COMPONENT_TYPES.CHECK
+				type: Envs.COMPONENT_TYPES.CHECK_NL
 			},
 			evt: {
 				'jq.keydown': this.onItemKeyDown
@@ -284,7 +284,7 @@ class NList extends NCodeTableComponent(NComponent) {
 	}
 }
 
-Envs.COMPONENT_TYPES.LIST = {type: 'n-list'};
+Envs.COMPONENT_TYPES.LIST = {type: 'n-list', label: true, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.LIST.type, function (options) {
 	return <NList {...options} />;
 });

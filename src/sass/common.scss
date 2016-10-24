@@ -87,6 +87,16 @@ li {
 	float: right;
 }
 
+.n-comp-label-top {
+	> .n-comp-label,
+	> .n-comp {
+		width: 100%;
+	}
+}
+
+.n-comp-label-left {
+}
+
 .n-control {
 	line-height: $line-height;
 	height: $line-height;

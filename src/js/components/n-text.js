@@ -173,7 +173,7 @@ class NText extends NAddonComponent {
 	}
 }
 
-Envs.COMPONENT_TYPES.TEXT = {type: 'n-text'};
+Envs.COMPONENT_TYPES.TEXT = {type: 'n-text', label: true, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TEXT.type, function (options) {
 	return <NText {...options} />;
 });

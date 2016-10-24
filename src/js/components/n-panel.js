@@ -177,15 +177,32 @@ class NPanel extends NCollapsibleContainer {
 		return this.state.expanded;
 	}
 
+	expand() {
+		if (this.refs.header) {
+			this.refs.header.expand();
+		} else {
+			this.refs.body.expand();
+			super.expand();
+		}
+	}
+	collapse() {
+		if (this.refs.header) {
+			this.refs.header.collapse();
+		} else {
+			this.refs.body.collapse();
+			super.collapse();
+		}
+	}
+
 	onExpandChanged(evt) {
 		switch(evt.type) {
 			case 'expand':
 				this.refs.body.expand();
-				this.expand();
+				super.expand();
 				break;
 			case 'collapse':
 				this.refs.body.collapse();
-				this.collapse();
+				super.collapse();
 				break;
 		}
 	}

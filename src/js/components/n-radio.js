@@ -151,11 +151,11 @@ class NRadioButton extends NCodeTableComponent(NComponent) {
 	}
 }
 
-Envs.COMPONENT_TYPES.RADIO = {type: 'n-radio'};
+Envs.COMPONENT_TYPES.RADIO = {type: 'n-radio', label: true, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.RADIO.type, function (options) {
 	return <NRadio {...options} />;
 });
-Envs.COMPONENT_TYPES.RADIO_BUTTON = {type: 'n-radio-button'};
+Envs.COMPONENT_TYPES.RADIO_BUTTON = {type: 'n-radio-button', label: true, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.RADIO_BUTTON.type, function (options) {
 	return <NRadioButton {...options} />;
 });

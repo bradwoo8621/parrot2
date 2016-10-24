@@ -71,7 +71,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 							});
 		let layout = new Layout('value', {
 			comp: {
-				type: Envs.COMPONENT_TYPES.CHECK
+				type: Envs.COMPONENT_TYPES.CHECK_NL
 			},
 			evt: {
 				'jq.keydown': this.onItemKeyDown
@@ -677,7 +677,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 	}
 }
 
-Envs.COMPONENT_TYPES.TREE = {type: 'n-tree'};
+Envs.COMPONENT_TYPES.TREE = {type: 'n-tree', label: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TREE.type, function (options) {
 	return <NTree {...options} />;
 });

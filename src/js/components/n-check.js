@@ -77,7 +77,7 @@ class NArrayCheck extends NCodeTableComponent(NComponent) {
 		let layout = {
 			label: item.text,
 			comp: {
-				type: Envs.COMPONENT_TYPES.CHECK,
+				type: Envs.COMPONENT_TYPES.CHECK_NL,
 				textOnLeft: this.isTextOnLeft(),
 				labelDisplay: true
 			}
@@ -187,15 +187,16 @@ class NToggle extends NComponent {
 	}
 }
 
-Envs.COMPONENT_TYPES.CHECK = {type: 'n-check'};
+Envs.COMPONENT_TYPES.CHECK = {type: 'n-check', label: true, error: true};
+Envs.COMPONENT_TYPES.CHECK_NL = {type: 'n-check', label: false, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.CHECK.type, function (options) {
 	return <NCheck {...options} />;
 });
-Envs.COMPONENT_TYPES.ARRAY_CHECK = {type: 'n-array-check'};
+Envs.COMPONENT_TYPES.ARRAY_CHECK = {type: 'n-array-check', label: true, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.ARRAY_CHECK.type, function (options) {
 	return <NArrayCheck {...options} />;
 });
-Envs.COMPONENT_TYPES.TOGGLE = {type: 'n-toggle'};
+Envs.COMPONENT_TYPES.TOGGLE = {type: 'n-toggle', label: true, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TOGGLE.type, function (options) {
 	return <NToggle {...options} />;
 });

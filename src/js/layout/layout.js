@@ -26,8 +26,7 @@ class Layout {
 		return layout;
 	}
 	static buildLayoutByProps(props) {
-		let layout = Layout.toStereo(props);
-		return new Layout(layout.id, layout);
+		return new Layout(props['n-id'], {}).mergeLayoutFromProps(props);
 	}
 
 	// id: string
@@ -35,11 +34,12 @@ class Layout {
 	constructor(id, layout) {
 		this.id = id;
 		this.layout = layout ? layout : {};
+		this.initialLayout = layout;
 	}
 	mergeLayoutFromProps(props) {
 		let fromProps = Layout.toStereo(props);
 		if (Object.keys(fromProps).length != 0) {
-			this.layout = Envs.deepMergeTo({}, this.layout, Layout.toStereo(props));
+			this.layout = Envs.deepMergeTo({}, this.initialLayout, fromProps);
 		}
 		return this;
 	}
@@ -47,11 +47,7 @@ class Layout {
 	getType() {
 		let type = this.getOptionValue('type');
 		if (type) {
-			if (typeof type === 'string') {
-				return this.buildDefaultType(type);
-			} else {
-				return type;
-			}
+			return this.buildDefaultType(type);
 		} else {
 			return this.buildDefaultType();
 		}
@@ -61,12 +57,29 @@ class Layout {
 	}
 	buildDefaultType(type) {
 		type = type ? type : 'n-text';
-		return {
-			type: type,
-			label: typeof type.label !== 'undefined' ? type.label : true,
-			error: typeof type.error !== 'undefined' ? type.error : true,
-			popover: typeof type.popover !== 'undefined' ? type.popover : Envs.COMPONENT_ERROR_POPOVER
-		};
+		if (typeof type === 'string') {
+			return {
+				type: type,
+				label: false,
+				error: true,
+				popover: Envs.COMPONENT_ERROR_POPOVER
+			};
+		} else {
+			return Envs.deepMergeTo({
+				label: false,
+				error: true,
+				popover: Envs.COMPONENT_ERROR_POPOVER
+			}, type);
+		}
+	}
+	isLabelShown() {
+		return this.getType().label;
+	}
+	isErrorShown() {
+		return this.getType().error;
+	}
+	isErrorShownAsPopover() {
+		return this.getType().popover;
 	}
 
 	getId() {

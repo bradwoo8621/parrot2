@@ -6,6 +6,9 @@ class Envs {
 	constructor() {
 		this.props = {
 			cellWidth: 3,
+			cellColumns: 12,
+			labelPosition: 'top',
+			labelWidth: 4,
 			componentErrorPopover: true,
 			thousandsSeparator: ',',
 			numberPointer: '.',
@@ -64,6 +67,30 @@ class Envs {
 
 	set CELL_WIDTH(value) {
 		this.props.cellWidth = value;
+	}
+
+	get CELL_COLUMNS() {
+		return this.props.cellColumns;
+	}
+
+	set CELL_COLUMNS(value) {
+		this.props.cellColumns = value;
+	}
+
+	get LABEL_WIDTH() {
+		return this.props.labelWidth;
+	}
+
+	set LABEL_WIDTH(value) {
+		this.props.labelWidth = value;
+	}
+
+	get LABEL_POSITION() {
+		return this.props.labelPosition;
+	}
+
+	set LABEL_POSITION(value) {
+		this.props.labelPosition = value;
 	}
 
 	get COMPONENT_ERROR_POPOVER() {

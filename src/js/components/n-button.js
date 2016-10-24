@@ -175,11 +175,11 @@ class NButtonBar extends NContainer {
 	}
 }
 
-Envs.COMPONENT_TYPES.BUTTON = {type: 'n-button'};
+Envs.COMPONENT_TYPES.BUTTON = {type: 'n-button', label: false, popover: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.BUTTON.type, function (options) {
 	return <NButton {...options} />;
 });
-Envs.COMPONENT_TYPES.BUTTON_BAR = {type: 'n-button-bar'};
+Envs.COMPONENT_TYPES.BUTTON_BAR = {type: 'n-button-bar', label: false, popover: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.BUTTON_BAR.type, function (options) {
 	return <NButtonBar {...options} />;
 });

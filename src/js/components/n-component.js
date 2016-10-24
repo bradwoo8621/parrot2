@@ -116,6 +116,7 @@ class NComponent extends React.Component {
 		this.addPostChangeListener(this.bindToThis(this.onModelChanged));
 		this.addPostValidateListener(this.bindToThis(this.onModelValidated));
 		this.detectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected);
+		this.detectMonitors(['watch']);
 	}
 	uninstallUnderlyingMonitors() {
 		this.pointcutPreExecutor.apply(this, arguments);
@@ -139,6 +140,7 @@ class NComponent extends React.Component {
 		this.removePostChangeListener(this.bindToThis(this.onModelChanged));
 		this.removePostValidateListener(this.bindToThis(this.onModelValidated));
 		this.undetectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected);
+		this.undetectMonitors(['watch']);
 	}
 	// life cycle pointcut executor
 	pointcutPreExecutor(pointcut) {
@@ -233,14 +235,19 @@ class NComponent extends React.Component {
 		return this.manageMonitor(key, handler, this.removeDependencyMonitor);
 	}
 	manageMonitor(key, handler, manageFunction) {
-		let def = this.getLayoutOptionValue(key);
-		if (def && def.depends) {
-			let depends = def.depends;
-			depends = Array.isArray(depends) ? depends : [depends];
-			depends.forEach(depend => {
-				manageFunction.call(this, depend, handler);
-			});
-		}
+		this.wrapToArray(this.getLayoutOptionValue(key)).forEach((def) => {
+			if (def && def.depends) {
+				let depends = def.depends;
+				depends = this.wrapToArray(depends);
+				depends.forEach(depend => {
+					if (handler) {
+						manageFunction.call(this, depend, this.bindToThis(handler));
+					} else {
+						manageFunction.call(this, depend, this.bindToThis(def.rule ? def.rule : this.onMonitorChangeDetected));
+					}
+				});
+			}
+		});
 		return this;
 	}
 	detectMonitors(optionKeys, handler) {
@@ -252,7 +259,7 @@ class NComponent extends React.Component {
 	manageMonitors(optionsKeys, handler, manageFunction) {
 		optionsKeys.forEach(key => {
 			// monitor must be bindToThis
-			manageFunction.call(this, key, this.bindToThis(handler));
+			manageFunction.call(this, key, handler);
 		});
 		return this;
 	}
@@ -317,9 +324,64 @@ class NComponent extends React.Component {
 	getLabel() {
 		return this.wrapOptionValue(this.getLayout().getLabel());
 	}
+	isLabelShown() {
+		return this.getLayout().isLabelShown();
+	}
 	// position can be string or function
 	getWidth() {
 		return this.wrapOptionValue(this.getLayout().getWidth());
+	}
+	getLabelWidth() {
+		return this.getLayoutOptionValue('labelWidth', Envs.LABEL_WIDTH);
+	}
+	getComponentInternalWidth(labelWidth) {
+		let compWidth = this.getLayoutOptionValue('compWidth');
+		if (compWidth) {
+			return compWidth;
+		} else {
+			labelWidth = labelWidth ? labelWidth : Envs.LABEL_WIDTH;
+			if (typeof labelWidth === 'number' || typeof labelWidth === 'string') {
+				compWidth = Envs.CELL_COLUMNS - Envs.LABEL_WIDTH;
+			} else {
+				let cellColumns = this.getLayoutOptionValue('cellColumns', Envs.CELL_COLUMNS);
+				compWidth = Object.keys(labelWidth).reduce((prev, next) => {
+					let width = labelWidth[next];
+					if (typeof width === 'number' || typeof width === 'string') {
+						prev[next] = cellColumns - width;
+					}
+					return prev;
+				}, {});
+			}
+			let correct = true;
+			if (typeof compWidth === 'number') {
+				correct = !isNaN(compWidth);
+			} else {
+				correct = Object.keys(compWidth).some((key) => {
+					if (isNaN(compWidth[key])) {
+						return true;
+					}
+				});
+			}
+			if (!correct) {
+				throw {
+					message: 'Cannot compute component internal width on label width',
+					labelWidth: labelWidth
+				};
+			} else {
+				return compWidth;
+			}
+		}
+	}
+	getLabelPosition() {
+		let pos = this.getLayoutOptionValue('labelPosition', Envs.LABEL_POSITION);
+		if (typeof pos === 'string') {
+			return `n-comp-label-${pos}`;
+		} else {
+			return classnames(Object.keys(pos).reduce((prev, next) => {
+				prev[`n-comp-label-${next}`] = pos[next];
+				return prev;
+			}, {}));
+		}
 	}
 	getWidthClassName(width) {
 		if (width == null) {
@@ -526,6 +588,27 @@ class NComponent extends React.Component {
 		return this.getValueFromModel();
 	}
 	render() {
+		if (!this.isVisible()) {
+			return null;
+		}
+		let label = this.getLabel();
+		let labelShown = this.isLabelShown();
+		if (labelShown && label) {
+			let labelWidth = this.getLabelWidth();
+			let compWidth = this.getComponentInternalWidth(labelWidth);
+			return (<div className={classnames('n-row', this.getLabelPosition())}>
+				<div className={classnames('n-comp-label', this.getWidthClassName(labelWidth))}>
+					{label}
+				</div>
+				<div className={classnames('n-comp', this.getWidthClassName(compWidth))}>
+					{this.renderComponent()}
+				</div>
+			</div>);
+		} else {
+			return this.renderComponent();
+		}
+	}
+	renderComponent() {
 		if (this.isViewMode()) {
 			return this.renderInViewMode();
 		} else {

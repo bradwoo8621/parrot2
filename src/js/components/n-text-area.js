@@ -104,7 +104,7 @@ class NTextArea extends NComponent {
 	}
 }
 
-Envs.COMPONENT_TYPES.TEXTAREA = {type: 'n-text-area'};
+Envs.COMPONENT_TYPES.TEXTAREA = {type: 'n-text-area', label: true, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TEXTAREA.type, function (options) {
 	return <NTextArea {...options} />;
 });

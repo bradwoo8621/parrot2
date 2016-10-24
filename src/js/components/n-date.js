@@ -1132,19 +1132,19 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 	}
 }
 
-Envs.COMPONENT_TYPES.DATE_CALENDAR = {type: 'n-date-calendar', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.DATE_CALENDAR = {type: 'n-date-calendar', label: true, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.DATE_CALENDAR.type, function (options) {
 	return <NDateCalendar {...options} />;
 });
-Envs.COMPONENT_TYPES.TIME_CLOCK = {type: 'n-time-clock', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.TIME_CLOCK = {type: 'n-time-clock', label: true, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TIME_CLOCK.type, function (options) {
 	return <NTimeClock {...options} />;
 });
-Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR = {type: 'n-date-time-calendar', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR = {type: 'n-date-time-calendar', label: true, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR.type, function (options) {
 	return <NDateTimeCalendar {...options} />;
 });
-Envs.COMPONENT_TYPES.DATE_PICKER = {type: 'n-date-picker', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.DATE_PICKER = {type: 'n-date-picker', label: true, error: true};
 Envs.setRenderer(Envs.COMPONENT_TYPES.DATE_PICKER.type, function (options) {
 	return <NDate {...options} />;
 });
