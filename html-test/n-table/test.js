@@ -29,6 +29,16 @@ $(function() {
 			gender: 'M'
 		}]
 	});
+	let viewModel = new Model({}).addPostChangeListener('selected', function(evt) {
+		let selected = evt.new;
+		let items = model.get('items');
+		if (items) {
+			items.forEach(function(item) {
+				item.selected = selected;
+			});
+			model.firePostChangeEvent('items', items, items);
+		}
+	});
 	let layout = new Layout('items', {
 		comp: {
 			columns: [{
@@ -49,7 +59,8 @@ $(function() {
 				header: {
 					comp: {
 						type: Envs.COMPONENT_TYPES.CHECK,
-						// TODO 
+						additionalModel: viewModel,
+						usePrimaryModel: false
 					}
 				},
 				dataId: 'selected',
@@ -136,17 +147,24 @@ $(function() {
 		},
 		styles: {
 			comp: 'n-row-md-20c n-row-lg-20c'
+		},
+		evt: {
+			itemChange: function() {
+				console.log(arguments);
+			}
 		}
 	})
 
+	let table = <NTable model={model} layout={layout} />;
 	let panel = (<div className='n-top-container'>
 		<div className='n-row n-in-form'>
 			<div className='n-col-sm-12 n-col-md-12 n-col-lg-11'>
-				<NTable model={model} layout={layout} />
+				{table}
 			</div>
 		</div>
 	</div>);
 	ReactDOM.render(panel, document.getElementById('main'));
 
 	window.testModel = model;
+	window.testViewModel = viewModel;
 });
