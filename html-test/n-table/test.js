@@ -139,8 +139,37 @@ $(function() {
 				},
 				width: {xs: 12, sm: 6, md: 4, lg: 4}
 			}, {
-				header: 'Column E',
-				dataId: 'columnE',
+				header: '',
+				sorter: false,
+				body: {
+					edit: {
+						comp: {
+							type: Envs.COMPONENT_TYPES.ICON,
+							icon: 'pencil'
+						},
+						evt: {
+							click: function() {
+							}
+						}
+					},
+					remove: {
+						comp: {
+							type: Envs.COMPONENT_TYPES.ICON,
+							icon: 'close',
+							visible: {
+								depends: 'age',
+								rule: function() {
+									return this.getModel().get('age') > 18;
+								}
+							}
+						},
+						evt: {
+							click: function() {
+								console.log(this.getModel());
+							}
+						}
+					}
+				},
 				width: {xs: 12, sm: 6, md: 4, lg: 4}
 			}],
 			sortable: true
@@ -155,11 +184,10 @@ $(function() {
 		}
 	})
 
-	let table = <NTable model={model} layout={layout} />;
 	let panel = (<div className='n-top-container'>
 		<div className='n-row n-in-form'>
 			<div className='n-col-sm-12 n-col-md-12 n-col-lg-11'>
-				{table}
+				<NTable model={model} layout={layout} />
 			</div>
 		</div>
 	</div>);

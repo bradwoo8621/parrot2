@@ -20,6 +20,10 @@
     padding-right: 15px;
     padding-left: 15px;
 }
+.n-table-body-cell .n-row .n-icon {
+	line-height: 30px;
+	height: 30px;
+}
 @media (max-width: 767px) {
 	.n-col-xs-index,
 	.n-col-xs-select,

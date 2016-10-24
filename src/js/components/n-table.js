@@ -158,7 +158,7 @@ class NTableHeader extends NTableContainer(NHierarchyComponent) {
 		}
 		let ret = this.fireEventToMonitor($.Event('columnSort', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			nData: {
+			ndata: {
 				column: column,
 				sortType: sortType
 			}
@@ -266,7 +266,7 @@ class NTableBody extends NTableContainer(NHierarchyComponent) {
 		this.forceUpdate();
 		this.fireEventToMonitor($.Event('columnSort', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			nData: {
+			ndata: {
 				column: column,
 				sortType: sortType
 			}
@@ -311,7 +311,8 @@ class NTable extends NTableContainer(NHierarchyComponent) {
 				columns: this.getColumns()
 			},
 			evt: {
-				columnSort: this.onBodyColumnSorted
+				columnSort: this.onBodyColumnSorted,
+				itemChange: this.onItemChanged
 			}
 		}, this.getTableBodyLayout());
 
@@ -359,9 +360,19 @@ class NTable extends NTableContainer(NHierarchyComponent) {
 	onBodyColumnSorted = (evt) => {
 		this.fireEventToMonitor($.Event('columnSort', {
 			target: ReactDOM.findDOMNode(this.refs.me),
-			nData: {
-				column: evt.nData.column,
-				sortType: evt.nData.sortType
+			ndata: {
+				column: evt.ndata.column,
+				sortType: evt.ndata.sortType
+			}
+		}));
+	}
+	onItemChanged = (evt) => {
+		this.fireEventToMonitor($.Event('itemChange', {
+			target: ReactDOM.findDOMNode(this.refs.me),
+			ndata: {
+				itemModel: evt.ndata.itemModel,
+				itemIndex: evt.ndata.itemIndex,
+				originalEvent: evt.ndata.originalEvent
 			}
 		}));
 	}
