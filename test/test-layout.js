@@ -38,7 +38,7 @@ describe('Layout', function() {
 			assert.equal('n-text', type.type);
 			assert.equal(true, type.error);
 			assert.equal(true, type.popover);
-			assert.equal(true, type.label);
+			assert.equal(false, type.label);
 		});
 	});
 	describe('#getId', function() {
