@@ -329,10 +329,7 @@ class NComponent extends React.Component {
 	}
 	// position can be string or function
 	getWidth() {
-		return this.wrapOptionValue(this.getLayout().getWidth(), this.getDefaultCellWidth());
-	}
-	getDefaultCellWidth() {
-		return Envs.CELL_WIDTH;
+		return this.wrapOptionValue(this.getLayout().getWidth());
 	}
 	getLabelWidth() {
 		return this.getLayoutOptionValue('labelWidth', Envs.LABEL_WIDTH);
@@ -388,7 +385,7 @@ class NComponent extends React.Component {
 	}
 	getWidthClassName(width) {
 		if (arguments.length === 0) {
-			throw 'Width cannot be undefined';
+			throw 'At least one parameter be passed';
 		}
 		if (width == null) {
 			return '';
@@ -396,7 +393,7 @@ class NComponent extends React.Component {
 		let type = typeof width;
 		if (type === 'number' || type === 'string') {
 			// only returns xs and sm, cover all sizes
-			return `n-col-xs-${width} n-col-sm-${width}`;
+			return `n-col-sm-${width}`;
 		} else {
 			return classnames(Object.keys(width).reduce((prev, next) => {
 				let value = width[next];
