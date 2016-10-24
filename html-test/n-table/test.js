@@ -112,7 +112,7 @@ $(function() {
 							type: Envs.COMPONENT_TYPES.LABEL,
 							textFromModel: false
 						},
-						pos: {col: 10}
+						pos: {col: 10, width: 6}
 					},
 					b: {
 						label: 'Age',
@@ -120,7 +120,7 @@ $(function() {
 							type: Envs.COMPONENT_TYPES.LABEL,
 							textFromModel: false
 						},
-						pos: {col: 20}
+						pos: {col: 20, width: 6}
 					}
 				},
 				body: {
@@ -128,13 +128,13 @@ $(function() {
 						comp: {
 							type: Envs.COMPONENT_TYPES.TEXT
 						},
-						pos: {col: 10}
+						pos: {col: 10, width: 6}
 					},
 					age: {
 						comp: {
 							type: Envs.COMPONENT_TYPES.TEXT
 						},
-						pos: {col: 20}
+						pos: {col: 20, width: 6}
 					}
 				},
 				width: {xs: 12, sm: 6, md: 4, lg: 4}
