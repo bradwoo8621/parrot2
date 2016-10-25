@@ -53,7 +53,9 @@ class Envs {
 			treeLeafIcon: 'file-o',
 			treeMaxHeight: 300,
 			listMaxHeight: 300,
-			tableColumnsOfGrid: 12
+			tableColumnsOfGrid: 12,
+			dropdownMaxHeight: 300,
+			dropdownMinWidth: 300
 		};
 		this.viewModeRenderers = {};
 		this.renderers = {};
@@ -291,6 +293,22 @@ class Envs {
 
 	set TABLE_COLUMNS_OF_GRID(value) {
 		this.props.tableColumnsOfGrid = value;
+	}
+
+	get DROPDOWN_MAX_HEIGHT() {
+		return this.props.dropdownMaxHeight;
+	}
+
+	set DROPDOWN_MAX_HEIGHT(value) {
+		this.props.dropdownMaxHeight = value;
+	}
+
+	get DROPDOWN_MIN_WIDTH() {
+		return this.props.dropdownMinWidth;
+	}
+
+	set DROPDOWN_MIN_WIDTH(value) {
+		this.props.dropdownMinWidth = value;
 	}
 
 	getRenderer(type) {

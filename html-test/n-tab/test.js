@@ -46,7 +46,9 @@ $(function() {
 					}
 				},
 				children: {
-					name: {}
+					name: {
+						pos: {width: 4}
+					}
 				}
 			}, {
 				label: function() {
@@ -67,7 +69,9 @@ $(function() {
 				}
 			},
 			children: {
-				amount: {}
+				amount: {
+					pos: {width: 5}
+				}
 			}
 		},
 		evt: {
@@ -100,7 +104,9 @@ $(function() {
 			addable: true,
 			removable: true,
 			children: {
-				age: {}
+				age: {
+					pos: {width: 6}
+				}
 			},
 			leadChildren: {
 				icon: {

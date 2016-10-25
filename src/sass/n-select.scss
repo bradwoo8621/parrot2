@@ -1,0 +1,20 @@
+.n-select {
+	position: relative;
+	display: inline-table;
+	vertical-align: middle;
+	border-collapse: collapse;
+	input {
+		display: table-cell;
+		width: 100%;
+	}
+	.n-input-addon {
+		.n-icon {
+			margin-left: $margin-3;
+			margin-right: $margin-3;
+		}
+	}
+
+	.n-dropdown {
+		width: 100%;
+	}
+}

@@ -17,6 +17,7 @@ module.exports = {
 		'n-list': './html-test/n-list/test.js',
 		'n-panel': './html-test/n-panel/test.js',
 		'n-radio': './html-test/n-radio/test.js',
+		'n-select': './html-test/n-select/test.js',
 		'n-tab': './html-test/n-tab/test.js',
 		'n-table': './html-test/n-table/test.js',
 		'n-text': './html-test/n-text/test.js',

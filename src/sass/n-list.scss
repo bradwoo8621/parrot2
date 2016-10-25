@@ -41,12 +41,18 @@
 			line-height: $line-height;
 			height: $line-height;
 			float: left;
+			+ .n-list-item-text {
+				width: calc(100% - 0.25rem);
+			}
+			+ .n-check + .n-list-item-text {
+				width: calc(100% - 0.55rem);
+			}
 		}
 		.n-check {
 			float: left;
 			margin-right: 0.1rem;
 			+ .n-list-item-text {
-				width: calc(100% - 0.55rem);
+				width: calc(100% - 0.3rem);
 			}
 		}
 		.n-list-item-text {
@@ -54,9 +60,6 @@
 			display: inline-block;
 			width: 100%;
 			word-wrap: break-word;
-		}
-		.n-list-item-icon + .n-list-item-text {
-			width: calc(100% - 0.25rem);
 		}
 	}
 }
