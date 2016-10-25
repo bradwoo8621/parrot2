@@ -29,20 +29,30 @@ const NIconRenderer = (ParentClass) => class extends ParentClass {
 
 class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComponent))) {
 	renderDropdown() {
-		let options = {
-			model: this.getModel(),
-			'n-id': this.getDataId(),
-			'n-comp-codes': this.getCodeTable(),
-			'n-comp-minHeight': this.getDropdownMinHeight(),
-			'n-comp-maxHeight': this.getDropdownMaxHeight(),
-			'n-comp-minWidth': this.getDropdownMinWidth(),
-			'n-comp-maxWidth': this.getDropdownMaxWidth(),
-			'n-comp-checkable': true,
-			'n-styles-comp': 'n-dropdown',
-			container: this,
+		let layout = Envs.deepMergeTo({
+			comp: {
+				type: Envs.COMPONENT_TYPES.LIST,
+				noWrap: false
+			}
+		}, this.getDropdownLayout(), {
+			comp: {
+				checkable: true,
+				codes: this.getCodeTable(),
+				multiple: this.isMultiple()
+			}
+		});
+		if (!layout.styles) {
+			layout.styles = {};
+		}
+		if (!layout.styles.comp) {
+			layout.styles.comp = 'n-dropdown';
+		} else {
+			layout.styles.comp += ' n-dropdown';
+		}
+
+		return this.renderInternalComponent(layout, {
 			ref: 'dropdown'
-		};
-		return <NList {...options} />;
+		});
 	}
 	renderCalendarIcon() {
 		return (<div className='n-input-addon'>
@@ -91,17 +101,11 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 	getComponent() {
 		return $(ReactDOM.findDOMNode(this.refs.txt));
 	}
-	getDropdownMinHeight() {
-		return this.getLayoutOptionValue('minHeight');
+	getDropdownLayout() {
+		return this.getLayoutOptionValue('dropdown', {});
 	}
-	getDropdownMaxHeight() {
-		return this.getLayoutOptionValue('maxHeight', Envs.DROPDOWN_MAX_HEIGHT);
-	}
-	getDropdownMinWidth() {
-		return this.getLayoutOptionValue('minWidth', Envs.DROPDOWN_MIN_WIDTH);
-	}
-	getDropdownMaxWidth() {
-		return this.getLayoutOptionValue('maxWidth');
+	isMultiple() {
+		return this.getLayoutOptionValue('multiple', false);
 	}
 
 	onComponentKeyPressed = (evt) => {

@@ -35,17 +35,27 @@ $(function() {
 			old: evt.old
 		});
 	});
-	let layout = new Layout('value', {
+	let layoutL = new Layout('value', {
 		label: 'Check Me',
 		comp: {
 			codes: codes,
+		}
+	});
+	let layoutLM = new Layout('values', {
+		label: 'Check Me',
+		comp: {
+			codes: codes,
+			multiple: true
 		}
 	});
 
 	let panel = (<div className='n-top-container'>
 		<div className='n-row'>
 			<div className='n-col-sm-6 n-col-md-3'>
-				<NSelect model={model} layout={layout} />
+				<NSelect model={model} layout={layoutL} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NSelect model={model} layout={layoutLM} />
 			</div>
 		</div>
 	</div>);

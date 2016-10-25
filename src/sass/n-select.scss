@@ -16,5 +16,28 @@
 
 	.n-dropdown {
 		width: 100%;
+		&.n-list {
+			.n-list-item {
+				.n-check {
+					float: right;
+					margin-right: 0;
+					margin-left: 0.1rem;
+					&.n-checked {
+						.n-check-text:before {
+							display: inline-block;
+							font: normal normal normal 14px/1 FontAwesome;
+							font-size: inherit;
+							text-rendering: auto;
+							-webkit-font-smoothing: antialiased;
+							-moz-osx-font-smoothing: grayscale;
+							content: '\f00c';
+						}
+					}
+					.n-check-box {
+						display: none;
+					}
+				}
+			}
+		}
 	}
 }
