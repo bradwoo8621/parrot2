@@ -28,6 +28,32 @@ const NIconRenderer = (ParentClass) => class extends ParentClass {
 }
 
 class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComponent))) {
+	postWillUpdate() {
+		this.getComponent().off('change', this.onComponentChanged);
+	}
+	postDidUpdate() {
+		this.setValueToText();
+		this.getComponent().on('change', this.onComponentChanged);
+	}
+	postDidMount() {
+		this.setValueToText();
+		this.getComponent().on('change', this.onComponentChanged);
+	}
+	postWillUnmount() {
+		this.getComponent().off('change', this.onComponentChanged);
+	}
+	setValueToText() {
+		if (this.isMultiple()) {
+			return;
+		}
+		let component = this.getComponent();
+		let value = this.getValueFromModel();
+		if (value == null) {
+			component.val('');
+		} else {
+			component.val(this.getCodeTable().getText(value));
+		}
+	}
 	renderDropdown() {
 		let layout = Envs.deepMergeTo({
 			comp: {
@@ -39,6 +65,9 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 				checkable: true,
 				codes: this.getCodeTable(),
 				multiple: this.isMultiple()
+			},
+			evt: {
+				itemCheckChange: this.onItemCheckChanged
 			}
 		});
 		if (!layout.styles) {
@@ -70,16 +99,16 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 	}
 	renderText() {
 		return (<input type='text'
-		               className='n-control'
-		               disabled={!this.isEnabled()}
-		               placeholder={this.getPlaceholder()}
+					   className='n-control'
+					   disabled={!this.isEnabled()}
+					   placeholder={this.getPlaceholder()}
 
-		               onKeyPress={this.onComponentKeyPressed}
-		               onChange={this.onComponentChanged}
-		               onFocus={this.onComponentFocused}
-		               onBlur={this.onComponentBlurred}
+					   onKeyPress={this.onComponentKeyPressed}
+					   onChange={this.onComponentChanged}
+					   onFocus={this.onComponentFocused}
+					   onBlur={this.onComponentBlurred}
 
-		               ref='txt'/>);
+					   ref='txt'/>);
 	}
 	renderInNormal() {
 		let className = classnames(this.getComponentStyle());
@@ -107,9 +136,17 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 	isMultiple() {
 		return this.getLayoutOptionValue('multiple', false);
 	}
+	getValueFromModel() {
+		return this.isMultiple() ? 
+					this.wrapToArray(super.getValueFromModel()) : 
+					super.getValueFromModel();
+	}
 
+	onComponentChanged = (evt) => {
+		// TODO filter dropdown options according to current text
+		this.showDropdown();
+	}
 	onComponentKeyPressed = (evt) => {
-		evt.preventDefault();
 		this.onComponentChanged(evt);
 	}
 	onComponentFocused = (evt) => {
@@ -122,6 +159,7 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 		if (this.isEnabled()) {
 			evt.preventDefault();
 			this.setValueToModel(null);
+			this.showDropdown();
 		}
 		$(ReactDOM.findDOMNode(this.refs.txt)).focus();
 	}
@@ -130,6 +168,17 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 			evt.preventDefault();
 			this.showDropdown();
 		}
+	}
+	onItemCheckChanged = (evt) => {
+		this.forceUpdate(() => {
+			this.fireEventToMonitor($.Event('itemCheckChange', {
+				target: ReactDOM.findDOMNode(this.refs.me),
+				ndata: {
+					items: this.wrapToArray(evt.ndata.item || evt.ndata.items),
+					checked: evt.ndata.checked
+				}
+			}));
+		});
 	}
 }
 

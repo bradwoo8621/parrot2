@@ -1085,7 +1085,6 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 
 	// dom event
 	onComponentKeyPressed = (evt) => {
-		evt.preventDefault();
 		this.onComponentChanged(evt);
 	}
 	onComponentFocused = (evt) => {
@@ -1100,6 +1099,7 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 		if (this.isEnabled()) {
 			evt.preventDefault();
 			this.setValueToModel(null);
+			this.showDropdown();
 		}
 		$(ReactDOM.findDOMNode(this.refs.txt)).focus();
 	}

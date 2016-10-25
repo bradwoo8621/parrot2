@@ -131,12 +131,9 @@ class NList extends NCodeTableComponent(NComponent) {
 	}
 
 	getValueFromModel() {
-		if (this.isMultipleCheck()) {
-			let values = super.getValueFromModel();
-			return values ? values : [];
-		} else {
-			return super.getValueFromModel();
-		}
+		return this.isMultipleCheck() ? 
+					this.wrapToArray(super.getValueFromModel()) : 
+					super.getValueFromModel();
 	}
 	isItemChecked(item) {
 		if (this.isMultipleCheck()) {
