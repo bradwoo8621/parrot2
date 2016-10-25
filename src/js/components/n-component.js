@@ -10,30 +10,30 @@ import {Layout} from '../layout/layout'
 let $ = jQuery;
 
 // https://gist.github.com/beiyuu/2029907
-$.fn.select = function(start, end) {
-	let $this = $(this);
-	if (!this || this.length == 0) {
-		return $this;
-	}
-    let el = this[0];
-    if (!el) {
-    } else if (el.setSelectionRange) { /* WebKit, IE9+ */
-    	if (start != null) {
-    		end = end == null ? $(this).val().length : end;
-	    	el.setSelectionRange(start, end); 
-	    } else {
-	    	let start = Math.min(el.selectionStart, el.selectionEnd);
-	    	let end = Math.max(el.selectionStart, el.selectionEnd);
-	    	return {
-	    		start: start,
-	    		end: end,
-	    		length: end - start,
-	    		text: $this.val().substring(start, end)
-	    	};
-	    }
-	}
-    return $this;
-};
+// $.fn.select = function(start, end) {
+// 	let $this = $(this);
+// 	if (!this || this.length == 0) {
+// 		return $this;
+// 	}
+//     let el = this[0];
+//     if (!el) {
+//     } else if (el.setSelectionRange) { /* WebKit, IE9+ */
+//     	if (start != null) {
+//     		end = end == null ? $(this).val().length : end;
+// 	    	el.setSelectionRange(start, end); 
+// 	    } else {
+// 	    	let start = Math.min(el.selectionStart, el.selectionEnd);
+// 	    	let end = Math.max(el.selectionStart, el.selectionEnd);
+// 	    	return {
+// 	    		start: start,
+// 	    		end: end,
+// 	    		length: end - start,
+// 	    		text: $this.val().substring(start, end)
+// 	    	};
+// 	    }
+// 	}
+//     return $this;
+// };
 
 class NComponent extends React.Component {
 	state = {}
