@@ -11,25 +11,25 @@
 		@include float-layout-container();
 		.n-select-item {
 			float: left;
-		    border: $border-1;
-		    border-radius: $border-radius;
-		    line-height: 0.24rem;
-		    padding-left: 0.1rem;
-		    padding-right: 0.1rem;
-		    margin-top: 0.02rem;
-		    margin-bottom: 0.02rem;
-		    margin-right: 0.03rem;
-		    .n-select-item-text {
-		    	line-height: 0.24rem;
-		    	display: inline-block;
-		    	float: left;
-		    	width: calc(100% - 0.18rem);
-		    }
-		    .n-select-item-remove-icon {
-		    	float: right;
-		    	width: 0.18rem;
-		    	line-height: 0.24rem;
-		    }
+			border: $border-1;
+			border-radius: $border-radius;
+			line-height: 0.24rem;
+			padding-left: 0.1rem;
+			padding-right: 0.1rem;
+			margin-top: 0.02rem;
+			margin-bottom: 0.02rem;
+			margin-right: 0.03rem;
+			.n-select-item-text {
+				line-height: 0.24rem;
+				display: inline-block;
+				float: left;
+				width: calc(100% - 0.18rem);
+			}
+			.n-select-item-remove-icon {
+				float: right;
+				width: 0.18rem;
+				line-height: 0.24rem;
+			}
 		}
 	}
 	input {
