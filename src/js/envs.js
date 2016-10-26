@@ -55,7 +55,8 @@ class Envs {
 			listMaxHeight: 300,
 			tableColumnsOfGrid: 12,
 			dropdownMaxHeight: 300,
-			dropdownMinWidth: 300
+			dropdownMinWidth: 300,
+			selectPlaceholder: 'Please Select...'
 		};
 		this.viewModeRenderers = {};
 		this.renderers = {};
@@ -309,6 +310,14 @@ class Envs {
 
 	set DROPDOWN_MIN_WIDTH(value) {
 		this.props.dropdownMinWidth = value;
+	}
+
+	get SELECT_PLACEHOLDER() {
+		return this.props.selectPlaceholder;
+	}
+
+	set SELECT_PLACEHOLDER(value) {
+		this.props.selectPlaceholder = value;
 	}
 
 	getRenderer(type) {

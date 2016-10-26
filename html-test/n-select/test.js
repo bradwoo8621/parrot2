@@ -54,6 +54,14 @@ $(function() {
 		label: 'Check Me',
 		comp: {
 			codes: codes,
+			placeholder: 'Please Select...'
+		}
+	});
+	let layoutLF = new Layout('value', {
+		label: 'Check Me',
+		comp: {
+			codes: codes,
+			filter: true
 		}
 	});
 	let layoutLM = new Layout('values', {
@@ -63,6 +71,14 @@ $(function() {
 			multiple: true
 		}
 	});
+	let layoutLMF = new Layout('values', {
+		label: 'Check Me',
+		comp: {
+			codes: codes,
+			multiple: true,
+			filter: true
+		}
+	});
 
 	let panel = (<div className='n-top-container'>
 		<div className='n-row'>
@@ -70,7 +86,13 @@ $(function() {
 				<NSelect model={model} layout={layoutL} />
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
+				<NSelect model={model} layout={layoutLF} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
 				<NSelect model={model} layout={layoutLM} />
+			</div>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NSelect model={model} layout={layoutLMF} />
 			</div>
 		</div>
 	</div>);

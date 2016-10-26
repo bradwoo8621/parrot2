@@ -31,32 +31,6 @@ const NIconRenderer = (ParentClass) => class extends ParentClass {
 }
 
 class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComponent))) {
-	postWillUpdate() {
-		this.getComponent().off('change', this.onComponentChanged);
-	}
-	postDidUpdate() {
-		this.setValueToText();
-		this.getComponent().on('change', this.onComponentChanged);
-	}
-	postDidMount() {
-		this.setValueToText();
-		this.getComponent().on('change', this.onComponentChanged);
-	}
-	postWillUnmount() {
-		this.getComponent().off('change', this.onComponentChanged);
-	}
-	setValueToText() {
-		if (this.isMultiple()) {
-			return;
-		}
-		let component = this.getComponent();
-		let value = this.getValueFromModel();
-		if (value == null) {
-			component.val('');
-		} else {
-			component.val(this.getCodeTable().getText(value));
-		}
-	}
 	renderDropdown() {
 		let layout = Envs.deepMergeTo({
 			comp: {
@@ -101,19 +75,6 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 		</div>);
 	}
 	renderText() {
-		return null;
-		return (<input type='text'
-					   className='n-control'
-					   disabled={!this.isEnabled()}
-					   placeholder={this.getPlaceholder()}
-					   readOnly={!this.isFilterable()}
-
-					   onKeyPress={this.onComponentKeyPressed}
-					   onChange={this.onComponentChanged}
-					   onFocus={this.onComponentFocused}
-					   onBlur={this.onComponentBlurred}
-
-					   ref='txt'/>);
 	}
 	renderSelectedItem(value, itemIndex) {
 		let item = this.getCodeTable().getItem(value);
@@ -128,21 +89,39 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 		</li>);
 	}
 	renderSelectedItems() {
-		if (!this.isMultiple()) {
-			return;
+		let value = this.getValueFromModel();
+		if (value == null || value.length == 0) {
+			let placeholder = this.getPlaceholder();
+			return (<div className='n-select-items'>
+				<span className='n-select-placeholder-text'>
+					{placeholder ? placeholder : '\u00a0'}
+				</span>
+			</div>);
 		}
-		return (<ul className='n-select-items'>
-			{this.getValueFromModel().map((value, index) => {
-				return this.renderSelectedItem(value, index);
-			})}
-		</ul>);
+		if (this.isMultiple()) {
+			return (<ul className='n-select-items'>
+				{value.map((value, index) => {
+					return this.renderSelectedItem(value, index);
+				})}
+			</ul>);
+		} else {
+			return (<div className='n-select-items'>
+				<span className='n-select-item-text'>
+					{value == null ? '\u00a0': this.getCodeTable().getText(value)}
+				</span>
+			</div>);
+		}
 	}
 	renderInNormal() {
 		let className = classnames(this.getComponentStyle());
 		return (<div className={className}
+					 tabIndex={this.getTabIndex()}
+					 onFocus={this.onComponentFocused}
+					 onBlur={this.onComponentBlurred}
+					 onClick={this.onComponentClicked}
+					 onKeyUp={this.onComponentKeyUp}
 					 ref='me'>
 			{this.renderSelectedItems()}
-			{this.renderText()}
 			{this.renderCalendarIcon()}
 			{this.renderDropdown()}
 			{this.renderNormalLine()}
@@ -153,7 +132,7 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 		return 'n-select';
 	}
 	getPlaceholder() {
-		return this.getLayoutOptionValue('placeholder');
+		return this.getLayoutOptionValue('placeholder', Envs.SELECT_PLACEHOLDER);
 	}
 	getComponent() {
 		return $(ReactDOM.findDOMNode(this.refs.txt));
@@ -164,6 +143,9 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 	isFilterable() {
 		return this.getLayoutOptionValue('filter', false);
 	}
+	getFilterPlaceHolder() {
+		return this.getLayoutOptionValue('filterPlaceholder');
+	}
 	isMultiple() {
 		return this.getLayoutOptionValue('multiple', false);
 	}
@@ -173,20 +155,30 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 					super.getValueFromModel();
 	}
 
-	onComponentChanged = (evt) => {
-		// TODO filter dropdown options according to current text
-		this.showDropdown();
-	}
-	onComponentKeyPressed = (evt) => {
-		this.onComponentChanged(evt);
-	}
 	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();
 	}
 	onComponentBlurred = (evt) => {
 		this.onComponentFocusChanged();
 	}
+	onComponentClicked = (evt) => {
+		if (evt.isDefaultPrevented()) {
+			return;
+		}
+		evt.preventDefault();
+		this.showDropdown();
+	}
+	onComponentUpArrowKeyUp(evt) {
+		evt.preventDefault();
+		this.showDropdown();
+	}
+	onComponentKeyUp = (evt) => {
+		if (evt.keyCode === 40) {
+			this.onComponentUpArrowKeyUp(evt);
+		}
+	}
 	onItemClearIconClicked(value, evt) {
+		evt.preventDefault();
 		let values = this.getValueFromModel();
 		let index = values.findIndex((v) => {
 			return value == v;
@@ -207,6 +199,7 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 		}
 	}
 	onClearIconClicked = (evt) => {
+		evt.preventDefault();
 		if (this.isEnabled()) {
 			evt.preventDefault();
 			this.setValueToModel(null);

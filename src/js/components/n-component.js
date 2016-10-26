@@ -758,6 +758,7 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 			return;
 		}
 		if (evt.keyCode === 27) {
+			// escape
 			this.hideDropdown();
 		}
 	}

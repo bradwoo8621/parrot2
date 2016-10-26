@@ -2,12 +2,14 @@
 	position: relative;
 	display: block;
 	border-collapse: collapse;
+	outline: none;
 	@include float-layout-container();
 	.n-select-items {
 		display: block;
 		position: relative;
 		float: left;
 		width: calc(100% - 0.48rem);
+		cursor: pointer;
 		@include float-layout-container();
 		.n-select-item {
 			float: left;
@@ -31,13 +33,13 @@
 				line-height: 0.24rem;
 			}
 		}
-	}
-	input {
-		display: table-cell;
-		width: 100%;
-	}
-	input[readonly] {
-		cursor: pointer;
+		> .n-select-item-text,
+		> .n-select-placeholder-text {
+			display: block;
+		}
+		> .n-select-placeholder-text {
+			opacity: 0.7;
+		}
 	}
 	.n-input-addon {
 		display: block;
@@ -58,22 +60,28 @@
 		&.n-list {
 			.n-list-item {
 				.n-check {
-					float: right;
-					margin-right: 0;
-					margin-left: 0.1rem;
-					&.n-checked {
-						.n-check-text:before {
-							display: inline-block;
+					display: none;
+					+ .n-list-item-text {
+						width: 100%;
+					}
+					&.n-checked + .n-list-item-text {
+						width: calc(100% - 0.3rem);
+						&:after {
+							display: block;
 							font: normal normal normal 14px/1 FontAwesome;
 							font-size: inherit;
 							text-rendering: auto;
 							-webkit-font-smoothing: antialiased;
 							-moz-osx-font-smoothing: grayscale;
 							content: '\f00c';
+							position: absolute;
+							top: 0;
+							right: -0.3rem;
+							width: 0.3rem;
+							line-height: $line-height;
+							height: $line-height;
+							text-align: right;
 						}
-					}
-					.n-check-box {
-						display: none;
 					}
 				}
 			}
