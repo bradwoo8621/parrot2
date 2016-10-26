@@ -19,12 +19,27 @@ $(function() {
 		}, {
 			id: 2, 
 			text: 'Item 2'
-		}]
-	});
-	let longTextCodes = new CodeTable({
-		items: [{
-			id: 1,
+		}, {
+			id: 3,
 			text: 'World Map 世界地图 ; 世界地图 ; 全世界电子地图 ; 地界地图'
+		}, {
+			id: 4, 
+			text: 'Item 4'
+		}, {
+			id: 5, 
+			text: 'Item 5'
+		}, {
+			id: 6, 
+			text: 'Item 6'
+		}, {
+			id: 7, 
+			text: 'Item 7'
+		}, {
+			id: 8, 
+			text: 'Item 8'
+		}, {
+			id: 9, 
+			text: 'Item 9'
 		}]
 	});
 	let model = new Model({

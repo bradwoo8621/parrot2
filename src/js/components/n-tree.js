@@ -648,7 +648,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 		let bg = $(ReactDOM.findDOMNode(this.refs.background));
 		let container = $(ReactDOM.findDOMNode(this.refs.me));
 		let containerOffset = container.offset();
-		let top = evt.clientY - containerOffset.top;
+		let top = evt.clientY + $(window).scrollTop() - containerOffset.top;
 		let found = container.find('.n-tree-node-text').toArray().some((dom) => {
 			let text = $(dom);
 			let offset = text.offset();
