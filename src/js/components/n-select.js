@@ -32,7 +32,7 @@ const NIconRenderer = (ParentClass) => class extends ParentClass {
 
 class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComponent))) {
 	renderDropdown() {
-		let layout = Envs.deepMergeTo({
+		let layout = Envs.deepMergeTo({}, {
 			comp: {
 				type: Envs.COMPONENT_TYPES.LIST,
 				noWrap: false

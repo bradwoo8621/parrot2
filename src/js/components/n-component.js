@@ -771,6 +771,8 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 		if (!me.hasClass('n-dropdown-open')) {
 			$(document).on('mousedown', this.bindToThis(this.onDocumentMouseDown))
 					   .on('keyup', this.bindToThis(this.onDocumentKeyUp));
+			// TODO close other dropdowns, but no event fired
+			$('.n-dropdown-open').removeClass('n-dropdown-open');
 			me.addClass('n-dropdown-open');
 			this.recalcDropdownPosition(this.getDropdown(), me);
 			this.fireEventToMonitor($.Event('dropdownOpen', {target: me[0]}));

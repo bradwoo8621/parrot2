@@ -1,4 +1,5 @@
 import * as SDK from '../../src/js/components/n-select'
+import {NTree}from '../../src/js/components/n-tree'
 
 let {
 	React, 
@@ -79,6 +80,18 @@ $(function() {
 			filter: true
 		}
 	});
+	let layoutT = new Layout('value', {
+		label: 'Check Me',
+		comp: {
+			codes: codes,
+			placeholder: 'Please Select...',
+			dropdown: {
+				comp: {
+					type: Envs.COMPONENT_TYPES.TREE
+				}
+			}
+		}
+	});
 
 	let panel = (<div className='n-top-container'>
 		<div className='n-row'>
@@ -93,6 +106,11 @@ $(function() {
 			</div>
 			<div className='n-col-sm-6 n-col-md-3'>
 				<NSelect model={model} layout={layoutLMF} />
+			</div>
+		</div>
+		<div className='n-row'>
+			<div className='n-col-sm-6 n-col-md-3'>
+				<NSelect model={model} layout={layoutT} />
 			</div>
 		</div>
 	</div>);

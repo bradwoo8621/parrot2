@@ -88,3 +88,15 @@
 		}
 	}
 }
+// IE 9
+@media screen and (min-width:0\0) and (min-resolution: .001dpcm) { 
+	.n-select .n-dropdown.n-list .n-list-item .n-check.n-checked + .n-list-item-text:after {
+		top: 0.15rem;
+	}
+}
+// IE 10 & 11
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	.n-select .n-dropdown.n-list .n-list-item .n-check.n-checked + .n-list-item-text:after  { 
+		top: 0.15rem;
+	}
+}
