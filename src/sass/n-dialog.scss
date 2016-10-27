@@ -1,0 +1,58 @@
+.n-dialog-backdrop {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 0;
+	display: block;
+	overflow: hidden;
+	-webkit-overflow-scrolling: touch;
+	outline: 0;
+	transition: bottom 600ms ease;
+	&.n-dialog-show {
+		overflow-x: hidden;
+		overflow-y: hidden;
+		height: 100vh;
+		&.n-dialog-shown {
+			overflow-y: auto;
+		}
+	}
+}
+.n-dialog {
+	display: block;
+	position: relative;
+	width: auto;
+	margin: 0.3rem auto;
+	border-radius: $border-radius;
+	&.n-dialog-auto-width {
+		width: calc(100% - 100px);
+	}
+	.n-dialog-content {
+		display: block;
+		position: relative;
+		background-color: $container-bg-color;
+		outline: none;
+		box-shadow: 0 0.03rem 0.06rem rgba(0, 0, 0, 0.2);
+	}
+}
+@media #{$media-sm} {
+	.n-dialog {
+		width: 6rem;
+	}
+}
+@media #{$media-md} {
+	.n-dialog {
+		width: 8rem;
+	}
+}
+@media #{$media-lg} {
+	.n-dialog {
+		width: 10rem;
+	}
+}
+// IE 9
+@media screen and (min-width:0\0) and (min-resolution: .001dpcm) { 
+	.n-dialog-backdrop.n-dialog-show {
+		overflow-y: auto;
+	}
+}

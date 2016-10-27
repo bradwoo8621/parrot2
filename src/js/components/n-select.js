@@ -84,7 +84,7 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 			{this.renderIcon({
 				icon: 'close',
 				click: this.onItemClearIconClicked.bind(this, value),
-				style: 'n-select-item-remove-icon'
+				style: '!n-select-item-remove-icon'
 			})}
 		</li>);
 	}
@@ -139,12 +139,6 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 	}
 	getDropdownLayout() {
 		return this.getLayoutOptionValue('dropdown', {});
-	}
-	isFilterable() {
-		return this.getLayoutOptionValue('filter', false);
-	}
-	getFilterPlaceHolder() {
-		return this.getLayoutOptionValue('filterPlaceholder');
 	}
 	isMultiple() {
 		return this.getLayoutOptionValue('multiple', false);

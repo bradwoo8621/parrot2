@@ -125,7 +125,12 @@ class Layout {
 		return this.layout.comp ? this.layout.comp : {};
 	}
 	getOptionValue(key) {
-		return this.getOptions()[key];
+		let options = this.getOptions();
+		if (options[key] && options.propertyIsEnumerable(key)) {
+			return this.getOptions()[key];
+		} else {
+			return null;
+		}
 	}
 
 	getAdditionalModel() {

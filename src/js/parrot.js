@@ -12,3 +12,5 @@ export * from './components/n-table'
 export * from './components/n-text-area'
 export * from './components/n-text'
 export * from './components/n-tree'
+
+export * from './components/n-dialog'

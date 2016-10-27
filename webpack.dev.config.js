@@ -24,6 +24,8 @@ module.exports = {
 		'n-text-area': './html-test/n-text-area/test.js',
 		'n-tree': './html-test/n-tree/test.js',
 
+		'n-dialog': './html-test/n-dialog/test.js',
+
 		// sass
 		'style-default': './src/sass/bundle-default.scss',
 
