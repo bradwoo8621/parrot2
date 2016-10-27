@@ -41,7 +41,6 @@ class NDialogBackdrop extends React.Component {
 			'n-dialog-show': this.state.show
 		});
 		return (<div className={className}
-					 onTransitionEnd={this.onTransitionEnd}
 					 ref='me'>
 			<NDialog {...this.props.dialogOptions}
 					 backdrop={this}
@@ -51,22 +50,19 @@ class NDialogBackdrop extends React.Component {
 	isShown() {
 		return this.state.show;
 	}
+	getDialogId() {
+		if (this.state.id == null) {
+			this.state.id = Math.floor(Math.random() * 1000000);
+		}
+		return this.state.id;
+	}
 	show() {
-		this.setState({
-			show: true
-		});
+		$('body').addClass(`n-dialog-open-${this.getDialogId()}`);
+		this.setState({show: true});
 	}
 	hide() {
-		$(ReactDOM.findDOMNode(this.refs.me)).removeClass('n-dialog-shown');
-		this.setState({
-			show: false
-		});
-	}
-
-	onTransitionEnd = (evt) => {
-		if (this.isShown()) {
-			$(ReactDOM.findDOMNode(this.refs.me)).addClass('n-dialog-shown');
-		}
+		$('body').removeClass(`n-dialog-open-${this.getDialogId()}`);
+		this.setState({show: false});
 	}
 }
 

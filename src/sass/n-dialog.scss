@@ -1,21 +1,23 @@
+body[class*=n-dialog-open-] {
+	overflow-y: hidden;
+}
 .n-dialog-backdrop {
 	position: fixed;
 	top: 0;
 	right: 0;
 	left: 0;
-	height: 0;
-	display: block;
-	overflow: hidden;
+	bottom: 0;
+	visibility: hidden;
+	overflow-x: hidden;
+	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 	outline: 0;
-	transition: bottom 600ms ease;
+	opacity: 0;
+	transition: visibility 0s 0.4s, opacity 0.4s linear;
 	&.n-dialog-show {
-		overflow-x: hidden;
-		overflow-y: hidden;
-		height: 100vh;
-		&.n-dialog-shown {
-			overflow-y: auto;
-		}
+		visibility: visible;
+		opacity: 1;
+		transition: visibility 0s, opacity 0.4s linear;
 	}
 }
 .n-dialog {
@@ -48,11 +50,5 @@
 @media #{$media-lg} {
 	.n-dialog {
 		width: 10rem;
-	}
-}
-// IE 9
-@media screen and (min-width:0\0) and (min-resolution: .001dpcm) { 
-	.n-dialog-backdrop.n-dialog-show {
-		overflow-y: auto;
 	}
 }
