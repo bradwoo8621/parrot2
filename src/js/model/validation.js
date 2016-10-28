@@ -1,7 +1,13 @@
 import {Envs} from '../envs'
 
+// TODO rules
 const GlobalValidationRules = {
-
+	required: null,
+	min: null,
+	max: null,
+	before: null,
+	after: null,
+	child: null
 };
 class Validator {
 	static ALL = '--all'
