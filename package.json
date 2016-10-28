@@ -21,7 +21,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev-build": "webpack --config webpack.dev.config.js"
+    "dev-build": "webpack --config webpack.dev.config.js",
+    "dist": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.13.0",
@@ -52,6 +53,7 @@
     "precss": "^1.4.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webpack-cleanup-plugin": "^0.4.1"
   }
 }
