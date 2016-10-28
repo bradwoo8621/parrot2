@@ -61,7 +61,7 @@ class NCheck extends NComponent {
 		let value = this.getValueFromModel();
 		this.setValueToModel(!value);
 
-		$(ReactDOM.findDOMNode(this.refs.me)).focus();
+		this.$me().focus();
 	}
 	onComponentKeyPressed = (evt) => {
 		if (evt.charCode === 32) {
@@ -166,7 +166,7 @@ class NToggle extends NComponent {
 		let value = this.getValueFromModel();
 		this.setValueToModel(!value);
 
-		$(ReactDOM.findDOMNode(this.refs.me)).focus();
+		this.$me().focus();
 	}
 	onComponentKeyUp = (evt) => {
 		let keycode = evt.keyCode;

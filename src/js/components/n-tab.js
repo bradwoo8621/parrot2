@@ -33,7 +33,7 @@ const NTabContainer = (ParentClass) => class extends ParentClass {
 			activeTabIndex: tabIndex
 		}, () => {
 			this.fireEventToMonitor($.Event('active', {
-				target: ReactDOM.findDOMNode(this.refs.me),
+				target: this.me(),
 				ndata: {
 					tab: this.getActiveTab(),
 					tabIndex: tabIndex
@@ -122,7 +122,7 @@ class NTabHeader extends NTabContainer(NContainer) {
 	onItemActived(tab, tabIndex, evt) {
 		evt.preventDefault();
 		let can = this.fireEventToMonitor($.Event('shouldActive', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				tab: tab,
 				tabIndex: tabIndex
@@ -236,7 +236,7 @@ class NTab extends NTabContainer(NContainer) {
 	onItemActived(evt) {
 		this.refs.body.setActiveTabIndex(evt.ndata.tabIndex);
 		this.fireEventToMonitor($.Event('active', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				tab: evt.ndata.tab,
 				tabIndex: evt.ndata.tabIndex
@@ -245,7 +245,7 @@ class NTab extends NTabContainer(NContainer) {
 	}
 	onItemShouldActive = (evt) => {
 		return this.fireEventToMonitor($.Event('shouldActive', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				tab: evt.ndata.tab,
 				tabIndex: evt.ndata.tabIndex
@@ -367,7 +367,7 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 	}
 	onItemActived = (evt) => {
 		this.fireEventToMonitor($.Event('active', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				tab: evt.tab,
 				tabIndex: evt.tabIndex
@@ -381,7 +381,7 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 			return false;
 		} else {
 			return this.fireEventToMonitor($.Event('shouldActive', {
-				target: ReactDOM.findDOMNode(this.refs.me),
+				target: this.me(),
 				ndata: {
 					tab: evt.tab,
 					tabIndex: evt.tabIndex
@@ -404,7 +404,7 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 	onRemoveClicked(itemModel, itemIndex, evt) {
 		evt.preventDefault();
 		let can = this.fireEventToMonitor($.Event('shouldRemove', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			data: itemModel,
 			dataIndex: itemIndex
 		}));

@@ -187,7 +187,7 @@ class NList extends NCodeTableComponent(NComponent) {
 	}
 	shouldItemCheckChanged(item, checked) {
 		return this.fireEventToMonitor($.Event('shouldItemCheckChange'), {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				item: item,
 				checked: checked
@@ -196,7 +196,7 @@ class NList extends NCodeTableComponent(NComponent) {
 	}
 	itemCheckChanged(item, checked) {
 		this.fireEventToMonitor($.Event('itemCheckChange', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				item: item,
 				checked: checked
@@ -250,7 +250,7 @@ class NList extends NCodeTableComponent(NComponent) {
 	}
 	onMouseMoved = (evt) => {
 		let bg = $(ReactDOM.findDOMNode(this.refs.background));
-		let container = $(ReactDOM.findDOMNode(this.refs.me));
+		let container = this.$me();
 		let containerOffset = container.offset();
 		let top = evt.clientY + $(window).scrollTop() - containerOffset.top;
 		let found = container.find('.n-list-item-text').toArray().some((dom) => {

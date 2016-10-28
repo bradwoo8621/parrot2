@@ -77,12 +77,12 @@ class NPanelBody extends NCollapsibleContainer {
 		return 'n-panel-body-' + this.getLayoutOptionValue('style', 'default');
 	}
 	expand() {
-		$(ReactDOM.findDOMNode(this.refs.me)).slideDown(500, () => {
+		this.$me().slideDown(500, () => {
 			super.expand();
 		});
 	}
 	collapse() {
-		$(ReactDOM.findDOMNode(this.refs.me)).slideUp(500, () => {
+		this.$me().slideUp(500, () => {
 			super.collapse();
 		});
 	}
@@ -245,7 +245,7 @@ class NArrayPanel extends NHierarchyComponent {
 	}
 	onItemCollapsed(itemModel, itemIndex) {
 		this.fireEventToMonitor($.Event('itemCollapse', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				itemModel: itemModel,
 				itemIndex: itemIndex
@@ -254,7 +254,7 @@ class NArrayPanel extends NHierarchyComponent {
 	}
 	onItemExpanded(itemModel, itemIndex) {
 		this.fireEventToMonitor($.Event('itemExpand', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				itemModel: itemModel,
 				itemIndex: itemIndex

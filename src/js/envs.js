@@ -62,6 +62,8 @@ class Envs {
 		this.renderers = {};
 
 		this.COMPONENT_TYPES = {};
+
+		this.checkTransitionSupported();
 	}
 	// global variables
 	get CELL_WIDTH() {
@@ -417,6 +419,45 @@ class Envs {
 			});
 		});
 		return target;
+	}
+
+	checkTransitionSupported() {
+		let TransitionEndEvent = {
+			transition: 'transitionend',
+			WebkitTransition: 'webkitTransitionEnd',
+			MozTransition: 'transitionend',
+			OTransition: 'oTransitionEnd otransitionend'
+		};
+		this.isTransitionSupported = false;
+		let el = document.createElement('parrot2');
+		for (let name in TransitionEndEvent) {
+			if (el.style[name] !== undefined) {
+				this.isTransitionSupported = true;
+				break;
+			}
+		}
+	}
+	// delegate for jquery transition end
+	// for those browsers which doesn't support transition, invoke handler immediately
+	// for those browsers which supports transition, add transitionend listener
+	// options format as below,
+	// {
+	//		target: jquery object
+	//		handler: event handler, pass target if transition not supported
+	//		repeat: use 'on' when repeat is true, otherwise use 'one'
+	// }
+	transitionend(options) {
+		let target = options.target;
+		if (this.isTransitionSupported) {
+			if (options.repeat) {
+				options.target.on('transitionend', options.handler);
+			} else {
+				options.target.one('transitionend', options.handler);
+			}
+		} else {
+			options.handler.call(this, options.target);
+		}
+		return options.target;
 	}
 }
 

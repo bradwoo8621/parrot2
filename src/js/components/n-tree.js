@@ -24,8 +24,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 	}
 	postDidMount() {
 		this.state.expandStatus = [];
-		$(ReactDOM.findDOMNode(this.refs.me))
-					.find('li')
+		this.$me().find('li')
 					.each((index, dom) => {
 						let node = $(dom);
 						if (node.hasClass('n-tree-node-expanded')) {
@@ -251,8 +250,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 			// scan ancestors, 
 			// if all directly children are checked, then the ancestor should be checked
 			// if checked is false, then all ancesstors should be unchecked
-			let node = $(ReactDOM.findDOMNode(this.refs.me))
-								.find('li').filter((index, dom) => {
+			let node = this.$me().find('li').filter((index, dom) => {
 									return $(dom).attr('data-node-id') == item.id;
 								});
 			// find all children
@@ -369,7 +367,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 	}
 	shouldItemCheckChanged(items, checked) {
 		return this.fireEventToMonitor($.Event('shouldItemCheckChange'), {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				items: items,
 				checked: checked
@@ -378,7 +376,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 	}
 	itemCheckChanged(items, checked) {
 		this.fireEventToMonitor($.Event('itemCheckChange', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				items: items,
 				checked: checked
@@ -387,7 +385,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 	}
 	nodeExpandChanged(node, expanded) {
 		this.fireEventToMonitor($.Event(expanded ? 'nodeExpand' : 'nodeCollapse', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				node: node
 			}
@@ -397,7 +395,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 	// make sure parent of node is expanded
 	focusNode(node) {
 		let offset = node.offset();
-		let container = $(ReactDOM.findDOMNode(this.refs.me));
+		let container = this.$me();
 		let containerOffset = container.offset();
 		let needScroll = false;
 		if (offset.top < containerOffset.top
@@ -414,8 +412,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 	// node level starts from 0
 	// expand nodes which level <= parameter
 	expandTo(nodeLevel, animation) {
-		$(ReactDOM.findDOMNode(this.refs.me))
-				  .find('li')
+		this.$me().find('li')
 				  .each((index, dom) => {
 				  		let node = $(dom);
 						let level = node.attr('data-node-level');
@@ -458,8 +455,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 	}
 	// collapse nodes which level > parameter
 	collapseTo(nodeLevel, animation) {
-		$(ReactDOM.findDOMNode(this.refs.me))
-				  .find('li')
+		this.$me().find('li')
 				  .each((index, dom) => {
 				  		let node = $(dom);
 						let level = node.attr('data-node-level');
@@ -646,7 +642,7 @@ class NTree extends NCodeTableComponent(NComponent) {
 	}
 	onMouseMoved = (evt) => {
 		let bg = $(ReactDOM.findDOMNode(this.refs.background));
-		let container = $(ReactDOM.findDOMNode(this.refs.me));
+		let container = this.$me();
 		let containerOffset = container.offset();
 		let top = evt.clientY + $(window).scrollTop() - containerOffset.top;
 		let found = container.find('.n-tree-node-text').toArray().some((dom) => {

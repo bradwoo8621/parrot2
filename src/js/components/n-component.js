@@ -9,33 +9,15 @@ import {Layout} from '../layout/layout'
 
 let $ = jQuery;
 
-// https://gist.github.com/beiyuu/2029907
-// $.fn.select = function(start, end) {
-// 	let $this = $(this);
-// 	if (!this || this.length == 0) {
-// 		return $this;
-// 	}
-//     let el = this[0];
-//     if (!el) {
-//     } else if (el.setSelectionRange) { /* WebKit, IE9+ */
-//     	if (start != null) {
-//     		end = end == null ? $(this).val().length : end;
-// 	    	el.setSelectionRange(start, end); 
-// 	    } else {
-// 	    	let start = Math.min(el.selectionStart, el.selectionEnd);
-// 	    	let end = Math.max(el.selectionStart, el.selectionEnd);
-// 	    	return {
-// 	    		start: start,
-// 	    		end: end,
-// 	    		length: end - start,
-// 	    		text: $this.val().substring(start, end)
-// 	    	};
-// 	    }
-// 	}
-//     return $this;
-// };
-
-class NComponent extends React.Component {
+class NWidget extends React.Component {
+	me() {
+		return ReactDOM.findDOMNode(this.refs.me);
+	}
+	$me() {
+		return $(this.me());
+	}
+}
+class NComponent extends NWidget {
 	state = {}
 
 	constructor(props) {
@@ -124,7 +106,7 @@ class NComponent extends React.Component {
 	}
 	internalInstallDOMListeners() {
 		let listeners = this.getDOMEventMonitors();
-		let me = $(ReactDOM.findDOMNode(this.refs.me));
+		let me = this.$me();
 		Object.keys(listeners).forEach((key) => {
 			let listener = listeners[key];
 			if (typeof listener === 'function') {
@@ -152,7 +134,7 @@ class NComponent extends React.Component {
 	}
 	internalUninstallDOMListeners() {
 		let listeners = this.getDOMEventMonitors();
-		let me = $(ReactDOM.findDOMNode(this.refs.me));
+		let me = this.$me();
 		Object.keys(listeners).forEach((key) => {
 			let listener = listeners[key];
 			if (typeof listener === 'function') {
@@ -749,7 +731,7 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 		if (evt.isDefaultPrevented()) {
 			return;
 		}
-		if ($(evt.target).closest($(ReactDOM.findDOMNode(this.refs.me))).length == 0) {
+		if ($(evt.target).closest(this.$me()).length == 0) {
 			this.hideDropdown();
 		}
 	}
@@ -764,10 +746,10 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 	}
 
 	isDropdownShown() {
-		return $(ReactDOM.findDOMNode(this.refs.me)).hasClass('n-dropdown-open');
+		return this.$me().hasClass('n-dropdown-open');
 	}
 	showDropdown() {
-		let me = $(ReactDOM.findDOMNode(this.refs.me));
+		let me = this.$me();
 		if (!me.hasClass('n-dropdown-open')) {
 			$(document).on('mousedown', this.bindToThis(this.onDocumentMouseDown))
 					   .on('keyup', this.bindToThis(this.onDocumentKeyUp));
@@ -779,7 +761,7 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 		}
 	}
 	hideDropdown() {
-		let me = $(ReactDOM.findDOMNode(this.refs.me));
+		let me = this.$me();
 		if (me.hasClass('n-dropdown-open')) {
 			$(document).off('mousedown', this.bindToThis(this.onDocumentMouseDown))
 					   .off('keyup', this.bindToThis(this.onDocumentKeyUp));
@@ -788,7 +770,7 @@ const NDropdownComponent = (ParentClass) => class extends ParentClass {
 		}
 	}
 	toggleDropdown() {
-		let me = $(ReactDOM.findDOMNode(this.refs.me));
+		let me = this.$me();
 		if (!me.hasClass('n-dropdown-open')) {
 			this.showDropdown();
 		} else {
@@ -1032,13 +1014,13 @@ class NCollapsibleContainer extends NContainer {
 	expand() {
 		this.setState({expanded: true});
 		this.fireEventToMonitor($.Event('expand', {
-			target: ReactDOM.findDOMNode(this.refs.me)
+			target: this.me()
 		}));	
 	}
 	collapse() {
 		this.setState({expanded: false});
 		this.fireEventToMonitor($.Event('collapse', {
-			target: ReactDOM.findDOMNode(this.refs.me)
+			target: this.me()
 		}));	
 	}
 }
@@ -1076,7 +1058,7 @@ class NHierarchyComponent extends NContainer {
 		// fire update event, ignore the property information
 		evt.model.getParent().update(this.getDataId(), evt.model.getCurrentModel(), evt.model.getCurrentModel(), itemIndex);
 		this.fireEventToMonitor($.Event('itemChange', {
-			target: ReactDOM.findDOMNode(this.refs.me),
+			target: this.me(),
 			ndata: {
 				itemModel: evt.model,
 				itemIndex: itemIndex,
@@ -1096,6 +1078,7 @@ export {
 	$,
 	classnames,
 
+	NWidget,
 	NComponent,
 	NAddonComponent,
 	NDropdownComponent,

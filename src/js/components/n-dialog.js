@@ -4,7 +4,8 @@ import {
 	$, 
 	classnames, 
 	Envs, 
-	Model, 
+	Model,
+	NWidget, 
 	NComponent} from './n-component'
 import {NPanel} from './n-panel'
 
@@ -34,7 +35,7 @@ class NDialog extends NComponent {
 	}
 }
 
-class NDialogBackdrop extends React.Component {
+class NDialogBackdrop extends NWidget {
 	state = {}
 	render() {
 		let className = classnames('n-dialog-backdrop', {
@@ -61,8 +62,13 @@ class NDialogBackdrop extends React.Component {
 		this.setState({show: true});
 	}
 	hide() {
-		$('body').removeClass(`n-dialog-open-${this.getDialogId()}`);
 		this.setState({show: false});
+		Envs.transitionend({
+			target: this.$me(),
+			handler: () => {
+				$('body').removeClass(`n-dialog-open-${this.getDialogId()}`);
+			}
+		});
 	}
 }
 

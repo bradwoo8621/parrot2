@@ -182,7 +182,7 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 			let removedValues = newValues.splice(index, 1);
 			this.setValueToModel(newValues);
 			this.fireEventToMonitor($.Event('itemCheckChange', {
-				target: ReactDOM.findDOMNode(this.refs.me),
+				target: this.me(),
 				ndata: {
 					items: removedValues.map((value) => {
 						return this.getCodeTable().getItem(value);
@@ -210,7 +210,7 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 	onItemCheckChanged = (evt) => {
 		this.forceUpdate(() => {
 			this.fireEventToMonitor($.Event('itemCheckChange', {
-				target: ReactDOM.findDOMNode(this.refs.me),
+				target: this.me(),
 				ndata: {
 					items: this.wrapToArray(evt.ndata.item || evt.ndata.items),
 					checked: evt.ndata.checked
