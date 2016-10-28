@@ -35,10 +35,7 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 		let layout = Envs.deepMergeTo({}, {
 			comp: {
 				type: Envs.COMPONENT_TYPES.LIST,
-				noWrap: false
-			}
-		}, this.getDropdownLayout(), {
-			comp: {
+				noWrap: false,
 				checkable: true,
 				codes: this.getCodeTable(),
 				multiple: this.isMultiple()
@@ -46,7 +43,7 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 			evt: {
 				itemCheckChange: this.onItemCheckChanged
 			}
-		});
+		}, this.getDropdownLayout());
 		if (!layout.styles) {
 			layout.styles = {};
 		}
@@ -73,8 +70,6 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 				ref: 'dropdown-btn'
 			})}
 		</div>);
-	}
-	renderText() {
 	}
 	renderSelectedItem(value, itemIndex) {
 		let item = this.getCodeTable().getItem(value);

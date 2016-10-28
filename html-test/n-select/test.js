@@ -55,14 +55,13 @@ $(function() {
 		label: 'Check Me',
 		comp: {
 			codes: codes,
-			placeholder: 'Please Select...'
+			placeholder: 'Hello!'
 		}
 	});
 	let layoutLF = new Layout('value', {
 		label: 'Check Me',
 		comp: {
-			codes: codes,
-			filter: true
+			codes: codes
 		}
 	});
 	let layoutLM = new Layout('values', {
@@ -76,8 +75,7 @@ $(function() {
 		label: 'Check Me',
 		comp: {
 			codes: codes,
-			multiple: true,
-			filter: true
+			multiple: true
 		}
 	});
 	let layoutT = new Layout('value', {
