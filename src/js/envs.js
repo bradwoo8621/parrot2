@@ -422,6 +422,10 @@ class Envs {
 	}
 
 	checkTransitionSupported() {
+		if (typeof document === 'undefined') {
+			console.error('Make sure document object existed!');
+			return;
+		}
 		let TransitionEndEvent = {
 			transition: 'transitionend',
 			WebkitTransition: 'webkitTransitionEnd',

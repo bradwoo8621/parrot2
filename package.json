@@ -21,6 +21,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "test": "mocha test --recursive",
     "dev-build": "webpack --config webpack.dev.config.js",
     "dist": "webpack --config webpack.config.js"
   },
