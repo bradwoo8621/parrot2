@@ -5,6 +5,7 @@ import classnames from 'classnames'
 
 import {Envs, lodash} from '../envs'
 import {Model} from '../model/model'
+import {Validator} from '../model/validation'
 import {Layout} from '../layout/layout'
 
 let $ = jQuery;
@@ -96,13 +97,14 @@ class NComponent extends NWidget {
 
 	// first parameter is a json of pointcut methods
 	installUnderlyingMonitors() {
-		this.pointcutPreExecutor.apply(this, arguments);
-		this.internalInstallLifecycleMonitors();
-		this.internalInstallDOMListeners();
-		this.pointcutPostExecutor.apply(this, arguments);
-		this.doAfterRender();
+		return this.pointcutPreExecutor.apply(this, arguments)
+				   .internalInstallLifecycleMonitors()
+				   .internalInstallDOMListeners()
+				   .pointcutPostExecutor.apply(this, arguments)
+				   .doAfterRender();
 	}
 	doAfterRender() {
+		return this;
 	}
 	internalInstallDOMListeners() {
 		let listeners = this.getDOMEventMonitors();
@@ -119,18 +121,20 @@ class NComponent extends NWidget {
 				}
 			}
 		});
+		return this;
 	}
 	internalInstallLifecycleMonitors() {
-		this.addPostChangeListener(this.bindToThis(this.onModelChanged));
-		this.addPostValidateListener(this.bindToThis(this.onModelValidated));
-		this.detectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected);
-		this.detectMonitors(['watch']);
+		return this.addPostChangeListener(this.bindToThis(this.onModelChanged))
+				   .addPostValidateListener(this.bindToThis(this.onModelValidated))
+				   .detectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected)
+				   .detectMonitors(['watch'])
+				   .detectMonitors(['validate'], this.onValidateDetected);
 	}
 	uninstallUnderlyingMonitors() {
-		this.pointcutPreExecutor.apply(this, arguments);
-		this.internalUninstallLifecycleMonitors();
-		this.internalUninstallDOMListeners();
-		this.pointcutPostExecutor.apply(this, arguments);
+		return this.pointcutPreExecutor.apply(this, arguments)
+				   .internalUninstallLifecycleMonitors()
+				   .internalUninstallDOMListeners()
+				   .pointcutPostExecutor.apply(this, arguments);
 	}
 	internalUninstallDOMListeners() {
 		let listeners = this.getDOMEventMonitors();
@@ -143,23 +147,27 @@ class NComponent extends NWidget {
 				me.off(key, listener.selector, listener.data, this.bindToThis(listener.handler));
 			}
 		});
+		return this;
 	}
 	internalUninstallLifecycleMonitors() {
-		this.removePostChangeListener(this.bindToThis(this.onModelChanged));
-		this.removePostValidateListener(this.bindToThis(this.onModelValidated));
-		this.undetectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected);
-		this.undetectMonitors(['watch']);
+		return this.removePostChangeListener(this.bindToThis(this.onModelChanged))
+				   .removePostValidateListener(this.bindToThis(this.onModelValidated))
+				   .undetectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected)
+				   .undetectMonitors(['watch'])
+				   .undetectMonitors(['validate'], this.onValidateDetected);
 	}
 	// life cycle pointcut executor
 	pointcutPreExecutor(pointcut) {
 		if (pointcut && pointcut.pre) {
 			pointcut.pre.apply(this, Array.prototype.slice.call(arguments, 1));
 		}
+		return this;
 	}
 	pointcutPostExecutor(pointcut) {
 		if (pointcut && pointcut.post) {
 			pointcut.post.apply(this, Array.prototype.slice.call(arguments, 1));
 		}
+		return this;
 	}
 
 	// model listeners
@@ -196,13 +204,16 @@ class NComponent extends NWidget {
 		return this;
 	}
 	onModelChanged(evt) {
-		this.forceUpdate();
+		this.getModel().validate(this.getDataId());
 	}
 	onModelValidated(evt) {
 		this.forceUpdate();
 	}
 	onMonitorChangeDetected(evt) {
 		this.forceUpdate();
+	}
+	onValidateDetected(evt) {
+		this.getModel().validate(this.getDataId());
 	}
 
 	// option designated monitors
@@ -1069,6 +1080,7 @@ class NHierarchyComponent extends NContainer {
 }
 
 export * from '../model/model'
+export * from '../model/validation'
 export * from '../layout/layout'
 export * from '../envs'
 export {

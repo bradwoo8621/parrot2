@@ -165,8 +165,13 @@ class Validator {
 
 		this.ruleRepo = ruleRepo;
 	}
-	validate(model, perspective) {
+	validate(model, property, perspective) {
 		let rules = this.getRules(perspective);
+		if (property) {
+			let propertyRule = {};
+			propertyRule[property] = rules[property];
+			rules = propertyRule;
+		}
 		return Object.keys(rules).map((propertyName) => {
 			let value = model.get(propertyName);
 			let rulesOnProperty = rules[propertyName];
@@ -246,6 +251,12 @@ class Validator {
 					or into global validation rules repository`;
 		}
 		return rule;
+	}
+	setPerspective(perspective) {
+		this.perspective = perspective;
+	}
+	getPerspective() {
+		return this.perspective;
 	}
 }
 

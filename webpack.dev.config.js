@@ -26,6 +26,8 @@ module.exports = {
 
 		'n-dialog': './html-test/n-dialog/test.js',
 
+		'n-form': './html-test/n-form/test.js',
+
 		// sass
 		'style-default': './src/sass/bundle-default.scss',
 

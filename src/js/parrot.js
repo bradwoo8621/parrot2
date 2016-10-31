@@ -14,3 +14,5 @@ export * from './components/n-text'
 export * from './components/n-tree'
 
 export * from './components/n-dialog'
+
+export * from './components/n-form'

@@ -2,21 +2,13 @@ import {React, ReactDOM, $, classnames, Envs, NComponent} from './n-component'
 
 class NTextArea extends NComponent {
 	// lifecycle
-	postWillUpdate() {
-		this.getComponent().off('change', this.onComponentChanged);
-	}
 	postDidUpdate() {
 		if (this.getComponentText() != this.getValueFromModel()) {
 			this.getComponent().val(value);
 		}
-		this.getComponent().on('change', this.onComponentChanged);
 	}
 	postDidMount() {
 		this.getComponent().val(this.getValueFromModel());
-		this.getComponent().on('change', this.onComponentChanged);
-	}
-	postWillUnmount() {
-		this.getComponent().off('change', this.onComponentChanged);
 	}
 
 	renderText() {
@@ -25,7 +17,6 @@ class NTextArea extends NComponent {
 		               placeholder={this.getPlaceholder()}
 		               rows={this.getTextRows()}
 
-		               onKeyPress={this.onComponentKeyPressed}
 		               onChange={this.onComponentChanged}
 		               onFocus={this.onComponentFocused}
 		               onBlur={this.onComponentBlurred}
@@ -79,10 +70,6 @@ class NTextArea extends NComponent {
 		}
 	}
 
-	// dom event
-	onComponentKeyPressed = (evt) => {
-		this.onComponentChanged(evt);
-	}
 	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();
 	}

@@ -298,6 +298,44 @@ class Model {
 	getParent() {
 		return this.parent;
 	}
+
+	setValidator(validator) {
+		this.validator = validator;
+	}
+	getValidator() {
+		return this.validator;
+	}
+	validate(dataId, perspective) {
+		if (this.validator) {
+			let validationResults = this.getValidationResults();
+			let result = this.validator.validate(this, dataId, perspective);
+			if (dataId) {
+				// only validate given data id
+				validationResults[dataId] = result[dataId];
+				this.firePostValidateEvent(dataId, model.get(dataId), validationResults[dataId]);
+			} else {
+				// validate all, replace old
+				let old = this.validationResults;
+				this.validationResults = result;
+				let fired = {};
+				Object.keys(result).forEach((dataId) => {
+					fired[dataId] = true;
+					this.firePostValidateEvent(dataId, model.get(dataId), result[dataId]);
+				});
+				Object.keys(old).forEach((dataId) => {
+					if (!fired[dataId]) {
+						this.firePostValidateEvent(dataId, model.get(dataId), null);
+					}
+				});
+			}
+		}
+	}
+	getValidationResults(dataId) {
+		if (this.validationResults == null) {
+			this.validationResults = {};
+		}
+		return dataId ? this.validationResults[dataId] : this.validationResults;
+	}
 }
 
 export * from './codetable'

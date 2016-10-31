@@ -968,23 +968,15 @@ class NDateTimeCalendar extends NDateComponent(NComponent) {
 }
 
 class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))) {
-	postWillUpdate() {
-		this.getComponent().off('change', this.onComponentChanged);
-	}
 	postDidUpdate() {
 		let compValue = this.formatValue(this.getComponentText(), this.getDisplayFormats());
 		let modelValue = this.getValueFromModel();
 		if (!this.isSame(compValue, modelValue)) {
 			this.getComponent().val(this.parseText(modelValue, this.getPrimaryDisplayFormat()));
 		}
-		this.getComponent().on('change', this.onComponentChanged);
 	}
 	postDidMount() {
 		this.getComponent().val(this.parseText(this.getValueFromModel(), this.getPrimaryDisplayFormat()));
-		this.getComponent().on('change', this.onComponentChanged);
-	}
-	postWillUnmount() {
-		this.getComponent().off('change', this.onComponentChanged);
 	}
 	renderDropdown() {
 		let hasDate = this.isDateSupported();
@@ -1037,7 +1029,6 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 		               disabled={!this.isEnabled()}
 		               placeholder={this.getPlaceholder()}
 
-		               onKeyPress={this.onComponentKeyPressed}
 		               onChange={this.onComponentChanged}
 		               onFocus={this.onComponentFocused}
 		               onBlur={this.onComponentBlurred}
@@ -1084,9 +1075,6 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 	}
 
 	// dom event
-	onComponentKeyPressed = (evt) => {
-		this.onComponentChanged(evt);
-	}
 	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();
 	}

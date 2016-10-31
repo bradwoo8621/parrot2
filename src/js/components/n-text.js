@@ -2,9 +2,6 @@ import {React, ReactDOM, $, classnames, Envs, NComponent, NAddonComponent} from 
 
 class NText extends NAddonComponent {
 	// lifecycle
-	postWillUpdate() {
-		this.getComponent().off('change', this.onComponentChanged);
-	}
 	postDidUpdate() {
 		let value = this.getValueFromModel();
 		if (!$(ReactDOM.findDOMNode(this.refs.focusLine)).hasClass('focus')) {
@@ -13,23 +10,16 @@ class NText extends NAddonComponent {
 		if (this.getComponentText() != value) {
 			this.getComponent().val(value);
 		}
-		this.getComponent().on('change', this.onComponentChanged);
 	}
 	postDidMount() {
 		this.getComponent().val(this.formatValue(this.getValueFromModel()));
-		this.getComponent().on('change', this.onComponentChanged);
 	}
-	postWillUnmount() {
-		this.getComponent().off('change', this.onComponentChanged);
-	}
-
 	renderText() {
 		return (<input type={this.getInputKind()}
 		               className='n-control'
 		               disabled={!this.isEnabled()}
 		               placeholder={this.getPlaceholder()}
 
-		               onKeyPress={this.onComponentKeyPressed}
 		               onChange={this.onComponentChanged}
 		               onFocus={this.onComponentFocused}
 		               onBlur={this.onComponentBlurred}
@@ -111,9 +101,6 @@ class NText extends NAddonComponent {
 	}
 
 	// dom event
-	onComponentKeyPressed = (evt) => {
-		this.onComponentChanged(evt);
-	}
 	onComponentFocused = (evt) => {
 		this.onComponentFocusChanged();
 
