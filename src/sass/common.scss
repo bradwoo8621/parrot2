@@ -87,7 +87,7 @@ li {
 	float: right;
 }
 
-.n-comp-label-top {
+.n-comp-label-top > .n-row {
 	> .n-comp-label,
 	> .n-comp {
 		width: 100%;
@@ -144,4 +144,30 @@ li {
     	left: 0;
     	width: 100%;
     }
+}
+
+.n-validation {
+	display: block;
+	position: relative;
+	color: $color-danger;
+	font-size: $validation-font-size;
+	line-height: $validation-line-height;
+	.n-validation-result {
+		display: block;
+		position: relative;
+		&.n-validation-result-info {
+			color: $color-info;
+		}
+		&.n-validation-result-warning {
+			color: $color-warning;
+		}
+	}
+}
+.n-row {
+	> .n-validation {
+		float: left;
+		padding-left: $pad-15;
+		padding-right: $pad-15;
+		width: 100%;
+	}
 }

@@ -5,7 +5,8 @@ let {
 	React, 
 	ReactDOM, 
 	CodeTable, 
-	Model, 
+	Model,
+	Validator,
 	Layout, 
 	NForm, 
 	$, 
@@ -14,9 +15,16 @@ let {
 $(function() {
 	let model = new Model({
 	});
+	let validator = new Validator({
+		name: {
+			minlen: 5,
+			maxlen: 3
+		}
+	});
+	model.setValidator(validator);
 	model.addPostChangeListener('name', function(evt) {
 		console.log(`Name changed from "${evt.old}" to "${evt.new}"`);
-	}).addPostChangeListener('name', function(evt) {
+	}).addPostChangeListener('age', function(evt) {
 		console.log(`Age changed from "${evt.old}" to "${evt.new}"`);
 	});
 	let layout = new Layout('form', {
@@ -35,6 +43,27 @@ $(function() {
 						type: Envs.COMPONENT_TYPES.TEXT
 					},
 					pos: {width: 3, col: 200, row: 100}
+				},
+				name1: {
+					label: 'Name 1',
+					comp: {
+						type: Envs.COMPONENT_TYPES.TEXT
+					},
+					pos: {width: 3, col: 300, row: 100}
+				},
+				name2: {
+					label: 'Name 2',
+					comp: {
+						type: Envs.COMPONENT_TYPES.TEXT
+					},
+					pos: {width: 3, col: 400, row: 100}
+				},
+				name3: {
+					label: 'Name 3',
+					comp: {
+						type: Envs.COMPONENT_TYPES.TEXT
+					},
+					pos: {width: 3, col: 500, row: 100}
 				}
 			}
 		}

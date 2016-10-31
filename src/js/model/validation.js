@@ -92,21 +92,24 @@ class ValidationMessages {
 }
 let messages = new ValidationMessages();
 
+const isEmpty = function(value) {
+	return value == null || (value + '').length === 0;
+}
 const GlobalValidationRules = {
 	required(model, value, params, label) {
-		return (value == null || (value + '').length === 0) ? messages.convert('required', params, label) : true;
+		return isEmpty(value) ? messages.convert('required', params, label) : true;
 	},
 	minlen(model, value, params, label) {
-		return value == null ? true : (((value + '').length < params) ? messages.convert('minlen', params, label) : true);
+		return isEmpty(value) ? true : (((value + '').length < params) ? messages.convert('minlen', params, label) : true);
 	},
 	maxlen(model, value, params, label) {
-		return value == null ? true : (((value + '').length > params) ? messages.convert('maxlen', params, label) : true);
+		return isEmpty(value) ? true : (((value + '').length > params) ? messages.convert('maxlen', params, label) : true);
 	},
 	min(model, value, params, label) {
-		return value == null ? true : ((value * 1 < params) ? messages.convert('min', params, label) : true);
+		return isEmpty(value) ? true : ((value * 1 < params) ? messages.convert('min', params, label) : true);
 	},
 	max(model, value, params, label) {
-		return value == null ? true : ((value * 1 > params) ? messages.convert('max', params, label) : true);
+		return isEmpty(value) ? true : ((value * 1 > params) ? messages.convert('max', params, label) : true);
 	},
 	minsize(model, value, params, label) {
 		return (value == null || value.length === 0) ? true : ((value.length < params) ? messages.convert('minsize', params, label) : true);
@@ -115,13 +118,13 @@ const GlobalValidationRules = {
 		return (value == null || value.length === 0) ? true : ((value.length > params) ? messages.convert('maxsize', params, label) : true);
 	},
 	before(model, value, params, label) {
-		if (value == null || (value + '').length === 0) {
+		if (isEmpty(value)) {
 			return true;
 		}
 		return (value > params) ? messages.convert('before', params, label) : true;
 	},
 	after(model, value, params, label) {
-		if (value == null || (value + '').length === 0) {
+		if (isEmpty(value)) {
 			return true;
 		}
 		return (value < params) ? messages.convert('after', params, label) : true;
@@ -169,7 +172,9 @@ class Validator {
 		let rules = this.getRules(perspective);
 		if (property) {
 			let propertyRule = {};
-			propertyRule[property] = rules[property];
+			if (rules[property] != null) {
+				propertyRule[property] = rules[property];
+			}
 			rules = propertyRule;
 		}
 		return Object.keys(rules).map((propertyName) => {

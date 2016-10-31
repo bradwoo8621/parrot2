@@ -301,6 +301,7 @@ class Model {
 
 	setValidator(validator) {
 		this.validator = validator;
+		return this;
 	}
 	getValidator() {
 		return this.validator;
@@ -312,7 +313,7 @@ class Model {
 			if (dataId) {
 				// only validate given data id
 				validationResults[dataId] = result[dataId];
-				this.firePostValidateEvent(dataId, model.get(dataId), validationResults[dataId]);
+				this.firePostValidateEvent(dataId, this.get(dataId), validationResults[dataId]);
 			} else {
 				// validate all, replace old
 				let old = this.validationResults;
@@ -320,15 +321,16 @@ class Model {
 				let fired = {};
 				Object.keys(result).forEach((dataId) => {
 					fired[dataId] = true;
-					this.firePostValidateEvent(dataId, model.get(dataId), result[dataId]);
+					this.firePostValidateEvent(dataId, this.get(dataId), result[dataId]);
 				});
 				Object.keys(old).forEach((dataId) => {
 					if (!fired[dataId]) {
-						this.firePostValidateEvent(dataId, model.get(dataId), null);
+						this.firePostValidateEvent(dataId, this.get(dataId), null);
 					}
 				});
 			}
 		}
+		return this;
 	}
 	getValidationResults(dataId) {
 		if (this.validationResults == null) {

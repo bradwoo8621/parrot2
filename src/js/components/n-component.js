@@ -204,7 +204,11 @@ class NComponent extends NWidget {
 		return this;
 	}
 	onModelChanged(evt) {
-		this.getModel().validate(this.getDataId());
+		if (this.isValidateImmediately()) {
+			this.getModel().validate(this.getDataId());
+		} else {
+			this.forceUpdate();
+		}
 	}
 	onModelValidated(evt) {
 		this.forceUpdate();
@@ -214,6 +218,12 @@ class NComponent extends NWidget {
 	}
 	onValidateDetected(evt) {
 		this.getModel().validate(this.getDataId());
+	}
+	isValidateImmediately() {
+		return this.getLayoutOptionValue('validateImmediately', true);
+	}
+	getValidationResult() {
+		return this.getModel().getValidationResults(this.getDataId());
 	}
 
 	// option designated monitors
@@ -612,26 +622,54 @@ class NComponent extends NWidget {
 		if (!this.isVisible()) {
 			return null;
 		}
+		let validationResults = this.getValidationResult();
+
 		let label = this.getLabel();
 		let labelShown = this.isLabelShown();
 		let cellClassName = this.getWidthClassName(this.getWidth());
 		if (labelShown && label) {
 			let labelWidth = this.getLabelWidth();
 			let compWidth = this.getComponentInternalWidth(labelWidth);
-			return (<div className={classnames('n-row', this.getLabelPosition(), cellClassName)}>
-				<div className={classnames('n-comp-label', this.getWidthClassName(labelWidth))}>
-					{label}
-				</div>
-				<div className={classnames('n-comp', this.getWidthClassName(compWidth))}>
-					{this.renderComponent()}
+			return (<div className={classnames(this.getLabelPosition(), cellClassName)}>
+				<div className='n-row'>
+					<div className={classnames('n-comp-label', this.getWidthClassName(labelWidth))}>
+						{label}
+					</div>
+					<div className={classnames('n-comp', this.getWidthClassName(compWidth))}>
+						{this.renderComponent()}
+					</div>
+					{this.renderValidationResults(validationResults)}
 				</div>
 			</div>);
 		} else if (cellClassName) {
 			return (<div className={cellClassName}>
 				{this.renderComponent()}
+				{this.renderValidationResults(validationResults)}
+			</div>);
+		} else if (validationResults) {
+			return (<div>
+				{this.renderComponent()}
+				{this.renderValidationResults(validationResults)}
 			</div>);
 		} else {
 			return this.renderComponent();
+		}
+	}
+	renderValidationResults(results) {
+		if (results) {
+			return (<div className='n-validation'>
+				{results.map((result, resultIndex) => {
+					let className = classnames('n-validation-result', {
+						'n-validation-result-info': result.level === Validator.LEVEL_INFO,
+						'n-validation-result-warning': result.level === Validator.LEVEL_WARN,
+						'n-validation-result-error': result.level === Validator.LEVEL_ERROR
+					});
+					return (<span className={className}
+								 key={resultIndex}>
+						{result.message.replace('%1', this.getLabel())}
+					</span>);
+				})}
+			</div>);
 		}
 	}
 	renderComponent() {
