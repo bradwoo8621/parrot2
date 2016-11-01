@@ -95,8 +95,14 @@ class NText extends NAddonComponent {
 		let newValue = this.getComponentText();
 		let oldValue = this.getValueFromModel();
 		if (!this.textEquals(newValue, oldValue)) {
-			evt.preventDefault();
-			this.setValueToModel(newValue);
+			//evt.preventDefault();
+			if (this.state.valueChangeTimeoutId) {
+				clearTimeout(this.state.valueChangeTimeoutId);
+			}
+			this.state.valueChangeTimeoutId = setTimeout(() => {
+				delete this.state.valueChangeTimeoutId;
+				this.setValueToModel(newValue);
+			}, Envs.TEXT_CHANGE_DELAY);
 		}
 	}
 
@@ -108,7 +114,7 @@ class NText extends NAddonComponent {
 		let value = this.getValueFromModel();
 		if (value != this.getComponent().val()) {
 			// might be formatted or something else, however not same
-			evt.preventDefault();
+			// evt.preventDefault();
 			this.getComponent().val(value);
 		}
 	}
@@ -120,12 +126,12 @@ class NText extends NAddonComponent {
 			let value = this.formatValue(this.getValueFromModel());
 			if (text != value) {
 				// this moment, value of component is not formatted
-				evt.preventDefault();
+				// evt.preventDefault();
 				this.setValueToModel(text);
 			}
 			this.getComponent().val(this.formatValue(text));
 		} else {
-			evt.preventDefault();
+			// evt.preventDefault();
 			this.setValueToModel(null);
 		}
 	}

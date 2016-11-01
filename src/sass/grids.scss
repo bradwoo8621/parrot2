@@ -110,5 +110,9 @@ $media-name-list: xs sm md lg xl 2xl 3xl 4xl;
 		.n-col-#{nth($media-name-list, $media-index)}-hidden {
 			display: none !important;
 		}
+		div.clear-both-#{nth($media-name-list, $media-index)} {
+			clear: both;
+		}
 	}
 }
+

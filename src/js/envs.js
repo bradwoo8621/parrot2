@@ -36,6 +36,7 @@ class Envs {
 			percentageParser: function(displayText) {
 				return displayText ? (displayText / 100) : null;
 			},
+			textChangeDelay: 300,
 			dateValueFormat: 'YYYYMMDDHHmmss',
 			dateDisplayFormat: ['YYYY/MM/DD', 'YYYYMMDD'],
 			dateHeaderFormat: {year: 'YYYY', month: 'MMMM'},
@@ -73,7 +74,7 @@ class Envs {
 	set CELL_WIDTH(value) {
 		this.props.cellWidth = value;
 	}
-
+	// columns in a cell, default is 12
 	get CELL_COLUMNS() {
 		return this.props.cellColumns;
 	}
@@ -152,6 +153,14 @@ class Envs {
 
 	set PERCENTAGE_PARSER(value) {
 		this.props.percentageParser = value;
+	}
+
+	get TEXT_CHANGE_DELAY() {
+		return this.props.textChangeDelay;
+	}
+
+	set TEXT_CHANGE_DELAY(value) {
+		this.props.textChangeDelay = value;
 	}
 
 	get DATE_VALUE_FORMAT() {
