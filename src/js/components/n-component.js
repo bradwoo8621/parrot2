@@ -421,7 +421,7 @@ class NComponent extends NWidget {
 		}
 		let type = typeof width;
 		if (type === 'number' || type === 'string') {
-			// only returns xs and sm, cover all sizes
+			// only returns sm, for width over sm definition
 			return `n-col-sm-${width}`;
 		} else {
 			return classnames(Object.keys(width).reduce((prev, next) => {
@@ -964,8 +964,12 @@ class NContainer extends NComponent {
 		}
 		return child.props.children;
 	}
-	renderChildren(children, className, model) {
-		children = children ? children : this.getChildren();
+	renderChildren(options) {
+		options = options ? options : {};
+		let children = options.children ? options.children : this.getChildren(),
+			className = options.class,
+			model = options.model;
+
 		if (!children) {
 			return null;
 		}
@@ -995,24 +999,40 @@ class NContainer extends NComponent {
 		return Object.keys(rows).sort((index1, index2) => {
 			return index1 - index2;
 		}).map(rowIndex => {
-			return this.renderRow(rows[rowIndex], rowIndex, className, model);
+			return this.renderRow({
+				row: rows[rowIndex], 
+				rowIndex: rowIndex, 
+				class: className, 
+				model: model
+			});
 		});
 	}
-	renderRow(row, rowIndex, className, model) {
+	renderRow(options) {
+		options = options ? options : {};
+		let row = options.row,
+			rowIndex = options.rowIndex,
+			className = options.class,
+			model = options.model;
 		if (!row) {
 			return null;
 		}
 		let content = Object.keys(row).sort((index1, index2) => {
 			return index1 - index2;
 		}).map(columnIndex => {
-			return this.renderColumn(row[columnIndex], model);
+			return this.renderCell({
+				column: row[columnIndex], 
+				model: model
+			});
 		});
 		return (<div className={classnames('n-row', className)}
 					 key={rowIndex}>
 			{content}
 		</div>);
 	}
-	renderColumn(column, model) {
+	renderCell(options) {
+		options = options ? options : {};
+		let column = options.column,
+			model = options.model;
 		if (!column) {
 			return null;
 		}
@@ -1026,7 +1046,6 @@ class NContainer extends NComponent {
 				key: layoutIndex,
 				container: this
 			};
-			// TODO need to wrap into cell
 			return Envs.render(layout.getTypeAsString(), props);
 		});
 	}
@@ -1034,16 +1053,25 @@ class NContainer extends NComponent {
 		return this.getLayoutOptionValue('children');
 	}
 	renderLeadingChildren() {
-		return this.renderChildren(this.getLeadingChildren(), 'n-leading');
+		return this.renderChildren({
+			children: this.getLeadingChildren(),
+			class: 'n-leading'
+		});
 	}
 	renderTailingChildren() {
-		return this.renderChildren(this.getTailingChildren(), 'n-tailing');
+		return this.renderChildren({
+			children: this.getTailingChildren(), 
+			class: 'n-tailing'
+		});
 	}
 	getLeadingChildren() {
 		return this.getLayoutOptionValue('leadChildren', {});
 	}
 	getTailingChildren() {
 		return this.getLayoutOptionValue('tailChildren', {});
+	}
+	getColumnsOfGrid() {
+		return this.getLayoutOptionValue('columnOfGrid', Envs.COLUMNS_OF_GRID);
 	}
 }
 
@@ -1076,14 +1104,14 @@ class NCollapsibleContainer extends NContainer {
 
 class NHierarchyComponent extends NContainer {
 	internalInstallLifecycleMonitors() {
-		super.internalInstallLifecycleMonitors();
-		this.addPostAddListener(this.bindToThis(this.onModelChanged));
-		this.addPostRemoveListener(this.bindToThis(this.onModelChanged));
+		return super.internalInstallLifecycleMonitors()
+					.addPostAddListener(this.bindToThis(this.onModelChanged))
+					.addPostRemoveListener(this.bindToThis(this.onModelChanged));
 	}
 	internalUninstallLifecycleMonitors() {
-		super.internalUninstallLifecycleMonitors();
-		this.removePostAddListener(this.bindToThis(this.onModelChanged));
-		this.removePostRemoveListener(this.bindToThis(this.onModelChanged));
+		return super.internalUninstallLifecycleMonitors()
+					.removePostAddListener(this.bindToThis(this.onModelChanged))
+					.removePostRemoveListener(this.bindToThis(this.onModelChanged));
 	}
 	createItemModel(itemJSON, itemIndex) {
 		return new Model(itemJSON, true)

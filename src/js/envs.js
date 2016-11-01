@@ -54,7 +54,7 @@ class Envs {
 			treeLeafIcon: 'file-o',
 			treeMaxHeight: 300,
 			listMaxHeight: 300,
-			tableColumnsOfGrid: 12,
+			columnsOfGrid: 12,
 			dropdownMaxHeight: 300,
 			dropdownMinWidth: 300,
 			selectPlaceholder: 'Please Select...'
@@ -299,12 +299,12 @@ class Envs {
 		this.props.listMaxHeight = value;
 	}
 
-	get TABLE_COLUMNS_OF_GRID() {
-		return this.props.tableColumnsOfGrid;
+	get COLUMNS_OF_GRID() {
+		return this.props.columnsOfGrid;
 	}
 
-	set TABLE_COLUMNS_OF_GRID(value) {
-		this.props.tableColumnsOfGrid = value;
+	set COLUMNS_OF_GRID(value) {
+		this.props.columnsOfGrid = value;
 	}
 
 	get DROPDOWN_MAX_HEIGHT() {

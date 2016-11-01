@@ -155,7 +155,9 @@ class NTabBody extends NTabContainer(NContainer) {
 					 ref='me'>
 			{this.renderLeadingDOMChildren()}
 			{this.renderLeadingChildren()}
-			{this.renderChildren(this.wrapOptionValue(children.children))}
+			{this.renderChildren({
+				children: this.wrapOptionValue(children.children)
+			})}
 			{this.renderTailingChildren()}
 			{this.renderTailingDOMChildren()}
 		</div>)

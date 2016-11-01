@@ -116,7 +116,9 @@ class NTableHeader extends NTableContainer(NHierarchyComponent) {
 			}, title));
 		} else {
 			// component set
-			return this.renderChildren(title);
+			return this.renderChildren({
+				children: title
+			});
 		}
 	}
 	renderHeaderCell(column, columnIndex) {
@@ -198,7 +200,10 @@ class NTableBody extends NTableContainer(NHierarchyComponent) {
 					model: rowModel
 				});
 			} else {
-				return this.renderChildren(body, null, rowModel);
+				return this.renderChildren({
+					children: body, 
+					model: rowModel
+				});
 			}
 		}
 	}
