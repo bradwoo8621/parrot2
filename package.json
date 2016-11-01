@@ -23,7 +23,8 @@
   "scripts": {
     "test": "mocha test --recursive",
     "dev-build": "webpack --config webpack.dev.config.js",
-    "dist": "webpack --config webpack.config.js"
+    "dist": "webpack --config webpack.config.js && gulp uglify",
+    "uglify": "gulp uglify"
   },
   "dependencies": {
     "babel-polyfill": "^6.13.0",
@@ -48,6 +49,11 @@
     "css-loader": "^0.25.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "font-awesome": "^4.7.0",
+    "gulp": "^3.9.1",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.2.0",
+    "gulp-uglify": "^2.0.0",
     "jquery-deferred": "^0.3.1",
     "node-sass": "^3.10.0",
     "postcss-loader": "^0.13.0",

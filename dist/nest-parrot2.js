@@ -62,7 +62,7 @@
 	  });
 	});
 
-	var _nCheck = __webpack_require__(15);
+	var _nCheck = __webpack_require__(16);
 
 	Object.keys(_nCheck).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -74,7 +74,7 @@
 	  });
 	});
 
-	var _nDate = __webpack_require__(16);
+	var _nDate = __webpack_require__(17);
 
 	Object.keys(_nDate).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -86,7 +86,7 @@
 	  });
 	});
 
-	var _nIcon = __webpack_require__(17);
+	var _nIcon = __webpack_require__(18);
 
 	Object.keys(_nIcon).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -98,7 +98,7 @@
 	  });
 	});
 
-	var _nLabel = __webpack_require__(19);
+	var _nLabel = __webpack_require__(20);
 
 	Object.keys(_nLabel).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -110,7 +110,7 @@
 	  });
 	});
 
-	var _nList = __webpack_require__(20);
+	var _nList = __webpack_require__(21);
 
 	Object.keys(_nList).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -122,7 +122,7 @@
 	  });
 	});
 
-	var _nPanel = __webpack_require__(21);
+	var _nPanel = __webpack_require__(22);
 
 	Object.keys(_nPanel).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -134,7 +134,7 @@
 	  });
 	});
 
-	var _nRadio = __webpack_require__(22);
+	var _nRadio = __webpack_require__(23);
 
 	Object.keys(_nRadio).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -146,7 +146,7 @@
 	  });
 	});
 
-	var _nSelect = __webpack_require__(23);
+	var _nSelect = __webpack_require__(24);
 
 	Object.keys(_nSelect).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -158,7 +158,7 @@
 	  });
 	});
 
-	var _nTab = __webpack_require__(24);
+	var _nTab = __webpack_require__(25);
 
 	Object.keys(_nTab).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -170,7 +170,7 @@
 	  });
 	});
 
-	var _nTable = __webpack_require__(25);
+	var _nTable = __webpack_require__(26);
 
 	Object.keys(_nTable).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -182,7 +182,7 @@
 	  });
 	});
 
-	var _nTextArea = __webpack_require__(26);
+	var _nTextArea = __webpack_require__(27);
 
 	Object.keys(_nTextArea).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -194,7 +194,7 @@
 	  });
 	});
 
-	var _nText = __webpack_require__(27);
+	var _nText = __webpack_require__(28);
 
 	Object.keys(_nText).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -206,7 +206,7 @@
 	  });
 	});
 
-	var _nTree = __webpack_require__(28);
+	var _nTree = __webpack_require__(29);
 
 	Object.keys(_nTree).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -218,7 +218,7 @@
 	  });
 	});
 
-	var _nDialog = __webpack_require__(29);
+	var _nDialog = __webpack_require__(30);
 
 	Object.keys(_nDialog).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -226,6 +226,18 @@
 	    enumerable: true,
 	    get: function get() {
 	      return _nDialog[key];
+	    }
+	  });
+	});
+
+	var _nForm = __webpack_require__(31);
+
+	Object.keys(_nForm).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _nForm[key];
 	    }
 	  });
 	});
@@ -555,7 +567,19 @@
 		});
 	});
 
-	var _layout = __webpack_require__(10);
+	var _validation = __webpack_require__(10);
+
+	Object.keys(_validation).forEach(function (key) {
+		if (key === "default" || key === "__esModule") return;
+		Object.defineProperty(exports, key, {
+			enumerable: true,
+			get: function get() {
+				return _validation[key];
+			}
+		});
+	});
+
+	var _layout = __webpack_require__(11);
 
 	Object.keys(_layout).forEach(function (key) {
 		if (key === "default" || key === "__esModule") return;
@@ -579,19 +603,19 @@
 		});
 	});
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(12);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(12);
+	var _reactDom = __webpack_require__(13);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(13);
+	var _jquery = __webpack_require__(14);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(14);
+	var _classnames = __webpack_require__(15);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -746,15 +770,13 @@
 		}, {
 			key: 'installUnderlyingMonitors',
 			value: function installUnderlyingMonitors() {
-				this.pointcutPreExecutor.apply(this, arguments);
-				this.internalInstallLifecycleMonitors();
-				this.internalInstallDOMListeners();
-				this.pointcutPostExecutor.apply(this, arguments);
-				this.doAfterRender();
+				return this.pointcutPreExecutor.apply(this, arguments).internalInstallLifecycleMonitors().internalInstallDOMListeners().pointcutPostExecutor.apply(this, arguments).doAfterRender();
 			}
 		}, {
 			key: 'doAfterRender',
-			value: function doAfterRender() {}
+			value: function doAfterRender() {
+				return this;
+			}
 		}, {
 			key: 'internalInstallDOMListeners',
 			value: function internalInstallDOMListeners() {
@@ -774,22 +796,17 @@
 						}
 					}
 				});
+				return this;
 			}
 		}, {
 			key: 'internalInstallLifecycleMonitors',
 			value: function internalInstallLifecycleMonitors() {
-				this.addPostChangeListener(this.bindToThis(this.onModelChanged));
-				this.addPostValidateListener(this.bindToThis(this.onModelValidated));
-				this.detectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected);
-				this.detectMonitors(['watch']);
+				return this.addPostChangeListener(this.bindToThis(this.onModelChanged)).addPostValidateListener(this.bindToThis(this.onModelValidated)).detectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected).detectMonitors(['watch']).detectMonitors(['validate'], this.onValidateDetected);
 			}
 		}, {
 			key: 'uninstallUnderlyingMonitors',
 			value: function uninstallUnderlyingMonitors() {
-				this.pointcutPreExecutor.apply(this, arguments);
-				this.internalUninstallLifecycleMonitors();
-				this.internalUninstallDOMListeners();
-				this.pointcutPostExecutor.apply(this, arguments);
+				return this.pointcutPreExecutor.apply(this, arguments).internalUninstallLifecycleMonitors().internalUninstallDOMListeners().pointcutPostExecutor.apply(this, arguments);
 			}
 		}, {
 			key: 'internalUninstallDOMListeners',
@@ -806,14 +823,12 @@
 						me.off(key, listener.selector, listener.data, _this4.bindToThis(listener.handler));
 					}
 				});
+				return this;
 			}
 		}, {
 			key: 'internalUninstallLifecycleMonitors',
 			value: function internalUninstallLifecycleMonitors() {
-				this.removePostChangeListener(this.bindToThis(this.onModelChanged));
-				this.removePostValidateListener(this.bindToThis(this.onModelValidated));
-				this.undetectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected);
-				this.undetectMonitors(['watch']);
+				return this.removePostChangeListener(this.bindToThis(this.onModelChanged)).removePostValidateListener(this.bindToThis(this.onModelValidated)).undetectMonitors(['enabled', 'visible'], this.onMonitorChangeDetected).undetectMonitors(['watch']).undetectMonitors(['validate'], this.onValidateDetected);
 			}
 			// life cycle pointcut executor
 
@@ -823,6 +838,7 @@
 				if (pointcut && pointcut.pre) {
 					pointcut.pre.apply(this, Array.prototype.slice.call(arguments, 1));
 				}
+				return this;
 			}
 		}, {
 			key: 'pointcutPostExecutor',
@@ -830,6 +846,7 @@
 				if (pointcut && pointcut.post) {
 					pointcut.post.apply(this, Array.prototype.slice.call(arguments, 1));
 				}
+				return this;
 			}
 
 			// model listeners
@@ -888,7 +905,11 @@
 		}, {
 			key: 'onModelChanged',
 			value: function onModelChanged(evt) {
-				this.forceUpdate();
+				if (this.getModel().getValidator() && this.isValidateImmediately()) {
+					this.getModel().validate(this.getDataId());
+				} else {
+					this.forceUpdate();
+				}
 			}
 		}, {
 			key: 'onModelValidated',
@@ -899,6 +920,21 @@
 			key: 'onMonitorChangeDetected',
 			value: function onMonitorChangeDetected(evt) {
 				this.forceUpdate();
+			}
+		}, {
+			key: 'onValidateDetected',
+			value: function onValidateDetected(evt) {
+				this.getModel().validate(this.getDataId());
+			}
+		}, {
+			key: 'isValidateImmediately',
+			value: function isValidateImmediately() {
+				return this.getLayoutOptionValue('validateImmediately', true);
+			}
+		}, {
+			key: 'getValidationResult',
+			value: function getValidationResult() {
+				return this.getModel().getValidationResults(this.getDataId());
 			}
 
 			// option designated monitors
@@ -1159,7 +1195,7 @@
 				}
 				var type = typeof width === 'undefined' ? 'undefined' : _typeof(width);
 				if (type === 'number' || type === 'string') {
-					// only returns xs and sm, cover all sizes
+					// only returns sm, for width over sm definition
 					return 'n-col-sm-' + width;
 				} else {
 					return (0, _classnames2.default)(Object.keys(width).reduce(function (prev, next) {
@@ -1420,6 +1456,8 @@
 				if (!this.isVisible()) {
 					return null;
 				}
+				var validationResults = this.getValidationResult();
+
 				var label = this.getLabel();
 				var labelShown = this.isLabelShown();
 				var cellClassName = this.getWidthClassName(this.getWidth());
@@ -1428,26 +1466,66 @@
 					var compWidth = this.getComponentInternalWidth(labelWidth);
 					return _react2.default.createElement(
 						'div',
-						{ className: (0, _classnames2.default)('n-row', this.getLabelPosition(), cellClassName) },
+						{ className: (0, _classnames2.default)(this.getLabelPosition(), cellClassName) },
 						_react2.default.createElement(
 							'div',
-							{ className: (0, _classnames2.default)('n-comp-label', this.getWidthClassName(labelWidth)) },
-							label
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: (0, _classnames2.default)('n-comp', this.getWidthClassName(compWidth)) },
-							this.renderComponent()
+							{ className: 'n-row' },
+							_react2.default.createElement(
+								'div',
+								{ className: (0, _classnames2.default)('n-comp-label', this.getWidthClassName(labelWidth)) },
+								label
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: (0, _classnames2.default)('n-comp', this.getWidthClassName(compWidth)) },
+								this.renderComponent()
+							),
+							this.renderValidationResults(validationResults)
 						)
 					);
 				} else if (cellClassName) {
 					return _react2.default.createElement(
 						'div',
 						{ className: cellClassName },
-						this.renderComponent()
+						this.renderComponent(),
+						this.renderValidationResults(validationResults)
+					);
+				} else if (validationResults) {
+					return _react2.default.createElement(
+						'div',
+						null,
+						this.renderComponent(),
+						this.renderValidationResults(validationResults)
 					);
 				} else {
 					return this.renderComponent();
+				}
+			}
+		}, {
+			key: 'renderValidationResults',
+			value: function renderValidationResults(results) {
+				var _this9 = this;
+
+				if (results) {
+					return _react2.default.createElement(
+						'div',
+						{ className: 'n-validation' },
+						results.filter(function (result) {
+							return result.rule !== _validation.Validator.CHILD;
+						}).map(function (result, resultIndex) {
+							var className = (0, _classnames2.default)('n-validation-result', {
+								'n-validation-result-info': result.level === _validation.Validator.LEVEL_INFO,
+								'n-validation-result-warning': result.level === _validation.Validator.LEVEL_WARN,
+								'n-validation-result-error': result.level === _validation.Validator.LEVEL_ERROR
+							});
+							return _react2.default.createElement(
+								'span',
+								{ className: className,
+									key: resultIndex },
+								result.message.replace('%1', _this9.getLabel())
+							);
+						})
+					);
 				}
 			}
 		}, {
@@ -1551,7 +1629,7 @@
 		}, {
 			key: 'renderAddons',
 			value: function renderAddons(addons) {
-				var _this10 = this;
+				var _this11 = this;
 
 				if (!addons) {
 					return null;
@@ -1561,7 +1639,7 @@
 					'div',
 					{ className: 'n-input-addon' },
 					this.wrapToArray(addons).map(function (addon, addonIndex) {
-						return _this10.renderAddon(addon, addonIndex);
+						return _this11.renderAddon(addon, addonIndex);
 					})
 				);
 			}
@@ -1777,22 +1855,22 @@
 		_createClass(NContainer, [{
 			key: 'renderLeadingDOMChildren',
 			value: function renderLeadingDOMChildren(propsFromParent) {
-				var _this14 = this;
+				var _this15 = this;
 
 				return _react2.default.Children.map(this.props.children, function (child) {
 					if (child.props['data-leading']) {
-						return _this14.renderDOMChild(child, propsFromParent);
+						return _this15.renderDOMChild(child, propsFromParent);
 					}
 				});
 			}
 		}, {
 			key: 'renderTailingDOMChildren',
 			value: function renderTailingDOMChildren(propsFromParent) {
-				var _this15 = this;
+				var _this16 = this;
 
 				return _react2.default.Children.map(this.props.children, function (child) {
 					if (!child.props['data-leading']) {
-						return _this15.renderDOMChild(child, propsFromParent);
+						return _this16.renderDOMChild(child, propsFromParent);
 					}
 				});
 			}
@@ -1848,10 +1926,15 @@
 			}
 		}, {
 			key: 'renderChildren',
-			value: function renderChildren(children, className, model) {
-				var _this16 = this;
+			value: function renderChildren(options) {
+				var _this17 = this;
 
-				children = children ? children : this.getChildren();
+				options = options ? options : {};
+				var children = options.children ? options.children : this.getChildren(),
+				    className = options.class,
+				    model = options.model,
+				    columnsOfGrid = options.columnsOfGrid;
+
 				if (!children) {
 					return null;
 				}
@@ -1861,7 +1944,7 @@
 					var child = children[key];
 					var layout = new _layout.Layout(key, child);
 
-					var rowIndex = _this16.wrapOptionValue(layout.getRowIndex());
+					var rowIndex = _this17.wrapOptionValue(layout.getRowIndex());
 					rowIndex = rowIndex == null ? _envs.Envs.DEFAULT_ROW_INDEX : rowIndex;
 					var row = rows[rowIndex];
 					if (row == null) {
@@ -1869,7 +1952,7 @@
 						rows[rowIndex] = row;
 					}
 
-					var columnIndex = _this16.wrapOptionValue(layout.getColumnIndex());
+					var columnIndex = _this17.wrapOptionValue(layout.getColumnIndex());
 					columnIndex = columnIndex == null ? _envs.Envs.DEFAULT_COLUMN_INDEX : columnIndex;
 					var columnInRow = row[columnIndex];
 					if (columnInRow == null) {
@@ -1881,48 +1964,66 @@
 				return Object.keys(rows).sort(function (index1, index2) {
 					return index1 - index2;
 				}).map(function (rowIndex) {
-					return _this16.renderRow(rows[rowIndex], rowIndex, className, model);
+					return _this17.renderRow({
+						row: rows[rowIndex],
+						rowIndex: rowIndex,
+						class: className,
+						model: model,
+						columnsOfGrid: columnsOfGrid
+					});
 				});
 			}
 		}, {
 			key: 'renderRow',
-			value: function renderRow(row, rowIndex, className, model) {
-				var _this17 = this;
+			value: function renderRow(options) {
+				var _this18 = this;
 
+				options = options ? options : {};
+				var row = options.row,
+				    rowIndex = options.rowIndex,
+				    className = options.class,
+				    model = options.model,
+				    columnsOfGrid = options.columnsOfGrid;
 				if (!row) {
 					return null;
 				}
 				var content = Object.keys(row).sort(function (index1, index2) {
 					return index1 - index2;
 				}).map(function (columnIndex) {
-					return _this17.renderColumn(row[columnIndex], model);
+					return _this18.renderCell({
+						column: row[columnIndex],
+						model: model
+					});
 				});
+				className = (0, _classnames2.default)('n-row', className, this.getColumnsOfGridClassName(columnsOfGrid));
 				return _react2.default.createElement(
 					'div',
-					{ className: (0, _classnames2.default)('n-row', className),
+					{ className: className,
 						key: rowIndex },
 					content
 				);
 			}
 		}, {
-			key: 'renderColumn',
-			value: function renderColumn(column, model) {
-				var _this18 = this;
+			key: 'renderCell',
+			value: function renderCell(options) {
+				var _this19 = this;
 
+				options = options ? options : {};
+				var column = options.column,
+				    model = options.model;
 				if (!column) {
 					return null;
 				}
 				return column.map(function (layout, layoutIndex) {
 					var props = {
-						model: model ? model : _this18.getModel(),
+						model: model ? model : _this19.getModel(),
 						layout: layout,
-						orientation: _this18.getOrientation(),
-						viewMode: _this18.isViewMode(),
+						orientation: _this19.getOrientation(),
+						viewMode: _this19.isViewMode(),
 						ref: layout.getId(),
 						key: layoutIndex,
-						container: _this18
+						container: _this19
 					};
-					// TODO need to wrap into cell
 					return _envs.Envs.render(layout.getTypeAsString(), props);
 				});
 			}
@@ -1934,12 +2035,18 @@
 		}, {
 			key: 'renderLeadingChildren',
 			value: function renderLeadingChildren() {
-				return this.renderChildren(this.getLeadingChildren(), 'n-leading');
+				return this.renderChildren({
+					children: this.getLeadingChildren(),
+					class: 'n-leading'
+				});
 			}
 		}, {
 			key: 'renderTailingChildren',
 			value: function renderTailingChildren() {
-				return this.renderChildren(this.getTailingChildren(), 'n-tailing');
+				return this.renderChildren({
+					children: this.getTailingChildren(),
+					class: 'n-tailing'
+				});
 			}
 		}, {
 			key: 'getLeadingChildren',
@@ -1950,6 +2057,30 @@
 			key: 'getTailingChildren',
 			value: function getTailingChildren() {
 				return this.getLayoutOptionValue('tailChildren', {});
+			}
+		}, {
+			key: 'getColumnsOfGrid',
+			value: function getColumnsOfGrid() {
+				return this.getLayoutOptionValue('columnsOfGrid', _envs.Envs.COLUMNS_OF_GRID);
+			}
+			// will not use default value
+
+		}, {
+			key: 'getColumnsOfGridClassName',
+			value: function getColumnsOfGridClassName(columnsOfGrid) {
+				if (!columnsOfGrid) {
+					columnsOfGrid = this.getColumnsOfGrid();
+				}
+				if (!columnsOfGrid || columnsOfGrid == 12) {
+					return '';
+				} else if (typeof columnsOfGrid === 'number' || typeof columnsOfGrid === 'string') {
+					return 'n-row-' + columnsOfGrid + 'c';
+				} else {
+					return (0, _classnames2.default)(Object.keys(columnsOfGrid).reduce(function (prev, next) {
+						prev['n-row-' + next + '-' + columnsOfGrid[next] + 'c'] = true;
+						return prev;
+					}, {}));
+				}
 			}
 		}]);
 
@@ -2016,43 +2147,66 @@
 		_createClass(NHierarchyComponent, [{
 			key: 'internalInstallLifecycleMonitors',
 			value: function internalInstallLifecycleMonitors() {
-				_get(NHierarchyComponent.prototype.__proto__ || Object.getPrototypeOf(NHierarchyComponent.prototype), 'internalInstallLifecycleMonitors', this).call(this);
-				this.addPostAddListener(this.bindToThis(this.onModelChanged));
-				this.addPostRemoveListener(this.bindToThis(this.onModelChanged));
+				return _get(NHierarchyComponent.prototype.__proto__ || Object.getPrototypeOf(NHierarchyComponent.prototype), 'internalInstallLifecycleMonitors', this).call(this).addPostAddListener(this.bindToThis(this.onModelChanged)).addPostRemoveListener(this.bindToThis(this.onModelChanged));
 			}
 		}, {
 			key: 'internalUninstallLifecycleMonitors',
 			value: function internalUninstallLifecycleMonitors() {
-				_get(NHierarchyComponent.prototype.__proto__ || Object.getPrototypeOf(NHierarchyComponent.prototype), 'internalUninstallLifecycleMonitors', this).call(this);
-				this.removePostAddListener(this.bindToThis(this.onModelChanged));
-				this.removePostRemoveListener(this.bindToThis(this.onModelChanged));
+				return _get(NHierarchyComponent.prototype.__proto__ || Object.getPrototypeOf(NHierarchyComponent.prototype), 'internalUninstallLifecycleMonitors', this).call(this).removePostAddListener(this.bindToThis(this.onModelChanged)).removePostRemoveListener(this.bindToThis(this.onModelChanged));
 			}
 		}, {
 			key: 'createItemModel',
 			value: function createItemModel(itemJSON, itemIndex) {
-				var _this21 = this;
+				var _this22 = this;
 
-				return new _model.Model(itemJSON, true).setParent(this.getModel()).addPostChangeListener(_model.Model.ALL, function (evt) {
-					_this21.onItemModelChanged(evt, itemIndex);
+				var itemModel = new _model.Model(itemJSON, true).setParent(this.getModel()).addPostChangeListener(_model.Model.ALL, function (evt) {
+					_this22.onItemModelChanged(evt, itemIndex);
 				});
+				var itemValidationResult = this.findItemValidationResult(itemJSON);
+				if (itemValidationResult) {
+					itemModel.replaceValidationResults(itemValidationResult);
+				}
+				var validator = this.getModel().getValidator();
+				if (validator) {
+					itemModel.setValidator(validator.createChildValidator(this.getDataId()));
+				}
+				return itemModel;
+			}
+		}, {
+			key: 'findItemValidationResult',
+			value: function findItemValidationResult(itemJSON) {
+				var validationResults = this.getValidationResult();
+				if (validationResults) {
+					var results = validationResults.find(function (result) {
+						return result.rule === _validation.Validator.CHILD;
+					});
+					if (results) {
+						var itemResult = results.message.find(function (result) {
+							return result.item === itemJSON;
+						});
+						if (itemResult) {
+							return itemResult.result;
+						}
+					}
+				}
+				return null;
 			}
 		}, {
 			key: 'createItemLayoutOptions',
 			value: function createItemLayoutOptions(itemModel, itemIndex) {
-				var _this22 = this;
+				var _this23 = this;
 
 				var layoutOptions = this.getLayout().getOptions();
 				var itemLayoutOptions = {};
 				Object.keys(layoutOptions).forEach(function (key) {
-					itemLayoutOptions[key] = _this22.getLayoutOptionValue(key, null, true);
+					itemLayoutOptions[key] = _this23.getLayoutOptionValue(key, null, true);
 				});
 				return itemLayoutOptions;
 			}
-		}, {
-			key: 'onModelChanged',
-			value: function onModelChanged(evt) {
-				_get(NHierarchyComponent.prototype.__proto__ || Object.getPrototypeOf(NHierarchyComponent.prototype), 'onModelChanged', this).call(this, evt);
-			}
+			// onModelChanged(evt) {
+			// 	super.onModelChanged(evt);
+			// }
+
 		}, {
 			key: 'onItemModelChanged',
 			value: function onItemModelChanged(evt, itemIndex) {
@@ -2514,6 +2668,64 @@
 			value: function getParent() {
 				return this.parent;
 			}
+		}, {
+			key: 'setValidator',
+			value: function setValidator(validator) {
+				this.validator = validator;
+				return this;
+			}
+		}, {
+			key: 'getValidator',
+			value: function getValidator() {
+				return this.validator;
+			}
+		}, {
+			key: 'validate',
+			value: function validate(dataId, perspective) {
+				var _this = this;
+
+				if (this.validator) {
+					(function () {
+						var validationResults = _this.getValidationResults();
+						var result = _this.validator.validate(_this, dataId, perspective);
+						if (dataId) {
+							// only validate given data id
+							validationResults[dataId] = result[dataId];
+							_this.firePostValidateEvent(dataId, _this.get(dataId), validationResults[dataId]);
+						} else {
+							(function () {
+								// validate all, replace old
+								var old = _this.validationResults;
+								_this.validationResults = result;
+								var fired = {};
+								Object.keys(result).forEach(function (dataId) {
+									fired[dataId] = true;
+									_this.firePostValidateEvent(dataId, _this.get(dataId), result[dataId]);
+								});
+								Object.keys(old).forEach(function (dataId) {
+									if (!fired[dataId]) {
+										_this.firePostValidateEvent(dataId, _this.get(dataId), null);
+									}
+								});
+							})();
+						}
+					})();
+				}
+				return this;
+			}
+		}, {
+			key: 'getValidationResults',
+			value: function getValidationResults(dataId) {
+				if (this.validationResults == null) {
+					this.validationResults = {};
+				}
+				return dataId ? this.validationResults[dataId] : this.validationResults;
+			}
+		}, {
+			key: 'replaceValidationResults',
+			value: function replaceValidationResults(results) {
+				this.validationResults = results;
+			}
 		}]);
 
 		return Model;
@@ -2621,6 +2833,11 @@
 				return this.array;
 			}
 		}, {
+			key: 'isReady',
+			value: function isReady() {
+				return true;
+			}
+		}, {
 			key: 'ready',
 			value: function ready() {
 				return true;
@@ -2685,6 +2902,7 @@
 				percentageParser: function percentageParser(displayText) {
 					return displayText ? displayText / 100 : null;
 				},
+				textChangeDelay: 300,
 				dateValueFormat: 'YYYYMMDDHHmmss',
 				dateDisplayFormat: ['YYYY/MM/DD', 'YYYYMMDD'],
 				dateHeaderFormat: { year: 'YYYY', month: 'MMMM' },
@@ -2702,7 +2920,7 @@
 				treeLeafIcon: 'file-o',
 				treeMaxHeight: 300,
 				listMaxHeight: 300,
-				tableColumnsOfGrid: 12,
+				columnsOfGrid: 12,
 				dropdownMaxHeight: 300,
 				dropdownMinWidth: 300,
 				selectPlaceholder: 'Please Select...'
@@ -2834,6 +3052,10 @@
 		}, {
 			key: 'checkTransitionSupported',
 			value: function checkTransitionSupported() {
+				if (typeof document === 'undefined') {
+					console.error('Make sure document object existed!');
+					return;
+				}
 				var TransitionEndEvent = {
 					transition: 'transitionend',
 					WebkitTransition: 'webkitTransitionEnd',
@@ -2882,6 +3104,8 @@
 			set: function set(value) {
 				this.props.cellWidth = value;
 			}
+			// columns in a cell, default is 12
+
 		}, {
 			key: 'CELL_COLUMNS',
 			get: function get() {
@@ -2961,6 +3185,14 @@
 			},
 			set: function set(value) {
 				this.props.percentageParser = value;
+			}
+		}, {
+			key: 'TEXT_CHANGE_DELAY',
+			get: function get() {
+				return this.props.textChangeDelay;
+			},
+			set: function set(value) {
+				this.props.textChangeDelay = value;
 			}
 		}, {
 			key: 'DATE_VALUE_FORMAT',
@@ -3099,12 +3331,12 @@
 				this.props.listMaxHeight = value;
 			}
 		}, {
-			key: 'TABLE_COLUMNS_OF_GRID',
+			key: 'COLUMNS_OF_GRID',
 			get: function get() {
-				return this.props.tableColumnsOfGrid;
+				return this.props.columnsOfGrid;
 			},
 			set: function set(value) {
-				this.props.tableColumnsOfGrid = value;
+				this.props.columnsOfGrid = value;
 			}
 		}, {
 			key: 'DROPDOWN_MAX_HEIGHT',
@@ -3174,6 +3406,388 @@
 
 /***/ },
 /* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.ValidationMessages = exports.GlobalValidationRules = exports.Validator = undefined;
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _envs = __webpack_require__(8);
+
+	var _model = __webpack_require__(6);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ValidationMessages = function () {
+		function ValidationMessages() {
+			_classCallCheck(this, ValidationMessages);
+
+			this.messages = {};
+			this.install({
+				'required': '%1 is required.',
+				'minlen': 'Length of %1 should be at least %2 character(s).',
+				'min': 'Value of %1 should be at least %2.',
+				'minsize': 'There are at least %2 item(s) for %1.',
+				'maxlen': 'Length of %1 should be at most %2 character(s).',
+				'max': 'Value of %1 should be at most %2.',
+				'maxsize': 'There are at most %2 item(s) for %1.',
+				'before': '%1 should be before %2.',
+				'after': '%1 should be after %2'
+			});
+		}
+
+		_createClass(ValidationMessages, [{
+			key: 'install',
+			value: function install(options) {
+				var locale = this.parseLocale(options.locale, 'en');
+				var msgsOfLocale = this.messages[locale];
+				if (msgsOfLocale == null) {
+					msgsOfLocale = {};
+					this.messages[locale] = msgsOfLocale;
+				}
+				Object.keys(options).filter(function (key) {
+					return key !== 'locale';
+				}).forEach(function (ruleName) {
+					var oldMsg = msgsOfLocale[ruleName];
+					msgsOfLocale[ruleName] = options[ruleName];
+					if (oldMsg) {
+						console.info('Message "' + oldMsg + '" of rule "' + ruleName + '" is replaced by ' + options[ruleName] + ' on locale "' + locale + '".');
+					}
+				});
+			}
+		}, {
+			key: 'get',
+			value: function get(ruleName, locale) {
+				locale = this.parseLocale(locale, this.getLocale());
+				var msgsOfLocale = this.messages[locale];
+				var message = null;
+				if (msgsOfLocale) {
+					message = msgsOfLocale[ruleName];
+				}
+				if (message) {
+					return message;
+				} else {
+					var parentLocale = this.parentOfLocale(locale);
+					if (parentLocale === locale) {
+						throw 'Message of "' + ruleName + '" not found in locale "' + locale + '" and its parents.';
+					} else {
+						return this.get(ruleName, parentLocale);
+					}
+				}
+			}
+		}, {
+			key: 'parseLocale',
+			value: function parseLocale(locale, defaultLocale) {
+				return locale ? locale.replace('-', '_').toLowerCase() : defaultLocale;
+			}
+		}, {
+			key: 'parentOfLocale',
+			value: function parentOfLocale(locale) {
+				var segments = locale.split('_');
+				if (segments.length === 1) {
+					return 'en';
+				} else {
+					segments.splice(segments.length - 1, 1);
+					return segments.join('_');
+				}
+			}
+		}, {
+			key: 'getLocale',
+			value: function getLocale() {
+				if (this.locale) {} else if (typeof navigator === 'undefined') {
+					this.locale = 'en';
+				} else {
+					this.locale = navigator.language || navigator.userLanguage;
+				}
+				return this.locale;
+			}
+		}, {
+			key: 'setLocale',
+			value: function setLocale(locale) {
+				if (locale) {
+					this.locale = this.parseLocale(locale);
+				} else {
+					this.locale = 'en';
+				}
+			}
+		}, {
+			key: 'convert',
+			value: function convert(ruleName, param, label) {
+				var message = this.get(ruleName);
+				if (label) {
+					message = message.replace('%1', label);
+				}
+				if (param) {
+					message = message.replace('%2', param);
+				}
+				return message;
+			}
+		}]);
+
+		return ValidationMessages;
+	}();
+
+	var messages = new ValidationMessages();
+
+	var isEmpty = function isEmpty(value) {
+		return value == null || (value + '').length === 0;
+	};
+	var GlobalValidationRules = {
+		required: function required(model, value, params, label) {
+			return isEmpty(value) ? messages.convert('required', params, label) : true;
+		},
+		minlen: function minlen(model, value, params, label) {
+			return isEmpty(value) ? true : (value + '').length < params ? messages.convert('minlen', params, label) : true;
+		},
+		maxlen: function maxlen(model, value, params, label) {
+			return isEmpty(value) ? true : (value + '').length > params ? messages.convert('maxlen', params, label) : true;
+		},
+		min: function min(model, value, params, label) {
+			return isEmpty(value) ? true : value * 1 < params ? messages.convert('min', params, label) : true;
+		},
+		max: function max(model, value, params, label) {
+			return isEmpty(value) ? true : value * 1 > params ? messages.convert('max', params, label) : true;
+		},
+		minsize: function minsize(model, value, params, label) {
+			return value == null || value.length === 0 ? true : value.length < params ? messages.convert('minsize', params, label) : true;
+		},
+		maxsize: function maxsize(model, value, params, label) {
+			return value == null || value.length === 0 ? true : value.length > params ? messages.convert('maxsize', params, label) : true;
+		},
+		before: function before(model, value, params, label) {
+			if (isEmpty(value)) {
+				return true;
+			}
+			return value > params ? messages.convert('before', params, label) : true;
+		},
+		after: function after(model, value, params, label) {
+			if (isEmpty(value)) {
+				return true;
+			}
+			return value < params ? messages.convert('after', params, label) : true;
+		},
+		child: function child(model, value, params, label, ruleRepository) {
+			if (value == null || value.length == 0) {
+				return true;
+			}
+			var itemValidator = new Validator(params, null, ruleRepository);
+			var results = value.map(function (item) {
+				var itemModel = new _model.Model(item, true);
+				var result = itemValidator.validate(itemModel);
+				return {
+					item: item,
+					result: result
+				};
+			}).filter(function (itemResult) {
+				return Object.keys(itemResult.result).length > 0;
+			});
+			return results.length === 0 ? true : results;
+		}
+	};
+
+	var Validator = function () {
+		function Validator(rules, perspective, ruleRepo) {
+			var _this = this;
+
+			_classCallCheck(this, Validator);
+
+			if (perspective) {
+				this.rules = rules ? rules : {};
+			} else {
+				this.rules = {};
+				this.rules['' + Validator.ALL] = rules;
+			}
+			// remove null properties
+			Object.keys(this.rules).forEach(function (key) {
+				if (_this.rules[key] === null) {
+					delete _this.rules[key];
+				}
+			});
+
+			this.ruleRepo = ruleRepo;
+		}
+
+		_createClass(Validator, [{
+			key: 'validate',
+			value: function validate(model, property, perspective) {
+				var _this2 = this;
+
+				var rules = this.getRules(perspective);
+				if (property) {
+					var propertyRule = {};
+					if (rules[property] != null) {
+						propertyRule[property] = rules[property];
+					}
+					rules = propertyRule;
+				}
+				return Object.keys(rules).map(function (propertyName) {
+					var value = model.get(propertyName);
+					var rulesOnProperty = rules[propertyName];
+					var label = rulesOnProperty.label;
+					// result is an array
+					var resultsOnProperty = Object.keys(rulesOnProperty).filter(function (ruleName) {
+						return ruleName !== 'label';
+					}).map(function (ruleName) {
+						var params = rulesOnProperty[ruleName];
+						var rule = _this2.unwrapRuleParams(ruleName, params);
+						return {
+							rule: ruleName,
+							message: rule.checker.call(_this2, model, value, rule.params, label, _this2.ruleRepo),
+							level: rule.level
+						};
+					}).filter(function (ruleResult) {
+						// filter the passed rule results
+						return ruleResult.message != null && ruleResult.message !== true;
+					});
+					return {
+						name: propertyName,
+						result: resultsOnProperty
+					};
+				}).filter(function (propResult) {
+					// filter which has no failed result
+					return propResult.result.length != 0;
+				}).reduce(function (prev, next) {
+					prev[next.name] = next.result;
+					return prev;
+				}, {});
+			}
+		}, {
+			key: 'unwrapRuleParams',
+			value: function unwrapRuleParams(name, params) {
+				var type = typeof params === 'undefined' ? 'undefined' : _typeof(params);
+				if (type === 'function') {
+					return {
+						checker: params,
+						level: params.level ? params.level : Validator.LEVEL_ERROR,
+						params: params.params ? params.params : null
+					};
+				} else if (type === 'object') {
+					return {
+						checker: this.findRuleFromRepo(name),
+						level: params.level ? params.level : Validator.LEVEL_ERROR,
+						params: params.params ? params.params : params
+					};
+				} else {
+					return {
+						checker: this.findRuleFromRepo(name),
+						level: Validator.LEVEL_ERROR,
+						params: params
+					};
+				}
+			}
+		}, {
+			key: 'getRules',
+			value: function getRules(perspective) {
+				var _this3 = this;
+
+				if (!perspective) {
+					perspective = this.getPerspective();
+				}
+				if (perspective) {
+					var ruleSet = this.rules[perspective];
+					return ruleSet == null ? {} : ruleSet;
+				} else {
+					var _ruleSet = Object.keys(this.rules).map(function (key) {
+						return _this3.rules[key];
+					});
+					if (_ruleSet.length === 0) {
+						return {};
+					} else {
+						return _envs.Envs.deepMergeTo.apply(_envs.Envs, [{}].concat(_ruleSet));
+					}
+				}
+			}
+		}, {
+			key: 'findRuleFromRepo',
+			value: function findRuleFromRepo(ruleName) {
+				var rule = null;
+				if (this.ruleRepo) {
+					rule = this.ruleRepo[ruleName];
+				}
+				if (rule == null) {
+					rule = GlobalValidationRules[ruleName];
+				}
+				if (rule == null) {
+					throw 'Rule ' + ruleName + ' not found, please define it when construct validator \t\t\t\t\tor into global validation rules repository';
+				}
+				return rule;
+			}
+		}, {
+			key: 'setPerspective',
+			value: function setPerspective(perspective) {
+				this.perspective = perspective;
+				var childValidators = this.getChildValidators();
+				Object.keys(childValidators).forEach(function (dataId) {
+					var validator = childValidators[dataId];
+					validator.setPerspective(perspective);
+				});
+				return this;
+			}
+		}, {
+			key: 'getPerspective',
+			value: function getPerspective() {
+				return this.perspective;
+			}
+		}, {
+			key: 'getChildValidators',
+			value: function getChildValidators() {
+				if (this.childValidators == null) {
+					this.childValidators = {};
+				}
+				return this.childValidators;
+			}
+		}, {
+			key: 'getChildValidator',
+			value: function getChildValidator(dataId) {
+				return this.getChildValidators()[dataId];
+			}
+		}, {
+			key: 'createChildValidator',
+			value: function createChildValidator(dataId) {
+				var _this4 = this;
+
+				var validator = this.getChildValidator(dataId);
+				if (!validator) {
+					var rules = Object.keys(this.rules).reduce(function (prev, next) {
+						var perspectiveRules = _this4.rules[next];
+						var propertyRules = perspectiveRules[dataId];
+						if (propertyRules) {
+							var childRules = propertyRules.child;
+							if (childRules) {
+								prev[next] = childRules;
+							}
+						}
+						return prev;
+					}, {});
+					validator = new Validator(rules, true, this.ruleRepo);
+					validator.setPerspective(this.getPerspective());
+					this.childValidators[dataId] = validator;
+				}
+				return validator;
+			}
+		}]);
+
+		return Validator;
+	}();
+
+	Validator.ALL = '--all';
+	Validator.CHILD = 'child';
+	Validator.LEVEL_ERROR = 1;
+	Validator.LEVEL_WARN = 2;
+	Validator.LEVEL_INFO = 3;
+	exports.Validator = Validator;
+	exports.GlobalValidationRules = GlobalValidationRules;
+	exports.ValidationMessages = messages;
+
+/***/ },
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3390,31 +4004,31 @@
 	exports.Layout = Layout;
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = ReactDOM;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = jQuery;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = classNames;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3746,7 +4360,7 @@
 	exports.NToggle = NToggle;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3774,9 +4388,9 @@
 		});
 	});
 
-	var _nIcon = __webpack_require__(17);
+	var _nIcon = __webpack_require__(18);
 
-	var _moment = __webpack_require__(18);
+	var _moment = __webpack_require__(19);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -5081,8 +5695,6 @@
 
 			return _ret4 = (_temp4 = (_this12 = _possibleConstructorReturn(this, (_ref4 = NDate.__proto__ || Object.getPrototypeOf(NDate)).call.apply(_ref4, [this].concat(args))), _this12), _this12.onComponentChanged = function (evt) {
 				_this12.gatherValueFromInputAndSetToModel();
-			}, _this12.onComponentKeyPressed = function (evt) {
-				_this12.onComponentChanged(evt);
 			}, _this12.onComponentFocused = function (evt) {
 				_this12.onComponentFocusChanged();
 			}, _this12.onComponentBlurred = function (evt) {
@@ -5105,11 +5717,6 @@
 		}
 
 		_createClass(NDate, [{
-			key: 'postWillUpdate',
-			value: function postWillUpdate() {
-				this.getComponent().off('change', this.onComponentChanged);
-			}
-		}, {
 			key: 'postDidUpdate',
 			value: function postDidUpdate() {
 				var compValue = this.formatValue(this.getComponentText(), this.getDisplayFormats());
@@ -5117,18 +5724,11 @@
 				if (!this.isSame(compValue, modelValue)) {
 					this.getComponent().val(this.parseText(modelValue, this.getPrimaryDisplayFormat()));
 				}
-				this.getComponent().on('change', this.onComponentChanged);
 			}
 		}, {
 			key: 'postDidMount',
 			value: function postDidMount() {
 				this.getComponent().val(this.parseText(this.getValueFromModel(), this.getPrimaryDisplayFormat()));
-				this.getComponent().on('change', this.onComponentChanged);
-			}
-		}, {
-			key: 'postWillUnmount',
-			value: function postWillUnmount() {
-				this.getComponent().off('change', this.onComponentChanged);
 			}
 		}, {
 			key: 'renderDropdown',
@@ -5191,7 +5791,6 @@
 					disabled: !this.isEnabled(),
 					placeholder: this.getPlaceholder(),
 
-					onKeyPress: this.onComponentKeyPressed,
 					onChange: this.onComponentChanged,
 					onFocus: this.onComponentFocused,
 					onBlur: this.onComponentBlurred,
@@ -5303,7 +5902,7 @@
 	exports.moment = _moment2.default;
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5513,13 +6112,13 @@
 	exports.NStackIcon = NStackIcon;
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	module.exports = moment;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5668,7 +6267,7 @@
 	exports.NLabel = NLabel;
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5694,9 +6293,9 @@
 		});
 	});
 
-	var _nIcon = __webpack_require__(17);
+	var _nIcon = __webpack_require__(18);
 
-	var _nCheck = __webpack_require__(15);
+	var _nCheck = __webpack_require__(16);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6052,7 +6651,7 @@
 	exports.NList = NList;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6244,7 +6843,8 @@
 						expanded: this.isExpanded(),
 						collapsibleStyle: this.getCollapsibleStyle(),
 						leadChildren: this.getLeadingChildren(),
-						tailChildren: this.getTailingChildren()
+						tailChildren: this.getTailingChildren(),
+						columnsOfGrid: this.getColumnsOfGrid()
 					},
 					evt: {
 						expand: this.onExpandChanged.bind(this),
@@ -6266,7 +6866,8 @@
 						type: _nComponent.Envs.COMPONENT_TYPES.PANEL_BODY,
 						style: this.getLayoutOptionValue('style'),
 						expanded: this.isExpanded(),
-						children: this.getChildren()
+						children: this.getChildren(),
+						columnsOfGrid: this.getColumnsOfGrid()
 					}
 				}, this.getPanelBodyLayout());
 
@@ -6479,7 +7080,7 @@
 	exports.NPanelBody = NPanelBody;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6736,7 +7337,7 @@
 	exports.NRadioButton = NRadioButton;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6762,9 +7363,9 @@
 		});
 	});
 
-	var _nIcon = __webpack_require__(17);
+	var _nIcon = __webpack_require__(18);
 
-	var _nList = __webpack_require__(20);
+	var _nList = __webpack_require__(21);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -7058,7 +7659,7 @@
 	exports.NSelect = NSelect;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7326,7 +7927,9 @@
 						ref: 'me' },
 					this.renderLeadingDOMChildren(),
 					this.renderLeadingChildren(),
-					this.renderChildren(this.wrapOptionValue(children.children)),
+					this.renderChildren({
+						children: this.wrapOptionValue(children.children)
+					}),
 					this.renderTailingChildren(),
 					this.renderTailingDOMChildren()
 				);
@@ -7388,7 +7991,8 @@
 						style: this.getLayoutOptionValue('style'),
 						tabs: this.getTabs(),
 						leadChildren: this.getLeadingChildren(),
-						tailChildren: this.getTailingChildren()
+						tailChildren: this.getTailingChildren(),
+						columnsOfGrid: this.getColumnsOfGrid()
 					},
 					evt: {
 						active: this.onItemActived.bind(this),
@@ -7411,7 +8015,8 @@
 						type: _nComponent.Envs.COMPONENT_TYPES.TAB_BODY,
 						style: this.getLayoutOptionValue('style'),
 						tabs: this.getTabs(),
-						children: this.getChildren()
+						children: this.getChildren(),
+						columnsOfGrid: this.getColumnsOfGrid()
 					}
 				}, this.getTabBodyLayout());
 
@@ -7532,10 +8137,11 @@
 				var layoutJSON = {
 					label: this.getLayout().getLabel(),
 					dataId: this.getDataId(),
-					comp: _nComponent.Envs.deepMergeTo({
-						type: _nComponent.Envs.COMPONENT_TYPES.TAB,
+					comp: _nComponent.Envs.deepMergeTo({}, {
 						tabs: this.getTabs()
-					}, this.getLayout().getOptions()),
+					}, this.getLayout().getOptions(), {
+						type: _nComponent.Envs.COMPONENT_TYPES.TAB
+					}),
 					evt: {
 						active: this.onItemActived,
 						shouldActive: this.onItemShouldActive
@@ -7762,7 +8368,7 @@
 	exports.NTabBody = NTabBody;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7790,7 +8396,7 @@
 		});
 	});
 
-	var _nIcon = __webpack_require__(17);
+	var _nIcon = __webpack_require__(18);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -7954,7 +8560,16 @@
 					}, title));
 				} else {
 					// component set
-					return this.renderChildren(title);
+
+					return this.renderChildren({
+						children: Object.keys(title).reduce(function (prev, next) {
+							if (next !== 'columnsOfGrid') {
+								prev[next] = title[next];
+							}
+							return prev;
+						}, {}),
+						columnsOfGrid: title.columnsOfGrid ? title.columnsOfGrid : null
+					});
 				}
 			}
 		}, {
@@ -7976,7 +8591,7 @@
 			value: function renderInNormal() {
 				var _this5 = this;
 
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), 'n-row', this.getTableHeaderStyle());
+				var className = (0, _nComponent.classnames)(this.getComponentStyle(), 'n-row', this.getTableHeaderStyle(), this.getColumnsOfGridClassName());
 				return _nComponent.React.createElement(
 					'div',
 					{ className: className,
@@ -8067,7 +8682,16 @@
 							model: rowModel
 						});
 					} else {
-						return this.renderChildren(body, null, rowModel);
+						return this.renderChildren({
+							children: Object.keys(body).reduce(function (prev, next) {
+								if (next !== 'columnsOfGrid') {
+									prev[next] = body[next];
+								}
+								return prev;
+							}, {}),
+							columnsOfGrid: body.columnsOfGrid ? body.columnsOfGrid : null,
+							model: rowModel
+						});
 					}
 				}
 			}
@@ -8092,7 +8716,7 @@
 					'n-row': true,
 					'n-table-body-row-odd': rowIndex % 2 == 0,
 					'n-table-body-row-even': rowIndex % 2 == 1
-				});
+				}, this.getColumnsOfGridClassName());
 				return _nComponent.React.createElement(
 					'div',
 					{ className: className,
@@ -8218,7 +8842,8 @@
 						sorter: this.getLayoutOptionValue('sorter', null, true),
 						columns: this.getColumns(),
 						leadChildren: this.getLeadingChildren(),
-						tailChildren: this.getTailingChildren()
+						tailChildren: this.getTailingChildren(),
+						columnsOfGrid: this.getColumnsOfGrid()
 					},
 					evt: {
 						columnSort: this.onHeaderColumnSorting
@@ -8240,7 +8865,8 @@
 					comp: {
 						type: _nComponent.Envs.COMPONENT_TYPES.TABLE_BODY,
 						style: this.getLayoutOptionValue('style'),
-						columns: this.getColumns()
+						columns: this.getColumns(),
+						columnsOfGrid: this.getColumnsOfGrid()
 					},
 					evt: {
 						columnSort: this.onBodyColumnSorted,
@@ -8321,7 +8947,7 @@
 	exports.NTableBody = NTableBody;
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8370,11 +8996,15 @@
 				var newValue = _this.getComponentText();
 				var oldValue = _this.getValueFromModel();
 				if (!_this.textEquals(newValue, oldValue)) {
-					evt.preventDefault();
-					_this.setValueToModel(newValue);
+					// evt.preventDefault();
+					if (_this.state.valueChangeTimeoutId) {
+						clearTimeout(_this.state.valueChangeTimeoutId);
+					}
+					_this.state.valueChangeTimeoutId = setTimeout(function () {
+						delete _this.state.valueChangeTimeoutId;
+						_this.setValueToModel(newValue);
+					}, _nComponent.Envs.TEXT_CHANGE_DELAY);
 				}
-			}, _this.onComponentKeyPressed = function (evt) {
-				_this.onComponentChanged(evt);
 			}, _this.onComponentFocused = function (evt) {
 				_this.onComponentFocusChanged();
 			}, _this.onComponentBlurred = function (evt) {
@@ -8383,30 +9013,18 @@
 		}
 
 		_createClass(NTextArea, [{
-			key: 'postWillUpdate',
+			key: 'postDidUpdate',
 
 			// lifecycle
-			value: function postWillUpdate() {
-				this.getComponent().off('change', this.onComponentChanged);
-			}
-		}, {
-			key: 'postDidUpdate',
 			value: function postDidUpdate() {
 				if (this.getComponentText() != this.getValueFromModel()) {
 					this.getComponent().val(value);
 				}
-				this.getComponent().on('change', this.onComponentChanged);
 			}
 		}, {
 			key: 'postDidMount',
 			value: function postDidMount() {
 				this.getComponent().val(this.getValueFromModel());
-				this.getComponent().on('change', this.onComponentChanged);
-			}
-		}, {
-			key: 'postWillUnmount',
-			value: function postWillUnmount() {
-				this.getComponent().off('change', this.onComponentChanged);
 			}
 		}, {
 			key: 'renderText',
@@ -8416,7 +9034,6 @@
 					placeholder: this.getPlaceholder(),
 					rows: this.getTextRows(),
 
-					onKeyPress: this.onComponentKeyPressed,
 					onChange: this.onComponentChanged,
 					onFocus: this.onComponentFocused,
 					onBlur: this.onComponentBlurred,
@@ -8483,9 +9100,6 @@
 
 			// data event
 
-
-			// dom event
-
 		}, {
 			key: 'textEquals',
 
@@ -8515,7 +9129,7 @@
 	exports.NTextArea = NTextArea;
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8566,11 +9180,15 @@
 				var newValue = _this.getComponentText();
 				var oldValue = _this.getValueFromModel();
 				if (!_this.textEquals(newValue, oldValue)) {
-					evt.preventDefault();
-					_this.setValueToModel(newValue);
+					//evt.preventDefault();
+					if (_this.state.valueChangeTimeoutId) {
+						clearTimeout(_this.state.valueChangeTimeoutId);
+					}
+					_this.state.valueChangeTimeoutId = setTimeout(function () {
+						delete _this.state.valueChangeTimeoutId;
+						_this.setValueToModel(newValue);
+					}, _nComponent.Envs.TEXT_CHANGE_DELAY);
 				}
-			}, _this.onComponentKeyPressed = function (evt) {
-				_this.onComponentChanged(evt);
 			}, _this.onComponentFocused = function (evt) {
 				_this.onComponentFocusChanged();
 
@@ -8578,7 +9196,7 @@
 				var value = _this.getValueFromModel();
 				if (value != _this.getComponent().val()) {
 					// might be formatted or something else, however not same
-					evt.preventDefault();
+					// evt.preventDefault();
 					_this.getComponent().val(value);
 				}
 			}, _this.onComponentBlurred = function (evt) {
@@ -8589,26 +9207,21 @@
 					var value = _this.formatValue(_this.getValueFromModel());
 					if (text != value) {
 						// this moment, value of component is not formatted
-						evt.preventDefault();
+						// evt.preventDefault();
 						_this.setValueToModel(text);
 					}
 					_this.getComponent().val(_this.formatValue(text));
 				} else {
-					evt.preventDefault();
+					// evt.preventDefault();
 					_this.setValueToModel(null);
 				}
 			}, _temp), _possibleConstructorReturn(_this, _ret);
 		}
 
 		_createClass(NText, [{
-			key: 'postWillUpdate',
+			key: 'postDidUpdate',
 
 			// lifecycle
-			value: function postWillUpdate() {
-				this.getComponent().off('change', this.onComponentChanged);
-			}
-		}, {
-			key: 'postDidUpdate',
 			value: function postDidUpdate() {
 				var value = this.getValueFromModel();
 				if (!(0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(this.refs.focusLine)).hasClass('focus')) {
@@ -8617,18 +9230,11 @@
 				if (this.getComponentText() != value) {
 					this.getComponent().val(value);
 				}
-				this.getComponent().on('change', this.onComponentChanged);
 			}
 		}, {
 			key: 'postDidMount',
 			value: function postDidMount() {
 				this.getComponent().val(this.formatValue(this.getValueFromModel()));
-				this.getComponent().on('change', this.onComponentChanged);
-			}
-		}, {
-			key: 'postWillUnmount',
-			value: function postWillUnmount() {
-				this.getComponent().off('change', this.onComponentChanged);
 			}
 		}, {
 			key: 'renderText',
@@ -8638,7 +9244,6 @@
 					disabled: !this.isEnabled(),
 					placeholder: this.getPlaceholder(),
 
-					onKeyPress: this.onComponentKeyPressed,
 					onChange: this.onComponentChanged,
 					onFocus: this.onComponentFocused,
 					onBlur: this.onComponentBlurred,
@@ -8788,7 +9393,7 @@
 	exports.NText = NText;
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8814,9 +9419,9 @@
 		});
 	});
 
-	var _nIcon = __webpack_require__(17);
+	var _nIcon = __webpack_require__(18);
 
-	var _nCheck = __webpack_require__(15);
+	var _nCheck = __webpack_require__(16);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -9637,7 +10242,7 @@
 	exports.NTree = NTree;
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9663,7 +10268,7 @@
 		});
 	});
 
-	var _nPanel = __webpack_require__(21);
+	var _nPanel = __webpack_require__(22);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -9813,6 +10418,77 @@
 
 	exports.NDialog = NDialog;
 	exports.NDialogUtil = NDialogUtil;
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.NForm = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _nComponent = __webpack_require__(5);
+
+	Object.keys(_nComponent).forEach(function (key) {
+		if (key === "default" || key === "__esModule") return;
+		Object.defineProperty(exports, key, {
+			enumerable: true,
+			get: function get() {
+				return _nComponent[key];
+			}
+		});
+	});
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var NForm = function (_NContainer) {
+		_inherits(NForm, _NContainer);
+
+		function NForm() {
+			_classCallCheck(this, NForm);
+
+			return _possibleConstructorReturn(this, (NForm.__proto__ || Object.getPrototypeOf(NForm)).apply(this, arguments));
+		}
+
+		_createClass(NForm, [{
+			key: 'renderInNormal',
+			value: function renderInNormal() {
+				return _nComponent.React.createElement(
+					'div',
+					{ className: this.getComponentStyle(),
+						ref: 'me' },
+					this.renderLeadingDOMChildren(),
+					this.renderLeadingChildren(),
+					this.renderChildren(),
+					this.renderTailingChildren(),
+					this.renderTailingDOMChildren()
+				);
+			}
+		}, {
+			key: 'getComponentClassName',
+			value: function getComponentClassName() {
+				return 'n-form';
+			}
+		}]);
+
+		return NForm;
+	}(_nComponent.NContainer);
+
+	_nComponent.Envs.COMPONENT_TYPES.FORM = { type: 'n-form', label: false, popover: false, error: false };
+	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.FORM.type, function (options) {
+		return _nComponent.React.createElement(NForm, options);
+	});
+
+	exports.NForm = NForm;
 
 /***/ }
 /******/ ]);
