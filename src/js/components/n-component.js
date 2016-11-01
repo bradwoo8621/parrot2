@@ -658,7 +658,9 @@ class NComponent extends NWidget {
 	renderValidationResults(results) {
 		if (results) {
 			return (<div className='n-validation'>
-				{results.map((result, resultIndex) => {
+				{results.filter((result) => {
+					return result.rule !== Validator.CHILD;
+				}).map((result, resultIndex) => {
 					let className = classnames('n-validation-result', {
 						'n-validation-result-info': result.level === Validator.LEVEL_INFO,
 						'n-validation-result-warning': result.level === Validator.LEVEL_WARN,
@@ -1114,11 +1116,37 @@ class NHierarchyComponent extends NContainer {
 					.removePostRemoveListener(this.bindToThis(this.onModelChanged));
 	}
 	createItemModel(itemJSON, itemIndex) {
-		return new Model(itemJSON, true)
+		let itemModel = new Model(itemJSON, true)
 			.setParent(this.getModel())
 			.addPostChangeListener(Model.ALL, (evt) => {
 				this.onItemModelChanged(evt, itemIndex);
 			});
+		let itemValidationResult = this.findItemValidationResult(itemJSON);
+		if (itemValidationResult) {
+			itemModel.replaceValidationResults(itemValidationResult);
+		}
+		let validator = this.getModel().getValidator();
+		if (validator) {
+			itemModel.setValidator(validator.createChildValidator(this.getDataId()));
+		}
+		return itemModel;
+	}
+	findItemValidationResult(itemJSON) {
+		let validationResults = this.getValidationResult();
+		if (validationResults) {
+			let results = validationResults.find((result) => {
+				return result.rule === Validator.CHILD;
+			});
+			if (results) {
+				let itemResult = results.message.find((result) => {
+					return result.item === itemJSON;
+				});
+				if (itemResult) {
+					return itemResult.result;
+				}
+			}
+		}
+		return null;
 	}
 	createItemLayoutOptions(itemModel, itemIndex) {
 		let layoutOptions = this.getLayout().getOptions();

@@ -149,12 +149,13 @@ const GlobalValidationRules = {
 };
 class Validator {
 	static ALL = '--all'
+	static CHILD = 'child'
 	static LEVEL_ERROR = 1
 	static LEVEL_WARN = 2
 	static LEVEL_INFO = 3
 	constructor(rules, perspective, ruleRepo) {
 		if (perspective) {
-			this.rules = rules ? {} : this.rules;
+			this.rules = rules ? rules : {};
 		} else {
 			this.rules = {};
 			this.rules[`${Validator.ALL}`] = rules;
@@ -231,6 +232,9 @@ class Validator {
 		}
 	}
 	getRules(perspective) {
+		if (!perspective) {
+			perspective = this.getPerspective();
+		}
 		if (perspective) {
 			let ruleSet = this.rules[perspective];
 			return ruleSet == null ? {} : ruleSet;
@@ -261,9 +265,45 @@ class Validator {
 	}
 	setPerspective(perspective) {
 		this.perspective = perspective;
+		let childValidators = this.getChildValidators();
+		Object.keys(childValidators).forEach((dataId) => {
+			let validator = childValidators[dataId];
+			validator.setPerspective(perspective);
+		});
+		return this;
 	}
 	getPerspective() {
 		return this.perspective;
+	}
+
+	getChildValidators() {
+		if (this.childValidators == null) {
+			this.childValidators = {};
+		}
+		return this.childValidators;
+	}
+	getChildValidator(dataId) {
+		return this.getChildValidators()[dataId];
+	}
+	createChildValidator(dataId) {
+		let validator = this.getChildValidator(dataId);
+		if (!validator) {
+			let rules = Object.keys(this.rules).reduce((prev, next) => {
+				let perspectiveRules = this.rules[next];
+				let propertyRules = perspectiveRules[dataId];
+				if (propertyRules) {
+					let childRules = propertyRules.child;
+					if (childRules) {
+						prev[next] = childRules;
+					}
+				}
+				return prev;
+			}, {});
+			validator = new Validator(rules, true, this.ruleRepo);
+			validator.setPerspective(this.getPerspective());
+			this.childValidators[dataId] = validator;
+		}
+		return validator;
 	}
 }
 

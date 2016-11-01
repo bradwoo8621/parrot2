@@ -272,10 +272,11 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 		let layoutJSON = {
 			label: this.getLayout().getLabel(),
 			dataId: this.getDataId(),
-			comp: Envs.deepMergeTo({
-				type: Envs.COMPONENT_TYPES.TAB,
+			comp: Envs.deepMergeTo({}, {
 				tabs: this.getTabs()
-			}, this.getLayout().getOptions()),
+			}, this.getLayout().getOptions(), {
+				type: Envs.COMPONENT_TYPES.TAB,
+			}),
 			evt: {
 				active: this.onItemActived,
 				shouldActive: this.onItemShouldActive

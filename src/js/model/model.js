@@ -338,6 +338,9 @@ class Model {
 		}
 		return dataId ? this.validationResults[dataId] : this.validationResults;
 	}
+	replaceValidationResults(results) {
+		this.validationResults = results;
+	}
 }
 
 export * from './codetable'

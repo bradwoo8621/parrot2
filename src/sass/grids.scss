@@ -106,12 +106,15 @@ $media-name-list: xs sm md lg xl 2xl 3xl 4xl;
 }
 @for $media-index from 1 through 8 {
 	@media#{nth($media-list, $media-index)} {
-		.hidden-#{nth($media-name-list, $media-index)},
+		.n-hidden-#{nth($media-name-list, $media-index)},
 		.n-col-#{nth($media-name-list, $media-index)}-hidden {
 			display: none !important;
 		}
-		div.clear-both-#{nth($media-name-list, $media-index)} {
+		div.n-clear-both-#{nth($media-name-list, $media-index)} {
 			clear: both;
+		}
+		div.n-clear-none-#{nth($media-name-list, $media-index)} {
+			clear: none;
 		}
 	}
 }
