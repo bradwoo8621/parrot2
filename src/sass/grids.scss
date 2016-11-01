@@ -35,16 +35,16 @@
 	.n-row.n-row-#{$column}c {
 		@for $index from 1 through $column {
 			> .n-col-#{$media-name}-#{$index} {
-				width: percentage($index / 10);
+				width: percentage($index / $column);
 			}
 			> .n-col-#{$media-name}-offset-#{$index} {
-				margin-left: percentage($index / 10);
+				margin-left: percentage($index / $column);
 			}
 			> .n-col-#{$media-name}-push-#{$index} {
-				left: percentage($index / 12);
+				left: percentage($index / $column);
 			}
 			> .n-col-#{$media-name}-pull-#{$index} {
-				right: percentage($index / 12);
+				right: percentage($index / $column);
 			}
 		}
 	}

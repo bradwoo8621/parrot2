@@ -970,7 +970,8 @@ class NContainer extends NComponent {
 		options = options ? options : {};
 		let children = options.children ? options.children : this.getChildren(),
 			className = options.class,
-			model = options.model;
+			model = options.model,
+			columnsOfGrid = options.columnsOfGrid;
 
 		if (!children) {
 			return null;
@@ -1005,7 +1006,8 @@ class NContainer extends NComponent {
 				row: rows[rowIndex], 
 				rowIndex: rowIndex, 
 				class: className, 
-				model: model
+				model: model,
+				columnsOfGrid: columnsOfGrid
 			});
 		});
 	}
@@ -1014,7 +1016,8 @@ class NContainer extends NComponent {
 		let row = options.row,
 			rowIndex = options.rowIndex,
 			className = options.class,
-			model = options.model;
+			model = options.model,
+			columnsOfGrid = options.columnsOfGrid;
 		if (!row) {
 			return null;
 		}
@@ -1026,7 +1029,8 @@ class NContainer extends NComponent {
 				model: model
 			});
 		});
-		return (<div className={classnames('n-row', className)}
+		className = classnames('n-row', className, this.getColumnsOfGridClassName(columnsOfGrid));
+		return (<div className={className}
 					 key={rowIndex}>
 			{content}
 		</div>);
@@ -1073,7 +1077,23 @@ class NContainer extends NComponent {
 		return this.getLayoutOptionValue('tailChildren', {});
 	}
 	getColumnsOfGrid() {
-		return this.getLayoutOptionValue('columnOfGrid', Envs.COLUMNS_OF_GRID);
+		return this.getLayoutOptionValue('columnsOfGrid', Envs.COLUMNS_OF_GRID);
+	}
+	// will not use default value
+	getColumnsOfGridClassName(columnsOfGrid) {
+		if (!columnsOfGrid) {
+			columnsOfGrid = this.getColumnsOfGrid();
+		}
+		if (!columnsOfGrid || columnsOfGrid == 12) {
+			return '';
+		} else if (typeof columnsOfGrid === 'number' || typeof columnsOfGrid === 'string') {
+			return `n-row-${columnsOfGrid}c`;
+		} else {
+			return classnames(Object.keys(columnsOfGrid).reduce((prev, next) => {
+				prev[`n-row-${next}-${columnsOfGrid[next]}c`] = true;
+				return prev;
+			}, {}));
+		}
 	}
 }
 

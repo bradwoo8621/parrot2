@@ -116,8 +116,15 @@ class NTableHeader extends NTableContainer(NHierarchyComponent) {
 			}, title));
 		} else {
 			// component set
+
 			return this.renderChildren({
-				children: title
+				children: Object.keys(title).reduce((prev, next) => {
+					if (next !== 'columnsOfGrid') {
+						prev[next] = title[next];
+					}
+					return prev;
+				}, {}),
+				columnsOfGrid: title.columnsOfGrid ? title.columnsOfGrid : null
 			});
 		}
 	}
@@ -135,7 +142,8 @@ class NTableHeader extends NTableContainer(NHierarchyComponent) {
 	renderInNormal() {
 		let className = classnames(this.getComponentStyle(),
 								   'n-row',
-								   this.getTableHeaderStyle());
+								   this.getTableHeaderStyle(),
+								   this.getColumnsOfGridClassName());
 		return (<div className={className}
 					 ref='me'>
 			{this.getColumns().map((column, columnIndex) => {
@@ -201,7 +209,13 @@ class NTableBody extends NTableContainer(NHierarchyComponent) {
 				});
 			} else {
 				return this.renderChildren({
-					children: body, 
+					children: Object.keys(body).reduce((prev, next) => {
+						if (next !== 'columnsOfGrid') {
+							prev[next] = body[next];
+						}
+						return prev;
+					}, {}),
+					columnsOfGrid: body.columnsOfGrid ? body.columnsOfGrid : null,
 					model: rowModel
 				});
 			}
@@ -221,7 +235,7 @@ class NTableBody extends NTableContainer(NHierarchyComponent) {
 			'n-row': true,
 			'n-table-body-row-odd': rowIndex % 2 == 0,
 			'n-table-body-row-even': rowIndex % 2 == 1
-		});
+		}, this.getColumnsOfGridClassName());
 		return (<div className={className}
 					 key={rowIndex}>
 			{this.getColumns().map((column, columnIndex) => {
@@ -293,7 +307,8 @@ class NTable extends NTableContainer(NHierarchyComponent) {
 				sorter: this.getLayoutOptionValue('sorter', null, true),
 				columns: this.getColumns(),
 				leadChildren: this.getLeadingChildren(),
-				tailChildren: this.getTailingChildren()
+				tailChildren: this.getTailingChildren(),
+				columnsOfGrid: this.getColumnsOfGrid()
 			},
 			evt: {
 				columnSort: this.onHeaderColumnSorting
@@ -313,7 +328,8 @@ class NTable extends NTableContainer(NHierarchyComponent) {
 			comp: {
 				type: Envs.COMPONENT_TYPES.TABLE_BODY,
 				style: this.getLayoutOptionValue('style'),
-				columns: this.getColumns()
+				columns: this.getColumns(),
+				columnsOfGrid: this.getColumnsOfGrid()
 			},
 			evt: {
 				columnSort: this.onBodyColumnSorted,

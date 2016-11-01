@@ -105,7 +105,8 @@ class NPanel extends NCollapsibleContainer {
 				expanded: this.isExpanded(),
 				collapsibleStyle: this.getCollapsibleStyle(),
 				leadChildren: this.getLeadingChildren(),
-				tailChildren: this.getTailingChildren()
+				tailChildren: this.getTailingChildren(),
+				columnsOfGrid: this.getColumnsOfGrid()
 			},
 			evt: {
 				expand: this.onExpandChanged.bind(this),
@@ -125,7 +126,8 @@ class NPanel extends NCollapsibleContainer {
 				type: Envs.COMPONENT_TYPES.PANEL_BODY,
 				style: this.getLayoutOptionValue('style'),
 				expanded: this.isExpanded(),
-				children: this.getChildren()
+				children: this.getChildren(),
+				columnsOfGrid: this.getColumnsOfGrid()
 			}
 		}, this.getPanelBodyLayout());
 

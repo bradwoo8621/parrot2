@@ -184,7 +184,8 @@ class NTab extends NTabContainer(NContainer) {
 				style: this.getLayoutOptionValue('style'),
 				tabs: this.getTabs(),
 				leadChildren: this.getLeadingChildren(),
-				tailChildren: this.getTailingChildren()
+				tailChildren: this.getTailingChildren(),
+				columnsOfGrid: this.getColumnsOfGrid()
 			},
 			evt: {
 				active: this.onItemActived.bind(this),
@@ -205,7 +206,8 @@ class NTab extends NTabContainer(NContainer) {
 				type: Envs.COMPONENT_TYPES.TAB_BODY,
 				style: this.getLayoutOptionValue('style'),
 				tabs: this.getTabs(),
-				children: this.getChildren()
+				children: this.getChildren(),
+				columnsOfGrid: this.getColumnsOfGrid()
 			}
 		}, this.getTabBodyLayout());
 

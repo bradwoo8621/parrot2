@@ -172,10 +172,11 @@ $(function() {
 				},
 				width: {xs: 12, sm: 6, md: 4, lg: 4}
 			}],
-			sortable: true
-		},
-		styles: {
-			comp: 'n-row-md-20c n-row-lg-20c'
+			sortable: true,
+			columnsOfGrid: {
+				md: 20,
+				lg: 20
+			}
 		},
 		evt: {
 			itemChange: function() {
