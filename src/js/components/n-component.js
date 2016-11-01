@@ -204,7 +204,7 @@ class NComponent extends NWidget {
 		return this;
 	}
 	onModelChanged(evt) {
-		if (this.isValidateImmediately()) {
+		if (this.getModel().getValidator() && this.isValidateImmediately()) {
 			this.getModel().validate(this.getDataId());
 		} else {
 			this.forceUpdate();
@@ -1176,9 +1176,9 @@ class NHierarchyComponent extends NContainer {
 		});
 		return itemLayoutOptions;
 	}
-	onModelChanged(evt) {
-		super.onModelChanged(evt);
-	}
+	// onModelChanged(evt) {
+	// 	super.onModelChanged(evt);
+	// }
 	onItemModelChanged(evt, itemIndex) {
 		// fire update event, ignore the property information
 		evt.model.getParent().update(this.getDataId(), evt.model.getCurrentModel(), evt.model.getCurrentModel(), itemIndex);
