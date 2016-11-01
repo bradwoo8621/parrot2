@@ -17,7 +17,11 @@ $(function() {
 	});
 	let validator = new Validator({
 		name: {
-			minlen: 5,
+			label: '"Name"',
+			minlen: {
+				params: 5,
+				level: Validator.LEVEL_INFO
+			},
 			maxlen: 3
 		}
 	});

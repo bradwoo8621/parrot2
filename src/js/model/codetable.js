@@ -61,6 +61,9 @@ class CodeTable {
 		return this.array;
 	}
 
+	isReady() {
+		return true;
+	}
 	ready() {
 		return true;
 	}

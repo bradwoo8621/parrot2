@@ -182,7 +182,9 @@ class Validator {
 			let rulesOnProperty = rules[propertyName];
 			let label = rulesOnProperty.label;
 			// result is an array
-			let resultsOnProperty = Object.keys(rulesOnProperty).map((ruleName) => {
+			let resultsOnProperty = Object.keys(rulesOnProperty).filter((ruleName) => {
+				return ruleName !== 'label';
+			}).map((ruleName) => {
 				let params = rulesOnProperty[ruleName];
 				let rule = this.unwrapRuleParams(ruleName, params);
 				return {
