@@ -526,11 +526,11 @@
 		return NButtonBar;
 	}(_nComponent.NContainer);
 
-	_nComponent.Envs.COMPONENT_TYPES.BUTTON = { type: 'n-button', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.BUTTON = { type: 'n-button', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.BUTTON.type, function (options) {
 		return _nComponent.React.createElement(NButton, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.BUTTON_BAR = { type: 'n-button-bar', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.BUTTON_BAR = { type: 'n-button-bar', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.BUTTON_BAR.type, function (options) {
 		return _nComponent.React.createElement(NButtonBar, options);
 	});
@@ -1115,6 +1115,11 @@
 			value: function isLabelShown() {
 				return this.getLayout().isLabelShown();
 			}
+		}, {
+			key: 'isErrorShown',
+			value: function isErrorShown() {
+				return this.getLayout().isErrorShown();
+			}
 			// position can be string or function
 
 		}, {
@@ -1219,7 +1224,7 @@
 					} else if (clear === false) {
 						// do nothing
 					} else if (typeof clear === 'string') {
-						clearClassName = (0, _classnames2.default)(clear.split(',')).map(function (segment) {
+						clearClassName = (0, _classnames2.default)(clear.split(',').map(function (segment) {
 							var parts = segment.split(':');
 							if (parts.length === 1) {
 								return 'n-clear-' + segment + '-sm';
@@ -1228,7 +1233,7 @@
 									return 'n-clear-' + parts[0] + '-' + size;
 								}));
 							}
-						});
+						}));
 					} else {
 						clearClassName = (0, _classnames2.default)(Object.keys(clear).map(function (key) {
 							var value = clear[key];
@@ -1497,7 +1502,7 @@
 				if (!this.isVisible()) {
 					return null;
 				}
-				var validationResults = this.getValidationResult();
+				var validationResults = this.isErrorShown() ? this.getValidationResult() : null;
 
 				var label = this.getLabel();
 				var labelShown = this.isLabelShown();
@@ -1543,30 +1548,53 @@
 				}
 			}
 		}, {
-			key: 'renderValidationResults',
-			value: function renderValidationResults(results) {
+			key: 'renderValidationResultItems',
+			value: function renderValidationResultItems(items) {
 				var _this9 = this;
 
-				if (results) {
+				return items.map(function (item, itemIndex) {
+					var className = (0, _classnames2.default)('n-validation-result', {
+						'n-validation-result-info': item.level === _validation.Validator.LEVEL_INFO,
+						'n-validation-result-warning': item.level === _validation.Validator.LEVEL_WARN,
+						'n-validation-result-error': item.level === _validation.Validator.LEVEL_ERROR
+					});
 					return _react2.default.createElement(
-						'div',
-						{ className: 'n-validation' },
-						results.filter(function (result) {
-							return result.rule !== _validation.Validator.CHILD;
-						}).map(function (result, resultIndex) {
-							var className = (0, _classnames2.default)('n-validation-result', {
-								'n-validation-result-info': result.level === _validation.Validator.LEVEL_INFO,
-								'n-validation-result-warning': result.level === _validation.Validator.LEVEL_WARN,
-								'n-validation-result-error': result.level === _validation.Validator.LEVEL_ERROR
-							});
-							return _react2.default.createElement(
-								'span',
-								{ className: className,
-									key: resultIndex },
-								result.message.replace('%1', _this9.getLabel())
-							);
-						})
+						'span',
+						{ className: className,
+							key: itemIndex },
+						item.message.replace('%1', _this9.getLabel())
 					);
+				});
+			}
+		}, {
+			key: 'renderValidationResultIcon',
+			value: function renderValidationResultIcon(items) {
+				var className = (0, _classnames2.default)('n-validation-result-icon', 'fa fa-fw fa-exclamation-circle', {
+					'n-validation-result-info': items[0].level === _validation.Validator.LEVEL_INFO,
+					'n-validation-result-warning': items[0].level === _validation.Validator.LEVEL_WARN,
+					'n-validation-result-error': items[0].level === _validation.Validator.LEVEL_ERROR
+				});
+				return _react2.default.createElement('i', { className: className });
+			}
+		}, {
+			key: 'renderValidationResults',
+			value: function renderValidationResults(results) {
+				if (results) {
+					var items = results.filter(function (result) {
+						return result.rule !== _validation.Validator.CHILD;
+					}).slice(0).sort(function (a, b) {
+						var levelA = a.level ? a.level : _validation.Validator.LEVEL_ERROR;
+						var levelB = b.level ? b.level : _validation.Validator.LEVEL_ERROR;
+						return levelA - levelB;
+					});
+					if (items.length > 0) {
+						return _react2.default.createElement(
+							'div',
+							{ className: 'n-validation' },
+							this.renderValidationResultIcon(items),
+							this.renderValidationResultItems(items)
+						);
+					}
 				}
 			}
 		}, {
@@ -2920,7 +2948,6 @@
 				cellColumns: 12,
 				labelPosition: 'top',
 				labelWidth: 4,
-				componentErrorPopover: true,
 				thousandsSeparator: ',',
 				numberPointer: '.',
 				numberFormatter: function numberFormatter(modelValue) {
@@ -3170,14 +3197,6 @@
 			},
 			set: function set(value) {
 				this.props.labelPosition = value;
-			}
-		}, {
-			key: 'COMPONENT_ERROR_POPOVER',
-			get: function get() {
-				return this.props.componentErrorPopover;
-			},
-			set: function set(value) {
-				this.props.componentErrorPopover = value;
 			}
 		}, {
 			key: 'THOUSANDS_SEPARATOR',
@@ -3922,14 +3941,12 @@
 					return {
 						type: type,
 						label: false,
-						error: true,
-						popover: _envs.Envs.COMPONENT_ERROR_POPOVER
+						error: true
 					};
 				} else {
 					return _envs.Envs.deepMergeTo({
 						label: false,
-						error: true,
-						popover: _envs.Envs.COMPONENT_ERROR_POPOVER
+						error: true
 					}, type);
 				}
 			}
@@ -3942,11 +3959,6 @@
 			key: 'isErrorShown',
 			value: function isErrorShown() {
 				return this.getType().error;
-			}
-		}, {
-			key: 'isErrorShownAsPopover',
-			value: function isErrorShownAsPopover() {
-				return this.getType().popover;
 			}
 		}, {
 			key: 'getId',
@@ -3990,16 +4002,17 @@
 				if (typeof pos === 'undefined' || pos == null) {
 					return this.getDefaultPosition();
 				} else {
-					return this.getDefaultPosition(pos.width, pos.col, pos.row);
+					return this.getDefaultPosition(pos.width, pos.col, pos.row, pos.clear);
 				}
 			}
 		}, {
 			key: 'getDefaultPosition',
-			value: function getDefaultPosition(width, columnIndex, rowIndex) {
+			value: function getDefaultPosition(width, columnIndex, rowIndex, clear) {
 				return {
 					width: width,
 					col: columnIndex ? columnIndex : 9999,
-					row: rowIndex ? rowIndex : 9999
+					row: rowIndex ? rowIndex : 9999,
+					clear: clear
 				};
 			}
 		}, {
@@ -6144,12 +6157,12 @@
 		return NStackIcon;
 	}(_nComponent.NComponent);
 
-	_nComponent.Envs.COMPONENT_TYPES.ICON = { type: 'n-icon', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.ICON = { type: 'n-icon', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ICON.type, function (options) {
 		return _nComponent.React.createElement(NIcon, options);
 	});
 
-	_nComponent.Envs.COMPONENT_TYPES.STACK_ICON = { type: 'n-stack-icon', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.STACK_ICON = { type: 'n-stack-icon', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.STACK_ICON.type, function (options) {
 		return _nComponent.React.createElement(NStackIcon, options);
 	});
@@ -6305,7 +6318,7 @@
 		return NLabel;
 	}(_nComponent.NAddonComponent);
 
-	_nComponent.Envs.COMPONENT_TYPES.LABEL = { type: 'n-label', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.LABEL = { type: 'n-label', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.LABEL.type, function (options) {
 		return _nComponent.React.createElement(NLabel, options);
 	});
@@ -7103,19 +7116,19 @@
 		return NArrayPanel;
 	}(_nComponent.NHierarchyComponent);
 
-	_nComponent.Envs.COMPONENT_TYPES.PANEL_HEADER = { type: 'n-panel-header', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.PANEL_HEADER = { type: 'n-panel-header', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.PANEL_HEADER.type, function (options) {
 		return _nComponent.React.createElement(NPanelHeader, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.PANEL_BODY = { type: 'n-panel-body', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.PANEL_BODY = { type: 'n-panel-body', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.PANEL_BODY.type, function (options) {
 		return _nComponent.React.createElement(NPanelBody, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.PANEL = { type: 'n-panel', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.PANEL = { type: 'n-panel', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.PANEL.type, function (options) {
 		return _nComponent.React.createElement(NPanel, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.ARRAY_PANEL = { type: 'n-array-panel', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.ARRAY_PANEL = { type: 'n-array-panel', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ARRAY_PANEL.type, function (options) {
 		return _nComponent.React.createElement(NArrayPanel, options);
 	});
@@ -8391,19 +8404,19 @@
 		return NArrayTab;
 	}(NTabContainer(_nComponent.NHierarchyComponent));
 
-	_nComponent.Envs.COMPONENT_TYPES.TAB_HEADER = { type: 'n-tab-header', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.TAB_HEADER = { type: 'n-tab-header', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TAB_HEADER.type, function (options) {
 		return _nComponent.React.createElement(NTabHeader, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.TAB_BODY = { type: 'n-tab-body', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.TAB_BODY = { type: 'n-tab-body', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TAB_BODY.type, function (options) {
 		return _nComponent.React.createElement(NTabBody, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.TAB = { type: 'n-tab', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.TAB = { type: 'n-tab', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TAB.type, function (options) {
 		return _nComponent.React.createElement(NTab, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.ARRAY_TAB = { type: 'n-array-tab', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.ARRAY_TAB = { type: 'n-array-tab', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ARRAY_TAB.type, function (options) {
 		return _nComponent.React.createElement(NArrayTab, options);
 	});
@@ -8975,15 +8988,15 @@
 	NTable.DESC = 'desc';
 
 
-	_nComponent.Envs.COMPONENT_TYPES.TABLE_HEADER = { type: 'n-table-header', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.TABLE_HEADER = { type: 'n-table-header', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TABLE_HEADER.type, function (options) {
 		return _nComponent.React.createElement(NTableHeader, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.TABLE_BODY = { type: 'n-table-body', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.TABLE_BODY = { type: 'n-table-body', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TABLE_BODY.type, function (options) {
 		return _nComponent.React.createElement(NTableBody, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.TABLE = { type: 'n-table', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.TABLE = { type: 'n-table', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TABLE.type, function (options) {
 		return _nComponent.React.createElement(NTable, options);
 	});
@@ -10529,7 +10542,7 @@
 		return NForm;
 	}(_nComponent.NContainer);
 
-	_nComponent.Envs.COMPONENT_TYPES.FORM = { type: 'n-form', label: false, popover: false, error: false };
+	_nComponent.Envs.COMPONENT_TYPES.FORM = { type: 'n-form', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.FORM.type, function (options) {
 		return _nComponent.React.createElement(NForm, options);
 	});

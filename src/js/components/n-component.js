@@ -356,6 +356,9 @@ class NComponent extends NWidget {
 	isLabelShown() {
 		return this.getLayout().isLabelShown();
 	}
+	isErrorShown() {
+		return this.getLayout().isErrorShown();
+	}
 	// position can be string or function
 	getWidth() {
 		return this.wrapOptionValue(this.getLayout().getWidth());
@@ -663,7 +666,7 @@ class NComponent extends NWidget {
 		if (!this.isVisible()) {
 			return null;
 		}
-		let validationResults = this.getValidationResult();
+		let validationResults = this.isErrorShown() ? this.getValidationResult() : null;
 
 		let label = this.getLabel();
 		let labelShown = this.isLabelShown();
@@ -697,23 +700,43 @@ class NComponent extends NWidget {
 			return this.renderComponent();
 		}
 	}
+	renderValidationResultItems(items) {
+		return 	items.map((item, itemIndex) => {
+			let className = classnames('n-validation-result', {
+				'n-validation-result-info': item.level === Validator.LEVEL_INFO,
+				'n-validation-result-warning': item.level === Validator.LEVEL_WARN,
+				'n-validation-result-error': item.level === Validator.LEVEL_ERROR
+			});
+			return (<span className={className}
+						  key={itemIndex}>
+				{item.message.replace('%1', this.getLabel())}
+			</span>);
+		});
+	}
+	renderValidationResultIcon(items) {
+		let className = classnames('n-validation-result-icon',
+			'fa fa-fw fa-exclamation-circle', {
+			'n-validation-result-info': items[0].level === Validator.LEVEL_INFO,
+			'n-validation-result-warning': items[0].level === Validator.LEVEL_WARN,
+			'n-validation-result-error': items[0].level === Validator.LEVEL_ERROR
+		});
+		return <i className={className} />;
+	}
 	renderValidationResults(results) {
 		if (results) {
-			return (<div className='n-validation'>
-				{results.filter((result) => {
-					return result.rule !== Validator.CHILD;
-				}).map((result, resultIndex) => {
-					let className = classnames('n-validation-result', {
-						'n-validation-result-info': result.level === Validator.LEVEL_INFO,
-						'n-validation-result-warning': result.level === Validator.LEVEL_WARN,
-						'n-validation-result-error': result.level === Validator.LEVEL_ERROR
-					});
-					return (<span className={className}
-								 key={resultIndex}>
-						{result.message.replace('%1', this.getLabel())}
-					</span>);
-				})}
-			</div>);
+			let items = results.filter((result) => {
+				return result.rule !== Validator.CHILD;
+			}).slice(0).sort((a, b) => {
+				let levelA = a.level ? a.level : Validator.LEVEL_ERROR;
+				let levelB = b.level ? b.level : Validator.LEVEL_ERROR;
+				return levelA - levelB;
+			});
+			if (items.length > 0) {
+				return (<div className='n-validation'>
+					{this.renderValidationResultIcon(items)}
+					{this.renderValidationResultItems(items)}
+				</div>);
+			}
 		}
 	}
 	renderComponent() {

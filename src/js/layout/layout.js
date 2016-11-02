@@ -76,9 +76,6 @@ class Layout {
 	isErrorShown() {
 		return this.getType().error;
 	}
-	isErrorShownAsPopover() {
-		return this.getType().popover;
-	}
 
 	getId() {
 		return this.id;

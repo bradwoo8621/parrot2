@@ -152,9 +152,21 @@ li {
 	color: $color-danger;
 	font-size: $validation-font-size;
 	line-height: $validation-line-height;
+	.n-validation-result-icon {
+		float: left;
+		height: $validation-line-height;
+		line-height: $validation-line-height;
+		&.n-validation-result-info {
+			color: $color-info;
+		}
+		&.n-validation-result-warning {
+			color: $color-warning;
+		}
+	}
 	.n-validation-result {
 		display: block;
 		position: relative;
+		margin-left: 0.2rem;
 		&.n-validation-result-info {
 			color: $color-info;
 		}

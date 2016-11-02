@@ -119,9 +119,18 @@ li {
   color: #d9534f;
   font-size: 0.12rem;
   line-height: 0.15rem; }
+  .n-validation .n-validation-result-icon {
+    float: left;
+    height: 0.15rem;
+    line-height: 0.15rem; }
+    .n-validation .n-validation-result-icon.n-validation-result-info {
+      color: #5bc0de; }
+    .n-validation .n-validation-result-icon.n-validation-result-warning {
+      color: #f0ad4e; }
   .n-validation .n-validation-result {
     display: block;
-    position: relative; }
+    position: relative;
+    margin-left: 0.2rem; }
     .n-validation .n-validation-result.n-validation-result-info {
       color: #5bc0de; }
     .n-validation .n-validation-result.n-validation-result-warning {
