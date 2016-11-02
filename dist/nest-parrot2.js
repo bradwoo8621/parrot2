@@ -1186,24 +1186,65 @@
 			}
 		}, {
 			key: 'getWidthClassName',
-			value: function getWidthClassName(width) {
+			value: function getWidthClassName(width, clear) {
 				if (arguments.length === 0) {
 					throw 'At least one parameter be passed';
 				}
-				if (width == null) {
-					return '';
+				var widthClassName = '';
+				if (width != null) {
+					var type = typeof width === 'undefined' ? 'undefined' : _typeof(width);
+					if (type === 'number') {
+						// only returns sm, for width over sm definition
+						widthClassName = 'n-col-sm-' + width;
+					} else if (type === 'string') {
+						var segments = width.split(',');
+						if (segments.length == 1) {
+							widthClassName = 'n-col-sm-' + width;
+						} else {
+							widthClassName = (0, _classnames2.default)(segments.map(function (segment) {
+								return 'n-col-' + segment;
+							}));
+						}
+					} else {
+						widthClassName = (0, _classnames2.default)(Object.keys(width).map(function (key) {
+							return 'n-col-' + key + '-' + width[key];
+						}));
+					}
 				}
-				var type = typeof width === 'undefined' ? 'undefined' : _typeof(width);
-				if (type === 'number' || type === 'string') {
-					// only returns sm, for width over sm definition
-					return 'n-col-sm-' + width;
-				} else {
-					return (0, _classnames2.default)(Object.keys(width).reduce(function (prev, next) {
-						var value = width[next];
-						prev['n-col-' + next + '-' + value] = true;
-						return prev;
-					}, {}));
+				var clearClassName = '';
+				if (clear != null) {
+					if (clear === true) {
+						// only returns sm, for width over sm definition
+						clearClassName = 'n-clear-both-sm';
+					} else if (clear === false) {
+						// do nothing
+					} else if (typeof clear === 'string') {
+						clearClassName = (0, _classnames2.default)(clear.split(',')).map(function (segment) {
+							var parts = segment.split(':');
+							if (parts.length === 1) {
+								return 'n-clear-' + segment + '-sm';
+							} else {
+								return (0, _classnames2.default)(parts[1].split(' ').map(function (size) {
+									return 'n-clear-' + parts[0] + '-' + size;
+								}));
+							}
+						});
+					} else {
+						clearClassName = (0, _classnames2.default)(Object.keys(clear).map(function (key) {
+							var value = clear[key];
+							if (value === true) {
+								return 'n-clear-both-' + key;
+							} else if (value === false) {
+								return 'n-clear-none-' + key;
+							} else if (typeof value === 'string') {
+								return 'n-clear-' + value + '-' + key;
+							} else {
+								throw 'Unsupported clear type "' + value + '" for size "' + key + '"';
+							}
+						}));
+					}
 				}
+				return (0, _classnames2.default)(widthClassName, clearClassName);
 			}
 		}, {
 			key: 'getColumnIndex',
@@ -1460,7 +1501,7 @@
 
 				var label = this.getLabel();
 				var labelShown = this.isLabelShown();
-				var cellClassName = this.getWidthClassName(this.getWidth());
+				var cellClassName = this.getWidthClassName(this.getWidth(), this.wrapOptionValue(this.getLayout().getClear()));
 				if (labelShown && label) {
 					var labelWidth = this.getLabelWidth();
 					var compWidth = this.getComponentInternalWidth(labelWidth);
@@ -3926,6 +3967,11 @@
 			key: 'getWidth',
 			value: function getWidth() {
 				return this.getPosition().width;
+			}
+		}, {
+			key: 'getClear',
+			value: function getClear() {
+				return this.getPosition().clear;
 			}
 		}, {
 			key: 'getColumnIndex',

@@ -9,7 +9,6 @@ class Envs {
 			cellColumns: 12,
 			labelPosition: 'top',
 			labelWidth: 4,
-			componentErrorPopover: true,
 			thousandsSeparator: ',',
 			numberPointer: '.',
 			numberFormatter: function(modelValue) {
@@ -97,14 +96,6 @@ class Envs {
 
 	set LABEL_POSITION(value) {
 		this.props.labelPosition = value;
-	}
-
-	get COMPONENT_ERROR_POPOVER() {
-		return this.props.componentErrorPopover;
-	}
-
-	set COMPONENT_ERROR_POPOVER(value) {
-		this.props.componentErrorPopover = value;
 	}
 
 	get THOUSANDS_SEPARATOR() {

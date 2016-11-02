@@ -61,14 +61,12 @@ class Layout {
 			return {
 				type: type,
 				label: false,
-				error: true,
-				popover: Envs.COMPONENT_ERROR_POPOVER
+				error: true
 			};
 		} else {
 			return Envs.deepMergeTo({
 				label: false,
-				error: true,
-				popover: Envs.COMPONENT_ERROR_POPOVER
+				error: true
 			}, type);
 		}
 	}
@@ -94,6 +92,9 @@ class Layout {
 	getWidth() {
 		return this.getPosition().width;
 	}
+	getClear() {
+		return this.getPosition().clear;
+	}
 	getColumnIndex() {
 		return this.getPosition().col;
 	}
@@ -105,14 +106,15 @@ class Layout {
 		if (typeof pos === 'undefined' || pos == null) {
 			return this.getDefaultPosition();
 		} else {
-			return this.getDefaultPosition(pos.width, pos.col, pos.row);
+			return this.getDefaultPosition(pos.width, pos.col, pos.row, pos.clear);
 		}
 	}
-	getDefaultPosition(width, columnIndex, rowIndex) {
+	getDefaultPosition(width, columnIndex, rowIndex, clear) {
 		return {
 			width: width,
 			col: columnIndex ? columnIndex : 9999,
-			row: rowIndex ? rowIndex : 9999
+			row: rowIndex ? rowIndex : 9999,
+			clear: clear
 		};
 	}
 	getStyles() {

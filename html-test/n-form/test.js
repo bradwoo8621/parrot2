@@ -77,7 +77,7 @@ $(function() {
 					comp: {
 						type: Envs.COMPONENT_TYPES.TEXT
 					},
-					pos: {width: {sm: 6, md: 3}, col: 300, row: 100}
+					pos: {width: 'sm-6,md-3', col: 300, row: 100, clear: 'both:sm,none:md'}
 				},
 				name2: {
 					label: 'Name 2',
@@ -91,7 +91,7 @@ $(function() {
 					comp: {
 						type: Envs.COMPONENT_TYPES.TEXT
 					},
-					pos: {width: {sm: 6, md: 3}, col: 500, row: 100}
+					pos: {width: {sm: 6, md: 3}, col: 500, row: 100, clear: true}
 				},
 				button: {
 					label: 'Perspective',

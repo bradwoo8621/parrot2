@@ -412,24 +412,65 @@ class NComponent extends NWidget {
 			}, {}));
 		}
 	}
-	getWidthClassName(width) {
+	getWidthClassName(width, clear) {
 		if (arguments.length === 0) {
 			throw 'At least one parameter be passed';
 		}
-		if (width == null) {
-			return '';
+		let widthClassName = '';
+		if (width != null) {
+			let type = typeof width;
+			if (type === 'number') {
+				// only returns sm, for width over sm definition
+				widthClassName = `n-col-sm-${width}`;
+			} else if (type === 'string') {
+				let segments = width.split(',');
+				if (segments.length == 1) {
+					widthClassName = `n-col-sm-${width}`;
+				} else {
+					widthClassName = classnames(segments.map((segment) => {
+						return `n-col-${segment}`;
+					}));
+				}
+			} else {
+				widthClassName = classnames(Object.keys(width).map((key) => {
+					return `n-col-${key}-${width[key]}`;
+				}));
+			}
 		}
-		let type = typeof width;
-		if (type === 'number' || type === 'string') {
-			// only returns sm, for width over sm definition
-			return `n-col-sm-${width}`;
-		} else {
-			return classnames(Object.keys(width).reduce((prev, next) => {
-				let value = width[next];
-				prev[`n-col-${next}-${value}`] = true;
-				return prev;
-			}, {}));
+		let clearClassName = '';
+		if (clear != null) {
+			if (clear === true) {
+				// only returns sm, for width over sm definition
+				clearClassName = 'n-clear-both-sm';
+			} else if (clear === false) {
+				// do nothing
+			} else if (typeof clear === 'string') {
+				clearClassName = classnames(clear.split(',').map((segment) => {
+					let parts = segment.split(':');
+					if (parts.length === 1) {
+						return `n-clear-${segment}-sm`;
+					} else {
+						return classnames(parts[1].split(' ').map((size) => {
+							return `n-clear-${parts[0]}-${size}`;
+						}));
+					}
+				}));
+			} else {
+				clearClassName = classnames(Object.keys(clear).map((key) => {
+					let value = clear[key];
+					if (value === true) {
+						return `n-clear-both-${key}`;
+					} else if (value === false) {
+						return `n-clear-none-${key}`;
+					} else if (typeof value === 'string') {
+						return `n-clear-${value}-${key}`;
+					} else {
+						throw `Unsupported clear type "${value}" for size "${key}"`;
+					}
+				}));
+			}
 		}
+		return classnames(widthClassName, clearClassName);
 	}
 	getColumnIndex() {
 		return this.wrapOptionValue(this.getLayout().getColumnIndex());
@@ -626,7 +667,8 @@ class NComponent extends NWidget {
 
 		let label = this.getLabel();
 		let labelShown = this.isLabelShown();
-		let cellClassName = this.getWidthClassName(this.getWidth());
+		let cellClassName = this.getWidthClassName(this.getWidth(), 
+									this.wrapOptionValue(this.getLayout().getClear()));
 		if (labelShown && label) {
 			let labelWidth = this.getLabelWidth();
 			let compWidth = this.getComponentInternalWidth(labelWidth);
