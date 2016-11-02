@@ -24,7 +24,7 @@ class NForm extends NContainer {
 	}
 }
 
-Envs.COMPONENT_TYPES.FORM = {type: 'n-form', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.FORM = {type: 'n-form', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.FORM.type, function (options) {
 	return <NForm {...options} />;
 });

@@ -265,19 +265,19 @@ class NArrayPanel extends NHierarchyComponent {
 	}
 }
 
-Envs.COMPONENT_TYPES.PANEL_HEADER = {type: 'n-panel-header', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.PANEL_HEADER = {type: 'n-panel-header', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.PANEL_HEADER.type, function (options) {
 	return <NPanelHeader {...options} />;
 });
-Envs.COMPONENT_TYPES.PANEL_BODY = {type: 'n-panel-body', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.PANEL_BODY = {type: 'n-panel-body', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.PANEL_BODY.type, function (options) {
 	return <NPanelBody {...options} />;
 });
-Envs.COMPONENT_TYPES.PANEL = {type: 'n-panel', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.PANEL = {type: 'n-panel', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.PANEL.type, function (options) {
 	return <NPanel {...options} />;
 });
-Envs.COMPONENT_TYPES.ARRAY_PANEL = {type: 'n-array-panel', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.ARRAY_PANEL = {type: 'n-array-panel', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.ARRAY_PANEL.type, function (options) {
 	return <NArrayPanel {...options} />;
 });

@@ -37,7 +37,6 @@ describe('Layout', function() {
 			let type = layout.getType();
 			assert.equal('n-text', type.type);
 			assert.equal(true, type.error);
-			assert.equal(true, type.popover);
 			assert.equal(false, type.label);
 		});
 	});

@@ -467,19 +467,19 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 	}
 }
 
-Envs.COMPONENT_TYPES.TAB_HEADER = {type: 'n-tab-header', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.TAB_HEADER = {type: 'n-tab-header', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TAB_HEADER.type, function (options) {
 	return <NTabHeader {...options} />;
 });
-Envs.COMPONENT_TYPES.TAB_BODY = {type: 'n-tab-body', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.TAB_BODY = {type: 'n-tab-body', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TAB_BODY.type, function (options) {
 	return <NTabBody {...options} />;
 });
-Envs.COMPONENT_TYPES.TAB = {type: 'n-tab', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.TAB = {type: 'n-tab', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TAB.type, function (options) {
 	return <NTab {...options} />;
 });
-Envs.COMPONENT_TYPES.ARRAY_TAB = {type: 'n-array-tab', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.ARRAY_TAB = {type: 'n-array-tab', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.ARRAY_TAB.type, function (options) {
 	return <NArrayTab {...options} />;
 });

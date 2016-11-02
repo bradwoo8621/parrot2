@@ -101,12 +101,12 @@ class NStackIcon extends NComponent {
 	}
 }
 
-Envs.COMPONENT_TYPES.ICON = {type: 'n-icon', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.ICON = {type: 'n-icon', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.ICON.type, function (options) {
 	return <NIcon {...options} />;
 });
 
-Envs.COMPONENT_TYPES.STACK_ICON = {type: 'n-stack-icon', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.STACK_ICON = {type: 'n-stack-icon', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.STACK_ICON.type, function (options) {
 	return <NStackIcon {...options} />;
 });

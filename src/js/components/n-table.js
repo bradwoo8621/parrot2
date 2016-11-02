@@ -399,15 +399,15 @@ class NTable extends NTableContainer(NHierarchyComponent) {
 	}
 }
 
-Envs.COMPONENT_TYPES.TABLE_HEADER = {type: 'n-table-header', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.TABLE_HEADER = {type: 'n-table-header', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TABLE_HEADER.type, function (options) {
 	return <NTableHeader {...options} />;
 });
-Envs.COMPONENT_TYPES.TABLE_BODY = {type: 'n-table-body', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.TABLE_BODY = {type: 'n-table-body', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TABLE_BODY.type, function (options) {
 	return <NTableBody {...options} />;
 });
-Envs.COMPONENT_TYPES.TABLE = {type: 'n-table', label: false, popover: false, error: false};
+Envs.COMPONENT_TYPES.TABLE = {type: 'n-table', label: false, error: false};
 Envs.setRenderer(Envs.COMPONENT_TYPES.TABLE.type, function (options) {
 	return <NTable {...options} />;
 });
