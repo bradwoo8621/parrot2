@@ -9,9 +9,10 @@ require("babel-register")({
 	]
 });
 
-const SDK = require('../../src/js/components/n-component');
+const {NComponent} = require('../../src/js/components/n-component');
+const {Model} = require('../../src/js/model/model');
+const {Layout} = require('../../src/js/layout/layout');
 const $ = require('jquery-deferred');
-let {Model, Layout, NComponent} = SDK;
 
 const assert = require('assert');
 

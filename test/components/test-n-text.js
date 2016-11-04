@@ -9,8 +9,10 @@ require("babel-register")({
 	]
 });
 
-const SDK = require('../../src/js/components/n-text');
-let {Model, Layout, NText, Envs} = SDK;
+const {NText} = require('../../src/js/components/n-text');
+const {Model} = require('../../src/js/model/model');
+const {Layout} = require('../../src/js/layout/layout');
+const {Envs} = require('../../src/js/envs');
 
 const assert = require('assert');
 
