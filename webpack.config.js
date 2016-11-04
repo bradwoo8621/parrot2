@@ -9,17 +9,19 @@ var precss = require('precss');
 
 let extractSASS = new ExtractTextPlugin('[name]');
 
-module.exports = {
+let webpackTargetElectronRenderer = require('webpack-target-electron-renderer');
+
+var options = {
 	entry: {
 		// // sass
 		'nest-parrot2.css': './src/sass/bundle-default.scss',
 		// js
 		'nest-parrot2.js': './src/js/parrot.js',
 	},
-	target: 'node',
 	output: {
 		path: path.join(__dirname, 'dist'),
-		filename: '[name]'
+		filename: '[name]',
+		libraryTarget: 'umd'
 	},
 	module: {
 		loaders: [{
@@ -46,14 +48,41 @@ module.exports = {
 	],
 	externals: {
 		// require('jquery') is external and available on the global var jQuery
-		'jquery': 'jQuery',
-		'lodash': '_',
+		'jquery': {
+			root: 'jQuery',
+			commonjs2: 'jquery',
+			commonjs: 'jquery',
+			amd: 'jquery'
+		},
+		'lodash': {
+			root: '_',
+			commonjs2: 'lodash',
+			commonjs: 'lodash',
+			amd: 'lodash'
+		},
 		'moment': 'moment',
 
-		'react': 'React',
-		'react-dom': 'ReactDOM',
+		"react": {
+			root: 'React',
+			commonjs2: 'react',
+			commonjs: 'react',
+			amd: 'react'
+		},
+		'react-dom': {
+			root: 'ReactDOM',
+			commonjs2: 'react-dom',
+			commonjs: 'react-dom',
+			amd: 'react-dom'
+		},
 
-		'classnames': 'classNames'
+		'classnames': {
+			root: 'classNames',
+			commonjs2: 'classnames',
+			commonjs: 'classnames',
+			amd: 'classnames'
+		}
 	},
 	// debug: true
-}
+};
+options.target = webpackTargetElectronRenderer(options);
+module.exports = options;

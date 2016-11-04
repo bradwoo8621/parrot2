@@ -1,6 +1,6 @@
 {
   "name": "nest-parrot2",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Parrot2 built on react",
   "main": "src/js/parrot.js",
   "repository": {
@@ -61,6 +61,7 @@
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
-    "webpack-cleanup-plugin": "^0.4.1"
+    "webpack-cleanup-plugin": "^0.4.1",
+    "webpack-target-electron-renderer": "^0.4.0"
   }
 }
