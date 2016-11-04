@@ -492,4 +492,4 @@ class Envs {
 
 let envs = new Envs();
 
-export {envs as Envs, lodash}
+export {envs as Envs}

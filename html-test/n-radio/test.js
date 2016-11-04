@@ -1,17 +1,9 @@
-import * as SDK from '../../src/js/components/n-radio'
+import $ from 'jquery'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {CodeTable, Model, Layout, NRadio, NRadioButton, Envs} from '../../src/js/components/n-radio'
 import {NButton} from '../../src/js/components/n-button'
 import {NIcon} from '../../src/js/components/n-icon'
-
-let {
-	React, 
-	ReactDOM, 
-	CodeTable, 
-	Model, 
-	Layout, 
-	NRadio,
-	NRadioButton,
-	$, 
-	Envs} = SDK;
 
 $(function() {
 	let codes = new CodeTable({

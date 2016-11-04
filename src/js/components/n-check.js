@@ -1,4 +1,11 @@
-import {React, ReactDOM, $, classnames, Envs, Model, NComponent, NCodeTableComponent} from './n-component'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import jQuery from 'jquery'
+import classnames from 'classnames'
+import lodash from 'lodash'
+let $ = jQuery;
+
+import {Envs, Model, NComponent, NCodeTableComponent} from './n-component'
 
 class NCheck extends NComponent {
 	renderText(label) {

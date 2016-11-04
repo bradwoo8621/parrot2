@@ -1,18 +1,10 @@
-import * as SDK from '../../src/js/components/n-tab'
+import $ from 'jquery'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {CodeTable, Model, Layout, NTab, NArrayTab, Envs} from '../../src/js/components/n-tab'
 import {NIcon} from '../../src/js/components/n-icon'
 import {NLabel} from '../../src/js/components/n-label'
 import {NText} from '../../src/js/components/n-text'
-
-let {
-	React, 
-	ReactDOM, 
-	CodeTable, 
-	Model, 
-	Layout, 
-	NTab,
-	NArrayTab,
-	$, 
-	Envs} = SDK;
 
 $(function() {
 	let model = new Model({

@@ -270,11 +270,31 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NButton = function (_NDropdownComponent) {
 		_inherits(NButton, _NDropdownComponent);
@@ -331,7 +351,7 @@
 			key: 'renderDropdownIcon',
 			value: function renderDropdownIcon(dropdown) {
 				if (dropdown.has && !dropdown.separated) {
-					return _nComponent.React.createElement('i', { className: 'fa fa-fw fa-caret-down n-button-dropdown-icon',
+					return _react2.default.createElement('i', { className: 'fa fa-fw fa-caret-down n-button-dropdown-icon',
 						onClick: this.onDropdownIconClicked });
 				} else {
 					return null;
@@ -340,9 +360,9 @@
 		}, {
 			key: 'renderText',
 			value: function renderText(dropdown) {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'button',
-					{ className: (0, _nComponent.classnames)('n-control n-btn n-clickable', this.getButtonStyle()),
+					{ className: (0, _classnames2.default)('n-control n-btn n-clickable', this.getButtonStyle()),
 						onClick: this.onComponentClicked },
 					this.renderLeftIcon(),
 					this.getDisplayText(),
@@ -354,12 +374,12 @@
 			key: 'renderSeparatedDropdownIcon',
 			value: function renderSeparatedDropdownIcon(dropdown) {
 				if (dropdown.has && dropdown.separated) {
-					var className = (0, _nComponent.classnames)('n-control n-btn n-button-dropdown-icon n-clickable', this.getButtonStyle());
-					return _nComponent.React.createElement(
+					var className = (0, _classnames2.default)('n-control n-btn n-button-dropdown-icon n-clickable', this.getButtonStyle());
+					return _react2.default.createElement(
 						'button',
 						{ className: className,
 							onClick: this.onDropdownIconClicked },
-						_nComponent.React.createElement('i', { className: 'fa fa-fw fa-caret-down' })
+						_react2.default.createElement('i', { className: 'fa fa-fw fa-caret-down' })
 					);
 				} else {
 					return null;
@@ -368,7 +388,7 @@
 		}, {
 			key: 'renderDropdownItem',
 			value: function renderDropdownItem(item, itemIndex) {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'li',
 					{ key: itemIndex },
 					this.renderInternalComponent(item)
@@ -382,7 +402,7 @@
 				if (!dropdown.has) {
 					return null;
 				}
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'ul',
 					{ className: 'n-button-dropdown n-dropdown n-text-left',
 						ref: 'dropdown' },
@@ -396,10 +416,10 @@
 			value: function renderInNormal() {
 				var dropdown = this.prepareDropdownItems();
 
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), {
 					'n-button-group': dropdown.has && dropdown.separated
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -499,7 +519,7 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
@@ -528,11 +548,11 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.BUTTON = { type: 'n-button', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.BUTTON.type, function (options) {
-		return _nComponent.React.createElement(NButton, options);
+		return _react2.default.createElement(NButton, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.BUTTON_BAR = { type: 'n-button-bar', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.BUTTON_BAR.type, function (options) {
-		return _nComponent.React.createElement(NButtonBar, options);
+		return _react2.default.createElement(NButtonBar, options);
 	});
 
 	exports.NButton = NButton;
@@ -547,7 +567,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.NHierarchyComponent = exports.NCollapsibleContainer = exports.NContainer = exports.NCodeTableComponent = exports.NDropdownComponent = exports.NAddonComponent = exports.NComponent = exports.NWidget = exports.classnames = exports.$ = exports.jQuery = exports.ReactDOM = exports.React = undefined;
+	exports.NHierarchyComponent = exports.NCollapsibleContainer = exports.NContainer = exports.NCodeTableComponent = exports.NDropdownComponent = exports.NAddonComponent = exports.NComponent = exports.NWidget = undefined;
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
@@ -591,7 +611,7 @@
 		});
 	});
 
-	var _envs = __webpack_require__(8);
+	var _envs = __webpack_require__(9);
 
 	Object.keys(_envs).forEach(function (key) {
 		if (key === "default" || key === "__esModule") return;
@@ -618,6 +638,10 @@
 	var _classnames = __webpack_require__(15);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _lodash = __webpack_require__(8);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2295,11 +2319,6 @@
 		return NHierarchyComponent;
 	}(NContainer);
 
-	exports.React = _react2.default;
-	exports.ReactDOM = _reactDom2.default;
-	exports.jQuery = _jquery2.default;
-	exports.$ = $;
-	exports.classnames = _classnames2.default;
 	exports.NWidget = NWidget;
 	exports.NComponent = NComponent;
 	exports.NAddonComponent = NAddonComponent;
@@ -2330,13 +2349,19 @@
 		if (key === "default" || key === "__esModule") return;
 		Object.defineProperty(exports, key, {
 			enumerable: true,
-			get: function () {
+			get: function get() {
 				return _codetable[key];
 			}
 		});
 	});
 
-	var _envs = __webpack_require__(8);
+	var _lodash = __webpack_require__(8);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _envs = __webpack_require__(9);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2430,7 +2455,7 @@
 			if (noBase === true) {
 				this.currentModel = this.baseModel;
 			} else {
-				this.currentModel = _envs.lodash.cloneDeep(initDataJSON);
+				this.currentModel = _lodash2.default.cloneDeep(initDataJSON);
 			}
 			this.changed = false;
 			this.undivided = true;
@@ -2920,6 +2945,12 @@
 
 /***/ },
 /* 8 */
+/***/ function(module, exports) {
+
+	module.exports = _;
+
+/***/ },
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2927,11 +2958,11 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.lodash = exports.Envs = undefined;
+	exports.Envs = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lodash = __webpack_require__(9);
+	var _lodash = __webpack_require__(8);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -3456,13 +3487,6 @@
 	var envs = new Envs();
 
 	exports.Envs = envs;
-	exports.lodash = _lodash2.default;
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	module.exports = _;
 
 /***/ },
 /* 10 */
@@ -3479,7 +3503,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _envs = __webpack_require__(8);
+	var _envs = __webpack_require__(9);
 
 	var _model = __webpack_require__(6);
 
@@ -3859,7 +3883,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _envs = __webpack_require__(8);
+	var _lodash = __webpack_require__(8);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _envs = __webpack_require__(9);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -4107,17 +4137,41 @@
 		if (key === "default" || key === "__esModule") return;
 		Object.defineProperty(exports, key, {
 			enumerable: true,
-			get: function () {
+			get: function get() {
 				return _nComponent[key];
 			}
 		});
 	});
+
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _lodash = __webpack_require__(8);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NCheck = function (_NComponent) {
 		_inherits(NCheck, _NComponent);
@@ -4151,7 +4205,7 @@
 		_createClass(NCheck, [{
 			key: 'renderText',
 			value: function renderText(label) {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'span',
 					{ className: 'n-check-text n-control' },
 					label ? label : this.getLabel()
@@ -4176,10 +4230,10 @@
 		}, {
 			key: 'renderCheck',
 			value: function renderCheck() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'span',
 					{ className: 'n-check-box n-control' },
-					_nComponent.React.createElement('span', { className: 'n-check-box-rect' })
+					_react2.default.createElement('span', { className: 'n-check-box-rect' })
 				);
 			}
 		}, {
@@ -4187,13 +4241,13 @@
 			value: function renderInNormal() {
 				var labelDisplay = this.isLabelDisplay();
 				var textOnLeft = this.isTextOnLeft();
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), {
 					'n-checked': this.isChecked(),
 					'n-check-text-left': textOnLeft,
 					'n-check-text-right': !textOnLeft,
 					'n-check-no-text': !labelDisplay
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						onClick: this.onComponentClicked,
@@ -4266,10 +4320,10 @@
 			value: function renderInNormal() {
 				var _this3 = this;
 
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), {
 					'n-array-check-vertical': this.isOnVertical()
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -4365,15 +4419,15 @@
 		_createClass(NToggle, [{
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
-					{ className: (0, _nComponent.classnames)('n-control', this.getComponentStyle()),
+					{ className: (0, _classnames2.default)('n-control', this.getComponentStyle()),
 						onClick: this.onComponentClicked,
 						onKeyUp: this.onComponentKeyUp,
 						tabIndex: this.getTabIndex(),
 						ref: 'me' },
-					_nComponent.React.createElement('span', { className: (0, _nComponent.classnames)('n-toggle-button', this.getToggleStyle(), { 'n-checked': this.isChecked() }) }),
-					_nComponent.React.createElement(
+					_react2.default.createElement('span', { className: (0, _classnames2.default)('n-toggle-button', this.getToggleStyle(), { 'n-checked': this.isChecked() }) }),
+					_react2.default.createElement(
 						'span',
 						{ className: 'n-toggle-text n-control' },
 						' '
@@ -4403,15 +4457,15 @@
 	_nComponent.Envs.COMPONENT_TYPES.CHECK = { type: 'n-check', label: true, error: true };
 	_nComponent.Envs.COMPONENT_TYPES.CHECK_NL = { type: 'n-check', label: false, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.CHECK.type, function (options) {
-		return _nComponent.React.createElement(NCheck, options);
+		return _react2.default.createElement(NCheck, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.ARRAY_CHECK = { type: 'n-array-check', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ARRAY_CHECK.type, function (options) {
-		return _nComponent.React.createElement(NArrayCheck, options);
+		return _react2.default.createElement(NArrayCheck, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.TOGGLE = { type: 'n-toggle', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TOGGLE.type, function (options) {
-		return _nComponent.React.createElement(NToggle, options);
+		return _react2.default.createElement(NToggle, options);
 	});
 
 	exports.NCheck = NCheck;
@@ -4427,7 +4481,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.moment = exports.NDateTimeCalendar = exports.NTimeClock = exports.NDateCalendar = exports.NDate = exports.NDateComponent = undefined;
+	exports.NDateTimeCalendar = exports.NTimeClock = exports.NDateCalendar = exports.NDate = exports.NDateComponent = undefined;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -4447,6 +4501,26 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _lodash = __webpack_require__(8);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
 	var _nIcon = __webpack_require__(18);
 
 	var _moment = __webpack_require__(19);
@@ -4460,6 +4534,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var YEAR = 1;
 	var MONTH = 2;
@@ -4508,7 +4584,7 @@
 			}, {
 				key: 'renderDateFooter',
 				value: function renderDateFooter() {
-					return _nComponent.React.createElement(NCalendarFooter, { model: this.getModel(),
+					return _react2.default.createElement(NCalendarFooter, { model: this.getModel(),
 						'n-id': this.getDataId(),
 						'n-comp-showClose': this.isCloseButtonShown(),
 						'n-comp-showClear': this.isClearButtonShown(),
@@ -4840,7 +4916,7 @@
 			key: 'renderClearButton',
 			value: function renderClearButton() {
 				if (this.isClearButtonShown()) {
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'div',
 						{ className: 'n-calendar-footer-button' },
 						this.renderIcon({
@@ -4855,7 +4931,7 @@
 			key: 'renderNowButton',
 			value: function renderNowButton() {
 				if (this.isNowButtonShown()) {
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'div',
 						{ className: 'n-calendar-footer-button' },
 						this.renderIcon({
@@ -4870,7 +4946,7 @@
 			key: 'renderCloseButton',
 			value: function renderCloseButton() {
 				if (this.isCloseButtonShown()) {
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'div',
 						{ className: 'n-calendar-footer-button' },
 						this.renderIcon({
@@ -4884,7 +4960,7 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
@@ -5010,10 +5086,10 @@
 				if (!this.isYearPicking()) {
 					return null;
 				}
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-calendar-date-header-text' },
-					_nComponent.React.createElement(
+					_react2.default.createElement(
 						'span',
 						null,
 						date.format(this.getDateHeaderFormat().year) - 12,
@@ -5028,10 +5104,10 @@
 				if (!this.isMonthPicking()) {
 					return null;
 				}
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-calendar-date-header-text' },
-					_nComponent.React.createElement(
+					_react2.default.createElement(
 						'span',
 						{ className: 'n-clickable', onClick: this.onHeaderYearClicked },
 						date.format(this.getDateHeaderFormat().year)
@@ -5044,18 +5120,18 @@
 				if (!this.isDayPicking()) {
 					return null;
 				}
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-calendar-date-header-text' },
-					_nComponent.React.createElement(
+					_react2.default.createElement(
 						'span',
 						null,
-						_nComponent.React.createElement(
+						_react2.default.createElement(
 							'span',
 							{ className: 'n-clickable', onClick: this.onHeaderYearClicked },
 							date.format(this.getDateHeaderFormat().year)
 						),
-						_nComponent.React.createElement(
+						_react2.default.createElement(
 							'span',
 							{ className: 'n-clickable', onClick: this.onHeaderMonthClicked },
 							date.format(this.getDateHeaderFormat().month)
@@ -5067,7 +5143,7 @@
 			key: 'renderDateHeader',
 			value: function renderDateHeader() {
 				var date = this.getDisplayDate();
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-calendar-date-header' },
 					this.renderIcon({
@@ -5119,18 +5195,18 @@
 				return years.map(function (year, index) {
 					var theDate = date.clone().year(year);
 					var enabled = _this6.isDateEnabled(theDate, _this6.getCurrentDisplayType());
-					var className = (0, _nComponent.classnames)('n-calendar-date-body-body-text year', {
+					var className = (0, _classnames2.default)('n-calendar-date-body-body-text year', {
 						'today': year == today.year(),
 						'active': year == activeYear,
 						'disabled': !enabled
 					});
 					var clickHandler = enabled ? _this6.onYearClicked.bind(_this6, year) : null;
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'span',
 						{ className: className,
 							onClick: clickHandler,
 							key: index },
-						_nComponent.React.createElement(
+						_react2.default.createElement(
 							'span',
 							null,
 							year
@@ -5154,18 +5230,18 @@
 				return months.map(function (month, index) {
 					var theDate = date.clone().month(index);
 					var enabled = _this7.isDateEnabled(theDate, _this7.getCurrentDisplayType());
-					var className = (0, _nComponent.classnames)('n-calendar-date-body-body-text month', {
+					var className = (0, _classnames2.default)('n-calendar-date-body-body-text month', {
 						'today': index == today.month(),
 						'active': hasActiveMonth && index == activeMonth,
 						'disabled': !enabled
 					});
 					var clickHandler = enabled ? _this7.onMonthClicked.bind(_this7, index) : null;
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'span',
 						{ className: className,
 							onClick: clickHandler,
 							key: index },
-						_nComponent.React.createElement(
+						_react2.default.createElement(
 							'span',
 							null,
 							month
@@ -5180,11 +5256,11 @@
 					return null;
 				}
 				var weekdays = _moment2.default.weekdaysMin();
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-calendar-date-body-header' },
 					weekdays.map(function (weekday, index) {
-						return _nComponent.React.createElement(
+						return _react2.default.createElement(
 							'span',
 							{ className: 'n-calendar-date-body-header-text',
 								key: index },
@@ -5225,7 +5301,7 @@
 						theDate = date.clone().date(day);
 					}
 					var enabled = _this8.isDateEnabled(theDate, _this8.getCurrentDisplayType());
-					var className = (0, _nComponent.classnames)('n-calendar-date-body-body-text date', {
+					var className = (0, _classnames2.default)('n-calendar-date-body-body-text date', {
 						'before': before,
 						'after': after,
 						'today': theDate.year() == today.year() && theDate.month() == today.month() && theDate.date() == today.date(),
@@ -5233,12 +5309,12 @@
 						'disabled': !enabled
 					});
 					var clickHandler = enabled ? _this8.onDayClicked.bind(_this8, theDate) : null;
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'span',
 						{ className: className,
 							onClick: clickHandler,
 							key: index },
-						_nComponent.React.createElement(
+						_react2.default.createElement(
 							'span',
 							null,
 							day
@@ -5250,7 +5326,7 @@
 			key: 'renderDateBodyBody',
 			value: function renderDateBodyBody() {
 				var date = this.getDisplayDate();
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-calendar-date-body-body' },
 					this.renderDateBodyHeaderForDay(date),
@@ -5262,7 +5338,7 @@
 		}, {
 			key: 'renderDateBody',
 			value: function renderDateBody() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-calendar-date-body' },
 					this.renderDateBodyBody()
@@ -5272,9 +5348,9 @@
 			key: 'renderDate',
 			value: function renderDate() {
 				var hasFooter = this.hasFooter();
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
-					{ className: (0, _nComponent.classnames)('n-calendar-date', { 'n-calendar-no-footer': !hasFooter }) },
+					{ className: (0, _classnames2.default)('n-calendar-date', { 'n-calendar-no-footer': !hasFooter }) },
 					this.renderDateHeader(),
 					this.renderDateBody(),
 					hasFooter ? this.renderDateFooter() : null
@@ -5283,7 +5359,7 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
@@ -5299,7 +5375,7 @@
 			key: 'getDateHeaderFormat',
 			value: function getDateHeaderFormat() {
 				var format = this.getLayoutOptionValue('dateHeaderFormat');
-				return _nComponent.lodash.assign({}, _nComponent.Envs.DATE_HEADER_FORMAT, format);
+				return _lodash2.default.assign({}, _nComponent.Envs.DATE_HEADER_FORMAT, format);
 			}
 		}, {
 			key: 'isDayPicking',
@@ -5384,7 +5460,7 @@
 					date.add.call(date, options.year.step, options.year.unit || 'year');
 				}
 				this.setState({ displayDate: date });
-				this.fireEventToMonitor(_nComponent.$.Event('displayDateChange', {
+				this.fireEventToMonitor($.Event('displayDateChange', {
 					target: this.me(),
 					ndata: {
 						oldDisplayDate: oldDate,
@@ -5395,7 +5471,7 @@
 		}, {
 			key: 'fireDisplayTypeChangeEvent',
 			value: function fireDisplayTypeChangeEvent(oldDisplayType) {
-				this.fireEventToMonitor(_nComponent.$.Event('displayTypeChange', {
+				this.fireEventToMonitor($.Event('displayTypeChange', {
 					target: this.me(),
 					ndata: {
 						oldDisplayType: oldDisplayType,
@@ -5433,12 +5509,12 @@
 			}
 
 			return _ret3 = (_temp3 = (_this9 = _possibleConstructorReturn(this, (_ref3 = NTimeClock.__proto__ || Object.getPrototypeOf(NTimeClock)).call.apply(_ref3, [this].concat(args))), _this9), _this9.onCircleClicked = function (evt) {
-				var target = (0, _nComponent.$)(evt.target);
+				var target = $(evt.target);
 				var clientX = evt.clientX,
 				    clientY = evt.clientY;
 				var targetOffset = target.closest('svg').offset();
-				var x = clientX + (0, _nComponent.$)(document).scrollLeft() - (targetOffset.left + 105);
-				var y = -1 * (clientY + (0, _nComponent.$)(document).scrollTop() - (targetOffset.top + 105));
+				var x = clientX + $(document).scrollLeft() - (targetOffset.left + 105);
+				var y = -1 * (clientY + $(document).scrollTop() - (targetOffset.top + 105));
 				var degree = 0;
 				if (x == 0) {
 					degree = y >= 0 ? 90 : 270;
@@ -5521,16 +5597,16 @@
 						circles.splice(0, 1);
 					}
 				}
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-calendar-time-body' },
-					_nComponent.React.createElement(
+					_react2.default.createElement(
 						'div',
 						{ className: 'n-calendar-time-clock' },
-						_nComponent.React.createElement(
+						_react2.default.createElement(
 							'svg',
 							null,
-							_nComponent.React.createElement('circle', { className: 'n-calendar-time-clock-bg',
+							_react2.default.createElement('circle', { className: 'n-calendar-time-clock-bg',
 								r: '51', cx: '105', cy: '105' }),
 							circles.map(function (circle, index) {
 								var size = 92 - index * 30;
@@ -5539,18 +5615,18 @@
 									cx: 105,
 									cy: 105
 								};
-								return _nComponent.React.createElement(
+								return _react2.default.createElement(
 									'g',
 									{ key: index },
-									_nComponent.React.createElement(
+									_react2.default.createElement(
 										'title',
 										null,
 										circle.tip
 									),
-									_nComponent.React.createElement('circle', _extends({ className: 'n-calendar-time-clock-circle-bg ' + circle.class + ' size-' + size,
+									_react2.default.createElement('circle', _extends({ className: 'n-calendar-time-clock-circle-bg ' + circle.class + ' size-' + size,
 										onClick: _this10.onCircleClicked
 									}, painter)),
-									_nComponent.React.createElement('circle', _extends({ className: 'n-calendar-time-clock-circle ' + circle.class + ' size-' + size + ' when-' + circle.value + '-of-' + circle.total,
+									_react2.default.createElement('circle', _extends({ className: 'n-calendar-time-clock-circle ' + circle.class + ' size-' + size + ' when-' + circle.value + '-of-' + circle.total,
 										onClick: _this10.onCircleClicked
 									}, painter))
 								);
@@ -5563,13 +5639,13 @@
 			key: 'renderTimeHeader',
 			value: function renderTimeHeader() {
 				var date = this.getDisplayDate();
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-calendar-time-header' },
-					_nComponent.React.createElement(
+					_react2.default.createElement(
 						'div',
 						{ className: 'n-calendar-time-header-text' },
-						_nComponent.React.createElement(
+						_react2.default.createElement(
 							'span',
 							null,
 							date.format(this.getTimeHeaderFormat())
@@ -5581,9 +5657,9 @@
 			key: 'renderTime',
 			value: function renderTime() {
 				var hasFooter = this.hasFooter();
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
-					{ className: (0, _nComponent.classnames)('n-calendar-time', { 'n-calendar-no-footer': !hasFooter }) },
+					{ className: (0, _classnames2.default)('n-calendar-time', { 'n-calendar-no-footer': !hasFooter }) },
 					this.renderTimeHeader(),
 					this.renderTimeBody(),
 					hasFooter ? this.renderDateFooter() : null
@@ -5601,7 +5677,7 @@
 					clearInterval(this.state.timer);
 					delete this.state.timer;
 				}
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
@@ -5696,14 +5772,14 @@
 					'n-comp-showNow': false,
 					'n-comp-showClear': false
 				};
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
-					_nComponent.React.createElement(NDateCalendar, _extends({}, options, {
+					_react2.default.createElement(NDateCalendar, _extends({}, options, {
 						container: this,
 						ref: 'date' })),
-					_nComponent.React.createElement(NTimeClock, _extends({}, options, {
+					_react2.default.createElement(NTimeClock, _extends({}, options, {
 						container: this,
 						ref: 'time' })),
 					this.renderDateFooter()
@@ -5766,7 +5842,7 @@
 					_this12.setValueToModel(null);
 					_this12.showDropdown();
 				}
-				(0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(_this12.refs.txt)).focus();
+				$(_reactDom2.default.findDOMNode(_this12.refs.txt)).focus();
 			}, _this12.onCalendarIconClicked = function (evt) {
 				if (_this12.isEnabled() && !evt.isDefaultPrevented()) {
 					evt.preventDefault();
@@ -5817,17 +5893,17 @@
 					ref: 'dropdown'
 				};
 				if (hasDate && hasTime) {
-					return _nComponent.React.createElement(NDateTimeCalendar, options);
+					return _react2.default.createElement(NDateTimeCalendar, options);
 				} else if (hasDate) {
-					return _nComponent.React.createElement(NDateCalendar, options);
+					return _react2.default.createElement(NDateCalendar, options);
 				} else {
-					return _nComponent.React.createElement(NTimeClock, options);
+					return _react2.default.createElement(NTimeClock, options);
 				}
 			}
 		}, {
 			key: 'renderCalendarIcon',
 			value: function renderCalendarIcon() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-input-addon' },
 					this.renderIcon({
@@ -5845,7 +5921,7 @@
 		}, {
 			key: 'renderText',
 			value: function renderText() {
-				return _nComponent.React.createElement('input', { type: 'text',
+				return _react2.default.createElement('input', { type: 'text',
 					className: 'n-control',
 					disabled: !this.isEnabled(),
 					placeholder: this.getPlaceholder(),
@@ -5859,8 +5935,8 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				var className = (0, _nComponent.classnames)(this.getComponentStyle());
-				return _nComponent.React.createElement(
+				var className = (0, _classnames2.default)(this.getComponentStyle());
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -5889,7 +5965,7 @@
 		}, {
 			key: 'getComponent',
 			value: function getComponent() {
-				return (0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(this.refs.txt));
+				return $(_reactDom2.default.findDOMNode(this.refs.txt));
 			}
 		}, {
 			key: 'gatherValueFromInputAndSetToModel',
@@ -5938,19 +6014,19 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.DATE_CALENDAR = { type: 'n-date-calendar', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.DATE_CALENDAR.type, function (options) {
-		return _nComponent.React.createElement(NDateCalendar, options);
+		return _react2.default.createElement(NDateCalendar, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.TIME_CLOCK = { type: 'n-time-clock', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TIME_CLOCK.type, function (options) {
-		return _nComponent.React.createElement(NTimeClock, options);
+		return _react2.default.createElement(NTimeClock, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR = { type: 'n-date-time-calendar', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR.type, function (options) {
-		return _nComponent.React.createElement(NDateTimeCalendar, options);
+		return _react2.default.createElement(NDateTimeCalendar, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.DATE_PICKER = { type: 'n-date-picker', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.DATE_PICKER.type, function (options) {
-		return _nComponent.React.createElement(NDate, options);
+		return _react2.default.createElement(NDate, options);
 	});
 
 	exports.NDateComponent = NDateComponent;
@@ -5958,7 +6034,6 @@
 	exports.NDateCalendar = NDateCalendar;
 	exports.NTimeClock = NTimeClock;
 	exports.NDateTimeCalendar = NDateTimeCalendar;
-	exports.moment = _moment2.default;
 
 /***/ },
 /* 18 */
@@ -5985,11 +6060,31 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var prefixFA = function prefixFA(str) {
 		if (str) {
@@ -6033,7 +6128,7 @@
 		_createClass(NIcon, [{
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				return _nComponent.React.createElement('i', { className: prefixFA(this.getRenderedClassName()),
+				return _react2.default.createElement('i', { className: prefixFA(this.getRenderedClassName()),
 					onClick: this.onComponentClicked,
 					ref: 'me' });
 			}
@@ -6047,9 +6142,9 @@
 		}, {
 			key: 'getRenderedClassName',
 			value: function getRenderedClassName() {
-				return (0, _nComponent.classnames)(this.getComponentStyle(), {
+				return (0, _classnames2.default)(this.getComponentStyle(), {
 					'!fa fw': this.isFontAwesome()
-				}, (0, _nComponent.classnames)(this.getFontClassName()), {
+				}, (0, _classnames2.default)(this.getFontClassName()), {
 					'!n-clickable': this.isClickable()
 				});
 			}
@@ -6111,13 +6206,13 @@
 		_createClass(NStackIcon, [{
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'span',
 					{ className: prefixFA(this.getRenderedClassName()),
 						onClick: this.onComponentClicked,
 						ref: 'me' },
-					_nComponent.React.createElement('i', { className: prefixFA((0, _nComponent.classnames)('!fa stack-1x', this.getForeClassName())) }),
-					_nComponent.React.createElement('i', { className: prefixFA((0, _nComponent.classnames)('!fa stack-2x', this.getBackClassName())) })
+					_react2.default.createElement('i', { className: prefixFA((0, _classnames2.default)('!fa stack-1x', this.getForeClassName())) }),
+					_react2.default.createElement('i', { className: prefixFA((0, _classnames2.default)('!fa stack-2x', this.getBackClassName())) })
 				);
 			}
 			// style
@@ -6130,7 +6225,7 @@
 		}, {
 			key: 'getRenderedClassName',
 			value: function getRenderedClassName() {
-				return (0, _nComponent.classnames)(this.getComponentStyle(), 'stack fw', this.getBackgroundClassName(), {
+				return (0, _classnames2.default)(this.getComponentStyle(), 'stack fw', this.getBackgroundClassName(), {
 					'!n-clickable': this.isClickable()
 				});
 			}
@@ -6159,12 +6254,12 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.ICON = { type: 'n-icon', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ICON.type, function (options) {
-		return _nComponent.React.createElement(NIcon, options);
+		return _react2.default.createElement(NIcon, options);
 	});
 
 	_nComponent.Envs.COMPONENT_TYPES.STACK_ICON = { type: 'n-stack-icon', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.STACK_ICON.type, function (options) {
-		return _nComponent.React.createElement(NStackIcon, options);
+		return _react2.default.createElement(NStackIcon, options);
 	});
 
 	exports.NIcon = NIcon;
@@ -6203,11 +6298,31 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NLabel = function (_NAddonComponent) {
 		_inherits(NLabel, _NAddonComponent);
@@ -6233,10 +6348,10 @@
 		_createClass(NLabel, [{
 			key: 'renderText',
 			value: function renderText() {
-				var className = (0, _nComponent.classnames)('n-label-text', {
+				var className = (0, _classnames2.default)('n-label-text', {
 					'n-clickable': this.isClickable()
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'span',
 					{ className: className,
 						onClick: this.onComponentClicked,
@@ -6247,10 +6362,10 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), {
 					'has-addon': this.hasAddon()
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						tabIndex: this.getTabIndex(),
@@ -6320,7 +6435,7 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.LABEL = { type: 'n-label', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.LABEL.type, function (options) {
-		return _nComponent.React.createElement(NLabel, options);
+		return _react2.default.createElement(NLabel, options);
 	});
 
 	exports.NLabel = NLabel;
@@ -6352,15 +6467,35 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	var _nIcon = __webpack_require__(18);
 
 	var _nCheck = __webpack_require__(16);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NList = function (_NCodeTableComponent) {
 		_inherits(NList, _NCodeTableComponent);
@@ -6392,12 +6527,12 @@
 						break;
 				}
 			}, _this.onMouseMoved = function (evt) {
-				var bg = (0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(_this.refs.background));
+				var bg = $(_reactDom2.default.findDOMNode(_this.refs.background));
 				var container = _this.$me();
 				var containerOffset = container.offset();
-				var top = evt.clientY + (0, _nComponent.$)(window).scrollTop() - containerOffset.top;
+				var top = evt.clientY + $(window).scrollTop() - containerOffset.top;
 				var found = container.find('.n-list-item-text').toArray().some(function (dom) {
-					var text = (0, _nComponent.$)(dom);
+					var text = $(dom);
 					var offset = text.offset();
 					var textTop = offset.top - containerOffset.top;
 					if (textTop <= top && textTop + text.outerHeight() >= top) {
@@ -6416,7 +6551,7 @@
 					});
 				}
 			}, _this.onMouseLeft = function (evt) {
-				var bg = (0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(_this.refs.background));
+				var bg = $(_reactDom2.default.findDOMNode(_this.refs.background));
 				bg.css({
 					display: 'none'
 				});
@@ -6469,14 +6604,14 @@
 						'jq.keydown': this.onItemKeyDown
 					}
 				});
-				return _nComponent.React.createElement(_nCheck.NCheck, { model: model,
+				return _react2.default.createElement(_nCheck.NCheck, { model: model,
 					layout: layout });
 			}
 		}, {
 			key: 'renderItem',
 			value: function renderItem(item, itemIndex) {
 				var checkable = this.isItemCanCheck(item);
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-list-item',
 						tabIndex: '0',
@@ -6486,7 +6621,7 @@
 						key: itemIndex },
 					this.renderItemIcon(item),
 					checkable ? this.renderItemCheck(item) : null,
-					_nComponent.React.createElement(
+					_react2.default.createElement(
 						'span',
 						{ className: 'n-list-item-text' },
 						item.text
@@ -6504,17 +6639,17 @@
 					minWidth: this.getMinWidth(),
 					maxWidth: this.getMaxWidth()
 				};
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), {
 					'n-list-nowrap': this.isNoWrap()
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						style: styles,
 						onMouseMove: this.onMouseMoved,
 						onMouseLeave: this.onMouseLeft,
 						ref: 'me' },
-					_nComponent.React.createElement('div', { className: 'n-list-background',
+					_react2.default.createElement('div', { className: 'n-list-background',
 						ref: 'background' }),
 					this.getCodeTable().map(function (item, itemIndex) {
 						return _this3.renderItem(item, itemIndex);
@@ -6644,7 +6779,7 @@
 		}, {
 			key: 'shouldItemCheckChanged',
 			value: function shouldItemCheckChanged(item, checked) {
-				return this.fireEventToMonitor(_nComponent.$.Event('shouldItemCheckChange'), {
+				return this.fireEventToMonitor($.Event('shouldItemCheckChange'), {
 					target: this.me(),
 					ndata: {
 						item: item,
@@ -6655,7 +6790,7 @@
 		}, {
 			key: 'itemCheckChanged',
 			value: function itemCheckChanged(item, checked) {
-				this.fireEventToMonitor(_nComponent.$.Event('itemCheckChange', {
+				this.fireEventToMonitor($.Event('itemCheckChange', {
 					target: this.me(),
 					ndata: {
 						item: item,
@@ -6669,7 +6804,7 @@
 				if (evt.isDefaultPrevented()) {
 					return;
 				}
-				var target = (0, _nComponent.$)(evt.target).closest('.n-list-item');
+				var target = $(evt.target).closest('.n-list-item');
 				var id = target.attr('data-item-id');
 				var item = this.getCodeTable().getItem(id);
 				if (this.isItemCanCheck()) {
@@ -6680,7 +6815,7 @@
 		}, {
 			key: 'onItemUpArrowKeyDown',
 			value: function onItemUpArrowKeyDown(evt) {
-				var target = (0, _nComponent.$)(evt.target);
+				var target = $(evt.target);
 				var prev = target.prev('.n-list-item');
 				if (prev.length !== 0) {
 					evt.preventDefault();
@@ -6690,7 +6825,7 @@
 		}, {
 			key: 'onItemDownArrowKeyDown',
 			value: function onItemDownArrowKeyDown(evt) {
-				var target = (0, _nComponent.$)(evt.target);
+				var target = $(evt.target);
 				var next = target.next('.n-list-item');
 				if (next.length !== 0) {
 					evt.preventDefault();
@@ -6704,7 +6839,7 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.LIST = { type: 'n-list', label: true, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.LIST.type, function (options) {
-		return _nComponent.React.createElement(NList, options);
+		return _react2.default.createElement(NList, options);
 	});
 
 	exports.NList = NList;
@@ -6730,17 +6865,37 @@
 		if (key === "default" || key === "__esModule") return;
 		Object.defineProperty(exports, key, {
 			enumerable: true,
-			get: function () {
+			get: function get() {
 				return _nComponent[key];
 			}
 		});
 	});
+
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NPanelHeader = function (_NCollapsibleContaine) {
 		_inherits(NPanelHeader, _NCollapsibleContaine);
@@ -6773,19 +6928,19 @@
 			key: 'renderInNormal',
 			value: function renderInNormal() {
 				var collapsibleStyle = this.getCollapsibleStyle();
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), this.getPanelStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), this.getPanelStyle(), {
 					'n-panel-header-collapsible': this.isCollapsible(),
 					'n-panel-header-expanded': this.isExpanded(),
 					'n-panel-header-collapsed': !this.isExpanded()
 				}, 'n-panel-collapsible-' + collapsibleStyle);
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						onClick: this.onComponentClicked,
 						ref: 'me' },
 					this.renderLeadingDOMChildren(),
 					this.renderLeadingChildren(),
-					_nComponent.React.createElement(
+					_react2.default.createElement(
 						'span',
 						{ className: 'n-panel-header-text' },
 						this.getLabel()
@@ -6827,11 +6982,11 @@
 		_createClass(NPanelBody, [{
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), this.getPanelStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), this.getPanelStyle(), {
 					'n-panel-body-expanded': this.isExpanded(),
 					'n-panel-body-collapsed': !this.isExpanded()
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -6939,11 +7094,11 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), this.getPanelStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), this.getPanelStyle(), {
 					'n-panel-expanded': this.isExpanded(),
 					'n-panel-collapsed': !this.isExpanded()
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -7053,7 +7208,7 @@
 					dataId: this.getDataId(),
 					comp: layoutOptions
 				});
-				return _nComponent.React.createElement(NPanel, { model: model,
+				return _react2.default.createElement(NPanel, { model: model,
 					layout: layout,
 					orientation: this.getOrientation(),
 					viewMode: this.isViewMode(),
@@ -7069,7 +7224,7 @@
 			value: function renderInNormal() {
 				var _this7 = this;
 
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
@@ -7092,7 +7247,7 @@
 		}, {
 			key: 'onItemCollapsed',
 			value: function onItemCollapsed(itemModel, itemIndex) {
-				this.fireEventToMonitor(_nComponent.$.Event('itemCollapse', {
+				this.fireEventToMonitor($.Event('itemCollapse', {
 					target: this.me(),
 					ndata: {
 						itemModel: itemModel,
@@ -7103,7 +7258,7 @@
 		}, {
 			key: 'onItemExpanded',
 			value: function onItemExpanded(itemModel, itemIndex) {
-				this.fireEventToMonitor(_nComponent.$.Event('itemExpand', {
+				this.fireEventToMonitor($.Event('itemExpand', {
 					target: this.me(),
 					ndata: {
 						itemModel: itemModel,
@@ -7118,19 +7273,19 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.PANEL_HEADER = { type: 'n-panel-header', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.PANEL_HEADER.type, function (options) {
-		return _nComponent.React.createElement(NPanelHeader, options);
+		return _react2.default.createElement(NPanelHeader, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.PANEL_BODY = { type: 'n-panel-body', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.PANEL_BODY.type, function (options) {
-		return _nComponent.React.createElement(NPanelBody, options);
+		return _react2.default.createElement(NPanelBody, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.PANEL = { type: 'n-panel', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.PANEL.type, function (options) {
-		return _nComponent.React.createElement(NPanel, options);
+		return _react2.default.createElement(NPanel, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.ARRAY_PANEL = { type: 'n-array-panel', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ARRAY_PANEL.type, function (options) {
-		return _nComponent.React.createElement(NArrayPanel, options);
+		return _react2.default.createElement(NArrayPanel, options);
 	});
 
 	exports.NArrayPanel = NArrayPanel;
@@ -7163,11 +7318,31 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NRadio = function (_NCodeTableComponent) {
 		_inherits(NRadio, _NCodeTableComponent);
@@ -7181,7 +7356,7 @@
 		_createClass(NRadio, [{
 			key: 'renderText',
 			value: function renderText(item) {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'span',
 					{ className: 'n-radio-text n-control' },
 					item.text
@@ -7204,22 +7379,22 @@
 		}, {
 			key: 'renderRadioButton',
 			value: function renderRadioButton() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'span',
 					{ className: 'n-radio-box n-control' },
-					_nComponent.React.createElement('span', { className: 'n-radio-box-rect' })
+					_react2.default.createElement('span', { className: 'n-radio-box-rect' })
 				);
 			}
 		}, {
 			key: 'renderCodeItem',
 			value: function renderCodeItem(item, itemIndex) {
 				var textOnLeft = this.isTextOnLeft();
-				var className = (0, _nComponent.classnames)('n-radio', {
+				var className = (0, _classnames2.default)('n-radio', {
 					'n-checked': this.isChecked(item),
 					'n-radio-text-left': textOnLeft,
 					'n-radio-text-right': !textOnLeft
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						onClick: this.onComponentClicked.bind(this, item),
@@ -7236,10 +7411,10 @@
 			value: function renderInNormal() {
 				var _this2 = this;
 
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), {
 					'n-radio-vertical': this.isOnVertical()
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -7268,7 +7443,7 @@
 			value: function onComponentClicked(item, evt) {
 				evt.preventDefault();
 				this.setValueToModel(item.id);
-				var target = (0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(evt.target));
+				var target = $(_reactDom2.default.findDOMNode(evt.target));
 				if (target.hasClass('n-radio')) {
 					target.focus();
 				} else {
@@ -7341,7 +7516,7 @@
 			value: function renderInNormal() {
 				var _this4 = this;
 
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
@@ -7385,11 +7560,11 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.RADIO = { type: 'n-radio', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.RADIO.type, function (options) {
-		return _nComponent.React.createElement(NRadio, options);
+		return _react2.default.createElement(NRadio, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.RADIO_BUTTON = { type: 'n-radio-button', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.RADIO_BUTTON.type, function (options) {
-		return _nComponent.React.createElement(NRadioButton, options);
+		return _react2.default.createElement(NRadioButton, options);
 	});
 
 	exports.NRadio = NRadio;
@@ -7422,15 +7597,35 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	var _nIcon = __webpack_require__(18);
 
 	var _nList = __webpack_require__(21);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NIconRenderer = function NIconRenderer(ParentClass) {
 		return function (_ParentClass) {
@@ -7501,7 +7696,7 @@
 					_this2.setValueToModel(null);
 					_this2.showDropdown();
 				}
-				(0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(_this2.refs.txt)).focus();
+				$(_reactDom2.default.findDOMNode(_this2.refs.txt)).focus();
 			}, _this2.onDropdownIconClicked = function (evt) {
 				if (_this2.isEnabled() && !evt.isDefaultPrevented()) {
 					evt.preventDefault();
@@ -7509,7 +7704,7 @@
 				}
 			}, _this2.onItemCheckChanged = function (evt) {
 				_this2.forceUpdate(function () {
-					_this2.fireEventToMonitor(_nComponent.$.Event('itemCheckChange', {
+					_this2.fireEventToMonitor($.Event('itemCheckChange', {
 						target: _this2.me(),
 						ndata: {
 							items: _this2.wrapToArray(evt.ndata.item || evt.ndata.items),
@@ -7551,7 +7746,7 @@
 		}, {
 			key: 'renderCalendarIcon',
 			value: function renderCalendarIcon() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-input-addon' },
 					this.renderIcon({
@@ -7570,11 +7765,11 @@
 			key: 'renderSelectedItem',
 			value: function renderSelectedItem(value, itemIndex) {
 				var item = this.getCodeTable().getItem(value);
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'li',
 					{ className: 'n-select-item',
 						key: itemIndex },
-					_nComponent.React.createElement(
+					_react2.default.createElement(
 						'span',
 						{ className: 'n-select-item-text' },
 						item.text
@@ -7594,10 +7789,10 @@
 				var value = this.getValueFromModel();
 				if (value == null || value.length == 0) {
 					var placeholder = this.getPlaceholder();
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'div',
 						{ className: 'n-select-items' },
-						_nComponent.React.createElement(
+						_react2.default.createElement(
 							'span',
 							{ className: 'n-select-placeholder-text' },
 							placeholder ? placeholder : ' '
@@ -7605,7 +7800,7 @@
 					);
 				}
 				if (this.isMultiple()) {
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'ul',
 						{ className: 'n-select-items' },
 						value.map(function (value, index) {
@@ -7613,10 +7808,10 @@
 						})
 					);
 				} else {
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'div',
 						{ className: 'n-select-items' },
-						_nComponent.React.createElement(
+						_react2.default.createElement(
 							'span',
 							{ className: 'n-select-item-text' },
 							value == null ? ' ' : this.getCodeTable().getText(value)
@@ -7627,8 +7822,8 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				var className = (0, _nComponent.classnames)(this.getComponentStyle());
-				return _nComponent.React.createElement(
+				var className = (0, _classnames2.default)(this.getComponentStyle());
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						tabIndex: this.getTabIndex(),
@@ -7657,7 +7852,7 @@
 		}, {
 			key: 'getComponent',
 			value: function getComponent() {
-				return (0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(this.refs.txt));
+				return $(_reactDom2.default.findDOMNode(this.refs.txt));
 			}
 		}, {
 			key: 'getDropdownLayout',
@@ -7694,7 +7889,7 @@
 					var newValues = values.slice(0);
 					var removedValues = newValues.splice(index, 1);
 					this.setValueToModel(newValues);
-					this.fireEventToMonitor(_nComponent.$.Event('itemCheckChange', {
+					this.fireEventToMonitor($.Event('itemCheckChange', {
 						target: this.me(),
 						ndata: {
 							items: removedValues.map(function (value) {
@@ -7712,7 +7907,7 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.SELECT = { type: 'n-select', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.SELECT.type, function (options) {
-		return _nComponent.React.createElement(NSelect, options);
+		return _react2.default.createElement(NSelect, options);
 	});
 
 	exports.NSelect = NSelect;
@@ -7740,17 +7935,37 @@
 		if (key === "default" || key === "__esModule") return;
 		Object.defineProperty(exports, key, {
 			enumerable: true,
-			get: function () {
+			get: function get() {
 				return _nComponent[key];
 			}
 		});
 	});
+
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NTabContainer = function NTabContainer(ParentClass) {
 		return function (_ParentClass) {
@@ -7793,7 +8008,7 @@
 					this.setState({
 						activeTabIndex: tabIndex
 					}, function () {
-						_this2.fireEventToMonitor(_nComponent.$.Event('active', {
+						_this2.fireEventToMonitor($.Event('active', {
 							target: _this2.me(),
 							ndata: {
 								tab: _this2.getActiveTab(),
@@ -7832,20 +8047,20 @@
 		_createClass(NTabHeaderItem, [{
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), this.getItemStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), this.getItemStyle(), {
 					'n-active': this.getLayoutOptionValue('active'),
 					'n-clickable': this.isClickable()
 				});
 				// TODO for unknow reason, styles is broken when no text inside of span
 				// TODO an unicode white space added
 				var label = this.getLabel();
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'li',
 					{ className: className,
 						onClick: this.onItemClicked,
 						ref: 'me' },
 					this.renderLeadingChildren(),
-					_nComponent.React.createElement(
+					_react2.default.createElement(
 						'span',
 						{ className: 'n-tab-header-text' },
 						label ? label : ' '
@@ -7903,7 +8118,7 @@
 						}
 					})
 				};
-				return _nComponent.React.createElement(NTabHeaderItem, _extends({}, options, {
+				return _react2.default.createElement(NTabHeaderItem, _extends({}, options, {
 					container: this,
 					key: tabIndex }));
 			}
@@ -7912,8 +8127,8 @@
 			value: function renderInNormal() {
 				var _this5 = this;
 
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), this.getTabStyle());
-				return _nComponent.React.createElement(
+				var className = (0, _classnames2.default)(this.getComponentStyle(), this.getTabStyle());
+				return _react2.default.createElement(
 					'ul',
 					{ className: className,
 						ref: 'me' },
@@ -7938,7 +8153,7 @@
 				var _this6 = this;
 
 				evt.preventDefault();
-				var can = this.fireEventToMonitor(_nComponent.$.Event('shouldActive', {
+				var can = this.fireEventToMonitor($.Event('shouldActive', {
 					target: this.me(),
 					ndata: {
 						tab: tab,
@@ -7970,7 +8185,7 @@
 		_createClass(NTabBody, [{
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), this.getTabStyle());
+				var className = (0, _classnames2.default)(this.getComponentStyle(), this.getTabStyle());
 				var children = {
 					children: this.getChildren()
 				};
@@ -7980,7 +8195,7 @@
 						children: tab.children
 					});
 				}
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -8029,7 +8244,7 @@
 			}
 
 			return _ret2 = (_temp2 = (_this8 = _possibleConstructorReturn(this, (_ref2 = NTab.__proto__ || Object.getPrototypeOf(NTab)).call.apply(_ref2, [this].concat(args))), _this8), _this8.onItemShouldActive = function (evt) {
-				return _this8.fireEventToMonitor(_nComponent.$.Event('shouldActive', {
+				return _this8.fireEventToMonitor($.Event('shouldActive', {
 					target: _this8.me(),
 					ndata: {
 						tab: evt.ndata.tab,
@@ -8088,8 +8303,8 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), this.getTabStyle());
-				return _nComponent.React.createElement(
+				var className = (0, _classnames2.default)(this.getComponentStyle(), this.getTabStyle());
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -8121,7 +8336,7 @@
 			key: 'onItemActived',
 			value: function onItemActived(evt) {
 				this.refs.body.setActiveTabIndex(evt.ndata.tabIndex);
-				this.fireEventToMonitor(_nComponent.$.Event('active', {
+				this.fireEventToMonitor($.Event('active', {
 					target: this.me(),
 					ndata: {
 						tab: evt.ndata.tab,
@@ -8159,7 +8374,7 @@
 			}
 
 			return _ret3 = (_temp3 = (_this9 = _possibleConstructorReturn(this, (_ref3 = NArrayTab.__proto__ || Object.getPrototypeOf(NArrayTab)).call.apply(_ref3, [this].concat(args))), _this9), _this9.onItemActived = function (evt) {
-				_this9.fireEventToMonitor(_nComponent.$.Event('active', {
+				_this9.fireEventToMonitor($.Event('active', {
 					target: _this9.me(),
 					ndata: {
 						tab: evt.tab,
@@ -8172,7 +8387,7 @@
 					_this9.onAddClicked(evt);
 					return false;
 				} else {
-					return _this9.fireEventToMonitor(_nComponent.$.Event('shouldActive', {
+					return _this9.fireEventToMonitor($.Event('shouldActive', {
 						target: _this9.me(),
 						ndata: {
 							tab: evt.tab,
@@ -8206,7 +8421,7 @@
 						shouldActive: this.onItemShouldActive
 					}
 				};
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
@@ -8285,7 +8500,8 @@
 									comp: {
 										type: _nComponent.Envs.COMPONENT_TYPES.LABEL,
 										textFromModel: false
-									}
+									},
+									pos: { width: 12 }
 								}
 							};
 						}
@@ -8334,7 +8550,7 @@
 				var _this12 = this;
 
 				evt.preventDefault();
-				var can = this.fireEventToMonitor(_nComponent.$.Event('shouldRemove', {
+				var can = this.fireEventToMonitor($.Event('shouldRemove', {
 					target: this.me(),
 					data: itemModel,
 					dataIndex: itemIndex
@@ -8406,19 +8622,19 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.TAB_HEADER = { type: 'n-tab-header', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TAB_HEADER.type, function (options) {
-		return _nComponent.React.createElement(NTabHeader, options);
+		return _react2.default.createElement(NTabHeader, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.TAB_BODY = { type: 'n-tab-body', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TAB_BODY.type, function (options) {
-		return _nComponent.React.createElement(NTabBody, options);
+		return _react2.default.createElement(NTabBody, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.TAB = { type: 'n-tab', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TAB.type, function (options) {
-		return _nComponent.React.createElement(NTab, options);
+		return _react2.default.createElement(NTab, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.ARRAY_TAB = { type: 'n-array-tab', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ARRAY_TAB.type, function (options) {
-		return _nComponent.React.createElement(NArrayTab, options);
+		return _react2.default.createElement(NArrayTab, options);
 	});
 
 	exports.NArrayTab = NArrayTab;
@@ -8455,13 +8671,33 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	var _nIcon = __webpack_require__(18);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NTableContainer = function NTableContainer(ParentClass) {
 		return function (_ParentClass) {
@@ -8607,7 +8843,7 @@
 					type = typeof title === 'undefined' ? 'undefined' : _typeof(title);
 				}
 				if (type === 'string') {
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'span',
 						{ className: 'n-table-header-title' },
 						title
@@ -8634,8 +8870,8 @@
 		}, {
 			key: 'renderHeaderCell',
 			value: function renderHeaderCell(column, columnIndex) {
-				var className = (0, _nComponent.classnames)('n-table-header-cell', this.getColumnWidthClassName(column.width));
-				return _nComponent.React.createElement(
+				var className = (0, _classnames2.default)('n-table-header-cell', this.getColumnWidthClassName(column.width));
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						key: columnIndex },
@@ -8650,8 +8886,8 @@
 			value: function renderInNormal() {
 				var _this5 = this;
 
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), 'n-row', this.getTableHeaderStyle(), this.getColumnsOfGridClassName());
-				return _nComponent.React.createElement(
+				var className = (0, _classnames2.default)(this.getComponentStyle(), 'n-row', this.getTableHeaderStyle(), this.getColumnsOfGridClassName());
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -8682,7 +8918,7 @@
 				} else {
 					sortType = NTable.ASC;
 				}
-				var ret = this.fireEventToMonitor(_nComponent.$.Event('columnSort', {
+				var ret = this.fireEventToMonitor($.Event('columnSort', {
 					target: this.me(),
 					ndata: {
 						column: column,
@@ -8722,7 +8958,7 @@
 			value: function renderBodyCellContent(rowModel, rowIndex, column) {
 				var body = column.body;
 				if (!body) {
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'span',
 						null,
 						rowModel.get(column.dataId)
@@ -8757,8 +8993,8 @@
 		}, {
 			key: 'renderBodyCell',
 			value: function renderBodyCell(rowModel, rowIndex, column, columnIndex) {
-				var className = (0, _nComponent.classnames)('n-table-body-cell', this.getColumnWidthClassName(column.width));
-				return _nComponent.React.createElement(
+				var className = (0, _classnames2.default)('n-table-body-cell', this.getColumnWidthClassName(column.width));
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						key: columnIndex },
@@ -8770,13 +9006,13 @@
 			value: function renderBodyRow(rowModel, rowIndex) {
 				var _this8 = this;
 
-				var className = (0, _nComponent.classnames)({
+				var className = (0, _classnames2.default)({
 					'n-table-body-row': true,
 					'n-row': true,
 					'n-table-body-row-odd': rowIndex % 2 == 0,
 					'n-table-body-row-even': rowIndex % 2 == 1
 				}, this.getColumnsOfGridClassName());
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						key: rowIndex },
@@ -8790,8 +9026,8 @@
 			value: function renderInNormal() {
 				var _this9 = this;
 
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), this.getTableBodyStyle());
-				return _nComponent.React.createElement(
+				var className = (0, _classnames2.default)(this.getComponentStyle(), this.getTableBodyStyle());
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -8816,7 +9052,7 @@
 			value: function sortColumn(column, sortType) {
 				var _this10 = this;
 
-				var deferred = _nComponent.$.Deferred();
+				var deferred = $.Deferred();
 
 				sortType = sortType ? sortType : NTable.ASC;
 				var sorter = this.getSorter(column);
@@ -8839,7 +9075,7 @@
 			key: 'onColumnSorted',
 			value: function onColumnSorted(column, sortType) {
 				this.forceUpdate();
-				this.fireEventToMonitor(_nComponent.$.Event('columnSort', {
+				this.fireEventToMonitor($.Event('columnSort', {
 					target: this.me(),
 					ndata: {
 						column: column,
@@ -8869,7 +9105,7 @@
 			return _ret = (_temp = (_this11 = _possibleConstructorReturn(this, (_ref = NTable.__proto__ || Object.getPrototypeOf(NTable)).call.apply(_ref, [this].concat(args))), _this11), _this11.onHeaderColumnSorting = function (evt) {
 				return _this11.refs.body.sortColumn(evt.nData.column, evt.nData.sortType);
 			}, _this11.onBodyColumnSorted = function (evt) {
-				_this11.fireEventToMonitor(_nComponent.$.Event('columnSort', {
+				_this11.fireEventToMonitor($.Event('columnSort', {
 					target: _this11.me(),
 					ndata: {
 						column: evt.ndata.column,
@@ -8877,7 +9113,7 @@
 					}
 				}));
 			}, _this11.onItemChanged = function (evt) {
-				_this11.fireEventToMonitor(_nComponent.$.Event('itemChange', {
+				_this11.fireEventToMonitor($.Event('itemChange', {
 					target: _this11.me(),
 					ndata: {
 						itemModel: evt.ndata.itemModel,
@@ -8942,15 +9178,15 @@
 		}, {
 			key: 'renderFooter',
 			value: function renderFooter() {
-				var className = (0, _nComponent.classnames)('n-table-footer', 'n-row', 'n-table-footer-' + this.getTableStyle());
-				return _nComponent.React.createElement('div', { className: className,
+				var className = (0, _classnames2.default)('n-table-footer', 'n-row', 'n-table-footer-' + this.getTableStyle());
+				return _react2.default.createElement('div', { className: className,
 					ref: 'footer' });
 			}
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), 'n-table-' + this.getTableStyle());
-				return _nComponent.React.createElement(
+				var className = (0, _classnames2.default)(this.getComponentStyle(), 'n-table-' + this.getTableStyle());
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -8990,15 +9226,15 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.TABLE_HEADER = { type: 'n-table-header', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TABLE_HEADER.type, function (options) {
-		return _nComponent.React.createElement(NTableHeader, options);
+		return _react2.default.createElement(NTableHeader, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.TABLE_BODY = { type: 'n-table-body', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TABLE_BODY.type, function (options) {
-		return _nComponent.React.createElement(NTableBody, options);
+		return _react2.default.createElement(NTableBody, options);
 	});
 	_nComponent.Envs.COMPONENT_TYPES.TABLE = { type: 'n-table', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TABLE.type, function (options) {
-		return _nComponent.React.createElement(NTable, options);
+		return _react2.default.createElement(NTable, options);
 	});
 
 	exports.NTable = NTable;
@@ -9030,11 +9266,31 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NTextArea = function (_NComponent) {
 		_inherits(NTextArea, _NComponent);
@@ -9088,7 +9344,7 @@
 		}, {
 			key: 'renderText',
 			value: function renderText() {
-				return _nComponent.React.createElement('textarea', { className: (0, _nComponent.classnames)('n-control', this.getTextRowsClassName()),
+				return _react2.default.createElement('textarea', { className: (0, _classnames2.default)('n-control', this.getTextRowsClassName()),
 					disabled: !this.isEnabled(),
 					placeholder: this.getPlaceholder(),
 					rows: this.getTextRows(),
@@ -9102,7 +9358,7 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
@@ -9119,7 +9375,7 @@
 		}, {
 			key: 'getComponent',
 			value: function getComponent() {
-				return (0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(this.refs.txt));
+				return $(_reactDom2.default.findDOMNode(this.refs.txt));
 			}
 			// style
 
@@ -9182,7 +9438,7 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.TEXTAREA = { type: 'n-text-area', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TEXTAREA.type, function (options) {
-		return _nComponent.React.createElement(NTextArea, options);
+		return _react2.default.createElement(NTextArea, options);
 	});
 
 	exports.NTextArea = NTextArea;
@@ -9214,11 +9470,31 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NText = function (_NAddonComponent) {
 		_inherits(NText, _NAddonComponent);
@@ -9283,7 +9559,7 @@
 			// lifecycle
 			value: function postDidUpdate() {
 				var value = this.getValueFromModel();
-				if (!(0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(this.refs.focusLine)).hasClass('focus')) {
+				if (!$(_reactDom2.default.findDOMNode(this.refs.focusLine)).hasClass('focus')) {
 					value = this.formatValue(value);
 				}
 				if (this.getComponentText() != value) {
@@ -9298,7 +9574,7 @@
 		}, {
 			key: 'renderText',
 			value: function renderText() {
-				return _nComponent.React.createElement('input', { type: this.getInputKind(),
+				return _react2.default.createElement('input', { type: this.getInputKind(),
 					className: 'n-control',
 					disabled: !this.isEnabled(),
 					placeholder: this.getPlaceholder(),
@@ -9312,10 +9588,10 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), {
 					'has-addon': this.hasAddon()
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
@@ -9355,7 +9631,7 @@
 		}, {
 			key: 'getComponent',
 			value: function getComponent() {
-				return (0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(this.refs.txt));
+				return $(_reactDom2.default.findDOMNode(this.refs.txt));
 			}
 			// style
 
@@ -9446,7 +9722,7 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.TEXT = { type: 'n-text', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TEXT.type, function (options) {
-		return _nComponent.React.createElement(NText, options);
+		return _react2.default.createElement(NText, options);
 	});
 
 	exports.NText = NText;
@@ -9478,15 +9754,39 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _lodash = __webpack_require__(8);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
 	var _nIcon = __webpack_require__(18);
 
 	var _nCheck = __webpack_require__(16);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NTree = function (_NCodeTableComponent) {
 		_inherits(NTree, _NCodeTableComponent);
@@ -9498,7 +9798,7 @@
 
 			_this.onItemClicked = function (evt) {
 				evt.preventDefault();
-				_this.toggleNodeExpand((0, _nComponent.$)(evt.target).closest('li'), evt);
+				_this.toggleNodeExpand($(evt.target).closest('li'), evt);
 			};
 
 			_this.onItemKeyDown = function (evt) {
@@ -9523,12 +9823,12 @@
 			};
 
 			_this.onMouseMoved = function (evt) {
-				var bg = (0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(_this.refs.background));
+				var bg = $(_reactDom2.default.findDOMNode(_this.refs.background));
 				var container = _this.$me();
 				var containerOffset = container.offset();
-				var top = evt.clientY + (0, _nComponent.$)(window).scrollTop() - containerOffset.top;
+				var top = evt.clientY + $(window).scrollTop() - containerOffset.top;
 				var found = container.find('.n-tree-node-text').toArray().some(function (dom) {
-					var text = (0, _nComponent.$)(dom);
+					var text = $(dom);
 					var offset = text.offset();
 					var textTop = offset.top - containerOffset.top;
 					if (textTop <= top && textTop + text.outerHeight() >= top) {
@@ -9549,7 +9849,7 @@
 			};
 
 			_this.onMouseLeft = function (evt) {
-				var bg = (0, _nComponent.$)(_nComponent.ReactDOM.findDOMNode(_this.refs.background));
+				var bg = $(_reactDom2.default.findDOMNode(_this.refs.background));
 				bg.css({
 					display: 'none'
 				});
@@ -9572,7 +9872,7 @@
 
 				this.state.expandStatus = [];
 				this.$me().find('li').each(function (index, dom) {
-					var node = (0, _nComponent.$)(dom);
+					var node = $(dom);
 					if (node.hasClass('n-tree-node-expanded')) {
 						_this2.state.expandStatus.push(node.attr('data-node-id'));
 					}
@@ -9627,7 +9927,7 @@
 						'jq.keydown': this.onItemKeyDown
 					}
 				});
-				return _nComponent.React.createElement(_nCheck.NCheck, { model: model,
+				return _react2.default.createElement(_nCheck.NCheck, { model: model,
 					layout: layout });
 			}
 		}, {
@@ -9636,7 +9936,7 @@
 				var _this4 = this;
 
 				if (this.hasChildren(parent)) {
-					return _nComponent.React.createElement(
+					return _react2.default.createElement(
 						'ul',
 						{ className: 'n-tree-node',
 							'data-node-level': nodeLevel },
@@ -9651,14 +9951,14 @@
 			value: function renderNode(item, itemIndex, parent, nodeLevel) {
 				var hasChildren = this.hasChildren(item);
 				var expanded = this.isNodeExpanded(nodeLevel, item.id);
-				var className = (0, _nComponent.classnames)({
+				var className = (0, _classnames2.default)({
 					'n-tree-node-branch': hasChildren,
 					'n-tree-node-leaf': !hasChildren,
 					'n-tree-node-expanded': expanded,
 					'n-tree-node-collapsed': !expanded
 				});
 				var checkable = this.isNodeCanCheck(item);
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'li',
 					{ className: className,
 						'data-node-id': item.id,
@@ -9666,7 +9966,7 @@
 						key: itemIndex },
 					this.renderNodeIcon(item, itemIndex, parent),
 					checkable ? this.renderNodeCheck(item, itemIndex, parent) : null,
-					_nComponent.React.createElement(
+					_react2.default.createElement(
 						'span',
 						{ className: 'n-tree-node-text',
 							tabIndex: '0',
@@ -9682,7 +9982,7 @@
 			value: function renderTopLevelNodes() {
 				var _this5 = this;
 
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'ul',
 					{ className: 'n-tree-node',
 						'data-node-level': '1' },
@@ -9700,7 +10000,7 @@
 					icon: this.getRootIcon(),
 					children: this.getCodeTable().items()
 				};
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'ul',
 					{ className: 'n-tree-node n-tree-node-root',
 						'data-node-level': '0' },
@@ -9717,17 +10017,17 @@
 					minWidth: this.getMinWidth(),
 					maxWidth: this.getMaxWidth()
 				};
-				var className = (0, _nComponent.classnames)(this.getComponentStyle(), {
+				var className = (0, _classnames2.default)(this.getComponentStyle(), {
 					'n-tree-nowrap': this.isNoWrap()
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						style: styles,
 						onMouseMove: this.onMouseMoved,
 						onMouseLeave: this.onMouseLeft,
 						ref: 'me' },
-					_nComponent.React.createElement('div', { className: 'n-tree-background',
+					_react2.default.createElement('div', { className: 'n-tree-background',
 						ref: 'background' }),
 					showRoot ? this.renderRoot() : this.renderTopLevelNodes()
 				);
@@ -9824,7 +10124,7 @@
 			value: function isNodeExpanded(nodeLevel, nodeId) {
 				if (typeof this.state.expandStatus === 'number') {
 					return nodeLevel <= this.state.expandStatus;
-				} else if (_nComponent.lodash.isArray(this.state.expandStatus)) {
+				} else if (_lodash2.default.isArray(this.state.expandStatus)) {
 					return this.state.expandStatus.indexOf(nodeId + '') != -1;
 				} else {
 					throw {
@@ -9871,11 +10171,11 @@
 						// if all directly children are checked, then the ancestor should be checked
 						// if checked is false, then all ancesstors should be unchecked
 						var node = _this6.$me().find('li').filter(function (index, dom) {
-							return (0, _nComponent.$)(dom).attr('data-node-id') == item.id;
+							return $(dom).attr('data-node-id') == item.id;
 						});
 						// find all children
 						node.find('li').each(function (index, dom) {
-							var id = (0, _nComponent.$)(dom).attr('data-node-id');
+							var id = $(dom).attr('data-node-id');
 							var itemChecked = _this6.isItemChecked({ id: id });
 							if (itemChecked != checked) {
 								ids.push(id);
@@ -9997,7 +10297,7 @@
 		}, {
 			key: 'shouldItemCheckChanged',
 			value: function shouldItemCheckChanged(items, checked) {
-				return this.fireEventToMonitor(_nComponent.$.Event('shouldItemCheckChange'), {
+				return this.fireEventToMonitor($.Event('shouldItemCheckChange'), {
 					target: this.me(),
 					ndata: {
 						items: items,
@@ -10008,7 +10308,7 @@
 		}, {
 			key: 'itemCheckChanged',
 			value: function itemCheckChanged(items, checked) {
-				this.fireEventToMonitor(_nComponent.$.Event('itemCheckChange', {
+				this.fireEventToMonitor($.Event('itemCheckChange', {
 					target: this.me(),
 					ndata: {
 						items: items,
@@ -10019,7 +10319,7 @@
 		}, {
 			key: 'nodeExpandChanged',
 			value: function nodeExpandChanged(node, expanded) {
-				this.fireEventToMonitor(_nComponent.$.Event(expanded ? 'nodeExpand' : 'nodeCollapse', {
+				this.fireEventToMonitor($.Event(expanded ? 'nodeExpand' : 'nodeCollapse', {
 					target: this.me(),
 					ndata: {
 						node: node
@@ -10055,7 +10355,7 @@
 				var _this8 = this;
 
 				this.$me().find('li').each(function (index, dom) {
-					var node = (0, _nComponent.$)(dom);
+					var node = $(dom);
 					var level = node.attr('data-node-level');
 					if (level <= nodeLevel) {
 						_this8.expandNode(node, animation);
@@ -10108,7 +10408,7 @@
 				var _this10 = this;
 
 				this.$me().find('li').each(function (index, dom) {
-					var node = (0, _nComponent.$)(dom);
+					var node = $(dom);
 					var level = node.attr('data-node-level');
 					if (level > nodeLevel) {
 						_this10.collapseNode(node, animation);
@@ -10178,7 +10478,7 @@
 		}, {
 			key: 'onItemSpaceKeyDown',
 			value: function onItemSpaceKeyDown(evt) {
-				var target = (0, _nComponent.$)(evt.target);
+				var target = $(evt.target);
 				var prev = target.prev();
 				if (target[0].tagName === 'SPAN' && prev.hasClass('n-check')) {
 					evt.preventDefault();
@@ -10191,12 +10491,12 @@
 		}, {
 			key: 'onItemLeftArrowKeyDown',
 			value: function onItemLeftArrowKeyDown(evt) {
-				var target = (0, _nComponent.$)(evt.target);
+				var target = $(evt.target);
 				var children = target.siblings('ul');
 				if (children.length > 0 && children.is(':visible')) {
 					// has children and expanded now
 					// collapse it
-					this.toggleNodeExpand((0, _nComponent.$)(evt.target).closest('li'), evt);
+					this.toggleNodeExpand($(evt.target).closest('li'), evt);
 				} else {
 					// focus parent node
 					var parentNode = target.closest('ul').parent();
@@ -10209,12 +10509,12 @@
 		}, {
 			key: 'onItemRightArrowKeyDown',
 			value: function onItemRightArrowKeyDown(evt) {
-				var target = (0, _nComponent.$)(evt.target);
+				var target = $(evt.target);
 				var children = target.siblings('ul');
 				if (children.length > 0 && !children.is(':visible')) {
 					// has children and collapsed now
 					// expand it
-					this.toggleNodeExpand((0, _nComponent.$)(evt.target).closest('li'), evt);
+					this.toggleNodeExpand($(evt.target).closest('li'), evt);
 				} else if (children.length > 0) {
 					evt.preventDefault();
 					// already expanded, focus the first child
@@ -10224,7 +10524,7 @@
 		}, {
 			key: 'onItemUpArrowKeyDown',
 			value: function onItemUpArrowKeyDown(evt) {
-				var target = (0, _nComponent.$)(evt.target);
+				var target = $(evt.target);
 				var node = target.closest('li');
 				var previousNode = node.prev();
 				if (previousNode.length === 0) {
@@ -10255,7 +10555,7 @@
 		}, {
 			key: 'onItemDownArrowKeyDown',
 			value: function onItemDownArrowKeyDown(evt) {
-				var target = (0, _nComponent.$)(evt.target);
+				var target = $(evt.target);
 				var children = target.siblings('ul');
 				if (children.length > 0 && children.is(':visible')) {
 					// has children and expanded now
@@ -10295,7 +10595,7 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.TREE = { type: 'n-tree', label: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TREE.type, function (options) {
-		return _nComponent.React.createElement(NTree, options);
+		return _react2.default.createElement(NTree, options);
 	});
 
 	exports.NTree = NTree;
@@ -10321,19 +10621,39 @@
 		if (key === "default" || key === "__esModule") return;
 		Object.defineProperty(exports, key, {
 			enumerable: true,
-			get: function () {
+			get: function get() {
 				return _nComponent[key];
 			}
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	var _nPanel = __webpack_require__(22);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NDialog = function (_NComponent) {
 		_inherits(NDialog, _NComponent);
@@ -10352,7 +10672,7 @@
 						type: _nComponent.Envs.COMPONENT_TYPES.PANEL
 					}
 				}, this.getContentLayout());
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: 'n-dialog-content' },
 					this.renderInternalComponent(layout)
@@ -10361,7 +10681,7 @@
 		}, {
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
@@ -10403,14 +10723,14 @@
 		_createClass(NDialogBackdrop, [{
 			key: 'render',
 			value: function render() {
-				var className = (0, _nComponent.classnames)('n-dialog-backdrop', {
+				var className = (0, _classnames2.default)('n-dialog-backdrop', {
 					'n-dialog-show': this.state.show
 				});
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: className,
 						ref: 'me' },
-					_nComponent.React.createElement(NDialog, _extends({}, this.props.dialogOptions, {
+					_react2.default.createElement(NDialog, _extends({}, this.props.dialogOptions, {
 						backdrop: this,
 						ref: 'dialog' }))
 				);
@@ -10431,7 +10751,7 @@
 		}, {
 			key: 'show',
 			value: function show() {
-				(0, _nComponent.$)('body').addClass('n-dialog-open-' + this.getDialogId());
+				$('body').addClass('n-dialog-open-' + this.getDialogId());
 				this.setState({ show: true });
 			}
 		}, {
@@ -10443,7 +10763,7 @@
 				_nComponent.Envs.transitionend({
 					target: this.$me(),
 					handler: function handler() {
-						(0, _nComponent.$)('body').removeClass('n-dialog-open-' + _this3.getDialogId());
+						$('body').removeClass('n-dialog-open-' + _this3.getDialogId());
 					}
 				});
 			}
@@ -10460,9 +10780,9 @@
 		_createClass(NDialogUtil, null, [{
 			key: 'createDialog',
 			value: function createDialog(options) {
-				var container = (0, _nComponent.$)('<div />');
-				var dialog = _nComponent.ReactDOM.render(_nComponent.React.createElement(NDialogBackdrop, { dialogOptions: options }), container[0]);
-				(0, _nComponent.$)('body').append(container);
+				var container = $('<div />');
+				var dialog = _reactDom2.default.render(_react2.default.createElement(NDialogBackdrop, { dialogOptions: options }), container[0]);
+				$('body').append(container);
 				return dialog;
 			}
 		}]);
@@ -10472,7 +10792,7 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.DIALOG = { type: 'n-dialog', label: true, error: true };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.DIALOG.type, function (options) {
-		return _nComponent.React.createElement(NDialog, options);
+		return _react2.default.createElement(NDialog, options);
 	});
 
 	exports.NDialog = NDialog;
@@ -10503,11 +10823,31 @@
 		});
 	});
 
+	var _react = __webpack_require__(12);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(13);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(14);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(15);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
 
 	var NForm = function (_NContainer) {
 		_inherits(NForm, _NContainer);
@@ -10521,7 +10861,7 @@
 		_createClass(NForm, [{
 			key: 'renderInNormal',
 			value: function renderInNormal() {
-				return _nComponent.React.createElement(
+				return _react2.default.createElement(
 					'div',
 					{ className: this.getComponentStyle(),
 						ref: 'me' },
@@ -10544,7 +10884,7 @@
 
 	_nComponent.Envs.COMPONENT_TYPES.FORM = { type: 'n-form', label: false, error: false };
 	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.FORM.type, function (options) {
-		return _nComponent.React.createElement(NForm, options);
+		return _react2.default.createElement(NForm, options);
 	});
 
 	exports.NForm = NForm;

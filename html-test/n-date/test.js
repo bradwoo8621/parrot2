@@ -1,7 +1,8 @@
-import * as SDK from '../../src/js/components/n-date'
-
-let {React, ReactDOM, Model, Layout, NDate, NDateCalendar, NTimeClock, NDateTimeCalendar, $, Envs, moment} = SDK;
-
+import $ from 'jquery'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import moment from 'moment'
+import {Model, Layout, NDate, NDateCalendar, NTimeClock, NDateTimeCalendar, Envs} from '../../src/js/components/n-date'
 
 $(function() {
 	let model = new Model({

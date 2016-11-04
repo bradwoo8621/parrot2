@@ -1,14 +1,7 @@
-import * as SDK from '../../src/js/components/n-tree'
-
-let {
-	React, 
-	ReactDOM, 
-	CodeTable, 
-	Model, 
-	Layout, 
-	NTree,
-	$, 
-	Envs} = SDK;
+import $ from 'jquery'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {CodeTable, Model, Layout, NTree, Envs} from '../../src/js/components/n-tree'
 
 $(function() {
 	let codes = new CodeTable({

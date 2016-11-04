@@ -1,9 +1,11 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import jQuery from 'jquery'
+import classnames from 'classnames'
+import lodash from 'lodash'
+let $ = jQuery;
+
 import {
-	React, 
-	ReactDOM, 
-	$, 
-	lodash,
-	classnames, 
 	Envs, 
 	Model, 
 	Layout,

@@ -1,7 +1,8 @@
-import * as SDK from '../../src/js/components/n-label'
+import $ from 'jquery'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Model, Layout, NLabel, Envs} from '../../src/js/components/n-label'
 import {NIcon, NStackIcon} from '../../src/js/components/n-icon'
-
-let {React, ReactDOM, Model, Layout, NLabel, $, Envs} = SDK;
 
 $(function() {
 	let model = new Model({

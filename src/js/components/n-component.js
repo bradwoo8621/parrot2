@@ -2,13 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
+import lodash from 'lodash'
+let $ = jQuery;
 
-import {Envs, lodash} from '../envs'
+import {Envs} from '../envs'
 import {Model} from '../model/model'
 import {Validator} from '../model/validation'
 import {Layout} from '../layout/layout'
 
-let $ = jQuery;
 
 class NWidget extends React.Component {
 	me() {
@@ -1263,12 +1264,6 @@ export * from '../model/validation'
 export * from '../layout/layout'
 export * from '../envs'
 export {
-	React,
-	ReactDOM,
-	jQuery,
-	$,
-	classnames,
-
 	NWidget,
 	NComponent,
 	NAddonComponent,

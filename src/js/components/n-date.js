@@ -1,9 +1,11 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import jQuery from 'jquery'
+import classnames from 'classnames'
+import lodash from 'lodash'
+let $ = jQuery;
+
 import {
-	React, 
-	ReactDOM, 
-	$, 
-	classnames, 
-	lodash, 
 	Envs, 
 	NComponent, 
 	NDropdownComponent} from './n-component'
@@ -1138,4 +1140,4 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.DATE_PICKER.type, function (options) {
 });
 
 export * from './n-component'
-export {NDateComponent, NDate, NDateCalendar, NTimeClock, NDateTimeCalendar, moment}
+export {NDateComponent, NDate, NDateCalendar, NTimeClock, NDateTimeCalendar}

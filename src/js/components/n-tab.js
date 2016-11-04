@@ -1,9 +1,10 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import jQuery from 'jquery'
+import classnames from 'classnames'
+let $ = jQuery;
+
 import {
-	React, 
-	ReactDOM, 
-	$, 
-	lodash, 
-	classnames, 
 	Envs, 
 	Model,
 	Layout, 
@@ -349,7 +350,8 @@ class NArrayTab extends NTabContainer(NHierarchyComponent) {
 							comp: {
 								type: Envs.COMPONENT_TYPES.LABEL,
 								textFromModel: false
-							}
+							},
+							pos: {width: 12}
 						}
 					}
 				}

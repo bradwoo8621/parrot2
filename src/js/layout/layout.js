@@ -1,4 +1,5 @@
-import {Envs, lodash} from '../envs'
+import lodash from 'lodash'
+import {Envs} from '../envs'
 
 class Layout {
 	static toStereo(props) {

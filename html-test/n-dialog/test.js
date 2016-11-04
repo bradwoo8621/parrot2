@@ -1,15 +1,10 @@
-import * as SDK from '../../src/js/components/n-dialog'
+import $ from 'jquery'
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+import {Model, Layout, NDialog, NDialogUtil, Envs} from '../../src/js/components/n-dialog'
 import {NText} from '../../src/js/components/n-text'
 import {NButton} from '../../src/js/components/n-button'
-
-let {React, 
-	 ReactDOM, 
-	 Model, 
-	 Layout, 
-	 NDialog,
-	 NDialogUtil,
-	 $, 
-	 Envs} = SDK;
 
 $(function() {
 	let model = new Model({

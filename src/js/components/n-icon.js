@@ -1,4 +1,10 @@
-import {React, ReactDOM, $, classnames, Envs, NComponent} from './n-component'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import jQuery from 'jquery'
+import classnames from 'classnames'
+let $ = jQuery;
+
+import {Envs, NComponent} from './n-component'
 
 let prefixFA = function(str) {
 	if (str) {

@@ -1,19 +1,9 @@
-import * as SDK from '../../src/js/components/n-panel'
+import $ from 'jquery'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {CodeTable, Model, Layout, NPanel, NPanelHeader, NPanelBody, NArrayPanel, Envs} from '../../src/js/components/n-panel'
 import {NIcon} from '../../src/js/components/n-icon'
 import {NCheck} from '../../src/js/components/n-check'
-
-let {
-	React, 
-	ReactDOM, 
-	CodeTable, 
-	Model, 
-	Layout, 
-	NPanel, 
-	NPanelHeader, 
-	NPanelBody, 
-	NArrayPanel,
-	$, 
-	Envs} = SDK;
 
 $(function() {
 	let model = new Model({
@@ -187,7 +177,7 @@ $(function() {
 				<NPanel model={model} layout={layout7}>
 					<NPanelHeader n-comp-style='danger'>
 						<span data-leading='1'>test</span>
-						<NIcon n-comp-icon='ban' n-evt-click={function() {console.log(this)}}/>
+						<NIcon n-id='ban' n-comp-icon='ban' n-evt-click={function() {console.log(this)}}/>
 					</NPanelHeader>
 					<NPanelBody n-comp-style='success'>
 						<span data-leading='1'>Body starting...</span>
