@@ -1,7 +1,10 @@
 import $ from 'jquery'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {CodeTable, Model, Layout, NRadio, NRadioButton, Envs} from '../../src/js/components/n-radio'
+import {CodeTable, Model} from '../../src/js/model/model'
+import {Layout} from '../../src/js/layout/layout'
+import {Envs} from '../../src/js/envs'
+import {NRadio, NRadioButton} from '../../src/js/components/n-radio'
 import {NButton} from '../../src/js/components/n-button'
 import {NIcon} from '../../src/js/components/n-icon'
 

@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
-
-import {Envs, NComponent} from './n-component'
+import {Envs} from '../envs'
+import {NComponent} from './n-component'
 
 let prefixFA = function(str) {
 	if (str) {
@@ -118,4 +118,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.STACK_ICON.type, function (options) {
 });
 
 export {NIcon, NStackIcon}
-export * from './n-component'

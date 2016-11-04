@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
-import {
-	Envs, 
-	Model, 
-	NComponent, 
-	NCodeTableComponent} from './n-component'
+import {Envs} from '../envs'
+import {Model} from '../model/model'
+import {NComponent, NCodeTableComponent} from './n-component'
 
 class NRadio extends NCodeTableComponent(NComponent) {
 	renderText(item) {
@@ -162,4 +160,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.RADIO_BUTTON.type, function (options) {
 });
 
 export {NRadio, NRadioButton}
-export * from './n-component'

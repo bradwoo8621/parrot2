@@ -4,13 +4,10 @@ import jQuery from 'jquery'
 import classnames from 'classnames'
 import lodash from 'lodash'
 let $ = jQuery;
-
-import {
-	Envs, 
-	Model, 
-	Layout,
-	NComponent, 
-	NCodeTableComponent} from './n-component'
+import {Envs} from '../envs'
+import {Model} from '../model/model'
+import {Layout} from '../layout/layout'
+import {NComponent, NCodeTableComponent} from './n-component'
 import {NIcon} from './n-icon'
 import {NCheck} from './n-check'
 
@@ -681,4 +678,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.TREE.type, function (options) {
 });
 
 export {NTree}
-export * from './n-component'

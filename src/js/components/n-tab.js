@@ -3,13 +3,10 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
-
-import {
-	Envs, 
-	Model,
-	Layout, 
-	NContainer,
-	NHierarchyComponent} from './n-component'
+import {Envs} from '../envs'
+import {Model} from '../model/model'
+import {Layout} from '../layout/layout'
+import {NContainer, NHierarchyComponent} from './n-component'
 
 const NTabContainer = (ParentClass) => class extends ParentClass {
 	getTabs() {
@@ -487,4 +484,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.ARRAY_TAB.type, function (options) {
 });
 
 export {NArrayTab, NTab, NTabHeader, NTabBody}
-export * from './n-component'

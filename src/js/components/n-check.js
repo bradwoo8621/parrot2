@@ -4,8 +4,9 @@ import jQuery from 'jquery'
 import classnames from 'classnames'
 import lodash from 'lodash'
 let $ = jQuery;
-
-import {Envs, Model, NComponent, NCodeTableComponent} from './n-component'
+import {Envs} from '../envs'
+import {Model} from '../model/model'
+import {NComponent, NCodeTableComponent} from './n-component'
 
 class NCheck extends NComponent {
 	renderText(label) {
@@ -209,4 +210,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.TOGGLE.type, function (options) {
 });
 
 export {NCheck, NArrayCheck, NToggle}
-export * from './n-component'

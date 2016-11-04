@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
-
-import {Envs, NComponent, NAddonComponent} from './n-component'
+import {Envs} from '../envs'
+import {NComponent, NAddonComponent} from './n-component'
 
 class NLabel extends NAddonComponent {
 	renderText() {
@@ -83,4 +83,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.LABEL.type, function (options) {
 });
 
 export {NLabel}
-export * from './n-component'

@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
-import {
-	Envs, 
-	Model,
-	NWidget, 
-	NComponent} from './n-component'
+import {Envs} from '../envs'
+import {Model} from '../model/model'
+import {NWidget, NComponent} from './n-component'
 import {NPanel} from './n-panel'
 
 class NDialog extends NComponent {
@@ -88,4 +86,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.DIALOG.type, function (options) {
 });
 
 export {NDialog, NDialogUtil}
-export * from './n-component'

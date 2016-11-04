@@ -3,12 +3,9 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
-
-import {
-	Envs, 
-	Layout, 
-	NCollapsibleContainer, 
-	NHierarchyComponent} from './n-component'
+import {Envs} from '../envs'
+import {Layout} from '../layout/layout'
+import {NCollapsibleContainer, NHierarchyComponent} from './n-component'
 
 class NPanelHeader extends NCollapsibleContainer {
 	renderInNormal() {
@@ -284,4 +281,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.ARRAY_PANEL.type, function (options) {
 });
 
 export {NArrayPanel, NPanel, NPanelHeader, NPanelBody}
-export * from './n-component'

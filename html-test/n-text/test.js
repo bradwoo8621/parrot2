@@ -1,7 +1,10 @@
 import $ from 'jquery'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Model, Layout, NText, Envs} from '../../src/js/components/n-text'
+import {Model} from '../../src/js/model/model'
+import {Layout} from '../../src/js/layout/layout'
+import {Envs} from '../../src/js/envs'
+import {NText} from '../../src/js/components/n-text'
 import {NIcon, NStackIcon} from '../../src/js/components/n-icon'
 import {NLabel} from '../../src/js/components/n-label'
 

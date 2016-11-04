@@ -4,12 +4,9 @@ import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
 
-import {
-	Envs, 
-	NComponent, 
-	NDropdownComponent,
-	NContainer,
-	Layout} from './n-component'
+import {Envs} from '../envs'
+import {Layout} from '../layout/layout'
+import {NComponent, NDropdownComponent, NContainer} from './n-component'
 
 class NButton extends NDropdownComponent(NComponent) {
 	renderIcon(icon) {
@@ -187,4 +184,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.BUTTON_BAR.type, function (options) {
 });
 
 export {NButton, NButtonBar}
-export * from './n-component'

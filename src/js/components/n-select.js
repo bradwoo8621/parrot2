@@ -3,13 +3,9 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
-
-import {
-	Envs, 
-	Model, 
-	NComponent, 
-	NCodeTableComponent,
-	NDropdownComponent} from './n-component'
+import {Envs} from '../envs'
+import {Model} from '../model/model'
+import {NComponent, NCodeTableComponent, NDropdownComponent} from './n-component'
 import {NIcon} from './n-icon'
 import {NList} from './n-list'
 
@@ -223,4 +219,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.SELECT.type, function (options) {
 });
 
 export {NSelect}
-export * from './n-component'

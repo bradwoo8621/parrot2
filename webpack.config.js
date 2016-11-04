@@ -16,6 +16,7 @@ module.exports = {
 		// js
 		'nest-parrot2.js': './src/js/parrot.js',
 	},
+	target: 'node',
 	output: {
 		path: path.join(__dirname, 'dist'),
 		filename: '[name]'

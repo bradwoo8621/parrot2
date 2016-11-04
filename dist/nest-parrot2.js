@@ -50,7 +50,55 @@
 	  value: true
 	});
 
-	var _nButton = __webpack_require__(4);
+	var _envs = __webpack_require__(4);
+
+	Object.keys(_envs).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _envs[key];
+	    }
+	  });
+	});
+
+	var _layout = __webpack_require__(6);
+
+	Object.keys(_layout).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _layout[key];
+	    }
+	  });
+	});
+
+	var _model = __webpack_require__(7);
+
+	Object.keys(_model).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _model[key];
+	    }
+	  });
+	});
+
+	var _validation = __webpack_require__(9);
+
+	Object.keys(_validation).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _validation[key];
+	    }
+	  });
+	});
+
+	var _nButton = __webpack_require__(10);
 
 	Object.keys(_nButton).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -254,37 +302,1795 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.NButtonBar = exports.NButton = undefined;
+	exports.Envs = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _nComponent = __webpack_require__(5);
+	var _lodash = __webpack_require__(5);
 
-	Object.keys(_nComponent).forEach(function (key) {
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Envs = function () {
+		function Envs() {
+			_classCallCheck(this, Envs);
+
+			this.props = {
+				cellWidth: 3,
+				cellColumns: 12,
+				labelPosition: 'top',
+				labelWidth: 4,
+				thousandsSeparator: ',',
+				numberPointer: '.',
+				numberFormatter: function numberFormatter(modelValue) {
+					if (modelValue || modelValue === 0) {
+						return ('' + modelValue).replace(/\./, envs.NUMBER_POINTER).replace(/\B(?=(\d{3})+(?!\d))/g, envs.THOUSANDS_SEPARATOR);
+					} else {
+						return '';
+					}
+				},
+				numberParser: function numberParser(displayText) {
+					if (displayText) {
+						return 1 * displayText.replace(new RegExp(envs.THOUSANDS_SEPARATOR.replace(/\./g, '\\\.'), 'g'), '').replace(new RegExp(envs.NUMBER_POINTER.replace(/\./g, '\\\.')), '.');
+					} else {
+						return null;
+					}
+				},
+				percentageFormatter: function percentageFormatter(modelValue) {
+					return modelValue || modelValue === 0 ? ('' + modelValue) * 100 : '';
+				},
+				percentageParser: function percentageParser(displayText) {
+					return displayText ? displayText / 100 : null;
+				},
+				textChangeDelay: 300,
+				dateValueFormat: 'YYYYMMDDHHmmss',
+				dateDisplayFormat: ['YYYY/MM/DD', 'YYYYMMDD'],
+				dateHeaderFormat: { year: 'YYYY', month: 'MMMM' },
+				timeDisplayFormat: 'HH:mm:ss',
+				timeHeaderFormat: 'A hh',
+				dateTimeDisplayFormat: 'YYYY/MM/DD HH:mm:ss',
+				yearStepWhenMonth: 5,
+				tabAddText: 'Add',
+				tabAddIcon: 'plus-square',
+				tabRemoveIcon: 'close',
+				tabNoItemText: 'No Item',
+				treeRootText: 'Root',
+				treeRootIcon: 'bars',
+				treeBranchIcon: 'folder-o',
+				treeLeafIcon: 'file-o',
+				treeMaxHeight: 300,
+				listMaxHeight: 300,
+				columnsOfGrid: 12,
+				dropdownMaxHeight: 300,
+				dropdownMinWidth: 300,
+				selectPlaceholder: 'Please Select...'
+			};
+			this.viewModeRenderers = {};
+			this.renderers = {};
+
+			this.COMPONENT_TYPES = {};
+
+			this.checkTransitionSupported();
+		}
+		// global variables
+
+
+		_createClass(Envs, [{
+			key: 'getRenderer',
+			value: function getRenderer(type) {
+				return this.renderers[type];
+			}
+		}, {
+			key: 'setRenderer',
+			value: function setRenderer(type, renderer) {
+				var originalRenderer = this.getRenderer(type);
+				this.renderers[type] = renderer;
+				if (originalRenderer) {
+					console.info('Component renderer for ' + type + ' was replaced.');
+				}
+			}
+			// external view mode renderer
+
+		}, {
+			key: 'getViewModeRenderer',
+			value: function getViewModeRenderer(type) {
+				return this.viewModeRenderers[type];
+			}
+		}, {
+			key: 'setViewModeRenderer',
+			value: function setViewModeRenderer(type, renderer) {
+				var originalRenderer = this.getViewModeRenderer(type);
+				this.viewModeRenderers[type] = renderer;
+				if (originalRenderer) {
+					console.info('External view mode renderer for ' + type + ' was replaced.');
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render(renderer, options) {
+				if (typeof renderer === 'string') {
+					return this.getRenderer(renderer).call(this, options);
+				} else {
+					return renderer.call(this, options);
+				}
+			}
+
+			// utils
+			// deep merge to a plain object from other plain objects
+			// argument 0: target object, will be modified. new {} created if it is null.
+			// arguments 1 ~ n: source objects, will not be modified. null or undefined objects are ignored.
+			// only recursive plain object will be deep merged
+			// if source value is an array, target value will be replaced anyway. and if element is
+			//		1. plain object: recursive clone and assign to target array
+			//		2. array: recursive clone and assign to target array
+			//		3. others: assign to target array directly
+			// if source value is a plain object, 
+			//		1. target value is a plain object: recursive deep merge
+			//		2. others: recursive clone and assign to target value
+			// if source value is other types, assign to target value directly
+
+		}, {
+			key: 'deepMergeTo',
+			value: function deepMergeTo() {
+				var _this = this;
+
+				if (arguments.length < 2) {
+					throw 'At least two argument.';
+				}
+				var target = arguments[0] ? arguments[0] : {};
+				if (!_lodash2.default.isPlainObject(target)) {
+					throw 'Target object must be a plain object.';
+				}
+				var sources = Array.prototype.slice.call(arguments, 1);
+				sources.forEach(function (source, sourceIndex) {
+					if (source == null) {
+						// ignore the null source object
+						return;
+					}
+					if (!_lodash2.default.isPlainObject(source)) {
+						throw 'Source object at index[' + (sourceIndex + 1) + '] must be a plain object.';
+					}
+					Object.keys(source).forEach(function (key) {
+						var sourceValue = source[key];
+						if (sourceValue == null) {
+							// ignore the null or undefined value
+							return;
+						}
+						if (_lodash2.default.isPlainObject(sourceValue)) {
+							// source value is a plain object
+							var targetValue = target[key];
+							if (!_lodash2.default.isPlainObject(targetValue)) {
+								// target value is not a plain object
+								// create new {} to be target value and copy from source value
+								target[key] = _this.deepMergeTo({}, sourceValue);
+							} else {
+								// target value is a plain object
+								_this.deepMergeTo(targetValue, sourceValue);
+							}
+						} else if (_lodash2.default.isArray(sourceValue)) {
+							// source value is an array
+							// replace target value anyway
+							target[key] = [];
+							sourceValue.forEach(function (value) {
+								if (_lodash2.default.isPlainObject(value)) {
+									target[key].push(_this.deepMergeTo({}, value));
+								} else if (_lodash2.default.isArray(value)) {
+									target[key].push(_this.deepMergeTo({}, { array: value }).array);
+								} else {
+									target[key].push(value);
+								}
+							});
+						} else {
+							// neither plain object nor array
+							// copy to target directly
+							target[key] = sourceValue;
+						}
+					});
+				});
+				return target;
+			}
+		}, {
+			key: 'checkTransitionSupported',
+			value: function checkTransitionSupported() {
+				if (typeof document === 'undefined') {
+					console.error('Make sure document object existed!');
+					return;
+				}
+				var TransitionEndEvent = {
+					transition: 'transitionend',
+					WebkitTransition: 'webkitTransitionEnd',
+					MozTransition: 'transitionend',
+					OTransition: 'oTransitionEnd otransitionend'
+				};
+				this.isTransitionSupported = false;
+				var el = document.createElement('parrot2');
+				for (var name in TransitionEndEvent) {
+					if (el.style[name] !== undefined) {
+						this.isTransitionSupported = true;
+						break;
+					}
+				}
+			}
+			// delegate for jquery transition end
+			// for those browsers which doesn't support transition, invoke handler immediately
+			// for those browsers which supports transition, add transitionend listener
+			// options format as below,
+			// {
+			//		target: jquery object
+			//		handler: event handler, pass target if transition not supported
+			//		repeat: use 'on' when repeat is true, otherwise use 'one'
+			// }
+
+		}, {
+			key: 'transitionend',
+			value: function transitionend(options) {
+				var target = options.target;
+				if (this.isTransitionSupported) {
+					if (options.repeat) {
+						options.target.on('transitionend', options.handler);
+					} else {
+						options.target.one('transitionend', options.handler);
+					}
+				} else {
+					options.handler.call(this, options.target);
+				}
+				return options.target;
+			}
+		}, {
+			key: 'CELL_WIDTH',
+			get: function get() {
+				return this.props.cellWidth;
+			},
+			set: function set(value) {
+				this.props.cellWidth = value;
+			}
+			// columns in a cell, default is 12
+
+		}, {
+			key: 'CELL_COLUMNS',
+			get: function get() {
+				return this.props.cellColumns;
+			},
+			set: function set(value) {
+				this.props.cellColumns = value;
+			}
+		}, {
+			key: 'LABEL_WIDTH',
+			get: function get() {
+				return this.props.labelWidth;
+			},
+			set: function set(value) {
+				this.props.labelWidth = value;
+			}
+		}, {
+			key: 'LABEL_POSITION',
+			get: function get() {
+				return this.props.labelPosition;
+			},
+			set: function set(value) {
+				this.props.labelPosition = value;
+			}
+		}, {
+			key: 'THOUSANDS_SEPARATOR',
+			get: function get() {
+				return this.props.thousandsSeparator;
+			},
+			set: function set(value) {
+				this.props.thousandsSeparator = value;
+			}
+		}, {
+			key: 'NUMBER_POINTER',
+			get: function get() {
+				return this.props.numberPointer;
+			},
+			set: function set(value) {
+				this.props.NUMBER_POINTER = value;
+			}
+		}, {
+			key: 'NUMBER_FORMATTER',
+			get: function get() {
+				return this.props.numberFormatter;
+			},
+			set: function set(value) {
+				this.props.numberFormatter = value;
+			}
+		}, {
+			key: 'NUMBER_PARSER',
+			get: function get() {
+				return this.props.numberParser;
+			},
+			set: function set(value) {
+				this.props.numberParser = value;
+			}
+		}, {
+			key: 'PERCENTAGE_FORMATTER',
+			get: function get() {
+				return this.props.percentageFormatter;
+			},
+			set: function set(value) {
+				this.props.PERCENTAGE_FORMATTER = value;
+			}
+		}, {
+			key: 'PERCENTAGE_PARSER',
+			get: function get() {
+				return this.props.percentageParser;
+			},
+			set: function set(value) {
+				this.props.percentageParser = value;
+			}
+		}, {
+			key: 'TEXT_CHANGE_DELAY',
+			get: function get() {
+				return this.props.textChangeDelay;
+			},
+			set: function set(value) {
+				this.props.textChangeDelay = value;
+			}
+		}, {
+			key: 'DATE_VALUE_FORMAT',
+			get: function get() {
+				return this.props.dateValueFormat;
+			},
+			set: function set(value) {
+				this.props.dateValueFormat = value;
+			}
+		}, {
+			key: 'DATE_DISPLAY_FORMAT',
+			get: function get() {
+				return this.props.dateDisplayFormat;
+			},
+			set: function set(value) {
+				this.props.dateDisplayFormat = value;
+			}
+		}, {
+			key: 'DATE_HEADER_FORMAT',
+			get: function get() {
+				return this.props.dateHeaderFormat;
+			},
+			set: function set(value) {
+				this.props.dateHeaderFormat = value;
+			}
+		}, {
+			key: 'YEAR_STEP_WHEN_MONTH',
+			get: function get() {
+				return this.props.yearStepWhenMonth;
+			},
+			set: function set(value) {
+				this.props.yearStepWhenMonth = value;
+			}
+		}, {
+			key: 'DATE_TIME_DISPLAY_FORMAT',
+			get: function get() {
+				return this.props.dateTimeDisplayFormat;
+			},
+			set: function set(value) {
+				this.props.dateTimeDisplayFormat = value;
+			}
+		}, {
+			key: 'TIME_DISPLAY_FORMAT',
+			get: function get() {
+				return this.props.timeDisplayFormat;
+			},
+			set: function set(value) {
+				this.props.timeDisplayFormat = value;
+			}
+		}, {
+			key: 'TIME_HEADER_FORMAT',
+			get: function get() {
+				return this.props.timeHeaderFormat;
+			},
+			set: function set(value) {
+				this.props.timeHeaderFormat = value;
+			}
+		}, {
+			key: 'TAB_ADD_TEXT',
+			get: function get() {
+				return this.props.tabAddText;
+			},
+			set: function set(value) {
+				this.props.tabAddText = value;
+			}
+		}, {
+			key: 'TAB_ADD_ICON',
+			get: function get() {
+				return this.props.tabAddIcon;
+			},
+			set: function set(value) {
+				this.props.tabAddIcon = value;
+			}
+		}, {
+			key: 'TAB_REMOVE_ICON',
+			get: function get() {
+				return this.props.tabRemoveIcon;
+			},
+			set: function set(value) {
+				this.props.tabRemoveIcon = value;
+			}
+		}, {
+			key: 'TAB_NO_ITEM_TEXT',
+			get: function get() {
+				return this.props.tabNoItemText;
+			},
+			set: function set(value) {
+				this.props.TAB_NO_ITEM_TEXT = value;
+			}
+		}, {
+			key: 'TREE_ROOT_TEXT',
+			get: function get() {
+				return this.props.treeRootText;
+			},
+			set: function set(value) {
+				this.props.treeRootText = value;
+			}
+		}, {
+			key: 'TREE_ROOT_ICON',
+			get: function get() {
+				return this.props.treeRootIcon;
+			},
+			set: function set(value) {
+				this.props.treeRootIcon = value;
+			}
+		}, {
+			key: 'TREE_BRANCH_ICON',
+			get: function get() {
+				return this.props.treeBranchIcon;
+			},
+			set: function set(value) {
+				this.props.treeBranchIcon = value;
+			}
+		}, {
+			key: 'TREE_LEAF_ICON',
+			get: function get() {
+				return this.props.treeLeafIcon;
+			},
+			set: function set(value) {
+				this.props.treeLeafIcon = value;
+			}
+		}, {
+			key: 'TREE_MAX_HEIGHT',
+			get: function get() {
+				return this.props.treeMaxHeight;
+			},
+			set: function set(value) {
+				this.props.treeMaxHeight = value;
+			}
+		}, {
+			key: 'LIST_MAX_HEIGHT',
+			get: function get() {
+				return this.props.listMaxHeight;
+			},
+			set: function set(value) {
+				this.props.listMaxHeight = value;
+			}
+		}, {
+			key: 'COLUMNS_OF_GRID',
+			get: function get() {
+				return this.props.columnsOfGrid;
+			},
+			set: function set(value) {
+				this.props.columnsOfGrid = value;
+			}
+		}, {
+			key: 'DROPDOWN_MAX_HEIGHT',
+			get: function get() {
+				return this.props.dropdownMaxHeight;
+			},
+			set: function set(value) {
+				this.props.dropdownMaxHeight = value;
+			}
+		}, {
+			key: 'DROPDOWN_MIN_WIDTH',
+			get: function get() {
+				return this.props.dropdownMinWidth;
+			},
+			set: function set(value) {
+				this.props.dropdownMinWidth = value;
+			}
+		}, {
+			key: 'SELECT_PLACEHOLDER',
+			get: function get() {
+				return this.props.selectPlaceholder;
+			},
+			set: function set(value) {
+				this.props.selectPlaceholder = value;
+			}
+		}]);
+
+		return Envs;
+	}();
+
+	// // there is no global object to carry the global constants variables
+	// // have to use window in browser or global in nodejs env
+	// // to carry the global constants
+	// // the global namespace is $pt
+	// // and import namespace is {Envs}
+	// // the above two are exactly same object
+	// let $pt;
+	// if (typeof window !== 'undefined') {
+	// 	$pt = window.$pt;
+	// } else if (typeof global !== 'undefined') {
+	// 	$pt = global.$pt;
+	// }
+	// // console.log('abc');
+	// // console.log($pt);
+
+	// if (typeof $pt === 'undefined' || $pt == null) {
+	// 	$pt = new Envs();
+	// 	if (typeof window !== 'undefined') {
+	// 		window.$pt = $pt;
+	// 	} else if (typeof global !== 'undefined') {
+	// 		global.$pt = $pt;
+	// 	}
+	// }
+
+	Envs.DEFAULT_COLUMN_INDEX = 9999;
+	Envs.DEFAULT_ROW_INDEX = 9999;
+	var envs = new Envs();
+
+	exports.Envs = envs;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	module.exports = _;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Layout = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _lodash = __webpack_require__(5);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _envs = __webpack_require__(4);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Layout = function () {
+		_createClass(Layout, null, [{
+			key: 'toStereo',
+			value: function toStereo(props) {
+				var layout = {};
+				if (!props) {
+					return layout;
+				}
+
+				Object.keys(props).filter(function (key) {
+					return key.startsWith('n-');
+				}).forEach(function (key) {
+					var keys = key.substr(2).split('-');
+					var count = keys.length - 1;
+					keys.reduce(function (object, keySegment, index) {
+						if (index === count) {
+							// last one
+							object[keySegment] = props[key];
+						} else {
+							var val = object[keySegment];
+							object[keySegment] = typeof val === 'undefined' || val == null ? {} : val;
+						}
+						return object[keySegment];
+					}, layout);
+				});
+				return layout;
+			}
+		}, {
+			key: 'buildLayoutByProps',
+			value: function buildLayoutByProps(props) {
+				return new Layout(props['n-id'], {}).mergeLayoutFromProps(props);
+			}
+
+			// id: string
+			// layout: JSON
+
+		}]);
+
+		function Layout(id, layout) {
+			_classCallCheck(this, Layout);
+
+			this.id = id;
+			this.layout = layout ? layout : {};
+			this.initialLayout = layout;
+		}
+
+		_createClass(Layout, [{
+			key: 'mergeLayoutFromProps',
+			value: function mergeLayoutFromProps(props) {
+				var fromProps = Layout.toStereo(props);
+				if (Object.keys(fromProps).length != 0) {
+					this.layout = _envs.Envs.deepMergeTo({}, this.initialLayout, fromProps);
+				}
+				return this;
+			}
+		}, {
+			key: 'getType',
+			value: function getType() {
+				var type = this.getOptionValue('type');
+				if (type) {
+					return this.buildDefaultType(type);
+				} else {
+					return this.buildDefaultType();
+				}
+			}
+		}, {
+			key: 'getTypeAsString',
+			value: function getTypeAsString() {
+				return this.getType().type;
+			}
+		}, {
+			key: 'buildDefaultType',
+			value: function buildDefaultType(type) {
+				type = type ? type : 'n-text';
+				if (typeof type === 'string') {
+					return {
+						type: type,
+						label: false,
+						error: true
+					};
+				} else {
+					return _envs.Envs.deepMergeTo({
+						label: false,
+						error: true
+					}, type);
+				}
+			}
+		}, {
+			key: 'isLabelShown',
+			value: function isLabelShown() {
+				return this.getType().label;
+			}
+		}, {
+			key: 'isErrorShown',
+			value: function isErrorShown() {
+				return this.getType().error;
+			}
+		}, {
+			key: 'getId',
+			value: function getId() {
+				return this.id;
+			}
+		}, {
+			key: 'getDataId',
+			value: function getDataId() {
+				return this.layout.dataId;
+			}
+		}, {
+			key: 'getLabel',
+			value: function getLabel() {
+				return this.layout.label;
+			}
+		}, {
+			key: 'getWidth',
+			value: function getWidth() {
+				return this.getPosition().width;
+			}
+		}, {
+			key: 'getClear',
+			value: function getClear() {
+				return this.getPosition().clear;
+			}
+		}, {
+			key: 'getColumnIndex',
+			value: function getColumnIndex() {
+				return this.getPosition().col;
+			}
+		}, {
+			key: 'getRowIndex',
+			value: function getRowIndex() {
+				return this.getPosition().row;
+			}
+		}, {
+			key: 'getPosition',
+			value: function getPosition() {
+				var pos = this.layout.pos;
+				if (typeof pos === 'undefined' || pos == null) {
+					return this.getDefaultPosition();
+				} else {
+					return this.getDefaultPosition(pos.width, pos.col, pos.row, pos.clear);
+				}
+			}
+		}, {
+			key: 'getDefaultPosition',
+			value: function getDefaultPosition(width, columnIndex, rowIndex, clear) {
+				return {
+					width: width,
+					col: columnIndex ? columnIndex : 9999,
+					row: rowIndex ? rowIndex : 9999,
+					clear: clear
+				};
+			}
+		}, {
+			key: 'getStyles',
+			value: function getStyles() {
+				return this.layout.styles ? this.layout.styles : {};
+			}
+		}, {
+			key: 'getStyle',
+			value: function getStyle(key) {
+				return this.getStyles()[key];
+			}
+		}, {
+			key: 'getOptions',
+			value: function getOptions() {
+				return this.layout.comp ? this.layout.comp : {};
+			}
+		}, {
+			key: 'getOptionValue',
+			value: function getOptionValue(key) {
+				var options = this.getOptions();
+				if (options[key] != null && options.propertyIsEnumerable(key)) {
+					return this.getOptions()[key];
+				} else {
+					return null;
+				}
+			}
+		}, {
+			key: 'getAdditionalModel',
+			value: function getAdditionalModel() {
+				return this.getOptionValue('additionalModel');
+			}
+		}, {
+			key: 'getEventMonitors',
+			value: function getEventMonitors() {
+				return this.layout.evt ? this.layout.evt : {};
+			}
+		}, {
+			key: 'getEventMonitor',
+			value: function getEventMonitor(key) {
+				return this.getEventMonitors()[key];
+			}
+		}]);
+
+		return Layout;
+	}();
+
+	exports.Layout = Layout;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Model = undefined;
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _codetable = __webpack_require__(8);
+
+	Object.keys(_codetable).forEach(function (key) {
 		if (key === "default" || key === "__esModule") return;
 		Object.defineProperty(exports, key, {
 			enumerable: true,
 			get: function get() {
-				return _nComponent[key];
+				return _codetable[key];
 			}
 		});
 	});
 
-	var _react = __webpack_require__(12);
+	var _lodash = __webpack_require__(5);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _envs = __webpack_require__(4);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ListenerSupport = function () {
+		function ListenerSupport(id) {
+			_classCallCheck(this, ListenerSupport);
+
+			this.id = id;
+			this.listeners = [];
+		}
+
+		_createClass(ListenerSupport, [{
+			key: 'getId',
+			value: function getId() {
+				return this.id;
+			}
+		}, {
+			key: 'getListeners',
+			value: function getListeners() {
+				return this.listeners;
+			}
+		}, {
+			key: 'isMonitorAll',
+			value: function isMonitorAll() {
+				return this.id === '--all';
+			}
+		}, {
+			key: 'isRegExp',
+			value: function isRegExp() {
+				return this.id instanceof RegExp;
+			}
+		}, {
+			key: 'isConcerned',
+			value: function isConcerned(id) {
+				if (this.isMonitorAll()) {
+					return true;
+				} else if (this.isRegExp()) {
+					return this.getId().test(id);
+				} else {
+					return this.getId() == id;
+				}
+			}
+		}, {
+			key: 'addListener',
+			value: function addListener(listener) {
+				var listeners = this.getListeners();
+				if (listener && listeners.indexOf(listener) == -1) {
+					listeners.push(listener);
+				}
+				return this;
+			}
+		}, {
+			key: 'removeListener',
+			value: function removeListener(listener) {
+				if (listener) {
+					var listeners = this.getListeners();
+					var index = listeners.indexOf(listener);
+					if (index != -1) {
+						listeners.splice(index, 1);
+					}
+				}
+				return this;
+			}
+		}, {
+			key: 'fireEvent',
+			value: function fireEvent(evt) {
+				// copy it, since component maybe uninstall listener sometimes
+				this.getListeners().slice(0).forEach(function (listener) {
+					// use model as context
+					listener.call(evt.model, evt);
+				});
+			}
+		}]);
+
+		return ListenerSupport;
+	}();
+
+	var Model = function () {
+		function Model(initDataJSON, noBase) {
+			_classCallCheck(this, Model);
+
+			// initialize listeners
+			this.listeners = ['change', 'add', 'remove', 'validate'].reduce(function (listeners, type) {
+				listeners[type] = {
+					pre: [],
+					post: []
+				};
+				return listeners;
+			}, {});
+			this.baseModel = initDataJSON;
+			if (noBase === true) {
+				this.currentModel = this.baseModel;
+			} else {
+				this.currentModel = _lodash2.default.cloneDeep(initDataJSON);
+			}
+			this.changed = false;
+			this.undivided = true;
+		}
+
+		_createClass(Model, [{
+			key: 'getListenersByTimeAndType',
+			value: function getListenersByTimeAndType(time, type) {
+				return this.listeners[type][time];
+			}
+		}, {
+			key: 'getListenerSupport',
+			value: function getListenerSupport(id, time, type) {
+				var create = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
+
+				id = id ? id : '--all';
+				var listeners = this.getListenersByTimeAndType(time, type);
+				var support = listeners.find(function (listener) {
+					return listener.id.toString() == id.toString();
+				});
+				if (!support && create) {
+					support = new ListenerSupport(id);
+					listeners.push(support);
+				}
+				return support;
+			}
+		}, {
+			key: 'addListener',
+			value: function addListener() {
+				var id = arguments.length <= 0 || arguments[0] === undefined ? '--all' : arguments[0];
+				var listener = arguments[1];
+				var type = arguments.length <= 2 || arguments[2] === undefined ? 'change' : arguments[2];
+				var time = arguments.length <= 3 || arguments[3] === undefined ? 'post' : arguments[3];
+
+				if (listener) {
+					this.getListenerSupport(id, time, type, true).addListener(listener);
+				}
+				return this;
+			}
+		}, {
+			key: 'removeListener',
+			value: function removeListener() {
+				var id = arguments.length <= 0 || arguments[0] === undefined ? '--all' : arguments[0];
+				var listener = arguments[1];
+				var type = arguments.length <= 2 || arguments[2] === undefined ? 'change' : arguments[2];
+				var time = arguments.length <= 3 || arguments[3] === undefined ? 'post' : arguments[3];
+
+				if (listener) {
+					var support = this.getListenerSupport(id, time, type);
+					if (support) {
+						support.removeListener(listener);
+					}
+				}
+				return this;
+			}
+		}, {
+			key: 'getListeners',
+			value: function getListeners() {
+				var id = arguments.length <= 0 || arguments[0] === undefined ? '--all' : arguments[0];
+				var time = arguments.length <= 1 || arguments[1] === undefined ? 'post' : arguments[1];
+				var type = arguments.length <= 2 || arguments[2] === undefined ? 'change' : arguments[2];
+
+				var support = this.getListenerSupport(id, time, type);
+				return support ? support.getListeners() : [];
+			}
+		}, {
+			key: 'addPostChangeListener',
+			value: function addPostChangeListener(id, listener) {
+				return this.addListener(id, listener);
+			}
+		}, {
+			key: 'removePostChangeListener',
+			value: function removePostChangeListener(id, listener) {
+				return this.removeListener(id, listener);
+			}
+		}, {
+			key: 'addPostAddListener',
+			value: function addPostAddListener(id, listener) {
+				return this.addListener(id, listener, 'add');
+			}
+		}, {
+			key: 'removePostAddListener',
+			value: function removePostAddListener(id, listener) {
+				return this.removeListener(id, listener, 'add');
+			}
+		}, {
+			key: 'addPostRemoveListener',
+			value: function addPostRemoveListener(id, listener) {
+				return this.addListener(id, listener, 'remove');
+			}
+		}, {
+			key: 'removePostRemoveListener',
+			value: function removePostRemoveListener(id, listener) {
+				return this.removeListener(id, listener, 'remove');
+			}
+		}, {
+			key: 'addPostValidateListener',
+			value: function addPostValidateListener(id, listener) {
+				return this.addListener(id, listener, 'validate');
+			}
+		}, {
+			key: 'removePostValidateListener',
+			value: function removePostValidateListener(id, listener) {
+				return this.removeListener(id, listener, 'validate');
+			}
+		}, {
+			key: 'fireEvent',
+			value: function fireEvent(evt) {
+				var id = evt.id,
+				    type = evt.type,
+				    time = evt.time;
+				var listeners = this.getListenersByTimeAndType(time, type);
+				listeners.forEach(function (listener) {
+					if (listener.isConcerned(id)) {
+						listener.fireEvent(evt);
+					}
+				});
+				return this;
+			}
+		}, {
+			key: 'firePostChangeEvent',
+			value: function firePostChangeEvent(id, oldValue, newValue, index) {
+				return this.fireEvent({
+					id: id,
+					old: oldValue,
+					new: newValue,
+					index: index,
+					type: 'change',
+					time: 'post',
+					model: this
+				});
+			}
+		}, {
+			key: 'firePostAddEvent',
+			value: function firePostAddEvent(id, value, newItem, index) {
+				return this.fireEvent({
+					id: id,
+					value: value,
+					new: newItem,
+					index: index,
+					type: 'add',
+					time: 'post',
+					model: this
+				});
+			}
+		}, {
+			key: 'firePostRemoveEvent',
+			value: function firePostRemoveEvent(id, value, removedItem, index) {
+				return this.fireEvent({
+					id: id,
+					value: value,
+					removed: removedItem,
+					index: index,
+					type: 'remove',
+					time: 'post',
+					model: this
+				});
+			}
+		}, {
+			key: 'firePostValidateEvent',
+			value: function firePostValidateEvent(id, value, error) {
+				return this.fireEvent({
+					id: id,
+					value: value,
+					error: error,
+					type: 'validate',
+					time: 'post',
+					model: this
+				});
+			}
+		}, {
+			key: 'getBaseModel',
+			value: function getBaseModel() {
+				return this.baseModel;
+			}
+		}, {
+			key: 'getCurrentModel',
+			value: function getCurrentModel() {
+				return this.currentModel;
+			}
+		}, {
+			key: 'get',
+			value: function get(id) {
+				return this.getFromJSON(id, this.getCurrentModel());
+			}
+		}, {
+			key: 'getFromJSON',
+			value: function getFromJSON(id, json) {
+				var ids = id.split('.');
+				var count = ids.length - 1;
+				return ids.reduce(function (object, id, index) {
+					var value = object[id];
+					return index === count ? value : typeof value === 'undefined' || value == null ? {} : value;
+				}, json);
+			}
+		}, {
+			key: 'set',
+			value: function set(id, value) {
+				var old = this.get(id);
+				if ((typeof old === 'undefined' ? 'undefined' : _typeof(old)) === (typeof value === 'undefined' ? 'undefined' : _typeof(value)) && old == value) {
+					// do nothing
+					return;
+				}
+				this.setIntoJSON(id, value, this.getCurrentModel());
+				this.setChanged(true);
+				this.firePostChangeEvent(id, old, value);
+				return this;
+			}
+		}, {
+			key: 'add',
+			value: function add(id, value, valueIndex) {
+				var values = this.get(id);
+				if (values == null) {
+					values = [];
+					values.push(value);
+					this.setIntoJSON(id, values, this.getCurrentModel());
+					this.setChanged(true);
+					this.firePostAddEvent(id, values, value, 0);
+				} else {
+					var index = values.findIndex(function (elm) {
+						return elm == value;
+					});
+					if (index == -1) {
+						// not found, add to given value index
+						valueIndex = valueIndex == null ? values.length : valueIndex;
+						valueIndex = valueIndex > values.length ? values.length : valueIndex;
+						values.splice(valueIndex, 0, value);
+						this.setChanged(true);
+						this.firePostAddEvent(id, values, value, valueIndex);
+					}
+				}
+				return this;
+			}
+		}, {
+			key: 'remove',
+			value: function remove(id, value) {
+				var values = this.get(id);
+				if (values == null || values.length == 0) {
+					// do nothing
+				} else {
+					var index = values.findIndex(function (elm) {
+						return elm == value;
+					});
+					if (index != -1) {
+						values.splice(index, 1);
+						this.setChanged(true);
+						this.firePostRemoveEvent(id, values, value, index);
+					}
+				}
+			}
+		}, {
+			key: 'update',
+			value: function update(id, oldValue, newValue) {
+				var values = this.get(id);
+				if (values == null || values.length == 0) {
+					// do nothing
+				} else {
+					var index = values.findIndex(function (elm) {
+						return elm == oldValue;
+					});
+					if (index != -1) {
+						values.splice(index, 1, newValue);
+						this.setChanged(true);
+						this.firePostChangeEvent(id, oldValue, newValue, index);
+					}
+				}
+			}
+		}, {
+			key: 'setIntoJSON',
+			value: function setIntoJSON(id, value, json) {
+				var ids = id.split('.');
+				var count = ids.length - 1;
+				ids.reduce(function (object, id, index) {
+					if (index === count) {
+						// last one
+						object[id] = value;
+						return value;
+					} else {
+						var val = object[id];
+						object[id] = typeof val === 'undefined' || val == null ? {} : val;
+						return object[id];
+					}
+				}, json);
+				return this;
+			}
+		}, {
+			key: 'isChanged',
+			value: function isChanged() {
+				return this.changed;
+			}
+		}, {
+			key: 'setChanged',
+			value: function setChanged(changed) {
+				this.changed = changed;
+			}
+		}, {
+			key: 'setParent',
+			value: function setParent(parent) {
+				this.parent = parent;
+				return this;
+			}
+		}, {
+			key: 'getParent',
+			value: function getParent() {
+				return this.parent;
+			}
+		}, {
+			key: 'setValidator',
+			value: function setValidator(validator) {
+				this.validator = validator;
+				return this;
+			}
+		}, {
+			key: 'getValidator',
+			value: function getValidator() {
+				return this.validator;
+			}
+		}, {
+			key: 'validate',
+			value: function validate(dataId, perspective) {
+				var _this = this;
+
+				if (this.validator) {
+					(function () {
+						var validationResults = _this.getValidationResults();
+						var result = _this.validator.validate(_this, dataId, perspective);
+						if (dataId) {
+							// only validate given data id
+							validationResults[dataId] = result[dataId];
+							_this.firePostValidateEvent(dataId, _this.get(dataId), validationResults[dataId]);
+						} else {
+							(function () {
+								// validate all, replace old
+								var old = _this.validationResults;
+								_this.validationResults = result;
+								var fired = {};
+								Object.keys(result).forEach(function (dataId) {
+									fired[dataId] = true;
+									_this.firePostValidateEvent(dataId, _this.get(dataId), result[dataId]);
+								});
+								Object.keys(old).forEach(function (dataId) {
+									if (!fired[dataId]) {
+										_this.firePostValidateEvent(dataId, _this.get(dataId), null);
+									}
+								});
+							})();
+						}
+					})();
+				}
+				return this;
+			}
+		}, {
+			key: 'getValidationResults',
+			value: function getValidationResults(dataId) {
+				if (this.validationResults == null) {
+					this.validationResults = {};
+				}
+				return dataId ? this.validationResults[dataId] : this.validationResults;
+			}
+		}, {
+			key: 'replaceValidationResults',
+			value: function replaceValidationResults(results) {
+				this.validationResults = results;
+			}
+		}]);
+
+		return Model;
+	}();
+
+	Model.ALL = '--all';
+	exports.Model = Model;
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var CodeTable = function () {
+		function CodeTable(options) {
+			var _this = this;
+
+			_classCallCheck(this, CodeTable);
+
+			this.array = options.items ? options.items : [];
+			this.sorter = options.sorter;
+			this.renderer = options.renderer;
+			this.tiler = options.tiler;
+
+			this.mapping = {};
+			this.array.map(function (item) {
+				var renderer = _this.getRenderer();
+				return renderer ? renderer.call(_this, item) : item;
+			}).sort(function (item1, item2) {
+				var sorter = _this.getSorter();
+				return sorter ? sorter.call(_this, item1, item2) : 0;
+			}).forEach(function (item) {
+				_this.getTiler().call(_this, item, _this.mapping);
+			});
+		}
+
+		_createClass(CodeTable, [{
+			key: 'getTiler',
+			value: function getTiler() {
+				if (!this.tiler) {
+					this.tiler = function (item, map) {
+						var _this2 = this;
+
+						map[item.id] = item;
+						if (item.children && item.children.length != 0) {
+							item.children.forEach(function (child) {
+								_this2.getTiler().call(_this2, child, map);
+							});
+						}
+					};
+				}
+				return this.tiler;
+			}
+		}, {
+			key: 'getSorter',
+			value: function getSorter() {
+				return this.sorter;
+			}
+		}, {
+			key: 'getRenderer',
+			value: function getRenderer() {
+				return this.renderer;
+			}
+		}, {
+			key: 'getItem',
+			value: function getItem(id) {
+				return this.mapping[id];
+			}
+		}, {
+			key: 'getText',
+			value: function getText(id) {
+				return this.mapping[id] ? this.mapping[id].text : null;
+			}
+		}, {
+			key: 'map',
+			value: function map(func) {
+				if (typeof func === 'undefined') {
+					return this.mapping;
+				} else {
+					return this.array.map(func);
+				}
+			}
+		}, {
+			key: 'forEach',
+			value: function forEach(func) {
+				return this.array.forEach(func);
+			}
+		}, {
+			key: 'filter',
+			value: function filter(func) {
+				return this.array.filter(func);
+			}
+		}, {
+			key: 'items',
+			value: function items() {
+				return this.array;
+			}
+		}, {
+			key: 'isReady',
+			value: function isReady() {
+				return true;
+			}
+		}, {
+			key: 'ready',
+			value: function ready() {
+				return true;
+			}
+		}]);
+
+		return CodeTable;
+	}();
+
+	exports.CodeTable = CodeTable;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.ValidationMessages = exports.GlobalValidationRules = exports.Validator = undefined;
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _envs = __webpack_require__(4);
+
+	var _model = __webpack_require__(7);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ValidationMessages = function () {
+		function ValidationMessages() {
+			_classCallCheck(this, ValidationMessages);
+
+			this.messages = {};
+			this.install({
+				'required': '%1 is required.',
+				'minlen': 'Length of %1 should be at least %2 character(s).',
+				'min': 'Value of %1 should be at least %2.',
+				'minsize': 'There are at least %2 item(s) for %1.',
+				'maxlen': 'Length of %1 should be at most %2 character(s).',
+				'max': 'Value of %1 should be at most %2.',
+				'maxsize': 'There are at most %2 item(s) for %1.',
+				'before': '%1 should be before %2.',
+				'after': '%1 should be after %2'
+			});
+		}
+
+		_createClass(ValidationMessages, [{
+			key: 'install',
+			value: function install(options) {
+				var locale = this.parseLocale(options.locale, 'en');
+				var msgsOfLocale = this.messages[locale];
+				if (msgsOfLocale == null) {
+					msgsOfLocale = {};
+					this.messages[locale] = msgsOfLocale;
+				}
+				Object.keys(options).filter(function (key) {
+					return key !== 'locale';
+				}).forEach(function (ruleName) {
+					var oldMsg = msgsOfLocale[ruleName];
+					msgsOfLocale[ruleName] = options[ruleName];
+					if (oldMsg) {
+						console.info('Message "' + oldMsg + '" of rule "' + ruleName + '" is replaced by ' + options[ruleName] + ' on locale "' + locale + '".');
+					}
+				});
+			}
+		}, {
+			key: 'get',
+			value: function get(ruleName, locale) {
+				locale = this.parseLocale(locale, this.getLocale());
+				var msgsOfLocale = this.messages[locale];
+				var message = null;
+				if (msgsOfLocale) {
+					message = msgsOfLocale[ruleName];
+				}
+				if (message) {
+					return message;
+				} else {
+					var parentLocale = this.parentOfLocale(locale);
+					if (parentLocale === locale) {
+						throw 'Message of "' + ruleName + '" not found in locale "' + locale + '" and its parents.';
+					} else {
+						return this.get(ruleName, parentLocale);
+					}
+				}
+			}
+		}, {
+			key: 'parseLocale',
+			value: function parseLocale(locale, defaultLocale) {
+				return locale ? locale.replace('-', '_').toLowerCase() : defaultLocale;
+			}
+		}, {
+			key: 'parentOfLocale',
+			value: function parentOfLocale(locale) {
+				var segments = locale.split('_');
+				if (segments.length === 1) {
+					return 'en';
+				} else {
+					segments.splice(segments.length - 1, 1);
+					return segments.join('_');
+				}
+			}
+		}, {
+			key: 'getLocale',
+			value: function getLocale() {
+				if (this.locale) {} else if (typeof navigator === 'undefined') {
+					this.locale = 'en';
+				} else {
+					this.locale = navigator.language || navigator.userLanguage;
+				}
+				return this.locale;
+			}
+		}, {
+			key: 'setLocale',
+			value: function setLocale(locale) {
+				if (locale) {
+					this.locale = this.parseLocale(locale);
+				} else {
+					this.locale = 'en';
+				}
+			}
+		}, {
+			key: 'convert',
+			value: function convert(ruleName, param, label) {
+				var message = this.get(ruleName);
+				if (label) {
+					message = message.replace('%1', label);
+				}
+				if (param) {
+					message = message.replace('%2', param);
+				}
+				return message;
+			}
+		}]);
+
+		return ValidationMessages;
+	}();
+
+	var messages = new ValidationMessages();
+
+	var isEmpty = function isEmpty(value) {
+		return value == null || (value + '').length === 0;
+	};
+	var GlobalValidationRules = {
+		required: function required(model, value, params, label) {
+			return isEmpty(value) ? messages.convert('required', params, label) : true;
+		},
+		minlen: function minlen(model, value, params, label) {
+			return isEmpty(value) ? true : (value + '').length < params ? messages.convert('minlen', params, label) : true;
+		},
+		maxlen: function maxlen(model, value, params, label) {
+			return isEmpty(value) ? true : (value + '').length > params ? messages.convert('maxlen', params, label) : true;
+		},
+		min: function min(model, value, params, label) {
+			return isEmpty(value) ? true : value * 1 < params ? messages.convert('min', params, label) : true;
+		},
+		max: function max(model, value, params, label) {
+			return isEmpty(value) ? true : value * 1 > params ? messages.convert('max', params, label) : true;
+		},
+		minsize: function minsize(model, value, params, label) {
+			return value == null || value.length === 0 ? true : value.length < params ? messages.convert('minsize', params, label) : true;
+		},
+		maxsize: function maxsize(model, value, params, label) {
+			return value == null || value.length === 0 ? true : value.length > params ? messages.convert('maxsize', params, label) : true;
+		},
+		before: function before(model, value, params, label) {
+			if (isEmpty(value)) {
+				return true;
+			}
+			return value > params ? messages.convert('before', params, label) : true;
+		},
+		after: function after(model, value, params, label) {
+			if (isEmpty(value)) {
+				return true;
+			}
+			return value < params ? messages.convert('after', params, label) : true;
+		},
+		child: function child(model, value, params, label, ruleRepository) {
+			if (value == null || value.length == 0) {
+				return true;
+			}
+			var itemValidator = new Validator(params, null, ruleRepository);
+			var results = value.map(function (item) {
+				var itemModel = new _model.Model(item, true);
+				var result = itemValidator.validate(itemModel);
+				return {
+					item: item,
+					result: result
+				};
+			}).filter(function (itemResult) {
+				return Object.keys(itemResult.result).length > 0;
+			});
+			return results.length === 0 ? true : results;
+		}
+	};
+
+	var Validator = function () {
+		function Validator(rules, perspective, ruleRepo) {
+			var _this = this;
+
+			_classCallCheck(this, Validator);
+
+			if (perspective) {
+				this.rules = rules ? rules : {};
+			} else {
+				this.rules = {};
+				this.rules['' + Validator.ALL] = rules;
+			}
+			// remove null properties
+			Object.keys(this.rules).forEach(function (key) {
+				if (_this.rules[key] === null) {
+					delete _this.rules[key];
+				}
+			});
+
+			this.ruleRepo = ruleRepo;
+		}
+
+		_createClass(Validator, [{
+			key: 'validate',
+			value: function validate(model, property, perspective) {
+				var _this2 = this;
+
+				var rules = this.getRules(perspective);
+				if (property) {
+					var propertyRule = {};
+					if (rules[property] != null) {
+						propertyRule[property] = rules[property];
+					}
+					rules = propertyRule;
+				}
+				return Object.keys(rules).map(function (propertyName) {
+					var value = model.get(propertyName);
+					var rulesOnProperty = rules[propertyName];
+					var label = rulesOnProperty.label;
+					// result is an array
+					var resultsOnProperty = Object.keys(rulesOnProperty).filter(function (ruleName) {
+						return ruleName !== 'label';
+					}).map(function (ruleName) {
+						var params = rulesOnProperty[ruleName];
+						var rule = _this2.unwrapRuleParams(ruleName, params);
+						return {
+							rule: ruleName,
+							message: rule.checker.call(_this2, model, value, rule.params, label, _this2.ruleRepo),
+							level: rule.level
+						};
+					}).filter(function (ruleResult) {
+						// filter the passed rule results
+						return ruleResult.message != null && ruleResult.message !== true;
+					});
+					return {
+						name: propertyName,
+						result: resultsOnProperty
+					};
+				}).filter(function (propResult) {
+					// filter which has no failed result
+					return propResult.result.length != 0;
+				}).reduce(function (prev, next) {
+					prev[next.name] = next.result;
+					return prev;
+				}, {});
+			}
+		}, {
+			key: 'unwrapRuleParams',
+			value: function unwrapRuleParams(name, params) {
+				var type = typeof params === 'undefined' ? 'undefined' : _typeof(params);
+				if (type === 'function') {
+					return {
+						checker: params,
+						level: params.level ? params.level : Validator.LEVEL_ERROR,
+						params: params.params ? params.params : null
+					};
+				} else if (type === 'object') {
+					return {
+						checker: this.findRuleFromRepo(name),
+						level: params.level ? params.level : Validator.LEVEL_ERROR,
+						params: params.params ? params.params : params
+					};
+				} else {
+					return {
+						checker: this.findRuleFromRepo(name),
+						level: Validator.LEVEL_ERROR,
+						params: params
+					};
+				}
+			}
+		}, {
+			key: 'getRules',
+			value: function getRules(perspective) {
+				var _this3 = this;
+
+				if (!perspective) {
+					perspective = this.getPerspective();
+				}
+				if (perspective) {
+					var ruleSet = this.rules[perspective];
+					return ruleSet == null ? {} : ruleSet;
+				} else {
+					var _ruleSet = Object.keys(this.rules).map(function (key) {
+						return _this3.rules[key];
+					});
+					if (_ruleSet.length === 0) {
+						return {};
+					} else {
+						return _envs.Envs.deepMergeTo.apply(_envs.Envs, [{}].concat(_ruleSet));
+					}
+				}
+			}
+		}, {
+			key: 'findRuleFromRepo',
+			value: function findRuleFromRepo(ruleName) {
+				var rule = null;
+				if (this.ruleRepo) {
+					rule = this.ruleRepo[ruleName];
+				}
+				if (rule == null) {
+					rule = GlobalValidationRules[ruleName];
+				}
+				if (rule == null) {
+					throw 'Rule ' + ruleName + ' not found, please define it when construct validator \t\t\t\t\tor into global validation rules repository';
+				}
+				return rule;
+			}
+		}, {
+			key: 'setPerspective',
+			value: function setPerspective(perspective) {
+				this.perspective = perspective;
+				var childValidators = this.getChildValidators();
+				Object.keys(childValidators).forEach(function (dataId) {
+					var validator = childValidators[dataId];
+					validator.setPerspective(perspective);
+				});
+				return this;
+			}
+		}, {
+			key: 'getPerspective',
+			value: function getPerspective() {
+				return this.perspective;
+			}
+		}, {
+			key: 'getChildValidators',
+			value: function getChildValidators() {
+				if (this.childValidators == null) {
+					this.childValidators = {};
+				}
+				return this.childValidators;
+			}
+		}, {
+			key: 'getChildValidator',
+			value: function getChildValidator(dataId) {
+				return this.getChildValidators()[dataId];
+			}
+		}, {
+			key: 'createChildValidator',
+			value: function createChildValidator(dataId) {
+				var _this4 = this;
+
+				var validator = this.getChildValidator(dataId);
+				if (!validator) {
+					var rules = Object.keys(this.rules).reduce(function (prev, next) {
+						var perspectiveRules = _this4.rules[next];
+						var propertyRules = perspectiveRules[dataId];
+						if (propertyRules) {
+							var childRules = propertyRules.child;
+							if (childRules) {
+								prev[next] = childRules;
+							}
+						}
+						return prev;
+					}, {});
+					validator = new Validator(rules, true, this.ruleRepo);
+					validator.setPerspective(this.getPerspective());
+					this.childValidators[dataId] = validator;
+				}
+				return validator;
+			}
+		}]);
+
+		return Validator;
+	}();
+
+	Validator.ALL = '--all';
+	Validator.CHILD = 'child';
+	Validator.LEVEL_ERROR = 1;
+	Validator.LEVEL_WARN = 2;
+	Validator.LEVEL_INFO = 3;
+	exports.Validator = Validator;
+	exports.GlobalValidationRules = GlobalValidationRules;
+	exports.ValidationMessages = messages;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.NButtonBar = exports.NButton = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _layout = __webpack_require__(6);
+
+	var _nComponent = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -503,7 +2309,7 @@
 						button.comp = {};
 					}
 					if (!button.comp.type) {
-						button.comp.type = _nComponent.Envs.COMPONENT_TYPES.BUTTON;
+						button.comp.type = _envs.Envs.COMPONENT_TYPES.BUTTON;
 					}
 					if (!button.styles) {
 						button.styles = {};
@@ -546,12 +2352,12 @@
 		return NButtonBar;
 	}(_nComponent.NContainer);
 
-	_nComponent.Envs.COMPONENT_TYPES.BUTTON = { type: 'n-button', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.BUTTON.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.BUTTON = { type: 'n-button', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.BUTTON.type, function (options) {
 		return _react2.default.createElement(NButton, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.BUTTON_BAR = { type: 'n-button-bar', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.BUTTON_BAR.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.BUTTON_BAR = { type: 'n-button-bar', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.BUTTON_BAR.type, function (options) {
 		return _react2.default.createElement(NButtonBar, options);
 	});
 
@@ -559,7 +2365,31 @@
 	exports.NButtonBar = NButtonBar;
 
 /***/ },
-/* 5 */
+/* 11 */
+/***/ function(module, exports) {
+
+	module.exports = React;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	module.exports = ReactDOM;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	module.exports = jQuery;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = classNames;
+
+/***/ },
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -575,73 +2405,33 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _model = __webpack_require__(6);
-
-	Object.keys(_model).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _model[key];
-			}
-		});
-	});
-
-	var _validation = __webpack_require__(10);
-
-	Object.keys(_validation).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _validation[key];
-			}
-		});
-	});
-
-	var _layout = __webpack_require__(11);
-
-	Object.keys(_layout).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _layout[key];
-			}
-		});
-	});
-
-	var _envs = __webpack_require__(9);
-
-	Object.keys(_envs).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _envs[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _lodash = __webpack_require__(8);
+	var _lodash = __webpack_require__(5);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _envs = __webpack_require__(4);
+
+	var _model = __webpack_require__(7);
+
+	var _validation = __webpack_require__(9);
+
+	var _layout = __webpack_require__(6);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2329,1794 +4119,6 @@
 	exports.NHierarchyComponent = NHierarchyComponent;
 
 /***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.Model = undefined;
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _codetable = __webpack_require__(7);
-
-	Object.keys(_codetable).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _codetable[key];
-			}
-		});
-	});
-
-	var _lodash = __webpack_require__(8);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	var _envs = __webpack_require__(9);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var ListenerSupport = function () {
-		function ListenerSupport(id) {
-			_classCallCheck(this, ListenerSupport);
-
-			this.id = id;
-			this.listeners = [];
-		}
-
-		_createClass(ListenerSupport, [{
-			key: 'getId',
-			value: function getId() {
-				return this.id;
-			}
-		}, {
-			key: 'getListeners',
-			value: function getListeners() {
-				return this.listeners;
-			}
-		}, {
-			key: 'isMonitorAll',
-			value: function isMonitorAll() {
-				return this.id === '--all';
-			}
-		}, {
-			key: 'isRegExp',
-			value: function isRegExp() {
-				return this.id instanceof RegExp;
-			}
-		}, {
-			key: 'isConcerned',
-			value: function isConcerned(id) {
-				if (this.isMonitorAll()) {
-					return true;
-				} else if (this.isRegExp()) {
-					return this.getId().test(id);
-				} else {
-					return this.getId() == id;
-				}
-			}
-		}, {
-			key: 'addListener',
-			value: function addListener(listener) {
-				var listeners = this.getListeners();
-				if (listener && listeners.indexOf(listener) == -1) {
-					listeners.push(listener);
-				}
-				return this;
-			}
-		}, {
-			key: 'removeListener',
-			value: function removeListener(listener) {
-				if (listener) {
-					var listeners = this.getListeners();
-					var index = listeners.indexOf(listener);
-					if (index != -1) {
-						listeners.splice(index, 1);
-					}
-				}
-				return this;
-			}
-		}, {
-			key: 'fireEvent',
-			value: function fireEvent(evt) {
-				// copy it, since component maybe uninstall listener sometimes
-				this.getListeners().slice(0).forEach(function (listener) {
-					// use model as context
-					listener.call(evt.model, evt);
-				});
-			}
-		}]);
-
-		return ListenerSupport;
-	}();
-
-	var Model = function () {
-		function Model(initDataJSON, noBase) {
-			_classCallCheck(this, Model);
-
-			// initialize listeners
-			this.listeners = ['change', 'add', 'remove', 'validate'].reduce(function (listeners, type) {
-				listeners[type] = {
-					pre: [],
-					post: []
-				};
-				return listeners;
-			}, {});
-			this.baseModel = initDataJSON;
-			if (noBase === true) {
-				this.currentModel = this.baseModel;
-			} else {
-				this.currentModel = _lodash2.default.cloneDeep(initDataJSON);
-			}
-			this.changed = false;
-			this.undivided = true;
-		}
-
-		_createClass(Model, [{
-			key: 'getListenersByTimeAndType',
-			value: function getListenersByTimeAndType(time, type) {
-				return this.listeners[type][time];
-			}
-		}, {
-			key: 'getListenerSupport',
-			value: function getListenerSupport(id, time, type) {
-				var create = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
-
-				id = id ? id : '--all';
-				var listeners = this.getListenersByTimeAndType(time, type);
-				var support = listeners.find(function (listener) {
-					return listener.id.toString() == id.toString();
-				});
-				if (!support && create) {
-					support = new ListenerSupport(id);
-					listeners.push(support);
-				}
-				return support;
-			}
-		}, {
-			key: 'addListener',
-			value: function addListener() {
-				var id = arguments.length <= 0 || arguments[0] === undefined ? '--all' : arguments[0];
-				var listener = arguments[1];
-				var type = arguments.length <= 2 || arguments[2] === undefined ? 'change' : arguments[2];
-				var time = arguments.length <= 3 || arguments[3] === undefined ? 'post' : arguments[3];
-
-				if (listener) {
-					this.getListenerSupport(id, time, type, true).addListener(listener);
-				}
-				return this;
-			}
-		}, {
-			key: 'removeListener',
-			value: function removeListener() {
-				var id = arguments.length <= 0 || arguments[0] === undefined ? '--all' : arguments[0];
-				var listener = arguments[1];
-				var type = arguments.length <= 2 || arguments[2] === undefined ? 'change' : arguments[2];
-				var time = arguments.length <= 3 || arguments[3] === undefined ? 'post' : arguments[3];
-
-				if (listener) {
-					var support = this.getListenerSupport(id, time, type);
-					if (support) {
-						support.removeListener(listener);
-					}
-				}
-				return this;
-			}
-		}, {
-			key: 'getListeners',
-			value: function getListeners() {
-				var id = arguments.length <= 0 || arguments[0] === undefined ? '--all' : arguments[0];
-				var time = arguments.length <= 1 || arguments[1] === undefined ? 'post' : arguments[1];
-				var type = arguments.length <= 2 || arguments[2] === undefined ? 'change' : arguments[2];
-
-				var support = this.getListenerSupport(id, time, type);
-				return support ? support.getListeners() : [];
-			}
-		}, {
-			key: 'addPostChangeListener',
-			value: function addPostChangeListener(id, listener) {
-				return this.addListener(id, listener);
-			}
-		}, {
-			key: 'removePostChangeListener',
-			value: function removePostChangeListener(id, listener) {
-				return this.removeListener(id, listener);
-			}
-		}, {
-			key: 'addPostAddListener',
-			value: function addPostAddListener(id, listener) {
-				return this.addListener(id, listener, 'add');
-			}
-		}, {
-			key: 'removePostAddListener',
-			value: function removePostAddListener(id, listener) {
-				return this.removeListener(id, listener, 'add');
-			}
-		}, {
-			key: 'addPostRemoveListener',
-			value: function addPostRemoveListener(id, listener) {
-				return this.addListener(id, listener, 'remove');
-			}
-		}, {
-			key: 'removePostRemoveListener',
-			value: function removePostRemoveListener(id, listener) {
-				return this.removeListener(id, listener, 'remove');
-			}
-		}, {
-			key: 'addPostValidateListener',
-			value: function addPostValidateListener(id, listener) {
-				return this.addListener(id, listener, 'validate');
-			}
-		}, {
-			key: 'removePostValidateListener',
-			value: function removePostValidateListener(id, listener) {
-				return this.removeListener(id, listener, 'validate');
-			}
-		}, {
-			key: 'fireEvent',
-			value: function fireEvent(evt) {
-				var id = evt.id,
-				    type = evt.type,
-				    time = evt.time;
-				var listeners = this.getListenersByTimeAndType(time, type);
-				listeners.forEach(function (listener) {
-					if (listener.isConcerned(id)) {
-						listener.fireEvent(evt);
-					}
-				});
-				return this;
-			}
-		}, {
-			key: 'firePostChangeEvent',
-			value: function firePostChangeEvent(id, oldValue, newValue, index) {
-				return this.fireEvent({
-					id: id,
-					old: oldValue,
-					new: newValue,
-					index: index,
-					type: 'change',
-					time: 'post',
-					model: this
-				});
-			}
-		}, {
-			key: 'firePostAddEvent',
-			value: function firePostAddEvent(id, value, newItem, index) {
-				return this.fireEvent({
-					id: id,
-					value: value,
-					new: newItem,
-					index: index,
-					type: 'add',
-					time: 'post',
-					model: this
-				});
-			}
-		}, {
-			key: 'firePostRemoveEvent',
-			value: function firePostRemoveEvent(id, value, removedItem, index) {
-				return this.fireEvent({
-					id: id,
-					value: value,
-					removed: removedItem,
-					index: index,
-					type: 'remove',
-					time: 'post',
-					model: this
-				});
-			}
-		}, {
-			key: 'firePostValidateEvent',
-			value: function firePostValidateEvent(id, value, error) {
-				return this.fireEvent({
-					id: id,
-					value: value,
-					error: error,
-					type: 'validate',
-					time: 'post',
-					model: this
-				});
-			}
-		}, {
-			key: 'getBaseModel',
-			value: function getBaseModel() {
-				return this.baseModel;
-			}
-		}, {
-			key: 'getCurrentModel',
-			value: function getCurrentModel() {
-				return this.currentModel;
-			}
-		}, {
-			key: 'get',
-			value: function get(id) {
-				return this.getFromJSON(id, this.getCurrentModel());
-			}
-		}, {
-			key: 'getFromJSON',
-			value: function getFromJSON(id, json) {
-				var ids = id.split('.');
-				var count = ids.length - 1;
-				return ids.reduce(function (object, id, index) {
-					var value = object[id];
-					return index === count ? value : typeof value === 'undefined' || value == null ? {} : value;
-				}, json);
-			}
-		}, {
-			key: 'set',
-			value: function set(id, value) {
-				var old = this.get(id);
-				if ((typeof old === 'undefined' ? 'undefined' : _typeof(old)) === (typeof value === 'undefined' ? 'undefined' : _typeof(value)) && old == value) {
-					// do nothing
-					return;
-				}
-				this.setIntoJSON(id, value, this.getCurrentModel());
-				this.setChanged(true);
-				this.firePostChangeEvent(id, old, value);
-				return this;
-			}
-		}, {
-			key: 'add',
-			value: function add(id, value, valueIndex) {
-				var values = this.get(id);
-				if (values == null) {
-					values = [];
-					values.push(value);
-					this.setIntoJSON(id, values, this.getCurrentModel());
-					this.setChanged(true);
-					this.firePostAddEvent(id, values, value, 0);
-				} else {
-					var index = values.findIndex(function (elm) {
-						return elm == value;
-					});
-					if (index == -1) {
-						// not found, add to given value index
-						valueIndex = valueIndex == null ? values.length : valueIndex;
-						valueIndex = valueIndex > values.length ? values.length : valueIndex;
-						values.splice(valueIndex, 0, value);
-						this.setChanged(true);
-						this.firePostAddEvent(id, values, value, valueIndex);
-					}
-				}
-				return this;
-			}
-		}, {
-			key: 'remove',
-			value: function remove(id, value) {
-				var values = this.get(id);
-				if (values == null || values.length == 0) {
-					// do nothing
-				} else {
-					var index = values.findIndex(function (elm) {
-						return elm == value;
-					});
-					if (index != -1) {
-						values.splice(index, 1);
-						this.setChanged(true);
-						this.firePostRemoveEvent(id, values, value, index);
-					}
-				}
-			}
-		}, {
-			key: 'update',
-			value: function update(id, oldValue, newValue) {
-				var values = this.get(id);
-				if (values == null || values.length == 0) {
-					// do nothing
-				} else {
-					var index = values.findIndex(function (elm) {
-						return elm == oldValue;
-					});
-					if (index != -1) {
-						values.splice(index, 1, newValue);
-						this.setChanged(true);
-						this.firePostChangeEvent(id, oldValue, newValue, index);
-					}
-				}
-			}
-		}, {
-			key: 'setIntoJSON',
-			value: function setIntoJSON(id, value, json) {
-				var ids = id.split('.');
-				var count = ids.length - 1;
-				ids.reduce(function (object, id, index) {
-					if (index === count) {
-						// last one
-						object[id] = value;
-						return value;
-					} else {
-						var val = object[id];
-						object[id] = typeof val === 'undefined' || val == null ? {} : val;
-						return object[id];
-					}
-				}, json);
-				return this;
-			}
-		}, {
-			key: 'isChanged',
-			value: function isChanged() {
-				return this.changed;
-			}
-		}, {
-			key: 'setChanged',
-			value: function setChanged(changed) {
-				this.changed = changed;
-			}
-		}, {
-			key: 'setParent',
-			value: function setParent(parent) {
-				this.parent = parent;
-				return this;
-			}
-		}, {
-			key: 'getParent',
-			value: function getParent() {
-				return this.parent;
-			}
-		}, {
-			key: 'setValidator',
-			value: function setValidator(validator) {
-				this.validator = validator;
-				return this;
-			}
-		}, {
-			key: 'getValidator',
-			value: function getValidator() {
-				return this.validator;
-			}
-		}, {
-			key: 'validate',
-			value: function validate(dataId, perspective) {
-				var _this = this;
-
-				if (this.validator) {
-					(function () {
-						var validationResults = _this.getValidationResults();
-						var result = _this.validator.validate(_this, dataId, perspective);
-						if (dataId) {
-							// only validate given data id
-							validationResults[dataId] = result[dataId];
-							_this.firePostValidateEvent(dataId, _this.get(dataId), validationResults[dataId]);
-						} else {
-							(function () {
-								// validate all, replace old
-								var old = _this.validationResults;
-								_this.validationResults = result;
-								var fired = {};
-								Object.keys(result).forEach(function (dataId) {
-									fired[dataId] = true;
-									_this.firePostValidateEvent(dataId, _this.get(dataId), result[dataId]);
-								});
-								Object.keys(old).forEach(function (dataId) {
-									if (!fired[dataId]) {
-										_this.firePostValidateEvent(dataId, _this.get(dataId), null);
-									}
-								});
-							})();
-						}
-					})();
-				}
-				return this;
-			}
-		}, {
-			key: 'getValidationResults',
-			value: function getValidationResults(dataId) {
-				if (this.validationResults == null) {
-					this.validationResults = {};
-				}
-				return dataId ? this.validationResults[dataId] : this.validationResults;
-			}
-		}, {
-			key: 'replaceValidationResults',
-			value: function replaceValidationResults(results) {
-				this.validationResults = results;
-			}
-		}]);
-
-		return Model;
-	}();
-
-	Model.ALL = '--all';
-	exports.Model = Model;
-
-/***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var CodeTable = function () {
-		function CodeTable(options) {
-			var _this = this;
-
-			_classCallCheck(this, CodeTable);
-
-			this.array = options.items ? options.items : [];
-			this.sorter = options.sorter;
-			this.renderer = options.renderer;
-			this.tiler = options.tiler;
-
-			this.mapping = {};
-			this.array.map(function (item) {
-				var renderer = _this.getRenderer();
-				return renderer ? renderer.call(_this, item) : item;
-			}).sort(function (item1, item2) {
-				var sorter = _this.getSorter();
-				return sorter ? sorter.call(_this, item1, item2) : 0;
-			}).forEach(function (item) {
-				_this.getTiler().call(_this, item, _this.mapping);
-			});
-		}
-
-		_createClass(CodeTable, [{
-			key: 'getTiler',
-			value: function getTiler() {
-				if (!this.tiler) {
-					this.tiler = function (item, map) {
-						var _this2 = this;
-
-						map[item.id] = item;
-						if (item.children && item.children.length != 0) {
-							item.children.forEach(function (child) {
-								_this2.getTiler().call(_this2, child, map);
-							});
-						}
-					};
-				}
-				return this.tiler;
-			}
-		}, {
-			key: 'getSorter',
-			value: function getSorter() {
-				return this.sorter;
-			}
-		}, {
-			key: 'getRenderer',
-			value: function getRenderer() {
-				return this.renderer;
-			}
-		}, {
-			key: 'getItem',
-			value: function getItem(id) {
-				return this.mapping[id];
-			}
-		}, {
-			key: 'getText',
-			value: function getText(id) {
-				return this.mapping[id] ? this.mapping[id].text : null;
-			}
-		}, {
-			key: 'map',
-			value: function map(func) {
-				if (typeof func === 'undefined') {
-					return this.mapping;
-				} else {
-					return this.array.map(func);
-				}
-			}
-		}, {
-			key: 'forEach',
-			value: function forEach(func) {
-				return this.array.forEach(func);
-			}
-		}, {
-			key: 'filter',
-			value: function filter(func) {
-				return this.array.filter(func);
-			}
-		}, {
-			key: 'items',
-			value: function items() {
-				return this.array;
-			}
-		}, {
-			key: 'isReady',
-			value: function isReady() {
-				return true;
-			}
-		}, {
-			key: 'ready',
-			value: function ready() {
-				return true;
-			}
-		}]);
-
-		return CodeTable;
-	}();
-
-	exports.CodeTable = CodeTable;
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	module.exports = _;
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.Envs = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _lodash = __webpack_require__(8);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Envs = function () {
-		function Envs() {
-			_classCallCheck(this, Envs);
-
-			this.props = {
-				cellWidth: 3,
-				cellColumns: 12,
-				labelPosition: 'top',
-				labelWidth: 4,
-				thousandsSeparator: ',',
-				numberPointer: '.',
-				numberFormatter: function numberFormatter(modelValue) {
-					if (modelValue || modelValue === 0) {
-						return ('' + modelValue).replace(/\./, envs.NUMBER_POINTER).replace(/\B(?=(\d{3})+(?!\d))/g, envs.THOUSANDS_SEPARATOR);
-					} else {
-						return '';
-					}
-				},
-				numberParser: function numberParser(displayText) {
-					if (displayText) {
-						return 1 * displayText.replace(new RegExp(envs.THOUSANDS_SEPARATOR.replace(/\./g, '\\\.'), 'g'), '').replace(new RegExp(envs.NUMBER_POINTER.replace(/\./g, '\\\.')), '.');
-					} else {
-						return null;
-					}
-				},
-				percentageFormatter: function percentageFormatter(modelValue) {
-					return modelValue || modelValue === 0 ? ('' + modelValue) * 100 : '';
-				},
-				percentageParser: function percentageParser(displayText) {
-					return displayText ? displayText / 100 : null;
-				},
-				textChangeDelay: 300,
-				dateValueFormat: 'YYYYMMDDHHmmss',
-				dateDisplayFormat: ['YYYY/MM/DD', 'YYYYMMDD'],
-				dateHeaderFormat: { year: 'YYYY', month: 'MMMM' },
-				timeDisplayFormat: 'HH:mm:ss',
-				timeHeaderFormat: 'A hh',
-				dateTimeDisplayFormat: 'YYYY/MM/DD HH:mm:ss',
-				yearStepWhenMonth: 5,
-				tabAddText: 'Add',
-				tabAddIcon: 'plus-square',
-				tabRemoveIcon: 'close',
-				tabNoItemText: 'No Item',
-				treeRootText: 'Root',
-				treeRootIcon: 'bars',
-				treeBranchIcon: 'folder-o',
-				treeLeafIcon: 'file-o',
-				treeMaxHeight: 300,
-				listMaxHeight: 300,
-				columnsOfGrid: 12,
-				dropdownMaxHeight: 300,
-				dropdownMinWidth: 300,
-				selectPlaceholder: 'Please Select...'
-			};
-			this.viewModeRenderers = {};
-			this.renderers = {};
-
-			this.COMPONENT_TYPES = {};
-
-			this.checkTransitionSupported();
-		}
-		// global variables
-
-
-		_createClass(Envs, [{
-			key: 'getRenderer',
-			value: function getRenderer(type) {
-				return this.renderers[type];
-			}
-		}, {
-			key: 'setRenderer',
-			value: function setRenderer(type, renderer) {
-				var originalRenderer = this.getRenderer(type);
-				this.renderers[type] = renderer;
-				if (originalRenderer) {
-					console.info('Component renderer for ' + type + ' was replaced.');
-				}
-			}
-			// external view mode renderer
-
-		}, {
-			key: 'getViewModeRenderer',
-			value: function getViewModeRenderer(type) {
-				return this.viewModeRenderers[type];
-			}
-		}, {
-			key: 'setViewModeRenderer',
-			value: function setViewModeRenderer(type, renderer) {
-				var originalRenderer = this.getViewModeRenderer(type);
-				this.viewModeRenderers[type] = renderer;
-				if (originalRenderer) {
-					console.info('External view mode renderer for ' + type + ' was replaced.');
-				}
-			}
-		}, {
-			key: 'render',
-			value: function render(renderer, options) {
-				if (typeof renderer === 'string') {
-					return this.getRenderer(renderer).call(this, options);
-				} else {
-					return renderer.call(this, options);
-				}
-			}
-
-			// utils
-			// deep merge to a plain object from other plain objects
-			// argument 0: target object, will be modified. new {} created if it is null.
-			// arguments 1 ~ n: source objects, will not be modified. null or undefined objects are ignored.
-			// only recursive plain object will be deep merged
-			// if source value is an array, target value will be replaced anyway. and if element is
-			//		1. plain object: recursive clone and assign to target array
-			//		2. array: recursive clone and assign to target array
-			//		3. others: assign to target array directly
-			// if source value is a plain object, 
-			//		1. target value is a plain object: recursive deep merge
-			//		2. others: recursive clone and assign to target value
-			// if source value is other types, assign to target value directly
-
-		}, {
-			key: 'deepMergeTo',
-			value: function deepMergeTo() {
-				var _this = this;
-
-				if (arguments.length < 2) {
-					throw 'At least two argument.';
-				}
-				var target = arguments[0] ? arguments[0] : {};
-				if (!_lodash2.default.isPlainObject(target)) {
-					throw 'Target object must be a plain object.';
-				}
-				var sources = Array.prototype.slice.call(arguments, 1);
-				sources.forEach(function (source, sourceIndex) {
-					if (source == null) {
-						// ignore the null source object
-						return;
-					}
-					if (!_lodash2.default.isPlainObject(source)) {
-						throw 'Source object at index[' + (sourceIndex + 1) + '] must be a plain object.';
-					}
-					Object.keys(source).forEach(function (key) {
-						var sourceValue = source[key];
-						if (sourceValue == null) {
-							// ignore the null or undefined value
-							return;
-						}
-						if (_lodash2.default.isPlainObject(sourceValue)) {
-							// source value is a plain object
-							var targetValue = target[key];
-							if (!_lodash2.default.isPlainObject(targetValue)) {
-								// target value is not a plain object
-								// create new {} to be target value and copy from source value
-								target[key] = _this.deepMergeTo({}, sourceValue);
-							} else {
-								// target value is a plain object
-								_this.deepMergeTo(targetValue, sourceValue);
-							}
-						} else if (_lodash2.default.isArray(sourceValue)) {
-							// source value is an array
-							// replace target value anyway
-							target[key] = [];
-							sourceValue.forEach(function (value) {
-								if (_lodash2.default.isPlainObject(value)) {
-									target[key].push(_this.deepMergeTo({}, value));
-								} else if (_lodash2.default.isArray(value)) {
-									target[key].push(_this.deepMergeTo({}, { array: value }).array);
-								} else {
-									target[key].push(value);
-								}
-							});
-						} else {
-							// neither plain object nor array
-							// copy to target directly
-							target[key] = sourceValue;
-						}
-					});
-				});
-				return target;
-			}
-		}, {
-			key: 'checkTransitionSupported',
-			value: function checkTransitionSupported() {
-				if (typeof document === 'undefined') {
-					console.error('Make sure document object existed!');
-					return;
-				}
-				var TransitionEndEvent = {
-					transition: 'transitionend',
-					WebkitTransition: 'webkitTransitionEnd',
-					MozTransition: 'transitionend',
-					OTransition: 'oTransitionEnd otransitionend'
-				};
-				this.isTransitionSupported = false;
-				var el = document.createElement('parrot2');
-				for (var name in TransitionEndEvent) {
-					if (el.style[name] !== undefined) {
-						this.isTransitionSupported = true;
-						break;
-					}
-				}
-			}
-			// delegate for jquery transition end
-			// for those browsers which doesn't support transition, invoke handler immediately
-			// for those browsers which supports transition, add transitionend listener
-			// options format as below,
-			// {
-			//		target: jquery object
-			//		handler: event handler, pass target if transition not supported
-			//		repeat: use 'on' when repeat is true, otherwise use 'one'
-			// }
-
-		}, {
-			key: 'transitionend',
-			value: function transitionend(options) {
-				var target = options.target;
-				if (this.isTransitionSupported) {
-					if (options.repeat) {
-						options.target.on('transitionend', options.handler);
-					} else {
-						options.target.one('transitionend', options.handler);
-					}
-				} else {
-					options.handler.call(this, options.target);
-				}
-				return options.target;
-			}
-		}, {
-			key: 'CELL_WIDTH',
-			get: function get() {
-				return this.props.cellWidth;
-			},
-			set: function set(value) {
-				this.props.cellWidth = value;
-			}
-			// columns in a cell, default is 12
-
-		}, {
-			key: 'CELL_COLUMNS',
-			get: function get() {
-				return this.props.cellColumns;
-			},
-			set: function set(value) {
-				this.props.cellColumns = value;
-			}
-		}, {
-			key: 'LABEL_WIDTH',
-			get: function get() {
-				return this.props.labelWidth;
-			},
-			set: function set(value) {
-				this.props.labelWidth = value;
-			}
-		}, {
-			key: 'LABEL_POSITION',
-			get: function get() {
-				return this.props.labelPosition;
-			},
-			set: function set(value) {
-				this.props.labelPosition = value;
-			}
-		}, {
-			key: 'THOUSANDS_SEPARATOR',
-			get: function get() {
-				return this.props.thousandsSeparator;
-			},
-			set: function set(value) {
-				this.props.thousandsSeparator = value;
-			}
-		}, {
-			key: 'NUMBER_POINTER',
-			get: function get() {
-				return this.props.numberPointer;
-			},
-			set: function set(value) {
-				this.props.NUMBER_POINTER = value;
-			}
-		}, {
-			key: 'NUMBER_FORMATTER',
-			get: function get() {
-				return this.props.numberFormatter;
-			},
-			set: function set(value) {
-				this.props.numberFormatter = value;
-			}
-		}, {
-			key: 'NUMBER_PARSER',
-			get: function get() {
-				return this.props.numberParser;
-			},
-			set: function set(value) {
-				this.props.numberParser = value;
-			}
-		}, {
-			key: 'PERCENTAGE_FORMATTER',
-			get: function get() {
-				return this.props.percentageFormatter;
-			},
-			set: function set(value) {
-				this.props.PERCENTAGE_FORMATTER = value;
-			}
-		}, {
-			key: 'PERCENTAGE_PARSER',
-			get: function get() {
-				return this.props.percentageParser;
-			},
-			set: function set(value) {
-				this.props.percentageParser = value;
-			}
-		}, {
-			key: 'TEXT_CHANGE_DELAY',
-			get: function get() {
-				return this.props.textChangeDelay;
-			},
-			set: function set(value) {
-				this.props.textChangeDelay = value;
-			}
-		}, {
-			key: 'DATE_VALUE_FORMAT',
-			get: function get() {
-				return this.props.dateValueFormat;
-			},
-			set: function set(value) {
-				this.props.dateValueFormat = value;
-			}
-		}, {
-			key: 'DATE_DISPLAY_FORMAT',
-			get: function get() {
-				return this.props.dateDisplayFormat;
-			},
-			set: function set(value) {
-				this.props.dateDisplayFormat = value;
-			}
-		}, {
-			key: 'DATE_HEADER_FORMAT',
-			get: function get() {
-				return this.props.dateHeaderFormat;
-			},
-			set: function set(value) {
-				this.props.dateHeaderFormat = value;
-			}
-		}, {
-			key: 'YEAR_STEP_WHEN_MONTH',
-			get: function get() {
-				return this.props.yearStepWhenMonth;
-			},
-			set: function set(value) {
-				this.props.yearStepWhenMonth = value;
-			}
-		}, {
-			key: 'DATE_TIME_DISPLAY_FORMAT',
-			get: function get() {
-				return this.props.dateTimeDisplayFormat;
-			},
-			set: function set(value) {
-				this.props.dateTimeDisplayFormat = value;
-			}
-		}, {
-			key: 'TIME_DISPLAY_FORMAT',
-			get: function get() {
-				return this.props.timeDisplayFormat;
-			},
-			set: function set(value) {
-				this.props.timeDisplayFormat = value;
-			}
-		}, {
-			key: 'TIME_HEADER_FORMAT',
-			get: function get() {
-				return this.props.timeHeaderFormat;
-			},
-			set: function set(value) {
-				this.props.timeHeaderFormat = value;
-			}
-		}, {
-			key: 'TAB_ADD_TEXT',
-			get: function get() {
-				return this.props.tabAddText;
-			},
-			set: function set(value) {
-				this.props.tabAddText = value;
-			}
-		}, {
-			key: 'TAB_ADD_ICON',
-			get: function get() {
-				return this.props.tabAddIcon;
-			},
-			set: function set(value) {
-				this.props.tabAddIcon = value;
-			}
-		}, {
-			key: 'TAB_REMOVE_ICON',
-			get: function get() {
-				return this.props.tabRemoveIcon;
-			},
-			set: function set(value) {
-				this.props.tabRemoveIcon = value;
-			}
-		}, {
-			key: 'TAB_NO_ITEM_TEXT',
-			get: function get() {
-				return this.props.tabNoItemText;
-			},
-			set: function set(value) {
-				this.props.TAB_NO_ITEM_TEXT = value;
-			}
-		}, {
-			key: 'TREE_ROOT_TEXT',
-			get: function get() {
-				return this.props.treeRootText;
-			},
-			set: function set(value) {
-				this.props.treeRootText = value;
-			}
-		}, {
-			key: 'TREE_ROOT_ICON',
-			get: function get() {
-				return this.props.treeRootIcon;
-			},
-			set: function set(value) {
-				this.props.treeRootIcon = value;
-			}
-		}, {
-			key: 'TREE_BRANCH_ICON',
-			get: function get() {
-				return this.props.treeBranchIcon;
-			},
-			set: function set(value) {
-				this.props.treeBranchIcon = value;
-			}
-		}, {
-			key: 'TREE_LEAF_ICON',
-			get: function get() {
-				return this.props.treeLeafIcon;
-			},
-			set: function set(value) {
-				this.props.treeLeafIcon = value;
-			}
-		}, {
-			key: 'TREE_MAX_HEIGHT',
-			get: function get() {
-				return this.props.treeMaxHeight;
-			},
-			set: function set(value) {
-				this.props.treeMaxHeight = value;
-			}
-		}, {
-			key: 'LIST_MAX_HEIGHT',
-			get: function get() {
-				return this.props.listMaxHeight;
-			},
-			set: function set(value) {
-				this.props.listMaxHeight = value;
-			}
-		}, {
-			key: 'COLUMNS_OF_GRID',
-			get: function get() {
-				return this.props.columnsOfGrid;
-			},
-			set: function set(value) {
-				this.props.columnsOfGrid = value;
-			}
-		}, {
-			key: 'DROPDOWN_MAX_HEIGHT',
-			get: function get() {
-				return this.props.dropdownMaxHeight;
-			},
-			set: function set(value) {
-				this.props.dropdownMaxHeight = value;
-			}
-		}, {
-			key: 'DROPDOWN_MIN_WIDTH',
-			get: function get() {
-				return this.props.dropdownMinWidth;
-			},
-			set: function set(value) {
-				this.props.dropdownMinWidth = value;
-			}
-		}, {
-			key: 'SELECT_PLACEHOLDER',
-			get: function get() {
-				return this.props.selectPlaceholder;
-			},
-			set: function set(value) {
-				this.props.selectPlaceholder = value;
-			}
-		}]);
-
-		return Envs;
-	}();
-
-	// // there is no global object to carry the global constants variables
-	// // have to use window in browser or global in nodejs env
-	// // to carry the global constants
-	// // the global namespace is $pt
-	// // and import namespace is {Envs}
-	// // the above two are exactly same object
-	// let $pt;
-	// if (typeof window !== 'undefined') {
-	// 	$pt = window.$pt;
-	// } else if (typeof global !== 'undefined') {
-	// 	$pt = global.$pt;
-	// }
-	// // console.log('abc');
-	// // console.log($pt);
-
-	// if (typeof $pt === 'undefined' || $pt == null) {
-	// 	$pt = new Envs();
-	// 	if (typeof window !== 'undefined') {
-	// 		window.$pt = $pt;
-	// 	} else if (typeof global !== 'undefined') {
-	// 		global.$pt = $pt;
-	// 	}
-	// }
-
-	Envs.DEFAULT_COLUMN_INDEX = 9999;
-	Envs.DEFAULT_ROW_INDEX = 9999;
-	var envs = new Envs();
-
-	exports.Envs = envs;
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.ValidationMessages = exports.GlobalValidationRules = exports.Validator = undefined;
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _envs = __webpack_require__(9);
-
-	var _model = __webpack_require__(6);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var ValidationMessages = function () {
-		function ValidationMessages() {
-			_classCallCheck(this, ValidationMessages);
-
-			this.messages = {};
-			this.install({
-				'required': '%1 is required.',
-				'minlen': 'Length of %1 should be at least %2 character(s).',
-				'min': 'Value of %1 should be at least %2.',
-				'minsize': 'There are at least %2 item(s) for %1.',
-				'maxlen': 'Length of %1 should be at most %2 character(s).',
-				'max': 'Value of %1 should be at most %2.',
-				'maxsize': 'There are at most %2 item(s) for %1.',
-				'before': '%1 should be before %2.',
-				'after': '%1 should be after %2'
-			});
-		}
-
-		_createClass(ValidationMessages, [{
-			key: 'install',
-			value: function install(options) {
-				var locale = this.parseLocale(options.locale, 'en');
-				var msgsOfLocale = this.messages[locale];
-				if (msgsOfLocale == null) {
-					msgsOfLocale = {};
-					this.messages[locale] = msgsOfLocale;
-				}
-				Object.keys(options).filter(function (key) {
-					return key !== 'locale';
-				}).forEach(function (ruleName) {
-					var oldMsg = msgsOfLocale[ruleName];
-					msgsOfLocale[ruleName] = options[ruleName];
-					if (oldMsg) {
-						console.info('Message "' + oldMsg + '" of rule "' + ruleName + '" is replaced by ' + options[ruleName] + ' on locale "' + locale + '".');
-					}
-				});
-			}
-		}, {
-			key: 'get',
-			value: function get(ruleName, locale) {
-				locale = this.parseLocale(locale, this.getLocale());
-				var msgsOfLocale = this.messages[locale];
-				var message = null;
-				if (msgsOfLocale) {
-					message = msgsOfLocale[ruleName];
-				}
-				if (message) {
-					return message;
-				} else {
-					var parentLocale = this.parentOfLocale(locale);
-					if (parentLocale === locale) {
-						throw 'Message of "' + ruleName + '" not found in locale "' + locale + '" and its parents.';
-					} else {
-						return this.get(ruleName, parentLocale);
-					}
-				}
-			}
-		}, {
-			key: 'parseLocale',
-			value: function parseLocale(locale, defaultLocale) {
-				return locale ? locale.replace('-', '_').toLowerCase() : defaultLocale;
-			}
-		}, {
-			key: 'parentOfLocale',
-			value: function parentOfLocale(locale) {
-				var segments = locale.split('_');
-				if (segments.length === 1) {
-					return 'en';
-				} else {
-					segments.splice(segments.length - 1, 1);
-					return segments.join('_');
-				}
-			}
-		}, {
-			key: 'getLocale',
-			value: function getLocale() {
-				if (this.locale) {} else if (typeof navigator === 'undefined') {
-					this.locale = 'en';
-				} else {
-					this.locale = navigator.language || navigator.userLanguage;
-				}
-				return this.locale;
-			}
-		}, {
-			key: 'setLocale',
-			value: function setLocale(locale) {
-				if (locale) {
-					this.locale = this.parseLocale(locale);
-				} else {
-					this.locale = 'en';
-				}
-			}
-		}, {
-			key: 'convert',
-			value: function convert(ruleName, param, label) {
-				var message = this.get(ruleName);
-				if (label) {
-					message = message.replace('%1', label);
-				}
-				if (param) {
-					message = message.replace('%2', param);
-				}
-				return message;
-			}
-		}]);
-
-		return ValidationMessages;
-	}();
-
-	var messages = new ValidationMessages();
-
-	var isEmpty = function isEmpty(value) {
-		return value == null || (value + '').length === 0;
-	};
-	var GlobalValidationRules = {
-		required: function required(model, value, params, label) {
-			return isEmpty(value) ? messages.convert('required', params, label) : true;
-		},
-		minlen: function minlen(model, value, params, label) {
-			return isEmpty(value) ? true : (value + '').length < params ? messages.convert('minlen', params, label) : true;
-		},
-		maxlen: function maxlen(model, value, params, label) {
-			return isEmpty(value) ? true : (value + '').length > params ? messages.convert('maxlen', params, label) : true;
-		},
-		min: function min(model, value, params, label) {
-			return isEmpty(value) ? true : value * 1 < params ? messages.convert('min', params, label) : true;
-		},
-		max: function max(model, value, params, label) {
-			return isEmpty(value) ? true : value * 1 > params ? messages.convert('max', params, label) : true;
-		},
-		minsize: function minsize(model, value, params, label) {
-			return value == null || value.length === 0 ? true : value.length < params ? messages.convert('minsize', params, label) : true;
-		},
-		maxsize: function maxsize(model, value, params, label) {
-			return value == null || value.length === 0 ? true : value.length > params ? messages.convert('maxsize', params, label) : true;
-		},
-		before: function before(model, value, params, label) {
-			if (isEmpty(value)) {
-				return true;
-			}
-			return value > params ? messages.convert('before', params, label) : true;
-		},
-		after: function after(model, value, params, label) {
-			if (isEmpty(value)) {
-				return true;
-			}
-			return value < params ? messages.convert('after', params, label) : true;
-		},
-		child: function child(model, value, params, label, ruleRepository) {
-			if (value == null || value.length == 0) {
-				return true;
-			}
-			var itemValidator = new Validator(params, null, ruleRepository);
-			var results = value.map(function (item) {
-				var itemModel = new _model.Model(item, true);
-				var result = itemValidator.validate(itemModel);
-				return {
-					item: item,
-					result: result
-				};
-			}).filter(function (itemResult) {
-				return Object.keys(itemResult.result).length > 0;
-			});
-			return results.length === 0 ? true : results;
-		}
-	};
-
-	var Validator = function () {
-		function Validator(rules, perspective, ruleRepo) {
-			var _this = this;
-
-			_classCallCheck(this, Validator);
-
-			if (perspective) {
-				this.rules = rules ? rules : {};
-			} else {
-				this.rules = {};
-				this.rules['' + Validator.ALL] = rules;
-			}
-			// remove null properties
-			Object.keys(this.rules).forEach(function (key) {
-				if (_this.rules[key] === null) {
-					delete _this.rules[key];
-				}
-			});
-
-			this.ruleRepo = ruleRepo;
-		}
-
-		_createClass(Validator, [{
-			key: 'validate',
-			value: function validate(model, property, perspective) {
-				var _this2 = this;
-
-				var rules = this.getRules(perspective);
-				if (property) {
-					var propertyRule = {};
-					if (rules[property] != null) {
-						propertyRule[property] = rules[property];
-					}
-					rules = propertyRule;
-				}
-				return Object.keys(rules).map(function (propertyName) {
-					var value = model.get(propertyName);
-					var rulesOnProperty = rules[propertyName];
-					var label = rulesOnProperty.label;
-					// result is an array
-					var resultsOnProperty = Object.keys(rulesOnProperty).filter(function (ruleName) {
-						return ruleName !== 'label';
-					}).map(function (ruleName) {
-						var params = rulesOnProperty[ruleName];
-						var rule = _this2.unwrapRuleParams(ruleName, params);
-						return {
-							rule: ruleName,
-							message: rule.checker.call(_this2, model, value, rule.params, label, _this2.ruleRepo),
-							level: rule.level
-						};
-					}).filter(function (ruleResult) {
-						// filter the passed rule results
-						return ruleResult.message != null && ruleResult.message !== true;
-					});
-					return {
-						name: propertyName,
-						result: resultsOnProperty
-					};
-				}).filter(function (propResult) {
-					// filter which has no failed result
-					return propResult.result.length != 0;
-				}).reduce(function (prev, next) {
-					prev[next.name] = next.result;
-					return prev;
-				}, {});
-			}
-		}, {
-			key: 'unwrapRuleParams',
-			value: function unwrapRuleParams(name, params) {
-				var type = typeof params === 'undefined' ? 'undefined' : _typeof(params);
-				if (type === 'function') {
-					return {
-						checker: params,
-						level: params.level ? params.level : Validator.LEVEL_ERROR,
-						params: params.params ? params.params : null
-					};
-				} else if (type === 'object') {
-					return {
-						checker: this.findRuleFromRepo(name),
-						level: params.level ? params.level : Validator.LEVEL_ERROR,
-						params: params.params ? params.params : params
-					};
-				} else {
-					return {
-						checker: this.findRuleFromRepo(name),
-						level: Validator.LEVEL_ERROR,
-						params: params
-					};
-				}
-			}
-		}, {
-			key: 'getRules',
-			value: function getRules(perspective) {
-				var _this3 = this;
-
-				if (!perspective) {
-					perspective = this.getPerspective();
-				}
-				if (perspective) {
-					var ruleSet = this.rules[perspective];
-					return ruleSet == null ? {} : ruleSet;
-				} else {
-					var _ruleSet = Object.keys(this.rules).map(function (key) {
-						return _this3.rules[key];
-					});
-					if (_ruleSet.length === 0) {
-						return {};
-					} else {
-						return _envs.Envs.deepMergeTo.apply(_envs.Envs, [{}].concat(_ruleSet));
-					}
-				}
-			}
-		}, {
-			key: 'findRuleFromRepo',
-			value: function findRuleFromRepo(ruleName) {
-				var rule = null;
-				if (this.ruleRepo) {
-					rule = this.ruleRepo[ruleName];
-				}
-				if (rule == null) {
-					rule = GlobalValidationRules[ruleName];
-				}
-				if (rule == null) {
-					throw 'Rule ' + ruleName + ' not found, please define it when construct validator \t\t\t\t\tor into global validation rules repository';
-				}
-				return rule;
-			}
-		}, {
-			key: 'setPerspective',
-			value: function setPerspective(perspective) {
-				this.perspective = perspective;
-				var childValidators = this.getChildValidators();
-				Object.keys(childValidators).forEach(function (dataId) {
-					var validator = childValidators[dataId];
-					validator.setPerspective(perspective);
-				});
-				return this;
-			}
-		}, {
-			key: 'getPerspective',
-			value: function getPerspective() {
-				return this.perspective;
-			}
-		}, {
-			key: 'getChildValidators',
-			value: function getChildValidators() {
-				if (this.childValidators == null) {
-					this.childValidators = {};
-				}
-				return this.childValidators;
-			}
-		}, {
-			key: 'getChildValidator',
-			value: function getChildValidator(dataId) {
-				return this.getChildValidators()[dataId];
-			}
-		}, {
-			key: 'createChildValidator',
-			value: function createChildValidator(dataId) {
-				var _this4 = this;
-
-				var validator = this.getChildValidator(dataId);
-				if (!validator) {
-					var rules = Object.keys(this.rules).reduce(function (prev, next) {
-						var perspectiveRules = _this4.rules[next];
-						var propertyRules = perspectiveRules[dataId];
-						if (propertyRules) {
-							var childRules = propertyRules.child;
-							if (childRules) {
-								prev[next] = childRules;
-							}
-						}
-						return prev;
-					}, {});
-					validator = new Validator(rules, true, this.ruleRepo);
-					validator.setPerspective(this.getPerspective());
-					this.childValidators[dataId] = validator;
-				}
-				return validator;
-			}
-		}]);
-
-		return Validator;
-	}();
-
-	Validator.ALL = '--all';
-	Validator.CHILD = 'child';
-	Validator.LEVEL_ERROR = 1;
-	Validator.LEVEL_WARN = 2;
-	Validator.LEVEL_INFO = 3;
-	exports.Validator = Validator;
-	exports.GlobalValidationRules = GlobalValidationRules;
-	exports.ValidationMessages = messages;
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.Layout = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _lodash = __webpack_require__(8);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	var _envs = __webpack_require__(9);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Layout = function () {
-		_createClass(Layout, null, [{
-			key: 'toStereo',
-			value: function toStereo(props) {
-				var layout = {};
-				if (!props) {
-					return layout;
-				}
-
-				Object.keys(props).filter(function (key) {
-					return key.startsWith('n-');
-				}).forEach(function (key) {
-					var keys = key.substr(2).split('-');
-					var count = keys.length - 1;
-					keys.reduce(function (object, keySegment, index) {
-						if (index === count) {
-							// last one
-							object[keySegment] = props[key];
-						} else {
-							var val = object[keySegment];
-							object[keySegment] = typeof val === 'undefined' || val == null ? {} : val;
-						}
-						return object[keySegment];
-					}, layout);
-				});
-				return layout;
-			}
-		}, {
-			key: 'buildLayoutByProps',
-			value: function buildLayoutByProps(props) {
-				return new Layout(props['n-id'], {}).mergeLayoutFromProps(props);
-			}
-
-			// id: string
-			// layout: JSON
-
-		}]);
-
-		function Layout(id, layout) {
-			_classCallCheck(this, Layout);
-
-			this.id = id;
-			this.layout = layout ? layout : {};
-			this.initialLayout = layout;
-		}
-
-		_createClass(Layout, [{
-			key: 'mergeLayoutFromProps',
-			value: function mergeLayoutFromProps(props) {
-				var fromProps = Layout.toStereo(props);
-				if (Object.keys(fromProps).length != 0) {
-					this.layout = _envs.Envs.deepMergeTo({}, this.initialLayout, fromProps);
-				}
-				return this;
-			}
-		}, {
-			key: 'getType',
-			value: function getType() {
-				var type = this.getOptionValue('type');
-				if (type) {
-					return this.buildDefaultType(type);
-				} else {
-					return this.buildDefaultType();
-				}
-			}
-		}, {
-			key: 'getTypeAsString',
-			value: function getTypeAsString() {
-				return this.getType().type;
-			}
-		}, {
-			key: 'buildDefaultType',
-			value: function buildDefaultType(type) {
-				type = type ? type : 'n-text';
-				if (typeof type === 'string') {
-					return {
-						type: type,
-						label: false,
-						error: true
-					};
-				} else {
-					return _envs.Envs.deepMergeTo({
-						label: false,
-						error: true
-					}, type);
-				}
-			}
-		}, {
-			key: 'isLabelShown',
-			value: function isLabelShown() {
-				return this.getType().label;
-			}
-		}, {
-			key: 'isErrorShown',
-			value: function isErrorShown() {
-				return this.getType().error;
-			}
-		}, {
-			key: 'getId',
-			value: function getId() {
-				return this.id;
-			}
-		}, {
-			key: 'getDataId',
-			value: function getDataId() {
-				return this.layout.dataId;
-			}
-		}, {
-			key: 'getLabel',
-			value: function getLabel() {
-				return this.layout.label;
-			}
-		}, {
-			key: 'getWidth',
-			value: function getWidth() {
-				return this.getPosition().width;
-			}
-		}, {
-			key: 'getClear',
-			value: function getClear() {
-				return this.getPosition().clear;
-			}
-		}, {
-			key: 'getColumnIndex',
-			value: function getColumnIndex() {
-				return this.getPosition().col;
-			}
-		}, {
-			key: 'getRowIndex',
-			value: function getRowIndex() {
-				return this.getPosition().row;
-			}
-		}, {
-			key: 'getPosition',
-			value: function getPosition() {
-				var pos = this.layout.pos;
-				if (typeof pos === 'undefined' || pos == null) {
-					return this.getDefaultPosition();
-				} else {
-					return this.getDefaultPosition(pos.width, pos.col, pos.row, pos.clear);
-				}
-			}
-		}, {
-			key: 'getDefaultPosition',
-			value: function getDefaultPosition(width, columnIndex, rowIndex, clear) {
-				return {
-					width: width,
-					col: columnIndex ? columnIndex : 9999,
-					row: rowIndex ? rowIndex : 9999,
-					clear: clear
-				};
-			}
-		}, {
-			key: 'getStyles',
-			value: function getStyles() {
-				return this.layout.styles ? this.layout.styles : {};
-			}
-		}, {
-			key: 'getStyle',
-			value: function getStyle(key) {
-				return this.getStyles()[key];
-			}
-		}, {
-			key: 'getOptions',
-			value: function getOptions() {
-				return this.layout.comp ? this.layout.comp : {};
-			}
-		}, {
-			key: 'getOptionValue',
-			value: function getOptionValue(key) {
-				var options = this.getOptions();
-				if (options[key] != null && options.propertyIsEnumerable(key)) {
-					return this.getOptions()[key];
-				} else {
-					return null;
-				}
-			}
-		}, {
-			key: 'getAdditionalModel',
-			value: function getAdditionalModel() {
-				return this.getOptionValue('additionalModel');
-			}
-		}, {
-			key: 'getEventMonitors',
-			value: function getEventMonitors() {
-				return this.layout.evt ? this.layout.evt : {};
-			}
-		}, {
-			key: 'getEventMonitor',
-			value: function getEventMonitor(key) {
-				return this.getEventMonitors()[key];
-			}
-		}]);
-
-		return Layout;
-	}();
-
-	exports.Layout = Layout;
-
-/***/ },
-/* 12 */
-/***/ function(module, exports) {
-
-	module.exports = React;
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	module.exports = ReactDOM;
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	module.exports = jQuery;
-
-/***/ },
-/* 15 */
-/***/ function(module, exports) {
-
-	module.exports = classNames;
-
-/***/ },
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4131,37 +4133,31 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _lodash = __webpack_require__(8);
+	var _lodash = __webpack_require__(5);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _envs = __webpack_require__(4);
+
+	var _model = __webpack_require__(7);
+
+	var _nComponent = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4299,7 +4295,7 @@
 				var layout = {
 					label: item.text,
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.CHECK_NL,
+						type: _envs.Envs.COMPONENT_TYPES.CHECK_NL,
 						textOnLeft: this.isTextOnLeft(),
 						labelDisplay: true
 					}
@@ -4308,7 +4304,7 @@
 				var id = this.getDataId();
 				var data = {};
 				data[id] = values.indexOf(item.id) != -1;
-				var model = new _nComponent.Model(data);
+				var model = new _model.Model(data);
 				model.addPostChangeListener(id, this.onItemCheckChanged.bind(this, item));
 				return this.renderInternalComponent(layout, {
 					key: itemIndex,
@@ -4454,17 +4450,17 @@
 		return NToggle;
 	}(_nComponent.NComponent);
 
-	_nComponent.Envs.COMPONENT_TYPES.CHECK = { type: 'n-check', label: true, error: true };
-	_nComponent.Envs.COMPONENT_TYPES.CHECK_NL = { type: 'n-check', label: false, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.CHECK.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.CHECK = { type: 'n-check', label: true, error: true };
+	_envs.Envs.COMPONENT_TYPES.CHECK_NL = { type: 'n-check', label: false, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.CHECK.type, function (options) {
 		return _react2.default.createElement(NCheck, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.ARRAY_CHECK = { type: 'n-array-check', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ARRAY_CHECK.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.ARRAY_CHECK = { type: 'n-array-check', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.ARRAY_CHECK.type, function (options) {
 		return _react2.default.createElement(NArrayCheck, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.TOGGLE = { type: 'n-toggle', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TOGGLE.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TOGGLE = { type: 'n-toggle', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TOGGLE.type, function (options) {
 		return _react2.default.createElement(NToggle, options);
 	});
 
@@ -4489,37 +4485,29 @@
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _lodash = __webpack_require__(8);
+	var _lodash = __webpack_require__(5);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _envs = __webpack_require__(4);
+
+	var _nComponent = __webpack_require__(15);
 
 	var _nIcon = __webpack_require__(18);
 
@@ -4536,6 +4524,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var $ = _jquery2.default;
+
 
 	var YEAR = 1;
 	var MONTH = 2;
@@ -4598,13 +4587,13 @@
 			}, {
 				key: 'getValueFormat',
 				value: function getValueFormat() {
-					return this.getLayoutOptionValue('valueFormat', _nComponent.Envs.DATE_VALUE_FORMAT);
+					return this.getLayoutOptionValue('valueFormat', _envs.Envs.DATE_VALUE_FORMAT);
 				}
 			}, {
 				key: 'getDisplayFormats',
 				value: function getDisplayFormats() {
 					var formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
-					return formats.length == 0 ? this.wrapToArray(_nComponent.Envs.DATE_DISPLAY_FORMAT) : formats;
+					return formats.length == 0 ? this.wrapToArray(_envs.Envs.DATE_DISPLAY_FORMAT) : formats;
 				}
 			}, {
 				key: 'getPrimaryDisplayFormat',
@@ -4614,7 +4603,7 @@
 			}, {
 				key: 'getYearStepOfMonthPanel',
 				value: function getYearStepOfMonthPanel() {
-					return this.getLayoutOptionValue('yearStep', _nComponent.Envs.YEAR_STEP_WHEN_MONTH);
+					return this.getLayoutOptionValue('yearStep', _envs.Envs.YEAR_STEP_WHEN_MONTH);
 				}
 				// {min: moment, max: moment}
 
@@ -4873,7 +4862,7 @@
 				value: function renderIcon(options) {
 					return this.renderInternalComponent({
 						comp: {
-							type: _nComponent.Envs.COMPONENT_TYPES.ICON,
+							type: _envs.Envs.COMPONENT_TYPES.ICON,
 							icon: options.icon
 						},
 						evt: {
@@ -5375,7 +5364,7 @@
 			key: 'getDateHeaderFormat',
 			value: function getDateHeaderFormat() {
 				var format = this.getLayoutOptionValue('dateHeaderFormat');
-				return _lodash2.default.assign({}, _nComponent.Envs.DATE_HEADER_FORMAT, format);
+				return _lodash2.default.assign({}, _envs.Envs.DATE_HEADER_FORMAT, format);
 			}
 		}, {
 			key: 'isDayPicking',
@@ -5692,7 +5681,7 @@
 		}, {
 			key: 'getTimeHeaderFormat',
 			value: function getTimeHeaderFormat() {
-				var format = this.getLayoutOptionValue('timeHeaderFormat', _nComponent.Envs.TIME_HEADER_FORMAT);
+				var format = this.getLayoutOptionValue('timeHeaderFormat', _envs.Envs.TIME_HEADER_FORMAT);
 				if (this.isMinuteSupported()) {
 					format += ':mm';
 				}
@@ -5705,7 +5694,7 @@
 			key: 'getDisplayFormats',
 			value: function getDisplayFormats() {
 				var formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
-				return formats.length == 0 ? this.wrapToArray(_nComponent.Envs.TIME_DISPLAY_FORMAT) : formats;
+				return formats.length == 0 ? this.wrapToArray(_envs.Envs.TIME_DISPLAY_FORMAT) : formats;
 			}
 		}, {
 			key: 'getCurrentDisplayType',
@@ -5794,7 +5783,7 @@
 			key: 'getDisplayFormats',
 			value: function getDisplayFormats() {
 				var formats = this.wrapToArray(this.getLayoutOptionValue('displayFormats'));
-				return formats.length == 0 ? this.wrapToArray(_nComponent.Envs.DATE_TIME_DISPLAY_FORMAT) : formats;
+				return formats.length == 0 ? this.wrapToArray(_envs.Envs.DATE_TIME_DISPLAY_FORMAT) : formats;
 			}
 		}, {
 			key: 'onNowClicked',
@@ -6012,20 +6001,20 @@
 		return NDate;
 	}(NIconRenderer(NDateComponent((0, _nComponent.NDropdownComponent)(_nComponent.NComponent))));
 
-	_nComponent.Envs.COMPONENT_TYPES.DATE_CALENDAR = { type: 'n-date-calendar', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.DATE_CALENDAR.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.DATE_CALENDAR = { type: 'n-date-calendar', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.DATE_CALENDAR.type, function (options) {
 		return _react2.default.createElement(NDateCalendar, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.TIME_CLOCK = { type: 'n-time-clock', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TIME_CLOCK.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TIME_CLOCK = { type: 'n-time-clock', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TIME_CLOCK.type, function (options) {
 		return _react2.default.createElement(NTimeClock, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR = { type: 'n-date-time-calendar', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR = { type: 'n-date-time-calendar', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.DATE_TIME_CALENDAR.type, function (options) {
 		return _react2.default.createElement(NDateTimeCalendar, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.DATE_PICKER = { type: 'n-date-picker', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.DATE_PICKER.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.DATE_PICKER = { type: 'n-date-picker', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.DATE_PICKER.type, function (options) {
 		return _react2.default.createElement(NDate, options);
 	});
 
@@ -6048,33 +6037,25 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _nComponent = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6085,6 +6066,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var $ = _jquery2.default;
+
 
 	var prefixFA = function prefixFA(str) {
 		if (str) {
@@ -6252,13 +6234,13 @@
 		return NStackIcon;
 	}(_nComponent.NComponent);
 
-	_nComponent.Envs.COMPONENT_TYPES.ICON = { type: 'n-icon', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ICON.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.ICON = { type: 'n-icon', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.ICON.type, function (options) {
 		return _react2.default.createElement(NIcon, options);
 	});
 
-	_nComponent.Envs.COMPONENT_TYPES.STACK_ICON = { type: 'n-stack-icon', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.STACK_ICON.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.STACK_ICON = { type: 'n-stack-icon', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.STACK_ICON.type, function (options) {
 		return _react2.default.createElement(NStackIcon, options);
 	});
 
@@ -6286,33 +6268,25 @@
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _nComponent = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6433,8 +6407,8 @@
 		return NLabel;
 	}(_nComponent.NAddonComponent);
 
-	_nComponent.Envs.COMPONENT_TYPES.LABEL = { type: 'n-label', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.LABEL.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.LABEL = { type: 'n-label', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.LABEL.type, function (options) {
 		return _react2.default.createElement(NLabel, options);
 	});
 
@@ -6455,33 +6429,29 @@
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _model = __webpack_require__(7);
+
+	var _layout = __webpack_require__(6);
+
+	var _nComponent = __webpack_require__(15);
 
 	var _nIcon = __webpack_require__(18);
 
@@ -6579,7 +6549,7 @@
 				}
 				var layout = {
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.ICON,
+						type: _envs.Envs.COMPONENT_TYPES.ICON,
 						icon: icon
 					},
 					styles: {
@@ -6593,12 +6563,12 @@
 			value: function renderItemCheck(item) {
 				var _this2 = this;
 
-				var model = new _nComponent.Model({ value: this.isItemChecked(item) }).addPostChangeListener('value', function (evt) {
+				var model = new _model.Model({ value: this.isItemChecked(item) }).addPostChangeListener('value', function (evt) {
 					_this2.onItemCheckChanged(item, evt.new);
 				});
-				var layout = new _nComponent.Layout('value', {
+				var layout = new _layout.Layout('value', {
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.CHECK_NL
+						type: _envs.Envs.COMPONENT_TYPES.CHECK_NL
 					},
 					evt: {
 						'jq.keydown': this.onItemKeyDown
@@ -6669,7 +6639,7 @@
 		}, {
 			key: 'getMaxHeight',
 			value: function getMaxHeight() {
-				return this.getLayoutOptionValue('maxHeight', _nComponent.Envs.LIST_MAX_HEIGHT);
+				return this.getLayoutOptionValue('maxHeight', _envs.Envs.LIST_MAX_HEIGHT);
 			}
 		}, {
 			key: 'getMinWidth',
@@ -6837,8 +6807,8 @@
 		return NList;
 	}((0, _nComponent.NCodeTableComponent)(_nComponent.NComponent));
 
-	_nComponent.Envs.COMPONENT_TYPES.LIST = { type: 'n-list', label: true, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.LIST.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.LIST = { type: 'n-list', label: true, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.LIST.type, function (options) {
 		return _react2.default.createElement(NList, options);
 	});
 
@@ -6859,33 +6829,27 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _layout = __webpack_require__(6);
+
+	var _nComponent = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7047,11 +7011,11 @@
 					return null;
 				}
 
-				var layout = _nComponent.Envs.deepMergeTo({}, {
+				var layout = _envs.Envs.deepMergeTo({}, {
 					label: this.getLabel(),
 					dataId: this.getDataId(),
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.PANEL_HEADER,
+						type: _envs.Envs.COMPONENT_TYPES.PANEL_HEADER,
 						style: this.getLayoutOptionValue('style'),
 						collapsible: this.isCollapsible(),
 						expanded: this.isExpanded(),
@@ -7074,10 +7038,10 @@
 		}, {
 			key: 'renderBody',
 			value: function renderBody() {
-				var layout = _nComponent.Envs.deepMergeTo({}, {
+				var layout = _envs.Envs.deepMergeTo({}, {
 					dataId: this.getDataId(),
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.PANEL_BODY,
+						type: _envs.Envs.COMPONENT_TYPES.PANEL_BODY,
 						style: this.getLayoutOptionValue('style'),
 						expanded: this.isExpanded(),
 						children: this.getChildren(),
@@ -7203,7 +7167,7 @@
 			value: function renderItem(item, itemIndex) {
 				var model = this.createItemModel(item, itemIndex);
 				var layoutOptions = this.createItemLayoutOptions(model, itemIndex);
-				var layout = new _nComponent.Layout(this.getId(), {
+				var layout = new _layout.Layout(this.getId(), {
 					label: this.getLayout().getLabel(),
 					dataId: this.getDataId(),
 					comp: layoutOptions
@@ -7271,20 +7235,20 @@
 		return NArrayPanel;
 	}(_nComponent.NHierarchyComponent);
 
-	_nComponent.Envs.COMPONENT_TYPES.PANEL_HEADER = { type: 'n-panel-header', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.PANEL_HEADER.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.PANEL_HEADER = { type: 'n-panel-header', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.PANEL_HEADER.type, function (options) {
 		return _react2.default.createElement(NPanelHeader, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.PANEL_BODY = { type: 'n-panel-body', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.PANEL_BODY.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.PANEL_BODY = { type: 'n-panel-body', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.PANEL_BODY.type, function (options) {
 		return _react2.default.createElement(NPanelBody, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.PANEL = { type: 'n-panel', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.PANEL.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.PANEL = { type: 'n-panel', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.PANEL.type, function (options) {
 		return _react2.default.createElement(NPanel, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.ARRAY_PANEL = { type: 'n-array-panel', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ARRAY_PANEL.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.ARRAY_PANEL = { type: 'n-array-panel', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.ARRAY_PANEL.type, function (options) {
 		return _react2.default.createElement(NArrayPanel, options);
 	});
 
@@ -7306,33 +7270,27 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _model = __webpack_require__(7);
+
+	var _nComponent = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7485,7 +7443,7 @@
 				var layout = {
 					label: item.text,
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.BUTTON,
+						type: _envs.Envs.COMPONENT_TYPES.BUTTON,
 						style: this.getButtonStyle()
 					},
 					evt: {
@@ -7502,7 +7460,7 @@
 				if (item.icon) {
 					layout.comp.leftIcon = {
 						comp: {
-							type: _nComponent.Envs.COMPONENT_TYPES.ICON,
+							type: _envs.Envs.COMPONENT_TYPES.ICON,
 							icon: item.icon
 						}
 					};
@@ -7558,12 +7516,12 @@
 		return NRadioButton;
 	}((0, _nComponent.NCodeTableComponent)(_nComponent.NComponent));
 
-	_nComponent.Envs.COMPONENT_TYPES.RADIO = { type: 'n-radio', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.RADIO.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.RADIO = { type: 'n-radio', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.RADIO.type, function (options) {
 		return _react2.default.createElement(NRadio, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.RADIO_BUTTON = { type: 'n-radio-button', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.RADIO_BUTTON.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.RADIO_BUTTON = { type: 'n-radio-button', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.RADIO_BUTTON.type, function (options) {
 		return _react2.default.createElement(NRadioButton, options);
 	});
 
@@ -7585,33 +7543,27 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _model = __webpack_require__(7);
+
+	var _nComponent = __webpack_require__(15);
 
 	var _nIcon = __webpack_require__(18);
 
@@ -7626,6 +7578,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var $ = _jquery2.default;
+
 
 	var NIconRenderer = function NIconRenderer(ParentClass) {
 		return function (_ParentClass) {
@@ -7642,7 +7595,7 @@
 				value: function renderIcon(options) {
 					return this.renderInternalComponent({
 						comp: {
-							type: _nComponent.Envs.COMPONENT_TYPES.ICON,
+							type: _envs.Envs.COMPONENT_TYPES.ICON,
 							icon: options.icon
 						},
 						styles: {
@@ -7718,9 +7671,9 @@
 		_createClass(NSelect, [{
 			key: 'renderDropdown',
 			value: function renderDropdown() {
-				var layout = _nComponent.Envs.deepMergeTo({}, {
+				var layout = _envs.Envs.deepMergeTo({}, {
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.LIST,
+						type: _envs.Envs.COMPONENT_TYPES.LIST,
 						noWrap: false,
 						checkable: true,
 						codes: this.getCodeTable(),
@@ -7847,7 +7800,7 @@
 		}, {
 			key: 'getPlaceholder',
 			value: function getPlaceholder() {
-				return this.getLayoutOptionValue('placeholder', _nComponent.Envs.SELECT_PLACEHOLDER);
+				return this.getLayoutOptionValue('placeholder', _envs.Envs.SELECT_PLACEHOLDER);
 			}
 		}, {
 			key: 'getComponent',
@@ -7905,8 +7858,8 @@
 		return NSelect;
 	}(NIconRenderer((0, _nComponent.NCodeTableComponent)((0, _nComponent.NDropdownComponent)(_nComponent.NComponent))));
 
-	_nComponent.Envs.COMPONENT_TYPES.SELECT = { type: 'n-select', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.SELECT.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.SELECT = { type: 'n-select', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.SELECT.type, function (options) {
 		return _react2.default.createElement(NSelect, options);
 	});
 
@@ -7929,33 +7882,29 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _model = __webpack_require__(7);
+
+	var _layout = __webpack_require__(6);
+
+	var _nComponent = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7966,6 +7915,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var $ = _jquery2.default;
+
 
 	var NTabContainer = function NTabContainer(ParentClass) {
 		return function (_ParentClass) {
@@ -8104,10 +8054,10 @@
 					model: tab.model ? tab.model : this.getModel(),
 					orientation: this.getOrientation(),
 					viewMode: this.isViewMode(),
-					layout: new _nComponent.Layout(this.getId(), {
+					layout: new _layout.Layout(this.getId(), {
 						dataId: this.getDataId(),
 						label: tab.label ? tab.label : this.getLayout().getLabel(),
-						comp: _nComponent.Envs.deepMergeTo({}, {
+						comp: _envs.Envs.deepMergeTo({}, {
 							leadChildren: this.getLeadingChildren(),
 							tailChildren: this.getTailingChildren(),
 							active: tabIndex == this.getActiveTabIndex(),
@@ -8191,7 +8141,7 @@
 				};
 				var tab = this.getActiveTab();
 				if (tab.children) {
-					children = _nComponent.Envs.deepMergeTo({}, children, {
+					children = _envs.Envs.deepMergeTo({}, children, {
 						children: tab.children
 					});
 				}
@@ -8257,11 +8207,11 @@
 		_createClass(NTab, [{
 			key: 'renderHeader',
 			value: function renderHeader() {
-				var layout = _nComponent.Envs.deepMergeTo({}, {
+				var layout = _envs.Envs.deepMergeTo({}, {
 					label: this.getLayout().getLabel(),
 					dataId: this.getDataId(),
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.TAB_HEADER,
+						type: _envs.Envs.COMPONENT_TYPES.TAB_HEADER,
 						style: this.getLayoutOptionValue('style'),
 						tabs: this.getTabs(),
 						leadChildren: this.getLeadingChildren(),
@@ -8283,10 +8233,10 @@
 		}, {
 			key: 'renderContent',
 			value: function renderContent() {
-				var layout = _nComponent.Envs.deepMergeTo({}, {
+				var layout = _envs.Envs.deepMergeTo({}, {
 					dataId: this.getDataId(),
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.TAB_BODY,
+						type: _envs.Envs.COMPONENT_TYPES.TAB_BODY,
 						style: this.getLayoutOptionValue('style'),
 						tabs: this.getTabs(),
 						children: this.getChildren(),
@@ -8411,10 +8361,10 @@
 				var layoutJSON = {
 					label: this.getLayout().getLabel(),
 					dataId: this.getDataId(),
-					comp: _nComponent.Envs.deepMergeTo({}, {
+					comp: _envs.Envs.deepMergeTo({}, {
 						tabs: this.getTabs()
 					}, this.getLayout().getOptions(), {
-						type: _nComponent.Envs.COMPONENT_TYPES.TAB
+						type: _envs.Envs.COMPONENT_TYPES.TAB
 					}),
 					evt: {
 						active: this.onItemActived,
@@ -8469,8 +8419,8 @@
 						tab.tailChildren = {
 							icon: {
 								comp: {
-									type: _nComponent.Envs.COMPONENT_TYPES.ICON,
-									icon: _nComponent.Envs.TAB_REMOVE_ICON
+									type: _envs.Envs.COMPONENT_TYPES.ICON,
+									icon: _envs.Envs.TAB_REMOVE_ICON
 								},
 								evt: {
 									click: _this10.onRemoveClicked.bind(_this10, model, itemIndex)
@@ -8482,23 +8432,23 @@
 				});
 				if (this.isAddable()) {
 					tabs.push({
-						label: _nComponent.Envs.TAB_ADD_TEXT,
-						model: new _nComponent.Model({}),
+						label: _envs.Envs.TAB_ADD_TEXT,
+						model: new _model.Model({}),
 						style: 'add-button',
 						leadChildren: {
 							icon: {
 								comp: {
-									type: _nComponent.Envs.COMPONENT_TYPES.ICON,
-									icon: _nComponent.Envs.TAB_ADD_ICON
+									type: _envs.Envs.COMPONENT_TYPES.ICON,
+									icon: _envs.Envs.TAB_ADD_ICON
 								}
 							}
 						},
 						children: function children() {
 							return {
 								label: {
-									label: _nComponent.Envs.TAB_NO_ITEM_TEXT,
+									label: _envs.Envs.TAB_NO_ITEM_TEXT,
 									comp: {
-										type: _nComponent.Envs.COMPONENT_TYPES.LABEL,
+										type: _envs.Envs.COMPONENT_TYPES.LABEL,
 										textFromModel: false
 									},
 									pos: { width: 12 }
@@ -8620,20 +8570,20 @@
 		return NArrayTab;
 	}(NTabContainer(_nComponent.NHierarchyComponent));
 
-	_nComponent.Envs.COMPONENT_TYPES.TAB_HEADER = { type: 'n-tab-header', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TAB_HEADER.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TAB_HEADER = { type: 'n-tab-header', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TAB_HEADER.type, function (options) {
 		return _react2.default.createElement(NTabHeader, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.TAB_BODY = { type: 'n-tab-body', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TAB_BODY.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TAB_BODY = { type: 'n-tab-body', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TAB_BODY.type, function (options) {
 		return _react2.default.createElement(NTabBody, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.TAB = { type: 'n-tab', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TAB.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TAB = { type: 'n-tab', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TAB.type, function (options) {
 		return _react2.default.createElement(NTab, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.ARRAY_TAB = { type: 'n-array-tab', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.ARRAY_TAB.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.ARRAY_TAB = { type: 'n-array-tab', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.ARRAY_TAB.type, function (options) {
 		return _react2.default.createElement(NArrayTab, options);
 	});
 
@@ -8659,33 +8609,29 @@
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _model = __webpack_require__(7);
+
+	var _layout = __webpack_require__(6);
+
+	var _nComponent = __webpack_require__(15);
 
 	var _nIcon = __webpack_require__(18);
 
@@ -8698,6 +8644,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var $ = _jquery2.default;
+
 
 	var NTableContainer = function NTableContainer(ParentClass) {
 		return function (_ParentClass) {
@@ -8814,7 +8761,7 @@
 				}
 				var layout = {
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.ICON,
+						type: _envs.Envs.COMPONENT_TYPES.ICON,
 						icon: function icon() {
 							var sortType = _this4.getColumnSortType(column);
 							if (sortType === NTable.ASC) {
@@ -8850,7 +8797,7 @@
 					);
 				} else if (type === 'object' && title.comp && title.comp.type) {
 					// a component
-					return this.renderInternalComponent(_nComponent.Envs.deepMergeTo({
+					return this.renderInternalComponent(_envs.Envs.deepMergeTo({
 						dataId: column.dataId
 					}, title));
 				} else {
@@ -8968,7 +8915,7 @@
 						body = body.call(this, rowModel, column);
 					}
 					if (body.comp && body.comp.type) {
-						return this.renderInternalComponent(_nComponent.Envs.deepMergeTo({
+						return this.renderInternalComponent(_envs.Envs.deepMergeTo({
 							dataId: column.dataId,
 							comp: {
 								rowIndex: rowIndex
@@ -9127,11 +9074,11 @@
 		_createClass(NTable, [{
 			key: 'renderHeader',
 			value: function renderHeader() {
-				var layout = _nComponent.Envs.deepMergeTo({}, {
+				var layout = _envs.Envs.deepMergeTo({}, {
 					label: this.getLayout().getLabel(),
 					dataId: this.getDataId(),
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.TABLE_HEADER,
+						type: _envs.Envs.COMPONENT_TYPES.TABLE_HEADER,
 						style: this.getLayoutOptionValue('style'),
 						sortable: this.getLayoutOptionValue('sortable', false),
 						sorter: this.getLayoutOptionValue('sorter', null, true),
@@ -9154,11 +9101,11 @@
 		}, {
 			key: 'renderBody',
 			value: function renderBody() {
-				var layout = _nComponent.Envs.deepMergeTo({}, {
+				var layout = _envs.Envs.deepMergeTo({}, {
 					label: this.getLayout().getLabel(),
 					dataId: this.getDataId(),
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.TABLE_BODY,
+						type: _envs.Envs.COMPONENT_TYPES.TABLE_BODY,
 						style: this.getLayoutOptionValue('style'),
 						columns: this.getColumns(),
 						columnsOfGrid: this.getColumnsOfGrid()
@@ -9224,16 +9171,16 @@
 	NTable.DESC = 'desc';
 
 
-	_nComponent.Envs.COMPONENT_TYPES.TABLE_HEADER = { type: 'n-table-header', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TABLE_HEADER.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TABLE_HEADER = { type: 'n-table-header', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TABLE_HEADER.type, function (options) {
 		return _react2.default.createElement(NTableHeader, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.TABLE_BODY = { type: 'n-table-body', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TABLE_BODY.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TABLE_BODY = { type: 'n-table-body', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TABLE_BODY.type, function (options) {
 		return _react2.default.createElement(NTableBody, options);
 	});
-	_nComponent.Envs.COMPONENT_TYPES.TABLE = { type: 'n-table', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TABLE.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TABLE = { type: 'n-table', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TABLE.type, function (options) {
 		return _react2.default.createElement(NTable, options);
 	});
 
@@ -9254,33 +9201,25 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _nComponent = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9318,7 +9257,7 @@
 					_this.state.valueChangeTimeoutId = setTimeout(function () {
 						delete _this.state.valueChangeTimeoutId;
 						_this.setValueToModel(newValue);
-					}, _nComponent.Envs.TEXT_CHANGE_DELAY);
+					}, _envs.Envs.TEXT_CHANGE_DELAY);
 				}
 			}, _this.onComponentFocused = function (evt) {
 				_this.onComponentFocusChanged();
@@ -9436,8 +9375,8 @@
 		return NTextArea;
 	}(_nComponent.NComponent);
 
-	_nComponent.Envs.COMPONENT_TYPES.TEXTAREA = { type: 'n-text-area', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TEXTAREA.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TEXTAREA = { type: 'n-text-area', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TEXTAREA.type, function (options) {
 		return _react2.default.createElement(NTextArea, options);
 	});
 
@@ -9458,33 +9397,25 @@
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _nComponent = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9522,7 +9453,7 @@
 					_this.state.valueChangeTimeoutId = setTimeout(function () {
 						delete _this.state.valueChangeTimeoutId;
 						_this.setValueToModel(newValue);
-					}, _nComponent.Envs.TEXT_CHANGE_DELAY);
+					}, _envs.Envs.TEXT_CHANGE_DELAY);
 				}
 			}, _this.onComponentFocused = function (evt) {
 				_this.onComponentFocusChanged();
@@ -9720,8 +9651,8 @@
 		return NText;
 	}(_nComponent.NAddonComponent);
 
-	_nComponent.Envs.COMPONENT_TYPES.TEXT = { type: 'n-text', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TEXT.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TEXT = { type: 'n-text', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TEXT.type, function (options) {
 		return _react2.default.createElement(NText, options);
 	});
 
@@ -9742,37 +9673,33 @@
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _lodash = __webpack_require__(8);
+	var _lodash = __webpack_require__(5);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _envs = __webpack_require__(4);
+
+	var _model = __webpack_require__(7);
+
+	var _layout = __webpack_require__(6);
+
+	var _nComponent = __webpack_require__(15);
 
 	var _nIcon = __webpack_require__(18);
 
@@ -9891,15 +9818,15 @@
 				}
 				if (!icon) {
 					if (this.hasChildren(item)) {
-						icon = _nComponent.Envs.TREE_BRANCH_ICON;
+						icon = _envs.Envs.TREE_BRANCH_ICON;
 						clickHandler = this.onItemClicked;
 					} else {
-						icon = _nComponent.Envs.TREE_LEAF_ICON;
+						icon = _envs.Envs.TREE_LEAF_ICON;
 					}
 				}
 				var layout = {
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.ICON,
+						type: _envs.Envs.COMPONENT_TYPES.ICON,
 						icon: icon
 					},
 					styles: {
@@ -9916,12 +9843,12 @@
 			value: function renderNodeCheck(item, itemIndex, parent) {
 				var _this3 = this;
 
-				var model = new _nComponent.Model({ value: this.isItemChecked(item) }).addPostChangeListener('value', function (evt) {
+				var model = new _model.Model({ value: this.isItemChecked(item) }).addPostChangeListener('value', function (evt) {
 					_this3.onItemCheckChanged(item, evt.new);
 				});
-				var layout = new _nComponent.Layout('value', {
+				var layout = new _layout.Layout('value', {
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.CHECK_NL
+						type: _envs.Envs.COMPONENT_TYPES.CHECK_NL
 					},
 					evt: {
 						'jq.keydown': this.onItemKeyDown
@@ -10050,12 +9977,12 @@
 		}, {
 			key: 'getRootIcon',
 			value: function getRootIcon() {
-				return this.getLayoutOptionValue('rootIcon', _nComponent.Envs.TREE_ROOT_ICON);
+				return this.getLayoutOptionValue('rootIcon', _envs.Envs.TREE_ROOT_ICON);
 			}
 		}, {
 			key: 'getRootText',
 			value: function getRootText() {
-				return this.getLayoutOptionValue('rootText', _nComponent.Envs.TREE_ROOT_TEXT);
+				return this.getLayoutOptionValue('rootText', _envs.Envs.TREE_ROOT_TEXT);
 			}
 		}, {
 			key: 'getMinHeight',
@@ -10065,7 +9992,7 @@
 		}, {
 			key: 'getMaxHeight',
 			value: function getMaxHeight() {
-				return this.getLayoutOptionValue('maxHeight', _nComponent.Envs.TREE_MAX_HEIGHT);
+				return this.getLayoutOptionValue('maxHeight', _envs.Envs.TREE_MAX_HEIGHT);
 			}
 		}, {
 			key: 'getMinWidth',
@@ -10593,8 +10520,8 @@
 	NTree.ROOT_ID = '-root';
 
 
-	_nComponent.Envs.COMPONENT_TYPES.TREE = { type: 'n-tree', label: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.TREE.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.TREE = { type: 'n-tree', label: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.TREE.type, function (options) {
 		return _react2.default.createElement(NTree, options);
 	});
 
@@ -10615,33 +10542,27 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _model = __webpack_require__(7);
+
+	var _nComponent = __webpack_require__(15);
 
 	var _nPanel = __webpack_require__(22);
 
@@ -10667,9 +10588,9 @@
 		_createClass(NDialog, [{
 			key: 'renderDialogContent',
 			value: function renderDialogContent() {
-				var layout = _nComponent.Envs.deepMergeTo({}, {
+				var layout = _envs.Envs.deepMergeTo({}, {
 					comp: {
-						type: _nComponent.Envs.COMPONENT_TYPES.PANEL
+						type: _envs.Envs.COMPONENT_TYPES.PANEL
 					}
 				}, this.getContentLayout());
 				return _react2.default.createElement(
@@ -10760,7 +10681,7 @@
 				var _this3 = this;
 
 				this.setState({ show: false });
-				_nComponent.Envs.transitionend({
+				_envs.Envs.transitionend({
 					target: this.$me(),
 					handler: function handler() {
 						$('body').removeClass('n-dialog-open-' + _this3.getDialogId());
@@ -10790,8 +10711,8 @@
 		return NDialogUtil;
 	}();
 
-	_nComponent.Envs.COMPONENT_TYPES.DIALOG = { type: 'n-dialog', label: true, error: true };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.DIALOG.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.DIALOG = { type: 'n-dialog', label: true, error: true };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.DIALOG.type, function (options) {
 		return _react2.default.createElement(NDialog, options);
 	});
 
@@ -10811,33 +10732,27 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _nComponent = __webpack_require__(5);
-
-	Object.keys(_nComponent).forEach(function (key) {
-		if (key === "default" || key === "__esModule") return;
-		Object.defineProperty(exports, key, {
-			enumerable: true,
-			get: function get() {
-				return _nComponent[key];
-			}
-		});
-	});
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(11);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(13);
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(14);
+	var _jquery = __webpack_require__(13);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _classnames = __webpack_require__(15);
+	var _classnames = __webpack_require__(14);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _layout = __webpack_require__(6);
+
+	var _nComponent = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10882,8 +10797,8 @@
 		return NForm;
 	}(_nComponent.NContainer);
 
-	_nComponent.Envs.COMPONENT_TYPES.FORM = { type: 'n-form', label: false, error: false };
-	_nComponent.Envs.setRenderer(_nComponent.Envs.COMPONENT_TYPES.FORM.type, function (options) {
+	_envs.Envs.COMPONENT_TYPES.FORM = { type: 'n-form', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.FORM.type, function (options) {
 		return _react2.default.createElement(NForm, options);
 	});
 

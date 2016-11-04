@@ -1259,10 +1259,6 @@ class NHierarchyComponent extends NContainer {
 	}
 }
 
-export * from '../model/model'
-export * from '../model/validation'
-export * from '../layout/layout'
-export * from '../envs'
 export {
 	NWidget,
 	NComponent,

@@ -1,7 +1,10 @@
 import $ from 'jquery'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {CodeTable, Model, Layout, NSelect, Envs} from '../../src/js/components/n-select'
+import {CodeTable, Model} from '../../src/js/model/model'
+import {Layout} from '../../src/js/layout/layout'
+import {Envs} from '../../src/js/envs'
+import {NSelect} from '../../src/js/components/n-select'
 import {NTree}from '../../src/js/components/n-tree'
 
 $(function() {

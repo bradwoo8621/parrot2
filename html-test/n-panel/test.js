@@ -1,7 +1,10 @@
 import $ from 'jquery'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {CodeTable, Model, Layout, NPanel, NPanelHeader, NPanelBody, NArrayPanel, Envs} from '../../src/js/components/n-panel'
+import {Model} from '../../src/js/model/model'
+import {Layout} from '../../src/js/layout/layout'
+import {Envs} from '../../src/js/envs'
+import {NPanel, NPanelHeader, NPanelBody, NArrayPanel} from '../../src/js/components/n-panel'
 import {NIcon} from '../../src/js/components/n-icon'
 import {NCheck} from '../../src/js/components/n-check'
 

@@ -1,7 +1,10 @@
 import $ from 'jquery'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {CodeTable, Model, Layout, NCheck, NArrayCheck, NToggle, Envs} from '../../src/js/components/n-check'
+import {CodeTable, Model} from '../../src/js/model/model'
+import {Layout} from '../../src/js/layout/layout'
+import {Envs} from '../../src/js/envs'
+import {NCheck, NArrayCheck, NToggle} from '../../src/js/components/n-check'
 
 $(function() {
 	let codes = new CodeTable({

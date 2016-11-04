@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
-
-import {
-	Envs, 
-	Model,
-	Layout, 
-	NHierarchyComponent} from './n-component'
+import {Envs} from '../envs'
+import {Model} from '../model/model'
+import {Layout} from '../layout/layout'
+import {NHierarchyComponent} from './n-component'
 import {NIcon} from './n-icon'
 
 const NTableContainer = (ParentClass) => class extends ParentClass {
@@ -414,4 +412,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.TABLE.type, function (options) {
 });
 
 export {NTable, NTableHeader, NTableBody}
-export * from './n-component'

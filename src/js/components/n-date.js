@@ -4,11 +4,8 @@ import jQuery from 'jquery'
 import classnames from 'classnames'
 import lodash from 'lodash'
 let $ = jQuery;
-
-import {
-	Envs, 
-	NComponent, 
-	NDropdownComponent} from './n-component'
+import {Envs} from '../envs'
+import {NComponent, NDropdownComponent} from './n-component'
 import {NIcon} from './n-icon'
 import moment from 'moment'
 
@@ -1139,5 +1136,4 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.DATE_PICKER.type, function (options) {
 	return <NDate {...options} />;
 });
 
-export * from './n-component'
 export {NDateComponent, NDate, NDateCalendar, NTimeClock, NDateTimeCalendar}

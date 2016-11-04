@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
-
-import {Envs, NComponent, NAddonComponent} from './n-component'
+import {Envs} from '../envs'
+import {NComponent, NAddonComponent} from './n-component'
 
 class NText extends NAddonComponent {
 	// lifecycle
@@ -178,4 +178,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.TEXT.type, function (options) {
 });
 
 export {NText}
-export * from './n-component'

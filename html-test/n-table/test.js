@@ -1,8 +1,10 @@
 import $ from 'jquery'
 import React from 'react'
 import ReactDOM from 'react-dom'
-
-import {CodeTable, Model, Layout, NTable, NTableHeader, NTableBody, Envs} from '../../src/js/components/n-table'
+import {Model} from '../../src/js/model/model'
+import {Layout} from '../../src/js/layout/layout'
+import {Envs} from '../../src/js/envs'
+import {NTable, NTableHeader, NTableBody} from '../../src/js/components/n-table'
 import {NLabel} from '../../src/js/components/n-label'
 import {NText} from '../../src/js/components/n-text'
 import {NCheck} from '../../src/js/components/n-check'

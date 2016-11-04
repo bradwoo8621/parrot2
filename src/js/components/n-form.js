@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom'
 import jQuery from 'jquery'
 import classnames from 'classnames'
 let $ = jQuery;
-import {
-	Envs, 
-	Layout, 
-	NContainer} from './n-component'
+import {Envs} from '../envs'
+import {Layout} from '../layout/layout'
+import {NContainer} from './n-component'
 
 class NForm extends NContainer {
 	renderInNormal() {
@@ -30,4 +29,3 @@ Envs.setRenderer(Envs.COMPONENT_TYPES.FORM.type, function (options) {
 });
 
 export {NForm}
-export * from './n-component'
