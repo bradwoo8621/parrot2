@@ -9,8 +9,6 @@ var precss = require('precss');
 
 let extractSASS = new ExtractTextPlugin('[name]');
 
-let webpackTargetElectronRenderer = require('webpack-target-electron-renderer');
-
 var options = {
 	entry: {
 		// // sass
@@ -84,5 +82,4 @@ var options = {
 	},
 	// debug: true
 };
-options.target = webpackTargetElectronRenderer(options);
 module.exports = options;

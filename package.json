@@ -61,7 +61,6 @@
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
-    "webpack-cleanup-plugin": "^0.4.1",
-    "webpack-target-electron-renderer": "^0.4.0"
+    "webpack-cleanup-plugin": "^0.4.1"
   }
 }
