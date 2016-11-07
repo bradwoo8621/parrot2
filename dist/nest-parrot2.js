@@ -108,7 +108,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 	});
 
-	var _nButton = __webpack_require__(10);
+	var _nComponent = __webpack_require__(10);
+
+	Object.keys(_nComponent).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _nComponent[key];
+	    }
+	  });
+	});
+
+	var _nButton = __webpack_require__(15);
 
 	Object.keys(_nButton).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -2076,337 +2088,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.NButtonBar = exports.NButton = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(11);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(12);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _jquery = __webpack_require__(13);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _classnames = __webpack_require__(14);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _envs = __webpack_require__(4);
-
-	var _layout = __webpack_require__(6);
-
-	var _nComponent = __webpack_require__(15);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var $ = _jquery2.default;
-
-	var NButton = function (_NDropdownComponent) {
-		_inherits(NButton, _NDropdownComponent);
-
-		function NButton() {
-			var _ref;
-
-			var _temp, _this, _ret;
-
-			_classCallCheck(this, NButton);
-
-			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-				args[_key] = arguments[_key];
-			}
-
-			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NButton.__proto__ || Object.getPrototypeOf(NButton)).call.apply(_ref, [this].concat(args))), _this), _this.onDropdownIconClicked = function (evt) {
-				if (_this.isEnabled() && !evt.isDefaultPrevented()) {
-					evt.preventDefault();
-					_this.showDropdown();
-				}
-			}, _this.onComponentClicked = function (evt) {
-				if (_this.isClickable()) {
-					// click defined, event there are dropdown items
-					// always respond click handler
-					_this.fireEventToMonitor(evt, 'click');
-				} else if (_this.hasDropdown(_this.getDropdownItems())) {
-					_this.onDropdownIconClicked(evt);
-				}
-			}, _temp), _possibleConstructorReturn(_this, _ret);
-		}
-
-		_createClass(NButton, [{
-			key: 'renderIcon',
-			value: function renderIcon(icon) {
-				return this.renderInternalComponent(icon);
-			}
-		}, {
-			key: 'renderLeftIcon',
-			value: function renderLeftIcon() {
-				var icon = this.getLeftIcon();
-				if (icon) {
-					return this.renderIcon(icon);
-				}
-			}
-		}, {
-			key: 'renderRightIcon',
-			value: function renderRightIcon() {
-				var icon = this.getRightIcon();
-				if (icon) {
-					return this.renderIcon(icon);
-				}
-			}
-		}, {
-			key: 'renderDropdownIcon',
-			value: function renderDropdownIcon(dropdown) {
-				if (dropdown.has && !dropdown.separated) {
-					return _react2.default.createElement('i', { className: 'fa fa-fw fa-caret-down n-button-dropdown-icon',
-						onClick: this.onDropdownIconClicked });
-				} else {
-					return null;
-				}
-			}
-		}, {
-			key: 'renderText',
-			value: function renderText(dropdown) {
-				return _react2.default.createElement(
-					'button',
-					{ className: (0, _classnames2.default)('n-control n-btn n-clickable', this.getButtonStyle()),
-						onClick: this.onComponentClicked },
-					this.renderLeftIcon(),
-					this.getDisplayText(),
-					this.renderRightIcon(),
-					this.renderDropdownIcon(dropdown)
-				);
-			}
-		}, {
-			key: 'renderSeparatedDropdownIcon',
-			value: function renderSeparatedDropdownIcon(dropdown) {
-				if (dropdown.has && dropdown.separated) {
-					var className = (0, _classnames2.default)('n-control n-btn n-button-dropdown-icon n-clickable', this.getButtonStyle());
-					return _react2.default.createElement(
-						'button',
-						{ className: className,
-							onClick: this.onDropdownIconClicked },
-						_react2.default.createElement('i', { className: 'fa fa-fw fa-caret-down' })
-					);
-				} else {
-					return null;
-				}
-			}
-		}, {
-			key: 'renderDropdownItem',
-			value: function renderDropdownItem(item, itemIndex) {
-				return _react2.default.createElement(
-					'li',
-					{ key: itemIndex },
-					this.renderInternalComponent(item)
-				);
-			}
-		}, {
-			key: 'renderDropdownItems',
-			value: function renderDropdownItems(dropdown) {
-				var _this2 = this;
-
-				if (!dropdown.has) {
-					return null;
-				}
-				return _react2.default.createElement(
-					'ul',
-					{ className: 'n-button-dropdown n-dropdown n-text-left',
-						ref: 'dropdown' },
-					dropdown.items.map(function (item, itemIndex) {
-						return _this2.renderDropdownItem(item, itemIndex);
-					})
-				);
-			}
-		}, {
-			key: 'renderInNormal',
-			value: function renderInNormal() {
-				var dropdown = this.prepareDropdownItems();
-
-				var className = (0, _classnames2.default)(this.getComponentStyle(), {
-					'n-button-group': dropdown.has && dropdown.separated
-				});
-				return _react2.default.createElement(
-					'div',
-					{ className: className,
-						ref: 'me' },
-					this.renderText(dropdown),
-					this.renderSeparatedDropdownIcon(dropdown),
-					this.renderDropdownItems(dropdown)
-				);
-			}
-		}, {
-			key: 'getComponentClassName',
-			value: function getComponentClassName() {
-				return 'n-button';
-			}
-		}, {
-			key: 'getDisplayText',
-			value: function getDisplayText() {
-				return this.isTextFromModel() ? this.getValueFromModel() : this.getLabel();
-			}
-		}, {
-			key: 'isTextFromModel',
-			value: function isTextFromModel() {
-				return this.getLayoutOptionValue('textFromModel', false);
-			}
-		}, {
-			key: 'getButtonStyle',
-			value: function getButtonStyle() {
-				return 'n-btn-' + this.getLayoutOptionValue('style', 'default');
-			}
-		}, {
-			key: 'getLeftIcon',
-			value: function getLeftIcon() {
-				return this.getLayoutOptionValue('leftIcon');
-			}
-		}, {
-			key: 'getRightIcon',
-			value: function getRightIcon() {
-				return this.getLayoutOptionValue('rightIcon');
-			}
-		}, {
-			key: 'getDropdownItems',
-			value: function getDropdownItems() {
-				return this.wrapToArray(this.getLayoutOptionValue('dropdownItems'));
-			}
-		}, {
-			key: 'prepareDropdownItems',
-			value: function prepareDropdownItems() {
-				var items = this.getDropdownItems();
-				return {
-					has: this.hasDropdown(items),
-					separated: this.isHasClickHanlder(),
-					items: items
-				};
-			}
-		}, {
-			key: 'hasDropdown',
-			value: function hasDropdown(dropdownItems) {
-				return dropdownItems && dropdownItems.length > 0;
-			}
-		}]);
-
-		return NButton;
-	}((0, _nComponent.NDropdownComponent)(_nComponent.NComponent));
-
-	var NButtonBar = function (_NContainer) {
-		_inherits(NButtonBar, _NContainer);
-
-		function NButtonBar() {
-			_classCallCheck(this, NButtonBar);
-
-			return _possibleConstructorReturn(this, (NButtonBar.__proto__ || Object.getPrototypeOf(NButtonBar)).apply(this, arguments));
-		}
-
-		_createClass(NButtonBar, [{
-			key: 'renderButtons',
-			value: function renderButtons() {
-				var _this4 = this;
-
-				var buttons = this.getButtons();
-				return buttons.map(function (button, buttonIndex) {
-					if (!button.comp) {
-						button.comp = {};
-					}
-					if (!button.comp.type) {
-						button.comp.type = _envs.Envs.COMPONENT_TYPES.BUTTON;
-					}
-					if (!button.styles) {
-						button.styles = {};
-					}
-					if (!button.styles.comp) {
-						button.styles.comp = 'n-float-right';
-					}
-					return _this4.renderInternalComponent(button, {
-						key: buttonIndex
-					});
-				});
-			}
-		}, {
-			key: 'renderInNormal',
-			value: function renderInNormal() {
-				return _react2.default.createElement(
-					'div',
-					{ className: this.getComponentStyle(),
-						ref: 'me' },
-					this.renderLeadingDOMChildren(),
-					this.renderLeadingChildren(),
-					this.renderButtons(),
-					this.renderTailingChildren(),
-					this.renderTailingDOMChildren()
-				);
-			}
-		}, {
-			key: 'getComponentClassName',
-			value: function getComponentClassName() {
-				return 'n-button-bar';
-			}
-		}, {
-			key: 'getButtons',
-			value: function getButtons() {
-				var buttons = this.getLayoutOptionValue('buttons');
-				return buttons ? buttons : [];
-			}
-		}]);
-
-		return NButtonBar;
-	}(_nComponent.NContainer);
-
-	_envs.Envs.COMPONENT_TYPES.BUTTON = { type: 'n-button', label: false, error: false };
-	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.BUTTON.type, function (options) {
-		return _react2.default.createElement(NButton, options);
-	});
-	_envs.Envs.COMPONENT_TYPES.BUTTON_BAR = { type: 'n-button-bar', label: false, error: false };
-	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.BUTTON_BAR.type, function (options) {
-		return _react2.default.createElement(NButtonBar, options);
-	});
-
-	exports.NButton = NButton;
-	exports.NButtonBar = NButtonBar;
-
-/***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_11__;
-
-/***/ },
-/* 12 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_12__;
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_14__;
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
 	exports.NHierarchyComponent = exports.NCollapsibleContainer = exports.NContainer = exports.NCodeTableComponent = exports.NDropdownComponent = exports.NAddonComponent = exports.NComponent = exports.NWidget = undefined;
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -4126,6 +3807,337 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.NHierarchyComponent = NHierarchyComponent;
 
 /***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_11__;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_12__;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_14__;
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.NButtonBar = exports.NButton = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(11);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(12);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(13);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _classnames = __webpack_require__(14);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _envs = __webpack_require__(4);
+
+	var _layout = __webpack_require__(6);
+
+	var _nComponent = __webpack_require__(10);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = _jquery2.default;
+
+	var NButton = function (_NDropdownComponent) {
+		_inherits(NButton, _NDropdownComponent);
+
+		function NButton() {
+			var _ref;
+
+			var _temp, _this, _ret;
+
+			_classCallCheck(this, NButton);
+
+			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+				args[_key] = arguments[_key];
+			}
+
+			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NButton.__proto__ || Object.getPrototypeOf(NButton)).call.apply(_ref, [this].concat(args))), _this), _this.onDropdownIconClicked = function (evt) {
+				if (_this.isEnabled() && !evt.isDefaultPrevented()) {
+					evt.preventDefault();
+					_this.showDropdown();
+				}
+			}, _this.onComponentClicked = function (evt) {
+				if (_this.isClickable()) {
+					// click defined, event there are dropdown items
+					// always respond click handler
+					_this.fireEventToMonitor(evt, 'click');
+				} else if (_this.hasDropdown(_this.getDropdownItems())) {
+					_this.onDropdownIconClicked(evt);
+				}
+			}, _temp), _possibleConstructorReturn(_this, _ret);
+		}
+
+		_createClass(NButton, [{
+			key: 'renderIcon',
+			value: function renderIcon(icon) {
+				return this.renderInternalComponent(icon);
+			}
+		}, {
+			key: 'renderLeftIcon',
+			value: function renderLeftIcon() {
+				var icon = this.getLeftIcon();
+				if (icon) {
+					return this.renderIcon(icon);
+				}
+			}
+		}, {
+			key: 'renderRightIcon',
+			value: function renderRightIcon() {
+				var icon = this.getRightIcon();
+				if (icon) {
+					return this.renderIcon(icon);
+				}
+			}
+		}, {
+			key: 'renderDropdownIcon',
+			value: function renderDropdownIcon(dropdown) {
+				if (dropdown.has && !dropdown.separated) {
+					return _react2.default.createElement('i', { className: 'fa fa-fw fa-caret-down n-button-dropdown-icon',
+						onClick: this.onDropdownIconClicked });
+				} else {
+					return null;
+				}
+			}
+		}, {
+			key: 'renderText',
+			value: function renderText(dropdown) {
+				return _react2.default.createElement(
+					'button',
+					{ className: (0, _classnames2.default)('n-control n-btn n-clickable', this.getButtonStyle()),
+						onClick: this.onComponentClicked },
+					this.renderLeftIcon(),
+					this.getDisplayText(),
+					this.renderRightIcon(),
+					this.renderDropdownIcon(dropdown)
+				);
+			}
+		}, {
+			key: 'renderSeparatedDropdownIcon',
+			value: function renderSeparatedDropdownIcon(dropdown) {
+				if (dropdown.has && dropdown.separated) {
+					var className = (0, _classnames2.default)('n-control n-btn n-button-dropdown-icon n-clickable', this.getButtonStyle());
+					return _react2.default.createElement(
+						'button',
+						{ className: className,
+							onClick: this.onDropdownIconClicked },
+						_react2.default.createElement('i', { className: 'fa fa-fw fa-caret-down' })
+					);
+				} else {
+					return null;
+				}
+			}
+		}, {
+			key: 'renderDropdownItem',
+			value: function renderDropdownItem(item, itemIndex) {
+				return _react2.default.createElement(
+					'li',
+					{ key: itemIndex },
+					this.renderInternalComponent(item)
+				);
+			}
+		}, {
+			key: 'renderDropdownItems',
+			value: function renderDropdownItems(dropdown) {
+				var _this2 = this;
+
+				if (!dropdown.has) {
+					return null;
+				}
+				return _react2.default.createElement(
+					'ul',
+					{ className: 'n-button-dropdown n-dropdown n-text-left',
+						ref: 'dropdown' },
+					dropdown.items.map(function (item, itemIndex) {
+						return _this2.renderDropdownItem(item, itemIndex);
+					})
+				);
+			}
+		}, {
+			key: 'renderInNormal',
+			value: function renderInNormal() {
+				var dropdown = this.prepareDropdownItems();
+
+				var className = (0, _classnames2.default)(this.getComponentStyle(), {
+					'n-button-group': dropdown.has && dropdown.separated
+				});
+				return _react2.default.createElement(
+					'div',
+					{ className: className,
+						ref: 'me' },
+					this.renderText(dropdown),
+					this.renderSeparatedDropdownIcon(dropdown),
+					this.renderDropdownItems(dropdown)
+				);
+			}
+		}, {
+			key: 'getComponentClassName',
+			value: function getComponentClassName() {
+				return 'n-button';
+			}
+		}, {
+			key: 'getDisplayText',
+			value: function getDisplayText() {
+				return this.isTextFromModel() ? this.getValueFromModel() : this.getLabel();
+			}
+		}, {
+			key: 'isTextFromModel',
+			value: function isTextFromModel() {
+				return this.getLayoutOptionValue('textFromModel', false);
+			}
+		}, {
+			key: 'getButtonStyle',
+			value: function getButtonStyle() {
+				return 'n-btn-' + this.getLayoutOptionValue('style', 'default');
+			}
+		}, {
+			key: 'getLeftIcon',
+			value: function getLeftIcon() {
+				return this.getLayoutOptionValue('leftIcon');
+			}
+		}, {
+			key: 'getRightIcon',
+			value: function getRightIcon() {
+				return this.getLayoutOptionValue('rightIcon');
+			}
+		}, {
+			key: 'getDropdownItems',
+			value: function getDropdownItems() {
+				return this.wrapToArray(this.getLayoutOptionValue('dropdownItems'));
+			}
+		}, {
+			key: 'prepareDropdownItems',
+			value: function prepareDropdownItems() {
+				var items = this.getDropdownItems();
+				return {
+					has: this.hasDropdown(items),
+					separated: this.isHasClickHanlder(),
+					items: items
+				};
+			}
+		}, {
+			key: 'hasDropdown',
+			value: function hasDropdown(dropdownItems) {
+				return dropdownItems && dropdownItems.length > 0;
+			}
+		}]);
+
+		return NButton;
+	}((0, _nComponent.NDropdownComponent)(_nComponent.NComponent));
+
+	var NButtonBar = function (_NContainer) {
+		_inherits(NButtonBar, _NContainer);
+
+		function NButtonBar() {
+			_classCallCheck(this, NButtonBar);
+
+			return _possibleConstructorReturn(this, (NButtonBar.__proto__ || Object.getPrototypeOf(NButtonBar)).apply(this, arguments));
+		}
+
+		_createClass(NButtonBar, [{
+			key: 'renderButtons',
+			value: function renderButtons() {
+				var _this4 = this;
+
+				var buttons = this.getButtons();
+				return buttons.map(function (button, buttonIndex) {
+					if (!button.comp) {
+						button.comp = {};
+					}
+					if (!button.comp.type) {
+						button.comp.type = _envs.Envs.COMPONENT_TYPES.BUTTON;
+					}
+					if (!button.styles) {
+						button.styles = {};
+					}
+					if (!button.styles.comp) {
+						button.styles.comp = 'n-float-right';
+					}
+					return _this4.renderInternalComponent(button, {
+						key: buttonIndex
+					});
+				});
+			}
+		}, {
+			key: 'renderInNormal',
+			value: function renderInNormal() {
+				return _react2.default.createElement(
+					'div',
+					{ className: this.getComponentStyle(),
+						ref: 'me' },
+					this.renderLeadingDOMChildren(),
+					this.renderLeadingChildren(),
+					this.renderButtons(),
+					this.renderTailingChildren(),
+					this.renderTailingDOMChildren()
+				);
+			}
+		}, {
+			key: 'getComponentClassName',
+			value: function getComponentClassName() {
+				return 'n-button-bar';
+			}
+		}, {
+			key: 'getButtons',
+			value: function getButtons() {
+				var buttons = this.getLayoutOptionValue('buttons');
+				return buttons ? buttons : [];
+			}
+		}]);
+
+		return NButtonBar;
+	}(_nComponent.NContainer);
+
+	_envs.Envs.COMPONENT_TYPES.BUTTON = { type: 'n-button', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.BUTTON.type, function (options) {
+		return _react2.default.createElement(NButton, options);
+	});
+	_envs.Envs.COMPONENT_TYPES.BUTTON_BAR = { type: 'n-button-bar', label: false, error: false };
+	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.BUTTON_BAR.type, function (options) {
+		return _react2.default.createElement(NButtonBar, options);
+	});
+
+	exports.NButton = NButton;
+	exports.NButtonBar = NButtonBar;
+
+/***/ },
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4164,7 +4176,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _model = __webpack_require__(7);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4514,7 +4526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _envs = __webpack_require__(4);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	var _nIcon = __webpack_require__(18);
 
@@ -6062,7 +6074,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _envs = __webpack_require__(4);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6293,7 +6305,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _envs = __webpack_require__(4);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6458,7 +6470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _layout = __webpack_require__(6);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	var _nIcon = __webpack_require__(18);
 
@@ -6856,7 +6868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _layout = __webpack_require__(6);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7297,7 +7309,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _model = __webpack_require__(7);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7570,7 +7582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _model = __webpack_require__(7);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	var _nIcon = __webpack_require__(18);
 
@@ -7911,7 +7923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _layout = __webpack_require__(6);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8638,7 +8650,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _layout = __webpack_require__(6);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	var _nIcon = __webpack_require__(18);
 
@@ -9226,7 +9238,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _envs = __webpack_require__(4);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9422,7 +9434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _envs = __webpack_require__(4);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9706,7 +9718,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _layout = __webpack_require__(6);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	var _nIcon = __webpack_require__(18);
 
@@ -10569,7 +10581,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _model = __webpack_require__(7);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	var _nPanel = __webpack_require__(22);
 
@@ -10759,7 +10771,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _layout = __webpack_require__(6);
 
-	var _nComponent = __webpack_require__(15);
+	var _nComponent = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

@@ -5,6 +5,7 @@ export * from './layout/layout'
 export * from './model/model'
 export * from './model/validation'
 
+export * from './components/n-component'
 export * from './components/n-button'
 export * from './components/n-check'
 export * from './components/n-date'
