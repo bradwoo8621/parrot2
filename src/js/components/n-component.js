@@ -497,11 +497,7 @@ class NComponent extends NWidget {
 					});
 	}
 	getCellStyle() {
-		return classnames(this.getStyle('cell'), 
-						this.getComponentClassName(), {
-							'n-disabled': !this.isEnabled(),
-							'n-view-mode': this.isViewMode()
-						});
+		return classnames(this.getStyle('cell'));
 	}
 	getStyle(key) {
 		return this.wrapOptionValue(this.getLayout().getStyle(key));
@@ -671,8 +667,9 @@ class NComponent extends NWidget {
 
 		let label = this.getLabel();
 		let labelShown = this.isLabelShown();
-		let cellClassName = this.getWidthClassName(this.getWidth(), 
-									this.wrapOptionValue(this.getLayout().getClear()));
+		let cellClassName = classnames(this.getCellStyle(),
+									this.getWidthClassName(this.getWidth(), 
+									this.wrapOptionValue(this.getLayout().getClear())));
 		if (labelShown && label) {
 			let labelWidth = this.getLabelWidth();
 			let compWidth = this.getComponentInternalWidth(labelWidth);

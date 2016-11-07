@@ -3108,10 +3108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'getCellStyle',
 			value: function getCellStyle() {
-				return (0, _classnames2.default)(this.getStyle('cell'), this.getComponentClassName(), {
-					'n-disabled': !this.isEnabled(),
-					'n-view-mode': this.isViewMode()
-				});
+				return (0, _classnames2.default)(this.getStyle('cell'));
 			}
 		}, {
 			key: 'getStyle',
@@ -3330,7 +3327,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var label = this.getLabel();
 				var labelShown = this.isLabelShown();
-				var cellClassName = this.getWidthClassName(this.getWidth(), this.wrapOptionValue(this.getLayout().getClear()));
+				var cellClassName = (0, _classnames2.default)(this.getCellStyle(), this.getWidthClassName(this.getWidth(), this.wrapOptionValue(this.getLayout().getClear())));
 				if (labelShown && label) {
 					var labelWidth = this.getLabelWidth();
 					var compWidth = this.getComponentInternalWidth(labelWidth);
