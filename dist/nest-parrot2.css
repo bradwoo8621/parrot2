@@ -29,6 +29,8 @@ input[type=text], input[type=password], input[type=number], input[type=tel], inp
   display: block; }
   input[type=text]::-ms-clear, input[type=password]::-ms-clear, input[type=number]::-ms-clear, input[type=tel]::-ms-clear, input[type=email]::-ms-clear, input[type=url]::-ms-clear, textarea::-ms-clear {
     display: none; }
+  input[type=text][disabled], input[type=password][disabled], input[type=number][disabled], input[type=tel][disabled], input[type=email][disabled], input[type=url][disabled], textarea[disabled] {
+    background-color: transparent; }
 
 textarea {
   resize: vertical; }
