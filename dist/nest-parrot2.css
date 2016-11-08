@@ -4346,6 +4346,8 @@ li {
          -moz-user-select: none;
           -ms-user-select: none;
               user-select: none; }
+  .n-check.n-disabled {
+    cursor: default; }
 
 .n-array-check {
   position: relative;
@@ -4409,6 +4411,8 @@ li {
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none; }
+  .n-toggle.n-disabled {
+    cursor: default; }
 
 .n-date {
   position: relative;
@@ -5629,6 +5633,8 @@ li {
   .n-radio-group.n-radio-vertical > .n-radio {
     display: block;
     margin-right: 0; }
+  .n-radio-group.n-disabled .n-radio {
+    cursor: default; }
 
 .n-radio-button-group {
   position: relative;
@@ -5747,6 +5753,8 @@ li {
           line-height: 0.3rem;
           height: 0.3rem;
           text-align: right; }
+  .n-select.n-disabled .n-select-items {
+    cursor: default; }
 
 @media screen and (min-width: 0\0) and (min-resolution: 0.001dpcm) {
   .n-select .n-dropdown.n-list .n-list-item .n-check.n-checked + .n-list-item-text:after {

@@ -84,6 +84,9 @@
 			margin-right: $margin-0;
 		}
 	}
+	&.n-disabled .n-radio {
+		cursor: default;
+	}
 }
 
 .n-radio-button-group {

@@ -3890,7 +3890,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 
 			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NButton.__proto__ || Object.getPrototypeOf(NButton)).call.apply(_ref, [this].concat(args))), _this), _this.onDropdownIconClicked = function (evt) {
-				if (_this.isEnabled() && !evt.isDefaultPrevented()) {
+				if (!evt.isDefaultPrevented()) {
 					evt.preventDefault();
 					_this.showDropdown();
 				}
@@ -3939,9 +3939,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'renderText',
 			value: function renderText(dropdown) {
+				var className = (0, _classnames2.default)('n-control', 'n-btn', this.getButtonStyle(), {
+					'n-clickable': this.isEnabled()
+				});
 				return _react2.default.createElement(
 					'button',
-					{ className: (0, _classnames2.default)('n-control n-btn n-clickable', this.getButtonStyle()),
+					{ className: className,
+						disabled: !this.isEnabled(),
 						onClick: this.onComponentClicked },
 					this.renderLeftIcon(),
 					this.getDisplayText(),
@@ -3953,10 +3957,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: 'renderSeparatedDropdownIcon',
 			value: function renderSeparatedDropdownIcon(dropdown) {
 				if (dropdown.has && dropdown.separated) {
-					var className = (0, _classnames2.default)('n-control n-btn n-button-dropdown-icon n-clickable', this.getButtonStyle());
+					var className = (0, _classnames2.default)('n-control n-btn n-button-dropdown-icon', this.getButtonStyle(), {
+						'n-clickable': this.isEnabled()
+					});
 					return _react2.default.createElement(
 						'button',
 						{ className: className,
+							disabled: !this.isEnabled(),
 							onClick: this.onDropdownIconClicked },
 						_react2.default.createElement('i', { className: 'fa fa-fw fa-caret-down' })
 					);
@@ -4203,12 +4210,18 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 
 			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NCheck.__proto__ || Object.getPrototypeOf(NCheck)).call.apply(_ref, [this].concat(args))), _this), _this.onComponentClicked = function (evt) {
+				if (!_this.isEnabled()) {
+					return;
+				}
 				evt.preventDefault();
 				var value = _this.getValueFromModel();
 				_this.setValueToModel(!value);
 
 				_this.$me().focus();
 			}, _this.onComponentKeyPressed = function (evt) {
+				if (!_this.isEnabled()) {
+					return;
+				}
 				if (evt.charCode === 32) {
 					evt.preventDefault();
 					var value = _this.getValueFromModel();
@@ -4316,7 +4329,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					comp: {
 						type: _envs.Envs.COMPONENT_TYPES.CHECK_NL,
 						textOnLeft: this.isTextOnLeft(),
-						labelDisplay: true
+						labelDisplay: true,
+						enabled: this.isEnabled()
 					}
 				};
 				var values = this.getValueFromModel();
@@ -4407,12 +4421,17 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 
 			return _ret2 = (_temp2 = (_this4 = _possibleConstructorReturn(this, (_ref2 = NToggle.__proto__ || Object.getPrototypeOf(NToggle)).call.apply(_ref2, [this].concat(args))), _this4), _this4.onComponentClicked = function (evt) {
-				evt.preventDefault();
-				var value = _this4.getValueFromModel();
-				_this4.setValueToModel(!value);
+				if (_this4.isEnabled()) {
+					evt.preventDefault();
+					var value = _this4.getValueFromModel();
+					_this4.setValueToModel(!value);
+				}
 
 				_this4.$me().focus();
 			}, _this4.onComponentKeyUp = function (evt) {
+				if (!_this4.isEnabled()) {
+					return;
+				}
 				var keycode = evt.keyCode;
 				var value = _this4.getValueFromModel();
 				if (keycode === 37) {
@@ -5916,12 +5935,12 @@ return /******/ (function(modules) { // webpackBootstrap
 					{ className: 'n-input-addon' },
 					this.renderIcon({
 						icon: 'close',
-						click: this.onClearIconClicked,
+						click: this.isEnabled() ? this.onClearIconClicked : null,
 						ref: 'clear-btn'
 					}),
 					this.renderIcon({
 						icon: 'calendar',
-						click: this.onCalendarIconClicked,
+						click: this.isEnabled() ? this.onCalendarIconClicked : null,
 						ref: 'dropdown-btn'
 					})
 				);
@@ -7418,6 +7437,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'onComponentClicked',
 			value: function onComponentClicked(item, evt) {
+				if (!this.isEnabled()) {
+					return;
+				}
 				evt.preventDefault();
 				this.setValueToModel(item.id);
 				var target = $(_reactDom2.default.findDOMNode(evt.target));
@@ -7430,6 +7452,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'onComponentKeyPressed',
 			value: function onComponentKeyPressed(item, evt) {
+				if (!this.isEnabled()) {
+					return;
+				}
 				if (evt.charCode === 32 && item.id != this.getValueFromModel()) {
 					// space bar
 					evt.preventDefault();
@@ -7463,7 +7488,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					label: item.text,
 					comp: {
 						type: _envs.Envs.COMPONENT_TYPES.BUTTON,
-						style: this.getButtonStyle()
+						style: this.getButtonStyle(),
+						enabled: this.isEnabled()
 					},
 					evt: {
 						click: this.onItemClicked.bind(this, item, itemIndex)
@@ -7652,7 +7678,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			}, _this2.onComponentBlurred = function (evt) {
 				_this2.onComponentFocusChanged();
 			}, _this2.onComponentClicked = function (evt) {
-				if (evt.isDefaultPrevented()) {
+				if (!_this2.isEnabled() || evt.isDefaultPrevented()) {
 					return;
 				}
 				evt.preventDefault();
@@ -7662,7 +7688,6 @@ return /******/ (function(modules) { // webpackBootstrap
 					_this2.onComponentUpArrowKeyUp(evt);
 				}
 			}, _this2.onClearIconClicked = function (evt) {
-				evt.preventDefault();
 				if (_this2.isEnabled()) {
 					evt.preventDefault();
 					_this2.setValueToModel(null);
@@ -7716,19 +7741,19 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 			}
 		}, {
-			key: 'renderCalendarIcon',
-			value: function renderCalendarIcon() {
+			key: 'renderOperationIcon',
+			value: function renderOperationIcon() {
 				return _react2.default.createElement(
 					'div',
 					{ className: 'n-input-addon' },
 					this.renderIcon({
 						icon: 'close',
-						click: this.onClearIconClicked,
+						click: this.isEnabled() ? this.onClearIconClicked : null,
 						ref: 'clear-btn'
 					}),
 					this.renderIcon({
 						icon: 'caret-down',
-						click: this.onDropdownIconClicked,
+						click: this.isEnabled() ? this.onDropdownIconClicked : null,
 						ref: 'dropdown-btn'
 					})
 				);
@@ -7805,7 +7830,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						onKeyUp: this.onComponentKeyUp,
 						ref: 'me' },
 					this.renderSelectedItems(),
-					this.renderCalendarIcon(),
+					this.renderOperationIcon(),
 					this.renderDropdown(),
 					this.renderNormalLine(),
 					this.renderFocusLine()
@@ -7844,6 +7869,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'onComponentUpArrowKeyUp',
 			value: function onComponentUpArrowKeyUp(evt) {
+				if (!this.isEnabled()) {
+					return;
+				}
 				evt.preventDefault();
 				this.showDropdown();
 			}
@@ -7852,6 +7880,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: function onItemClearIconClicked(value, evt) {
 				var _this4 = this;
 
+				if (!this.isEnabled()) {
+					return;
+				}
 				evt.preventDefault();
 				var values = this.getValueFromModel();
 				var index = values.findIndex(function (v) {

@@ -68,6 +68,9 @@ class NRadio extends NCodeTableComponent(NComponent) {
 	}
 
 	onComponentClicked(item, evt) {
+		if (!this.isEnabled()) {
+			return;
+		}
 		evt.preventDefault();
 		this.setValueToModel(item.id);
 		let target = $(ReactDOM.findDOMNode(evt.target));
@@ -78,6 +81,9 @@ class NRadio extends NCodeTableComponent(NComponent) {
 		}
 	}
 	onComponentKeyPressed(item, evt) {
+		if (!this.isEnabled()) {
+			return;
+		}
 		if (evt.charCode === 32 && item.id != this.getValueFromModel()) {
 			// space bar
 			evt.preventDefault();
@@ -97,7 +103,8 @@ class NRadioButton extends NCodeTableComponent(NComponent) {
 			label: item.text,
 			comp: {
 				type: Envs.COMPONENT_TYPES.BUTTON,
-				style: this.getButtonStyle()
+				style: this.getButtonStyle(),
+				enabled: this.isEnabled()
 			},
 			evt: {
 				click: this.onItemClicked.bind(this, item, itemIndex)

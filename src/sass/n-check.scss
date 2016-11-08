@@ -76,6 +76,9 @@
 			user-select: none;
 		}
 	}
+	&.n-disabled {
+		cursor: default;
+	}
 }
 
 .n-array-check {
@@ -144,5 +147,8 @@
 		display: inline-block;
 		height: inherit;
 		user-select: none;
+	}
+	&.n-disabled {
+		cursor: default;
 	}
 }

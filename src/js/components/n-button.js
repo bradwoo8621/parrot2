@@ -33,7 +33,11 @@ class NButton extends NDropdownComponent(NComponent) {
 		}
 	}
 	renderText(dropdown) {
-		return (<button className={classnames('n-control n-btn n-clickable', this.getButtonStyle())}
+		let className = classnames('n-control', 'n-btn', this.getButtonStyle(), {
+			'n-clickable': this.isEnabled()
+		});
+		return (<button className={className}
+						disabled={!this.isEnabled()}
 						onClick={this.onComponentClicked}>
 			{this.renderLeftIcon()}
 			{this.getDisplayText()}
@@ -43,9 +47,12 @@ class NButton extends NDropdownComponent(NComponent) {
 	}
 	renderSeparatedDropdownIcon(dropdown) {
 		if (dropdown.has && dropdown.separated) {
-			let className = classnames('n-control n-btn n-button-dropdown-icon n-clickable',
-									   this.getButtonStyle());
+			let className = classnames('n-control n-btn n-button-dropdown-icon',
+									   this.getButtonStyle(), {
+											'n-clickable': this.isEnabled()
+									   });
 			return (<button className={className}
+							disabled={!this.isEnabled()}
 							onClick={this.onDropdownIconClicked}>
 				<i className='fa fa-fw fa-caret-down' />
 			</button>);
@@ -118,7 +125,7 @@ class NButton extends NDropdownComponent(NComponent) {
 	}
 
 	onDropdownIconClicked = (evt) => {
-		if (this.isEnabled() && !evt.isDefaultPrevented()) {
+		if (!evt.isDefaultPrevented()) {
 			evt.preventDefault();
 			this.showDropdown();
 		}

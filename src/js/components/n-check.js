@@ -65,6 +65,9 @@ class NCheck extends NComponent {
 	}
 
 	onComponentClicked = (evt) => {
+		if (!this.isEnabled()) {
+			return;
+		}
 		evt.preventDefault();
 		let value = this.getValueFromModel();
 		this.setValueToModel(!value);
@@ -72,6 +75,9 @@ class NCheck extends NComponent {
 		this.$me().focus();
 	}
 	onComponentKeyPressed = (evt) => {
+		if (!this.isEnabled()) {
+			return;
+		}
 		if (evt.charCode === 32) {
 			evt.preventDefault();
 			let value = this.getValueFromModel();
@@ -87,7 +93,8 @@ class NArrayCheck extends NCodeTableComponent(NComponent) {
 			comp: {
 				type: Envs.COMPONENT_TYPES.CHECK_NL,
 				textOnLeft: this.isTextOnLeft(),
-				labelDisplay: true
+				labelDisplay: true,
+				enabled: this.isEnabled()
 			}
 		};
 		let values = this.getValueFromModel();
@@ -170,13 +177,18 @@ class NToggle extends NComponent {
 		return 'n-toggle-' + this.getLayoutOptionValue('style', 'primary');
 	}
 	onComponentClicked = (evt) => {
-		evt.preventDefault();
-		let value = this.getValueFromModel();
-		this.setValueToModel(!value);
+		if (this.isEnabled()) {
+			evt.preventDefault();
+			let value = this.getValueFromModel();
+			this.setValueToModel(!value);
+		}
 
 		this.$me().focus();
 	}
 	onComponentKeyUp = (evt) => {
+		if (!this.isEnabled()) {
+			return;
+		}
 		let keycode = evt.keyCode;
 		let value = this.getValueFromModel();
 		if (keycode === 37) {

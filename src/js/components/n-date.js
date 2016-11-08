@@ -1012,12 +1012,12 @@ class NDate extends NIconRenderer(NDateComponent(NDropdownComponent(NComponent))
 		return (<div className='n-input-addon'>
 			{this.renderIcon({
 				icon: 'close',
-				click: this.onClearIconClicked,
+				click: this.isEnabled() ? this.onClearIconClicked : null,
 				ref: 'clear-btn'
 			})}
 			{this.renderIcon({
 				icon: 'calendar',
-				click: this.onCalendarIconClicked,
+				click: this.isEnabled() ? this.onCalendarIconClicked : null,
 				ref: 'dropdown-btn'
 			})}
 		</div>);

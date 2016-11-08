@@ -55,16 +55,16 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 			ref: 'dropdown'
 		});
 	}
-	renderCalendarIcon() {
+	renderOperationIcon() {
 		return (<div className='n-input-addon'>
 			{this.renderIcon({
 				icon: 'close',
-				click: this.onClearIconClicked,
+				click: this.isEnabled() ? this.onClearIconClicked : null,
 				ref: 'clear-btn'
 			})}
 			{this.renderIcon({
 				icon: 'caret-down',
-				click: this.onDropdownIconClicked,
+				click: this.isEnabled() ? this.onDropdownIconClicked : null,
 				ref: 'dropdown-btn'
 			})}
 		</div>);
@@ -115,7 +115,7 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 					 onKeyUp={this.onComponentKeyUp}
 					 ref='me'>
 			{this.renderSelectedItems()}
-			{this.renderCalendarIcon()}
+			{this.renderOperationIcon()}
 			{this.renderDropdown()}
 			{this.renderNormalLine()}
 			{this.renderFocusLine()}
@@ -149,13 +149,16 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 		this.onComponentFocusChanged();
 	}
 	onComponentClicked = (evt) => {
-		if (evt.isDefaultPrevented()) {
+		if (!this.isEnabled() || evt.isDefaultPrevented()) {
 			return;
 		}
 		evt.preventDefault();
 		this.showDropdown();
 	}
 	onComponentUpArrowKeyUp(evt) {
+		if (!this.isEnabled()) {
+			return;
+		}
 		evt.preventDefault();
 		this.showDropdown();
 	}
@@ -165,6 +168,9 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 		}
 	}
 	onItemClearIconClicked(value, evt) {
+		if (!this.isEnabled()) {
+			return;
+		}
 		evt.preventDefault();
 		let values = this.getValueFromModel();
 		let index = values.findIndex((v) => {
@@ -186,7 +192,6 @@ class NSelect extends NIconRenderer(NCodeTableComponent(NDropdownComponent(NComp
 		}
 	}
 	onClearIconClicked = (evt) => {
-		evt.preventDefault();
 		if (this.isEnabled()) {
 			evt.preventDefault();
 			this.setValueToModel(null);
