@@ -18,6 +18,12 @@ class NWidget extends React.Component {
 	$me() {
 		return $(this.me());
 	}
+	cell() {
+		return this.refs.cell ? ReactDOM.findDOMNode(this.refs.cell) : this.me();
+	}
+	$cell() {
+		return $(this.cell());
+	}
 }
 class NComponent extends NWidget {
 	state = {}
@@ -109,7 +115,7 @@ class NComponent extends NWidget {
 	}
 	internalInstallDOMListeners() {
 		let listeners = this.getDOMEventMonitors();
-		let me = this.$me();
+		let me = this.$cell();
 		Object.keys(listeners).forEach((key) => {
 			let listener = listeners[key];
 			if (typeof listener === 'function') {
@@ -139,7 +145,7 @@ class NComponent extends NWidget {
 	}
 	internalUninstallDOMListeners() {
 		let listeners = this.getDOMEventMonitors();
-		let me = this.$me();
+		let me = this.$cell();
 		Object.keys(listeners).forEach((key) => {
 			let listener = listeners[key];
 			if (typeof listener === 'function') {
@@ -374,7 +380,7 @@ class NComponent extends NWidget {
 		} else {
 			labelWidth = labelWidth ? labelWidth : Envs.LABEL_WIDTH;
 			if (typeof labelWidth === 'number' || typeof labelWidth === 'string') {
-				compWidth = Envs.CELL_COLUMNS - Envs.LABEL_WIDTH;
+				compWidth = Envs.CELL_COLUMNS - labelWidth;
 			} else {
 				let cellColumns = this.getLayoutOptionValue('cellColumns', Envs.CELL_COLUMNS);
 				compWidth = Object.keys(labelWidth).reduce((prev, next) => {
@@ -673,7 +679,8 @@ class NComponent extends NWidget {
 		if (labelShown && label) {
 			let labelWidth = this.getLabelWidth();
 			let compWidth = this.getComponentInternalWidth(labelWidth);
-			return (<div className={classnames(this.getLabelPosition(), cellClassName)}>
+			return (<div className={classnames(this.getLabelPosition(), cellClassName)}
+						 ref='cell'>
 				<div className='n-row'>
 					<div className={classnames('n-comp-label', this.getWidthClassName(labelWidth))}>
 						{label}
@@ -685,12 +692,13 @@ class NComponent extends NWidget {
 				</div>
 			</div>);
 		} else if (cellClassName) {
-			return (<div className={cellClassName}>
+			return (<div className={cellClassName}
+						 ref='cell'>
 				{this.renderComponent()}
 				{this.renderValidationResults(validationResults)}
 			</div>);
 		} else if (validationResults) {
-			return (<div>
+			return (<div ref='cell'>
 				{this.renderComponent()}
 				{this.renderValidationResults(validationResults)}
 			</div>);

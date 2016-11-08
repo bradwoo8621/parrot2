@@ -2153,6 +2153,16 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: function $me() {
 				return $(this.me());
 			}
+		}, {
+			key: 'cell',
+			value: function cell() {
+				return this.refs.cell ? _reactDom2.default.findDOMNode(this.refs.cell) : this.me();
+			}
+		}, {
+			key: '$cell',
+			value: function $cell() {
+				return $(this.cell());
+			}
 		}]);
 
 		return NWidget;
@@ -2288,7 +2298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var _this3 = this;
 
 				var listeners = this.getDOMEventMonitors();
-				var me = this.$me();
+				var me = this.$cell();
 				Object.keys(listeners).forEach(function (key) {
 					var listener = listeners[key];
 					if (typeof listener === 'function') {
@@ -2319,7 +2329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var _this4 = this;
 
 				var listeners = this.getDOMEventMonitors();
-				var me = this.$me();
+				var me = this.$cell();
 				Object.keys(listeners).forEach(function (key) {
 					var listener = listeners[key];
 					if (typeof listener === 'function') {
@@ -2648,7 +2658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				} else {
 					labelWidth = labelWidth ? labelWidth : _envs.Envs.LABEL_WIDTH;
 					if (typeof labelWidth === 'number' || typeof labelWidth === 'string') {
-						compWidth = _envs.Envs.CELL_COLUMNS - _envs.Envs.LABEL_WIDTH;
+						compWidth = _envs.Envs.CELL_COLUMNS - labelWidth;
 					} else {
 						(function () {
 							var cellColumns = _this7.getLayoutOptionValue('cellColumns', _envs.Envs.CELL_COLUMNS);
@@ -3014,7 +3024,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					var compWidth = this.getComponentInternalWidth(labelWidth);
 					return _react2.default.createElement(
 						'div',
-						{ className: (0, _classnames2.default)(this.getLabelPosition(), cellClassName) },
+						{ className: (0, _classnames2.default)(this.getLabelPosition(), cellClassName),
+							ref: 'cell' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'n-row' },
@@ -3034,14 +3045,15 @@ return /******/ (function(modules) { // webpackBootstrap
 				} else if (cellClassName) {
 					return _react2.default.createElement(
 						'div',
-						{ className: cellClassName },
+						{ className: cellClassName,
+							ref: 'cell' },
 						this.renderComponent(),
 						this.renderValidationResults(validationResults)
 					);
 				} else if (validationResults) {
 					return _react2.default.createElement(
 						'div',
-						null,
+						{ ref: 'cell' },
 						this.renderComponent(),
 						this.renderValidationResults(validationResults)
 					);
