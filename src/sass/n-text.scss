@@ -3,11 +3,15 @@
 	display: block;
 	border-collapse:collapse;
 	&.has-addon {
-		display: inline-table;
+		display: table;
 		vertical-align: middle;
+		input {
+			display: table-cell;
+			float: left;
+		}
 	}
 	input {
-		display: table-cell;
+		display: block;
 		width: 100%;
 	}
 }
