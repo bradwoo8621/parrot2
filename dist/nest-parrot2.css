@@ -5971,10 +5971,13 @@ li {
   display: block;
   border-collapse: collapse; }
   .n-text.has-addon {
-    display: inline-table;
+    display: table;
     vertical-align: middle; }
+    .n-text.has-addon input {
+      display: table-cell;
+      float: left; }
   .n-text input {
-    display: table-cell;
+    display: block;
     width: 100%; }
 
 .n-text-area {
