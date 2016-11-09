@@ -57,260 +57,103 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
+	exports.NForm = exports.NDialogUtil = exports.NDialog = exports.NTree = exports.NText = exports.NTextArea = exports.NTableBody = exports.NTableHeader = exports.NTable = exports.NTabBody = exports.NTabHeader = exports.NTab = exports.NArrayTab = exports.NSelect = exports.NRadioButton = exports.NRadio = exports.NPanelBody = exports.NPanelHeader = exports.NPanel = exports.NArrayPanel = exports.NList = exports.NLabel = exports.NStackIcon = exports.NIcon = exports.NDateTimeCalendar = exports.NTimeClock = exports.NDateCalendar = exports.NDate = exports.NDateComponent = exports.NToggle = exports.NArrayCheck = exports.NCheck = exports.NButtonBar = exports.NButton = exports.NHierarchyComponent = exports.NCollapsibleContainer = exports.NContainer = exports.NCodeTableComponent = exports.NDropdownComponent = exports.NAddonComponent = exports.NComponent = exports.NWidget = exports.Model = exports.CodeTable = exports.Layout = exports.Envs = undefined;
 
 	var _envs = __webpack_require__(4);
 
-	Object.keys(_envs).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _envs[key];
-	    }
-	  });
-	});
-
 	var _layout = __webpack_require__(6);
-
-	Object.keys(_layout).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _layout[key];
-	    }
-	  });
-	});
 
 	var _model = __webpack_require__(7);
 
-	Object.keys(_model).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _model[key];
-	    }
-	  });
-	});
-
 	var _validation = __webpack_require__(9);
-
-	Object.keys(_validation).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _validation[key];
-	    }
-	  });
-	});
 
 	var _nComponent = __webpack_require__(10);
 
-	Object.keys(_nComponent).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nComponent[key];
-	    }
-	  });
-	});
-
 	var _nButton = __webpack_require__(15);
-
-	Object.keys(_nButton).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nButton[key];
-	    }
-	  });
-	});
 
 	var _nCheck = __webpack_require__(16);
 
-	Object.keys(_nCheck).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nCheck[key];
-	    }
-	  });
-	});
-
 	var _nDate = __webpack_require__(17);
-
-	Object.keys(_nDate).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nDate[key];
-	    }
-	  });
-	});
 
 	var _nIcon = __webpack_require__(18);
 
-	Object.keys(_nIcon).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nIcon[key];
-	    }
-	  });
-	});
-
 	var _nLabel = __webpack_require__(20);
-
-	Object.keys(_nLabel).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nLabel[key];
-	    }
-	  });
-	});
 
 	var _nList = __webpack_require__(21);
 
-	Object.keys(_nList).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nList[key];
-	    }
-	  });
-	});
-
 	var _nPanel = __webpack_require__(22);
-
-	Object.keys(_nPanel).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nPanel[key];
-	    }
-	  });
-	});
 
 	var _nRadio = __webpack_require__(23);
 
-	Object.keys(_nRadio).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nRadio[key];
-	    }
-	  });
-	});
-
 	var _nSelect = __webpack_require__(24);
-
-	Object.keys(_nSelect).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nSelect[key];
-	    }
-	  });
-	});
 
 	var _nTab = __webpack_require__(25);
 
-	Object.keys(_nTab).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nTab[key];
-	    }
-	  });
-	});
-
 	var _nTable = __webpack_require__(26);
-
-	Object.keys(_nTable).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nTable[key];
-	    }
-	  });
-	});
 
 	var _nTextArea = __webpack_require__(27);
 
-	Object.keys(_nTextArea).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nTextArea[key];
-	    }
-	  });
-	});
-
 	var _nText = __webpack_require__(28);
-
-	Object.keys(_nText).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nText[key];
-	    }
-	  });
-	});
 
 	var _nTree = __webpack_require__(29);
 
-	Object.keys(_nTree).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nTree[key];
-	    }
-	  });
-	});
-
 	var _nDialog = __webpack_require__(30);
-
-	Object.keys(_nDialog).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nDialog[key];
-	    }
-	  });
-	});
 
 	var _nForm = __webpack_require__(31);
 
-	Object.keys(_nForm).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _nForm[key];
-	    }
-	  });
-	});
+	// layout
+	exports.Envs = _envs.Envs;
+	exports.Layout = _layout.Layout;
+	exports.CodeTable = _model.CodeTable;
+	exports.Model = _model.Model;
+	exports.NWidget = _nComponent.NWidget;
+	exports.NComponent = _nComponent.NComponent;
+	exports.NAddonComponent = _nComponent.NAddonComponent;
+	exports.NDropdownComponent = _nComponent.NDropdownComponent;
+	exports.NCodeTableComponent = _nComponent.NCodeTableComponent;
+	exports.NContainer = _nComponent.NContainer;
+	exports.NCollapsibleContainer = _nComponent.NCollapsibleContainer;
+	exports.NHierarchyComponent = _nComponent.NHierarchyComponent;
+	exports.NButton = _nButton.NButton;
+	exports.NButtonBar = _nButton.NButtonBar;
+	exports.NCheck = _nCheck.NCheck;
+	exports.NArrayCheck = _nCheck.NArrayCheck;
+	exports.NToggle = _nCheck.NToggle;
+	exports.NDateComponent = _nDate.NDateComponent;
+	exports.NDate = _nDate.NDate;
+	exports.NDateCalendar = _nDate.NDateCalendar;
+	exports.NTimeClock = _nDate.NTimeClock;
+	exports.NDateTimeCalendar = _nDate.NDateTimeCalendar;
+	exports.NIcon = _nIcon.NIcon;
+	exports.NStackIcon = _nIcon.NStackIcon;
+	exports.NLabel = _nLabel.NLabel;
+	exports.NList = _nList.NList;
+	exports.NArrayPanel = _nPanel.NArrayPanel;
+	exports.NPanel = _nPanel.NPanel;
+	exports.NPanelHeader = _nPanel.NPanelHeader;
+	exports.NPanelBody = _nPanel.NPanelBody;
+	exports.NRadio = _nRadio.NRadio;
+	exports.NRadioButton = _nRadio.NRadioButton;
+	exports.NSelect = _nSelect.NSelect;
+	exports.NArrayTab = _nTab.NArrayTab;
+	exports.NTab = _nTab.NTab;
+	exports.NTabHeader = _nTab.NTabHeader;
+	exports.NTabBody = _nTab.NTabBody;
+	exports.NTable = _nTable.NTable;
+	exports.NTableHeader = _nTable.NTableHeader;
+	exports.NTableBody = _nTable.NTableBody;
+	exports.NTextArea = _nTextArea.NTextArea;
+	exports.NText = _nText.NText;
+	exports.NTree = _nTree.NTree;
+	exports.NDialog = _nDialog.NDialog;
+	exports.NDialogUtil = _nDialog.NDialogUtil;
+	exports.NForm = _nForm.NForm;
+	// components
+
+	// model
+	// environments
 
 /***/ },
 /* 1 */,
@@ -824,32 +667,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		return Envs;
 	}();
 
-	// // there is no global object to carry the global constants variables
-	// // have to use window in browser or global in nodejs env
-	// // to carry the global constants
-	// // the global namespace is $pt
-	// // and import namespace is {Envs}
-	// // the above two are exactly same object
-	// let $pt;
-	// if (typeof window !== 'undefined') {
-	// 	$pt = window.$pt;
-	// } else if (typeof global !== 'undefined') {
-	// 	$pt = global.$pt;
-	// }
-	// // console.log('abc');
-	// // console.log($pt);
-
-	// if (typeof $pt === 'undefined' || $pt == null) {
-	// 	$pt = new Envs();
-	// 	if (typeof window !== 'undefined') {
-	// 		window.$pt = $pt;
-	// 	} else if (typeof global !== 'undefined') {
-	// 		global.$pt = $pt;
-	// 	}
-	// }
-
 	Envs.DEFAULT_COLUMN_INDEX = 9999;
 	Envs.DEFAULT_ROW_INDEX = 9999;
+
+
 	var envs = new Envs();
 
 	exports.Envs = envs;
