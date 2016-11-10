@@ -503,10 +503,10 @@ class NComponent extends NWidget {
 					});
 	}
 	getCellStyle() {
-		return classnames(this.getStyle('cell'));
+		return this.getStyle('cell');
 	}
 	getStyle(key) {
-		return this.wrapOptionValue(this.getLayout().getStyle(key));
+		return classnames(this.wrapOptionValue(this.getLayout().getStyle(key)));
 	}
 
 	// get value by given key from layout
