@@ -2464,6 +2464,11 @@ return /******/ (function(modules) { // webpackBootstrap
 				return this.wrapOptionValue(this.getLayout().getWidth());
 			}
 		}, {
+			key: 'getRowWrap',
+			value: function getRowWrap() {
+				return this.wrapOptionValue(this.getLayout().getClear());
+			}
+		}, {
 			key: 'getLabelWidth',
 			value: function getLabelWidth() {
 				return this.getLayoutOptionValue('labelWidth', _envs.Envs.LABEL_WIDTH);
@@ -2559,6 +2564,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						clearClassName = 'n-clear-both-sm';
 					} else if (clear === false) {
 						// do nothing
+						clearClassName = 'n-clear-none-sm';
 					} else if (typeof clear === 'string') {
 						clearClassName = (0, _classnames2.default)(clear.split(',').map(function (segment) {
 							var parts = segment.split(':');
@@ -2620,12 +2626,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'getCellStyle',
 			value: function getCellStyle() {
-				return (0, _classnames2.default)(this.getStyle('cell'));
+				return this.getStyle('cell');
 			}
 		}, {
 			key: 'getStyle',
 			value: function getStyle(key) {
-				return this.wrapOptionValue(this.getLayout().getStyle(key));
+				return (0, _classnames2.default)(this.wrapOptionValue(this.getLayout().getStyle(key)));
 			}
 
 			// get value by given key from layout
@@ -2839,7 +2845,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var label = this.getLabel();
 				var labelShown = this.isLabelShown();
-				var cellClassName = (0, _classnames2.default)(this.getCellStyle(), this.getWidthClassName(this.getWidth(), this.wrapOptionValue(this.getLayout().getClear())));
+				var cellClassName = (0, _classnames2.default)(this.getCellStyle(), this.getWidthClassName(this.getWidth(), this.getRowWrap()));
 				if (labelShown && label) {
 					var labelWidth = this.getLabelWidth();
 					var compWidth = this.getComponentInternalWidth(labelWidth);

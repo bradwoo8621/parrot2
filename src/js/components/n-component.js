@@ -370,6 +370,9 @@ class NComponent extends NWidget {
 	getWidth() {
 		return this.wrapOptionValue(this.getLayout().getWidth());
 	}
+	getRowWrap() {
+		return this.wrapOptionValue(this.getLayout().getClear());
+	}
 	getLabelWidth() {
 		return this.getLayoutOptionValue('labelWidth', Envs.LABEL_WIDTH);
 	}
@@ -454,6 +457,7 @@ class NComponent extends NWidget {
 				clearClassName = 'n-clear-both-sm';
 			} else if (clear === false) {
 				// do nothing
+				clearClassName = 'n-clear-none-sm';
 			} else if (typeof clear === 'string') {
 				clearClassName = classnames(clear.split(',').map((segment) => {
 					let parts = segment.split(':');
@@ -674,8 +678,7 @@ class NComponent extends NWidget {
 		let label = this.getLabel();
 		let labelShown = this.isLabelShown();
 		let cellClassName = classnames(this.getCellStyle(),
-									this.getWidthClassName(this.getWidth(), 
-									this.wrapOptionValue(this.getLayout().getClear())));
+					this.getWidthClassName(this.getWidth(), this.getRowWrap()));
 		if (labelShown && label) {
 			let labelWidth = this.getLabelWidth();
 			let compWidth = this.getComponentInternalWidth(labelWidth);
