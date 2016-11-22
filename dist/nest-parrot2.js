@@ -59,7 +59,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.NForm = exports.NDialogUtil = exports.NDialog = exports.NTree = exports.NText = exports.NTextArea = exports.NTableBody = exports.NTableHeader = exports.NTable = exports.NTabBody = exports.NTabHeader = exports.NTab = exports.NArrayTab = exports.NSelect = exports.NRadioButton = exports.NRadio = exports.NPanelBody = exports.NPanelHeader = exports.NPanel = exports.NArrayPanel = exports.NList = exports.NLabel = exports.NStackIcon = exports.NIcon = exports.NDateTimeCalendar = exports.NTimeClock = exports.NDateCalendar = exports.NDate = exports.NDateComponent = exports.NToggle = exports.NArrayCheck = exports.NCheck = exports.NButtonBar = exports.NButton = exports.NHierarchyComponent = exports.NCollapsibleContainer = exports.NContainer = exports.NCodeTableComponent = exports.NDropdownComponent = exports.NAddonComponent = exports.NComponent = exports.NWidget = exports.Model = exports.CodeTable = exports.Layout = exports.Envs = undefined;
+	exports.Parrot = undefined;
 
 	var _envs = __webpack_require__(4);
 
@@ -104,56 +104,65 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _nForm = __webpack_require__(31);
 
 	// layout
-	exports.Envs = _envs.Envs;
-	exports.Layout = _layout.Layout;
-	exports.CodeTable = _model.CodeTable;
-	exports.Model = _model.Model;
-	exports.NWidget = _nComponent.NWidget;
-	exports.NComponent = _nComponent.NComponent;
-	exports.NAddonComponent = _nComponent.NAddonComponent;
-	exports.NDropdownComponent = _nComponent.NDropdownComponent;
-	exports.NCodeTableComponent = _nComponent.NCodeTableComponent;
-	exports.NContainer = _nComponent.NContainer;
-	exports.NCollapsibleContainer = _nComponent.NCollapsibleContainer;
-	exports.NHierarchyComponent = _nComponent.NHierarchyComponent;
-	exports.NButton = _nButton.NButton;
-	exports.NButtonBar = _nButton.NButtonBar;
-	exports.NCheck = _nCheck.NCheck;
-	exports.NArrayCheck = _nCheck.NArrayCheck;
-	exports.NToggle = _nCheck.NToggle;
-	exports.NDateComponent = _nDate.NDateComponent;
-	exports.NDate = _nDate.NDate;
-	exports.NDateCalendar = _nDate.NDateCalendar;
-	exports.NTimeClock = _nDate.NTimeClock;
-	exports.NDateTimeCalendar = _nDate.NDateTimeCalendar;
-	exports.NIcon = _nIcon.NIcon;
-	exports.NStackIcon = _nIcon.NStackIcon;
-	exports.NLabel = _nLabel.NLabel;
-	exports.NList = _nList.NList;
-	exports.NArrayPanel = _nPanel.NArrayPanel;
-	exports.NPanel = _nPanel.NPanel;
-	exports.NPanelHeader = _nPanel.NPanelHeader;
-	exports.NPanelBody = _nPanel.NPanelBody;
-	exports.NRadio = _nRadio.NRadio;
-	exports.NRadioButton = _nRadio.NRadioButton;
-	exports.NSelect = _nSelect.NSelect;
-	exports.NArrayTab = _nTab.NArrayTab;
-	exports.NTab = _nTab.NTab;
-	exports.NTabHeader = _nTab.NTabHeader;
-	exports.NTabBody = _nTab.NTabBody;
-	exports.NTable = _nTable.NTable;
-	exports.NTableHeader = _nTable.NTableHeader;
-	exports.NTableBody = _nTable.NTableBody;
-	exports.NTextArea = _nTextArea.NTextArea;
-	exports.NText = _nText.NText;
-	exports.NTree = _nTree.NTree;
-	exports.NDialog = _nDialog.NDialog;
-	exports.NDialogUtil = _nDialog.NDialogUtil;
-	exports.NForm = _nForm.NForm;
+	var Parrot = {
+		Envs: _envs.Envs,
+
+		Layout: _layout.Layout,
+
+		CodeTable: _model.CodeTable,
+		Model: _model.Model,
+
+		NWidget: _nComponent.NWidget,
+		NComponent: _nComponent.NComponent,
+		NAddonComponent: _nComponent.NAddonComponent,
+		NDropdownComponent: _nComponent.NDropdownComponent,
+		NCodeTableComponent: _nComponent.NCodeTableComponent,
+		NContainer: _nComponent.NContainer,
+		NCollapsibleContainer: _nComponent.NCollapsibleContainer,
+		NHierarchyComponent: _nComponent.NHierarchyComponent,
+
+		NButton: _nButton.NButton,
+		NButtonBar: _nButton.NButtonBar,
+		NCheck: _nCheck.NCheck,
+		NArrayCheck: _nCheck.NArrayCheck,
+		NToggle: _nCheck.NToggle,
+		NDateComponent: _nDate.NDateComponent,
+		NDate: _nDate.NDate,
+		NDateCalendar: _nDate.NDateCalendar,
+		NTimeClock: _nDate.NTimeClock,
+		NDateTimeCalendar: _nDate.NDateTimeCalendar,
+		NIcon: _nIcon.NIcon,
+		NStackIcon: _nIcon.NStackIcon,
+		NLabel: _nLabel.NLabel,
+		NList: _nList.NList,
+		NArrayPanel: _nPanel.NArrayPanel,
+		NPanel: _nPanel.NPanel,
+		NPanelHeader: _nPanel.NPanelHeader,
+		NPanelBody: _nPanel.NPanelBody,
+		NRadio: _nRadio.NRadio,
+		NRadioButton: _nRadio.NRadioButton,
+		NSelect: _nSelect.NSelect,
+		NArrayTab: _nTab.NArrayTab,
+		NTab: _nTab.NTab,
+		NTabHeader: _nTab.NTabHeader,
+		NTabBody: _nTab.NTabBody,
+		NTable: _nTable.NTable,
+		NTableHeader: _nTable.NTableHeader,
+		NTableBody: _nTable.NTableBody,
+		NTextArea: _nTextArea.NTextArea,
+		NText: _nText.NText,
+		NTree: _nTree.NTree,
+
+		NDialog: _nDialog.NDialog,
+		NDialogUtil: _nDialog.NDialogUtil,
+
+		NForm: _nForm.NForm
+	};
 	// components
 
 	// model
 	// environments
+	exports.Parrot = Parrot;
 
 /***/ },
 /* 1 */,

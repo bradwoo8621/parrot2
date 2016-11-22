@@ -64,7 +64,7 @@ import {
 
 import {NForm} from './components/n-form'
 
-export {
+let Parrot = {
 	Envs,
 
 	Layout,
@@ -118,3 +118,5 @@ export {
 	
 	NForm
 };
+
+export {Parrot}
