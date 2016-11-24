@@ -240,7 +240,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				columnsOfGrid: 12,
 				dropdownMaxHeight: 300,
 				dropdownMinWidth: 300,
-				selectPlaceholder: 'Please Select...'
+				selectPlaceholder: 'Please Select...',
+				dialogBackdropClassName: ''
 			};
 			this.viewModeRenderers = {};
 			this.renderers = {};
@@ -670,6 +671,14 @@ return /******/ (function(modules) { // webpackBootstrap
 			},
 			set: function set(value) {
 				this.props.selectPlaceholder = value;
+			}
+		}, {
+			key: 'DIALOG_BACKDROP_CLASSNAME',
+			get: function get() {
+				return this.props.dialogBackdropClassName;
+			},
+			set: function set(value) {
+				this.props.dialogBackdropClassName = value;
 			}
 		}]);
 
@@ -10544,11 +10553,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: function render() {
 				var className = (0, _classnames2.default)('n-dialog-backdrop', {
 					'n-dialog-show': this.state.show
-				});
+				}, this.props.className);
 				return _react2.default.createElement(
 					'div',
 					{ className: className,
+						style: { zIndex: this.props.zIndex },
 						ref: 'me' },
+					_react2.default.createElement('div', { className: 'n-dialog-backdrop-bg' }),
 					_react2.default.createElement(NDialog, _extends({}, this.props.dialogOptions, {
 						backdrop: this,
 						ref: 'dialog' }))
@@ -10586,6 +10597,11 @@ return /******/ (function(modules) { // webpackBootstrap
 					}
 				});
 			}
+		}, {
+			key: 'destroy',
+			value: function destroy() {
+				this.$me().parent().remove();
+			}
 		}]);
 
 		return NDialogBackdrop;
@@ -10598,16 +10614,28 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		_createClass(NDialogUtil, null, [{
 			key: 'createDialog',
-			value: function createDialog(options) {
+			value: function createDialog(options, backdropClassName) {
+				var className = backdropClassName;
+				className = className ? className : NDialogUtil.getBackdropClassNameFromEnv();
 				var container = $('<div />');
-				var dialog = _reactDom2.default.render(_react2.default.createElement(NDialogBackdrop, { dialogOptions: options }), container[0]);
+				var dialog = _reactDom2.default.render(_react2.default.createElement(NDialogBackdrop, { dialogOptions: options,
+					zIndex: NDialogUtil.CURRENT_ZINDEX++,
+					className: className }), container[0]);
 				$('body').append(container);
 				return dialog;
+			}
+		}, {
+			key: 'getBackdropClassNameFromEnv',
+			value: function getBackdropClassNameFromEnv() {
+				return _envs.Envs.DIALOG_BACKDROP_CLASSNAME;
 			}
 		}]);
 
 		return NDialogUtil;
 	}();
+
+	NDialogUtil.CURRENT_ZINDEX = 1000;
+
 
 	_envs.Envs.COMPONENT_TYPES.DIALOG = { type: 'n-dialog', label: true, error: true };
 	_envs.Envs.setRenderer(_envs.Envs.COMPONENT_TYPES.DIALOG.type, function (options) {

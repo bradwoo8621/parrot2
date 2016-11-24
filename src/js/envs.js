@@ -56,7 +56,8 @@ class Envs {
 			columnsOfGrid: 12,
 			dropdownMaxHeight: 300,
 			dropdownMinWidth: 300,
-			selectPlaceholder: 'Please Select...'
+			selectPlaceholder: 'Please Select...',
+			dialogBackdropClassName: ''
 		};
 		this.viewModeRenderers = {};
 		this.renderers = {};
@@ -320,6 +321,14 @@ class Envs {
 
 	set SELECT_PLACEHOLDER(value) {
 		this.props.selectPlaceholder = value;
+	}
+
+	get DIALOG_BACKDROP_CLASSNAME() {
+		return this.props.dialogBackdropClassName;
+	}
+
+	set DIALOG_BACKDROP_CLASSNAME(value) {
+		this.props.dialogBackdropClassName = value;
 	}
 
 	getRenderer(type) {

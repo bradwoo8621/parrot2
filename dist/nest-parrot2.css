@@ -6125,6 +6125,12 @@ body[class*=n-dialog-open-] {
     opacity: 1;
     -webkit-transition: visibility 0s, opacity 0.4s linear;
     transition: visibility 0s, opacity 0.4s linear; }
+  .n-dialog-backdrop .n-dialog-backdrop-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0; }
 
 .n-dialog {
   display: block;
@@ -6137,7 +6143,8 @@ body[class*=n-dialog-open-] {
   .n-dialog .n-dialog-content {
     display: block;
     position: relative;
-    background-color: #fff;
+    background-color: transparent;
+    border-radius: 2px;
     outline: none;
     box-shadow: 0 0.03rem 0.06rem rgba(0, 0, 0, 0.2); }
 

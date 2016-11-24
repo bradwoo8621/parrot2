@@ -39,9 +39,11 @@ class NDialogBackdrop extends NWidget {
 	render() {
 		let className = classnames('n-dialog-backdrop', {
 			'n-dialog-show': this.state.show
-		});
+		}, this.props.className);
 		return (<div className={className}
+					 style={{zIndex: this.props.zIndex}}
 					 ref='me'>
+			<div className='n-dialog-backdrop-bg'/>
 			<NDialog {...this.props.dialogOptions}
 					 backdrop={this}
 					 ref='dialog' />
@@ -69,14 +71,27 @@ class NDialogBackdrop extends NWidget {
 			}
 		});
 	}
+	destroy() {
+		this.$me().parent().remove();
+	}
 }
 
 class NDialogUtil {
-	static createDialog(options) {
+	static CURRENT_ZINDEX = 1000
+	static createDialog(options, backdropClassName) {
+		let className = backdropClassName;
+		className = className ? className : NDialogUtil.getBackdropClassNameFromEnv();
 		let container = $('<div />');
-		let dialog = ReactDOM.render(<NDialogBackdrop dialogOptions={options} />, container[0]);
+		let dialog = ReactDOM.render(
+							<NDialogBackdrop dialogOptions={options} 
+											 zIndex={NDialogUtil.CURRENT_ZINDEX++}
+											 className={className}/>, 
+							container[0]);
 		$('body').append(container);
 		return dialog;
+	}
+	static getBackdropClassNameFromEnv() {
+		return Envs.DIALOG_BACKDROP_CLASSNAME;
 	}
 }
 
