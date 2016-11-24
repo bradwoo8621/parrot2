@@ -894,7 +894,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: function getOptionValue(key) {
 				var options = this.getOptions();
 				if (options[key] != null && options.propertyIsEnumerable(key)) {
-					return this.getOptions()[key];
+					return options[key];
 				} else {
 					return null;
 				}
@@ -2664,7 +2664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					// not designated in layout
 					if (this.isNoValueAssigned(defaultValue)) {
 						// default value not designated
-						if (!this.isNoValueAssigned(this.props.defaultOptions)) {
+						if (!this.isNoValueAssigned(this.props.defaultOptions) && this.props.defaultOptions.propertyIsEnumerable(key)) {
 							// default option object designated
 							// get value from default option object
 							// value still might be null or undefined

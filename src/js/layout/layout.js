@@ -127,7 +127,7 @@ class Layout {
 	getOptionValue(key) {
 		let options = this.getOptions();
 		if (options[key] != null && options.propertyIsEnumerable(key)) {
-			return this.getOptions()[key];
+			return options[key];
 		} else {
 			return null;
 		}

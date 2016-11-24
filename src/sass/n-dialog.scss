@@ -1,5 +1,8 @@
 body[class*=n-dialog-open-] {
 	overflow-y: hidden;
+	@media #{$media-sm} {
+		padding-right: 17px;
+	}
 }
 .n-dialog-backdrop {
 	position: fixed;

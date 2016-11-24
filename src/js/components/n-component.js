@@ -522,7 +522,8 @@ class NComponent extends NWidget {
 			// not designated in layout
 			if (this.isNoValueAssigned(defaultValue)) {
 				// default value not designated
-				if (!this.isNoValueAssigned(this.props.defaultOptions)) {
+				if (!this.isNoValueAssigned(this.props.defaultOptions)
+						&& this.props.defaultOptions.propertyIsEnumerable(key)) {
 					// default option object designated
 					// get value from default option object
 					// value still might be null or undefined

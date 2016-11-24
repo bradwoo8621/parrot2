@@ -6111,6 +6111,9 @@ li {
 
 body[class*=n-dialog-open-] {
   overflow-y: hidden; }
+  @media (min-width: 768px) {
+    body[class*=n-dialog-open-] {
+      padding-right: 17px; } }
 
 .n-dialog-backdrop {
   position: fixed;
