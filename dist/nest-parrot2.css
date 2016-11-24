@@ -4266,6 +4266,12 @@ li {
     border-bottom-left-radius: 0;
     width: auto;
     padding: 0; }
+  .n-button.n-button-fill {
+    width: 100%; }
+    .n-button.n-button-fill .n-btn {
+      width: 100%; }
+  .n-button.n-button-in-row {
+    margin-top: 5px; }
 
 .n-button-bar {
   display: block;

@@ -77,6 +77,15 @@
 		    padding: $pad-0;
 		}
 	}
+	&.n-button-fill {
+		width: 100%;
+		.n-btn {
+			width: 100%;
+		}
+	}
+	&.n-button-in-row {
+		margin-top: $margin-5;
+	}
 }
 .n-button-bar {
 	display: block;

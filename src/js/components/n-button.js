@@ -80,7 +80,8 @@ class NButton extends NDropdownComponent(NComponent) {
 		let dropdown = this.prepareDropdownItems();
 
 		let className = classnames(this.getComponentStyle(), {
-			'n-button-group': dropdown.has && dropdown.separated
+			'n-button-group': dropdown.has && dropdown.separated,
+			'n-button-fill': this.isWidthFill()
 		});
 		return (<div className={className}
 					 ref='me'>
@@ -102,6 +103,9 @@ class NButton extends NDropdownComponent(NComponent) {
 	}
 	getButtonStyle() {
 		return 'n-btn-' + this.getLayoutOptionValue('style', 'default');
+	}
+	isWidthFill() {
+		return this.getLayoutOptionValue('fill', false);
 	}
 	getLeftIcon() {
 		return this.getLayoutOptionValue('leftIcon');

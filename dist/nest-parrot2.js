@@ -3860,7 +3860,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				var dropdown = this.prepareDropdownItems();
 
 				var className = (0, _classnames2.default)(this.getComponentStyle(), {
-					'n-button-group': dropdown.has && dropdown.separated
+					'n-button-group': dropdown.has && dropdown.separated,
+					'n-button-fill': this.isWidthFill()
 				});
 				return _react2.default.createElement(
 					'div',
@@ -3890,6 +3891,11 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: 'getButtonStyle',
 			value: function getButtonStyle() {
 				return 'n-btn-' + this.getLayoutOptionValue('style', 'default');
+			}
+		}, {
+			key: 'isWidthFill',
+			value: function isWidthFill() {
+				return this.getLayoutOptionValue('fill', false);
 			}
 		}, {
 			key: 'getLeftIcon',
