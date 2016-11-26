@@ -32,6 +32,7 @@ class ValidationMessages {
 				console.info(`Message "${oldMsg}" of rule "${ruleName}" is replaced by ${options[ruleName]} on locale "${locale}".`);
 			}
 		});
+		return this;
 	}
 	get(ruleName, locale) {
 		locale = this.parseLocale(locale, this.getLocale());
@@ -78,6 +79,7 @@ class ValidationMessages {
 		} else {
 			this.locale = 'en';
 		}
+		return this;
 	}
 	convert(ruleName, param, label) {
 		let message = this.get(ruleName);

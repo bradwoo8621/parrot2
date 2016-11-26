@@ -342,6 +342,10 @@ class Model {
 	replaceValidationResults(results) {
 		this.validationResults = results;
 	}
+	hasValidationResults() {
+		let results = this.getValidationResults();
+		return results && Object.keys(results).length === 0;
+	}
 }
 
 export * from './codetable'

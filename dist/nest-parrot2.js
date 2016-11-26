@@ -1416,6 +1416,12 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: function replaceValidationResults(results) {
 				this.validationResults = results;
 			}
+		}, {
+			key: 'hasValidationResults',
+			value: function hasValidationResults() {
+				var results = this.getValidationResults();
+				return results && Object.keys(results).length === 0;
+			}
 		}]);
 
 		return Model;
@@ -1596,6 +1602,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						console.info('Message "' + oldMsg + '" of rule "' + ruleName + '" is replaced by ' + options[ruleName] + ' on locale "' + locale + '".');
 					}
 				});
+				return this;
 			}
 		}, {
 			key: 'get',
@@ -1651,6 +1658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				} else {
 					this.locale = 'en';
 				}
+				return this;
 			}
 		}, {
 			key: 'convert',
