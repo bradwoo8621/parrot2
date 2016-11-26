@@ -111,6 +111,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		CodeTable: _model.CodeTable,
 		Model: _model.Model,
+		Validator: _validation.Validator,
+		GlobalValidationRules: _validation.GlobalValidationRules,
+		ValidationMessages: _validation.ValidationMessages,
 
 		NWidget: _nComponent.NWidget,
 		NComponent: _nComponent.NComponent,

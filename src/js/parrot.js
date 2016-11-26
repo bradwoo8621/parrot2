@@ -71,6 +71,9 @@ let Parrot = {
 
 	CodeTable,
 	Model,
+	Validator,
+	GlobalValidationRules,
+	ValidationMessages,
 
 	NWidget,
 	NComponent,
