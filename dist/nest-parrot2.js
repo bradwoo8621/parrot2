@@ -2090,7 +2090,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'isViewMode',
 			value: function isViewMode() {
-				return this.props.viewMode ? true : false;
+				var viewMode = this.getLayoutOptionValue('viewMode');
+				if (viewMode != null) {
+					return this.wrapOptionValue(viewMode);
+				} else {
+					return this.props.viewMode ? true : false;
+				}
 			}
 
 			// lifecycle
@@ -2530,7 +2535,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					if (typeof compWidth === 'number') {
 						correct = !isNaN(compWidth);
 					} else {
-						correct = Object.keys(compWidth).some(function (key) {
+						correct = !Object.keys(compWidth).some(function (key) {
 							if (isNaN(compWidth[key])) {
 								return true;
 							}
@@ -2549,7 +2554,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'getLabelPosition',
 			value: function getLabelPosition() {
-				var pos = this.getLayoutOptionValue('labelPosition', _envs.Envs.LABEL_POSITION);
+				var pos = this.getLayoutOptionValue('labelPosition');
+				if (!pos) {
+					var orientation = this.getOrientation();
+					if (orientation) {
+						pos = orientation;
+					} else {
+						pos = _envs.Envs.LABEL_POSITION;
+					}
+				}
 				if (typeof pos === 'string') {
 					return 'n-comp-label-' + pos;
 				} else {
@@ -3013,7 +3026,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					}
 				}));
 
-				return _envs.Envs.render(renderer, {
+				return _envs.Envs.render(_envs.Envs.COMPONENT_TYPES.LABEL.type, {
 					model: this.getModel(),
 					layout: layout,
 					orientation: this.getOrientation(),

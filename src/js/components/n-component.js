@@ -71,7 +71,12 @@ class NComponent extends NWidget {
 		return this.props.orientation;
 	}
 	isViewMode() {
-		return this.props.viewMode ? true : false;
+		let viewMode = this.getLayoutOptionValue('viewMode');
+		if (viewMode != null) {
+			return this.wrapOptionValue(viewMode);
+		} else {
+			return this.props.viewMode ? true : false;
+		}
 	}
 
 	// lifecycle
@@ -398,7 +403,7 @@ class NComponent extends NWidget {
 			if (typeof compWidth === 'number') {
 				correct = !isNaN(compWidth);
 			} else {
-				correct = Object.keys(compWidth).some((key) => {
+				correct = !Object.keys(compWidth).some((key) => {
 					if (isNaN(compWidth[key])) {
 						return true;
 					}
@@ -415,7 +420,15 @@ class NComponent extends NWidget {
 		}
 	}
 	getLabelPosition() {
-		let pos = this.getLayoutOptionValue('labelPosition', Envs.LABEL_POSITION);
+		let pos = this.getLayoutOptionValue('labelPosition');
+		if (!pos) {
+			let orientation = this.getOrientation();
+			if (orientation) {
+				pos = orientation;
+			} else {
+				pos = Envs.LABEL_POSITION;
+			}
+		}
 		if (typeof pos === 'string') {
 			return `n-comp-label-${pos}`;
 		} else {
@@ -789,7 +802,7 @@ class NComponent extends NWidget {
 			}
 		}));
 
-		return Envs.render(renderer, {
+		return Envs.render(Envs.COMPONENT_TYPES.LABEL.type, {
 			model: this.getModel(),
 			layout: layout,
 			orientation: this.getOrientation(),
