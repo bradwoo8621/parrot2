@@ -210,7 +210,7 @@ class Model {
 		let old = this.get(id);
 		if (typeof old === typeof value && old == value) {
 			// do nothing
-			return;
+			return this;
 		}
 		this.setIntoJSON(id, value, this.getCurrentModel());
 		this.setChanged(true);
@@ -254,6 +254,7 @@ class Model {
 				this.firePostRemoveEvent(id, values, value, index);
 			}
 		}
+		return this;
 	}
 	update(id, oldValue, newValue) {
 		let values = this.get(id);
@@ -269,6 +270,7 @@ class Model {
 				this.firePostChangeEvent(id, oldValue, newValue, index);
 			}
 		}
+		return this;
 	}
 	setIntoJSON(id, value, json) {
 		let ids = id.split('.');
@@ -341,6 +343,7 @@ class Model {
 	}
 	replaceValidationResults(results) {
 		this.validationResults = results;
+		return this;
 	}
 	hasValidationResults() {
 		let results = this.getValidationResults();

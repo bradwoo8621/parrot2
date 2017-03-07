@@ -935,7 +935,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Model = undefined;
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1065,7 +1065,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'getListenerSupport',
 			value: function getListenerSupport(id, time, type) {
-				var create = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
+				var create = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
 				id = id ? id : '--all';
 				var listeners = this.getListenersByTimeAndType(time, type);
@@ -1081,10 +1081,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'addListener',
 			value: function addListener() {
-				var id = arguments.length <= 0 || arguments[0] === undefined ? '--all' : arguments[0];
+				var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '--all';
 				var listener = arguments[1];
-				var type = arguments.length <= 2 || arguments[2] === undefined ? 'change' : arguments[2];
-				var time = arguments.length <= 3 || arguments[3] === undefined ? 'post' : arguments[3];
+				var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'change';
+				var time = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'post';
 
 				if (listener) {
 					this.getListenerSupport(id, time, type, true).addListener(listener);
@@ -1094,10 +1094,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'removeListener',
 			value: function removeListener() {
-				var id = arguments.length <= 0 || arguments[0] === undefined ? '--all' : arguments[0];
+				var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '--all';
 				var listener = arguments[1];
-				var type = arguments.length <= 2 || arguments[2] === undefined ? 'change' : arguments[2];
-				var time = arguments.length <= 3 || arguments[3] === undefined ? 'post' : arguments[3];
+				var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'change';
+				var time = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'post';
 
 				if (listener) {
 					var support = this.getListenerSupport(id, time, type);
@@ -1110,9 +1110,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'getListeners',
 			value: function getListeners() {
-				var id = arguments.length <= 0 || arguments[0] === undefined ? '--all' : arguments[0];
-				var time = arguments.length <= 1 || arguments[1] === undefined ? 'post' : arguments[1];
-				var type = arguments.length <= 2 || arguments[2] === undefined ? 'change' : arguments[2];
+				var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '--all';
+				var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'post';
+				var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'change';
 
 				var support = this.getListenerSupport(id, time, type);
 				return support ? support.getListeners() : [];
@@ -1253,7 +1253,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var old = this.get(id);
 				if ((typeof old === 'undefined' ? 'undefined' : _typeof(old)) === (typeof value === 'undefined' ? 'undefined' : _typeof(value)) && old == value) {
 					// do nothing
-					return;
+					return this;
 				}
 				this.setIntoJSON(id, value, this.getCurrentModel());
 				this.setChanged(true);
@@ -1301,6 +1301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						this.firePostRemoveEvent(id, values, value, index);
 					}
 				}
+				return this;
 			}
 		}, {
 			key: 'update',
@@ -1318,6 +1319,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						this.firePostChangeEvent(id, oldValue, newValue, index);
 					}
 				}
+				return this;
 			}
 		}, {
 			key: 'setIntoJSON',
@@ -1415,6 +1417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: 'replaceValidationResults',
 			value: function replaceValidationResults(results) {
 				this.validationResults = results;
+				return this;
 			}
 		}, {
 			key: 'hasValidationResults',
@@ -1556,7 +1559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.ValidationMessages = exports.GlobalValidationRules = exports.Validator = undefined;
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1942,7 +1945,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -2335,8 +2338,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					model = this.getModel();
 					manageFunction.call(model, dependency, handler);
 				} else {
-					var on = dependency.on;
-					var id = dependency.id;
+					var on = dependency.on,
+					    id = dependency.id;
 
 					if (on === 'p') {
 						model = this.getPrimaryModel();
@@ -4139,7 +4142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				if (options.show && !options.left) {
 					return this.renderText();
 				} else if (!options.show) {
-					return this.renderText(' ');
+					return this.renderText('\xA0');
 				}
 			}
 		}, {
@@ -4351,7 +4354,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					_react2.default.createElement(
 						'span',
 						{ className: 'n-toggle-text n-control' },
-						' '
+						'\xA0'
 					)
 				);
 			}
@@ -7679,7 +7682,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						_react2.default.createElement(
 							'span',
 							{ className: 'n-select-placeholder-text' },
-							placeholder ? placeholder : ' '
+							placeholder ? placeholder : '\xA0'
 						)
 					);
 				}
@@ -7698,7 +7701,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						_react2.default.createElement(
 							'span',
 							{ className: 'n-select-item-text' },
-							value == null ? ' ' : this.getCodeTable().getText(value)
+							value == null ? '\xA0' : this.getCodeTable().getText(value)
 						)
 					);
 				}
@@ -7950,7 +7953,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					_react2.default.createElement(
 						'span',
 						{ className: 'n-tab-header-text' },
-						label ? label : ' '
+						label ? label : '\xA0'
 					),
 					this.renderTailingChildren()
 				);
@@ -8540,7 +8543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.NTableBody = exports.NTableHeader = exports.NTable = undefined;
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
