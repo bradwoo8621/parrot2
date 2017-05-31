@@ -1,8 +1,8 @@
 {
   "name": "nest-parrot2",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "Parrot2 built on react",
-  "main": "src/js/parrot.js",
+  "main": "dist/nest-parrot2.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/bradwoo8621/parrot2.git"
